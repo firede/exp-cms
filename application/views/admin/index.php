@@ -44,7 +44,7 @@
 			<div class="content">大犀牛经验<br>版本：1.0<br><a href="http://daxiniu.com" target="_blank">DAXINIU.COM</a></div>
 		</div>
 	</div>
-	<div class="grid_14">内容</div>
+	<div class="grid_14"><?= $content ?></div>
 </div>
 
 </body>
