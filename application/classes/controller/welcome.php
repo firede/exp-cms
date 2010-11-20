@@ -2,7 +2,8 @@
 
 class Controller_Welcome extends Controller_Template {
 
-	public $template = 'welcome/index';
+	// 测试Smarty模板
+	public $template = 'smarty:welcome/index';
 
 	public function action_index()
 	{
