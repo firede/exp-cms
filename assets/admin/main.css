@@ -1,0 +1,202 @@
+/* 整体设置 */
+body {
+	font-size: 12px;
+}
+
+.container_16 {
+	padding: 15px 10px;
+}
+
+/* 头部设置 */
+#header {
+	position: relative;
+	padding-bottom: 12px;
+	margin: 0 10px;
+}
+#logo {
+	width: 230px;
+	height: 56px;
+	background: url('img/logo.png') no-repeat;
+}
+#logo h1 {
+	display: none;
+}
+#links {
+	position: absolute;
+	right: 0;
+	top: 0;
+}
+
+/* 侧边栏设置（包含导航和帮助、关于信息） */
+.sidebar li {
+	list-style: none;
+	padding: 0;
+	margin:0;
+}
+.mainmenu {
+	border: 2px solid #3399FF;
+	padding: 1px 1px 0;
+	margin: 0 0 10px;
+}
+.mainmenu li {
+	margin-bottom: 1px;
+	background: #008EE8 url('img/menu-bg.png') repeat-x;
+	font-size: 14px;
+	font-weight: 700;
+}
+.mainmenu li.active {
+	background: #FE8B01 url('img/menu-bg-active.png') repeat-x;
+}
+.mainmenu li a {
+	display: block;
+	height: 26px;
+	line-height: 26px;
+	padding-left: 5px;
+	text-decoration: none;
+	color: #FFF;
+}
+.mainmenu li a:hover {
+	text-decoration: underline;
+}
+.sidebox {
+	border: 2px solid #ACCAE4;
+	margin-bottom: 10px;
+}
+
+.sidebox h5 {
+	font-size: 14px;
+	font-weight: 700;
+	padding-left: 5px;
+	background: #ACCAE4 url('img/box-bg.png') repeat-x;
+	height: 26px;
+	line-height: 26px;
+	margin: 1px 1px 0;
+}
+.sidebox .content {
+	margin:0;
+	padding: 5px;
+	line-height: 20px;
+}
+
+/* main */
+.breadcrumbs {
+	overflow: hidden;
+	margin: 5px 0 10px;
+	padding-left: 20px;
+	position: relative;
+	color: #666;
+}
+.breadcrumbs .icon-position {
+	position: absolute;
+	left: 0;
+	top: 1px;
+}
+
+.exlink {
+	position: relative;
+	margin: 5px 0 10px;
+	padding-left: 20px;
+	float: right;
+}
+.exlink .icon-category {
+	position: absolute;
+	left: 0;
+	top: 1px;
+}
+
+/* operation table */
+.operation-bar {
+	border-width:2px;
+	border-style:solid;
+	border-color:#AFCAE4;
+	padding: 5px;
+}
+.operation-btn {
+	float: left;
+	display: inline;
+	margin: 0 6px;
+	padding-left: 20px;
+	position: relative;
+	text-decoration: none;
+}
+.operation-btn:hover {
+	text-decoration: underline;
+}
+
+.operation-btn span {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.list-table {
+	border-width: 0 2px;
+	border-style:solid;
+	border-color:#AFCAE4;
+	margin: 0;
+}
+.list-table th {
+	height: 20px;
+	padding: 3px 5px;
+	line-height: 20px;
+	overflow: hidden;
+	background: url('img/box-bg.png') repeat-x;
+	color: #666;
+	font-weight: 700;
+}
+.list-table td {
+	line-height: 18px;
+	padding: 3px 5px;
+}
+.table-btn {
+	float: left;
+	display: inline;
+	margin: 0 3px;
+}
+.table-btn span {
+	display: none;
+}
+
+
+/* icons */
+.icon-position,
+.icon-category,
+.icon-select,
+.icon-inverse,
+.icon-audit,
+.icon-star,
+.icon-del,
+.icon-move,
+.icon-preview {
+	width:16px;
+	height:16px;
+	display: block;
+}
+
+.icon-position {
+	background: url('img/icon-position.png') no-repeat;
+}
+.icon-category {
+	background: url('img/icon-category.png') no-repeat;
+}
+.icon-select {
+	background: url('img/icon-select.png') no-repeat;
+}
+.icon-inverse {
+	background: url('img/icon-inverse.png') no-repeat;
+}
+.icon-audit {
+	background: url('img/icon-audit.png') no-repeat;
+}
+.icon-star {
+	background: url('img/icon-star.png') no-repeat;
+}
+.icon-del {
+	background: url('img/icon-del.png') no-repeat;
+}
+.icon-move {
+	background: url('img/icon-move.png') no-repeat;
+}
+.icon-preview {
+	background: url('img/icon-preview.png') no-repeat;
+}
