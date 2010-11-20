@@ -1,2 +1,37 @@
-nbproject
+# Application
 .htaccess
+
+# Netbeans
+nbproject/
+
+# VIM
+.*.sw[a-z]
+*.un~
+
+# eclipse
+*.pydevproject
+.project
+.metadata
+bin/**
+tmp/**
+tmp/**/*
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.classpath
+.settings/
+.loadpath
+.cproject
+
+# Windows
+Thumbs.db 
+Desktop.ini
+
+# Mac OS X
+.DS_Store?
+Icon?
+._*
+.Spotlight-V100
+.Trashes
