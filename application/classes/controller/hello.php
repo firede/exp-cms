@@ -15,7 +15,7 @@ class Controller_Hello extends Controller {
 	public function action_json()
 	{
 		$view = View::factory('json:');
-		$view->content = array(
+		$content = array(
 			'success' => TRUE,
 			'message' => '成功啦！',
 			'result' => array(
@@ -31,7 +31,8 @@ class Controller_Hello extends Controller {
 				),
 			),
 		);
-
+		
+		$view->content = $content;
 		$this->request->response = $view->render();
 	}
 

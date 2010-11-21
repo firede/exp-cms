@@ -1,0 +1,1 @@
+<p>&copy; 2010 daxiniu.com <em><{$hello}></em></p>
