@@ -9,13 +9,14 @@
 		echo HTML::style('assets/common/960.css');
 		echo HTML::style('assets/admin/main.css');
 		echo HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js');
+		echo HTML::script('assets/admin/js/jquery.qtip.min.js');
 	?>
 	<title><?php echo $title ?></title>
 </head>
 
 <body>
 
-<div class="container_16">
+<div class="container_24 clearfix">
 	<div id="header">
 		<div id="logo"><h1><?php echo $title ?></h1></div>
 		<div id="links">
@@ -25,7 +26,7 @@
 			- <?php echo HTML::anchor('/admin/logout', '注销')?>
 		</div>
 	</div>
-	<div class="grid_2 sidebar">
+	<div class="grid_3 sidebar">
 		<ul class="mainmenu">
 			<li><?php echo HTML::anchor('/admin/post', '经验')?></li>
 			<li><?php echo HTML::anchor('/admin/category', '分类')?></li>
@@ -48,7 +49,7 @@
 			<div class="content">大犀牛经验<br>版本：1.0<br><a href="http://daxiniu.com" target="_blank">DAXINIU.COM</a></div>
 		</div>
 	</div>
-	<div class="grid_14"><?php echo $layout_main ?></div>
+	<div class="grid_21"><?php echo $layout_main ?></div>
 </div>
 
 </body>

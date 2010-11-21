@@ -2,16 +2,21 @@
 body {
 	font-size: 12px;
 }
-
-.container_16 {
-	padding: 15px 10px;
+.container_24 {
+	padding: 15px 0;
+}
+a {
+	color:#009;
+}
+a:hover {
+	color:#000;
 }
 
 /* 头部设置 */
 #header {
 	position: relative;
 	padding-bottom: 12px;
-	margin: 0 10px;
+	margin: 0 5px;
 }
 #logo {
 	width: 230px;
@@ -36,7 +41,7 @@ body {
 .mainmenu {
 	border: 2px solid #3399FF;
 	padding: 1px 1px 0;
-	margin: 0 0 15px;
+	margin: 0 0 10px;
 }
 .mainmenu li {
 	margin-bottom: 1px;
@@ -60,7 +65,7 @@ body {
 }
 .sidebox {
 	border: 2px solid #ACCAE4;
-	margin-bottom: 15px;
+	margin-bottom: 10px;
 }
 
 .sidebox h5 {
@@ -81,7 +86,7 @@ body {
 /* main */
 .breadcrumbs {
 	overflow: hidden;
-	margin: 5px 0 10px;
+	margin: 5px 0 15px;
 	padding-left: 20px;
 	position: relative;
 	color: #666;
@@ -129,6 +134,18 @@ body {
 	left: 0;
 }
 
+.pagination-bar {
+	border-width:2px;
+	border-style:solid;
+	border-color:#AFCAE4;
+	padding: 5px;
+	margin:10px 0;
+}
+.pagination-bar p {
+	margin:0;
+}
+
+
 .list-table {
 	border-width: 0 2px;
 	border-style:solid;
@@ -144,6 +161,7 @@ body {
 	background: url('img/box-bg.png') repeat-x;
 	color: #666;
 	font-weight: 700;
+	text-align: left;
 }
 .list-table td {
 	line-height: 18px;
