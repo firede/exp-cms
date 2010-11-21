@@ -36,7 +36,7 @@ body {
 .mainmenu {
 	border: 2px solid #3399FF;
 	padding: 1px 1px 0;
-	margin: 0 0 10px;
+	margin: 0 0 15px;
 }
 .mainmenu li {
 	margin-bottom: 1px;
@@ -60,7 +60,7 @@ body {
 }
 .sidebox {
 	border: 2px solid #ACCAE4;
-	margin-bottom: 10px;
+	margin-bottom: 15px;
 }
 
 .sidebox h5 {
@@ -133,6 +133,7 @@ body {
 	border-width: 0 2px;
 	border-style:solid;
 	border-color:#AFCAE4;
+	width: 100%;
 	margin: 0;
 }
 .list-table th {
