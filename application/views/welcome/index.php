@@ -5,6 +5,6 @@
 		<title>测试模板</title>
 	</head>
 	<body>
-		<h1><?= $hello ?></h1>
+		<h1><?php echo $hello ?></h1>
 	</body>
 </html>
