@@ -61,8 +61,8 @@ return array (
     'security'        =>   false,
 
     // use different delimiters throughout your templates if you really want to!
-    'left_delimiter'  =>  '{',
-    'right_delimiter' =>  '}',
+    'left_delimiter'  =>  '<{',
+    'right_delimiter' =>  '}>',
 
     // this could be useful if there are very many templates
     'use_sub_dirs'    => false, 
