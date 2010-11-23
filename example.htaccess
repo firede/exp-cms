@@ -1,10 +1,10 @@
-# Turn on URL rewriting
+﻿# Turn on URL rewriting
 RewriteEngine On
 
 # Installation directory
 # 此处根据程序访问URL的相对路径设置
 # 假如访问地址为"sample.com/exp/"，则规则设置为"/exp/"，跟目录设为"/"
-RewriteBase /exp/
+RewriteBase /
 
 # Protect hidden files from being viewed
 <Files .*>
