@@ -1,9 +1,15 @@
 <div class="grid_18 alpha">
 	<div class="breadcrumbs">
 		<span class="icon-position"></span>
-		<?php echo HTML::anchor('admin', '后台首页') ?> &raquo;
-		<?php echo HTML::anchor('admin/post/list', '经验列表') ?> &raquo;
-		<?php echo HTML::anchor('admin/post/list?category=12', '魔兽世界') ?>
+		<?php
+		$breadcrumb = array(
+			HTML::anchor('admin', '后台首页'),
+			HTML::anchor('admin/post', '经验'),
+			HTML::anchor('admin/post/list?category=12', '魔兽世界'),
+			'<span>列表</span>'
+		);
+		echo implode(' &raquo ', $breadcrumb);
+		?>
 	</div>
 </div>
 
@@ -17,12 +23,20 @@
 <div class="clear"></div>
 
 <div class="operation-bar clearfix">
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-select"></span>全选/取消</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-inverse"></span>反选</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-audit"></span>审核</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-star"></span>精华</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-del"></span>删除</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-move"></span>移动</a>
+	<div class="grid_10">
+		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-select"></span>全选/取消</a>
+		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-inverse"></span>反选</a>
+		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-audit"></span>审核</a>
+		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-star"></span>精华</a>
+		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-del"></span>删除</a>
+		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-move"></span>移动</a>
+	</div>
+	<div class="grid_10 right">
+		<div class="grid_4 right">
+			<input type="text" style="width:100px;border:1px solid #9BC;" />
+			<input type="button" value="搜索" style="border:1px solid #9BC;background:#CDF;" />
+		</div>
+	</div>
 </div>
 <table class="list-table">
 	<tr>
@@ -35,10 +49,10 @@
 		<th>操作</th>
 	</tr>
 <?php
-for($i=0; $i<20; $i++) {
-	$odd = ($i%2) ? '' : ' style="background:#F5FAFC;"';
+for($i=1; $i<=20; $i++) {
+	$odd = ($i%2) ? '' : ' class="odd"';
 ?>
-	<tr<?php echo $odd; ?>>
+	<tr<?php echo $odd; ?> val="<?php echo $i; ?>">
 		<td><input type="checkbox" /></td>
 		<td><a href="#">怎么为Yii Framework的应用程序划分前后台结构？</a></td>
 		<td>审核中</td>
@@ -76,7 +90,8 @@ $(".operation-btn").qtip({
 		},
 		data: {id: 5},
 		method: 'get',
-		url: 'http://daxiniu.cms/welcome'
+		url: 'http://daxiniu.cms/welcome',
+		text: 'Loading...'
 	},
 	show: {
 		when: 'click',
@@ -100,14 +115,9 @@ $(".operation-btn").qtip({
 		}
 	},
 	position: {
+		target: $(".container_24"),
 		type: 'fixed',
-		adjust: {
-			screen: true
-		},
-		corner: {
-			target: 'bottomMiddle',
-			tooltip: 'topMiddle'
-		}
+		corner: 'center'
 	}
 });
 
@@ -124,5 +134,13 @@ $('<div id="qtip-blanket">')
 		zIndex: 5000  // Make sure the zIndex is below 6000 to keep it below tooltips!
 	})
 	.appendTo(document.body) // Append to the document body
+	.click(function(){
+		alert('hi')
+	})
 	.hide(); // Hide it initially
 </script>
+
+<?php
+// 后台管理JS
+echo HTML::script('assets/admin/js/admin.js');
+?>

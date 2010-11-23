@@ -11,6 +11,10 @@ a {
 a:hover {
 	color:#000;
 }
+.right {
+	float: right;
+	text-align: right;
+}
 
 /* 头部设置 */
 #header {
@@ -45,14 +49,11 @@ a:hover {
 }
 .mainmenu li {
 	margin-bottom: 1px;
-	background: #008EE8 url('img/menu-bg.png') repeat-x;
 	font-size: 14px;
 	font-weight: 700;
 }
-.mainmenu li.active {
-	background: #FE8B01 url('img/menu-bg-active.png') repeat-x;
-}
 .mainmenu li a {
+	background: #008EE8 url('img/menu-bg.png') repeat-x;
 	display: block;
 	height: 26px;
 	line-height: 26px;
@@ -61,7 +62,8 @@ a:hover {
 	color: #FFF;
 }
 .mainmenu li a:hover {
-	text-decoration: underline;
+	background: #FE8B01 url('img/menu-bg-active.png') repeat-x;
+	color:yellow;
 }
 .sidebox {
 	border: 2px solid #ACCAE4;
@@ -90,6 +92,7 @@ a:hover {
 	padding-left: 20px;
 	position: relative;
 	color: #666;
+	_zoom:1;
 }
 .breadcrumbs .icon-position {
 	position: absolute;
@@ -102,6 +105,7 @@ a:hover {
 	margin: 5px 0 10px;
 	padding-left: 20px;
 	float: right;
+	_zoom:1;
 }
 .exlink .icon-category {
 	position: absolute;
@@ -114,7 +118,7 @@ a:hover {
 	border-width:2px;
 	border-style:solid;
 	border-color:#AFCAE4;
-	padding: 5px;
+	padding: 5px 0;
 }
 .operation-btn {
 	float: left;
@@ -167,6 +171,11 @@ a:hover {
 	line-height: 18px;
 	padding: 3px 5px;
 }
+
+.list-table .odd td {
+	background: #F5FAFC;
+}
+
 .table-btn {
 	float: left;
 	display: inline;
