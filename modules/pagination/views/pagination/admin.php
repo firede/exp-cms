@@ -3,6 +3,11 @@
 	First Previous 1 2 3 ... 22 23 24 25 26 [27] 28 29 30 31 32 ... 48 49 50 Next Last
 */
 
+$html_home = '<span class="icon-home" title="首页"></span>';
+$html_prev = '<span class="icon-prev" title="上一页"></span>';
+$html_next = '<span class="icon-next" title="下一页"></span>';
+$html_end = '<span class="icon-end" title="尾页"></span>';
+
 // Number of page links in the begin and end of whole range
 $count_out = ( ! empty($config['count_out'])) ? (int) $config['count_out'] : 3;
 // Number of page links on each side of current page
@@ -55,16 +60,15 @@ for ($i = $n7; $i <= $n8; $i++)
 }
 
 ?>
-<p class="pagination">
-
+<div class="pagination clearfix">
 	<?php if ($first_page !== FALSE): ?>
-		<a href="<?php echo HTML::chars($page->url($first_page)) ?>" rel="first"><?php echo '首页' ?></a>
+		<a href="<?php echo HTML::chars($page->url($first_page)) ?>" rel="first"><?php echo $html_home ?></a>
 	<?php else: ?>
 		<?php // echo '首页' ?>
 	<?php endif ?>
 
 	<?php if ($previous_page !== FALSE): ?>
-		<a href="<?php echo HTML::chars($page->url($previous_page)) ?>" rel="prev"><?php echo '上一页' ?></a>
+		<a href="<?php echo HTML::chars($page->url($previous_page)) ?>" rel="prev"><?php echo $html_prev ?></a>
 	<?php else: ?>
 		<?php // echo '上一页' ?>
 	<?php endif ?>
@@ -80,15 +84,14 @@ for ($i = $n7; $i <= $n8; $i++)
 	<?php endforeach ?>
 
 	<?php if ($next_page !== FALSE): ?>
-		<a href="<?php echo HTML::chars($page->url($next_page)) ?>" rel="next"><?php echo '下一页' ?></a>
+		<a href="<?php echo HTML::chars($page->url($next_page)) ?>" rel="next"><?php echo $html_next ?></a>
 	<?php else: ?>
 		<?php // echo '下一页' ?>
 	<?php endif ?>
 
 	<?php if ($last_page !== FALSE): ?>
-		<a href="<?php echo HTML::chars($page->url($last_page)) ?>" rel="last"><?php echo '尾页' ?></a>
+		<a href="<?php echo HTML::chars($page->url($last_page)) ?>" rel="last"><?php echo $html_end ?></a>
 	<?php else: ?>
 		<?php // echo '尾页' ?>
 	<?php endif ?>
-
-</p><!-- .pagination -->
+</div>

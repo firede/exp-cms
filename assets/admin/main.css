@@ -53,6 +53,8 @@ a:hover {
 	font-weight: 700;
 }
 .mainmenu li a {
+	border-radius: 3px;
+	-moz-border-radius: 3px;
 	background: #008EE8 url('img/menu-bg.png') repeat-x;
 	display: block;
 	height: 26px;
@@ -71,6 +73,8 @@ a:hover {
 }
 
 .sidebox h5 {
+	border-radius: 3px;
+	-moz-border-radius: 3px;
 	font-size: 14px;
 	font-weight: 700;
 	padding-left: 5px;
@@ -123,10 +127,12 @@ a:hover {
 .operation-btn {
 	float: left;
 	display: inline;
-	margin: 0 6px;
-	padding-left: 20px;
+	margin: 0 5px;
+	padding: 0 5px 0 25px;
 	position: relative;
 	text-decoration: none;
+	height: 20px;
+	line-height: 20px;
 }
 .operation-btn:hover {
 	text-decoration: underline;
@@ -134,19 +140,16 @@ a:hover {
 
 .operation-btn span {
 	position: absolute;
-	top: 0;
-	left: 0;
+	top: 2px;
+	left: 5px;
 }
 
 .pagination-bar {
 	border-width:2px;
 	border-style:solid;
 	border-color:#AFCAE4;
-	padding: 5px;
+	padding: 5px 10px;
 	margin:10px 0;
-}
-.pagination-bar p {
-	margin:0;
 }
 
 
@@ -195,7 +198,11 @@ a:hover {
 .icon-star,
 .icon-del,
 .icon-move,
-.icon-preview {
+.icon-preview,
+.icon-home,
+.icon-next,
+.icon-prev,
+.icon-end {
 	width:16px;
 	height:16px;
 	display: block;
@@ -227,4 +234,49 @@ a:hover {
 }
 .icon-preview {
 	background: url('img/icon-preview.png') no-repeat;
+}
+.icon-home {
+	background: url('img/icon-home.png') no-repeat;
+}
+.icon-next {
+	background: url('img/icon-next.png') no-repeat;
+}
+.icon-prev {
+	background: url('img/icon-prev.png') no-repeat;
+}
+.icon-end {
+	background: url('img/icon-end.png') no-repeat;
+}
+
+/* round corner */
+.radius_top {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+}
+.radius_bottom {
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	-moz-border-radius-bottomright: 5px;
+	-moz-border-radius-bottomleft: 5px;
+}
+.radius_all {
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+}
+
+/* pagination */
+.pagination span {
+	margin-top: 2px;
+}
+
+.pagination a, .pagination strong {
+	float: left;
+	height: 20px;
+	line-height: 20px;
+	padding:0 3px;
+}
+.pagination a:hover {
+	background: #CADFF9;
 }
