@@ -38,27 +38,25 @@
 		</div>
 	</div>
 </div>
+
 <table class="list-table">
 	<tr>
-		<th>选择</th>
+		<th style="width:25px">选择</th>
 		<th>标题</th>
-		<th>状态</th>
-		<th>日期</th>
-		<th>作者</th>
-		<th>分类</th>
-		<th>操作</th>
+		<th style="width:45px">状态</th>
+		<th style="width:65px">日期</th>
+		<th style="width:100px">作者</th>
+		<th style="width:100px">分类</th>
+		<th style="width:90px">操作</th>
 	</tr>
-<?php
-for($i=1; $i<=20; $i++) {
-	$odd = ($i%2) ? '' : ' class="odd"';
-?>
-	<tr<?php echo $odd; ?> val="<?php echo $i; ?>">
-		<td><input type="checkbox" /></td>
-		<td><a href="#">怎么为Yii Framework的应用程序划分前后台结构？</a></td>
-		<td>审核中</td>
-		<td>2010-11-16</td>
-		<td>火德</td>
-		<td>Yii Framework</td>
+	<?php foreach($items as $item): ?>
+	<tr val="<?php echo $item['id']; ?>">
+		<td><input type="checkbox" val="<?php echo $item['id']; ?>" /></td>
+		<td><a href="#"><?php echo $item['title']; ?></a></td>
+		<td><span class="status_<?php echo $item['status']; ?>"><?php echo $item['status_name']; ?></span></td>
+		<td><?php echo $item['pub_time']; ?></td>
+		<td><?php echo $item['user_name']; ?></td>
+		<td><?php echo $item['cate_name']; ?></td>
 		<td>
 			<a href="#" onclick="return false;" class="table-btn icon-audit" title="审核"><span>审核</span></a>
 			<a href="#" onclick="return false;" class="table-btn icon-star" title="精华"><span>精华</span></a>
@@ -66,7 +64,7 @@ for($i=1; $i<=20; $i++) {
 			<a href="#" onclick="return false;" class="table-btn icon-preview" title="预览"><span>预览</span></a>
 		</td>
 	</tr>
-<?php } ?>
+	<?php endforeach; ?>
 </table>
 <div class="operation-bar clearfix">
 	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-select"></span>全选/取消</a>

@@ -1,6 +1,6 @@
 	<div class="grid_3 sidebar">
 		<ul class="mainmenu">
-			<li><?php echo HTML::anchor('/admin/post', '经验', array('class'=>'active'))?></li>
+			<li><?php echo HTML::anchor('/admin/post', '经验')?></li>
 			<li><?php echo HTML::anchor('/admin/category', '分类')?></li>
 			<li><?php echo HTML::anchor('/admin/attachment', '附件')?></li>
 			<li><?php echo HTML::anchor('/admin/user', '用户')?></li>
