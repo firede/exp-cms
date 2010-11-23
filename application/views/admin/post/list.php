@@ -41,7 +41,7 @@
 
 <table class="list-table">
 	<tr>
-		<th style="width:25px">选择</th>
+		<th style="width:30px">选择</th>
 		<th>标题</th>
 		<th style="width:45px">状态</th>
 		<th style="width:65px">日期</th>
