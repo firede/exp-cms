@@ -12,10 +12,10 @@ class Controller_Post extends Controller {
      * 根据条件查询相应的post表数据,并加载重绘至post列表页面
      */
 
-    public function action_querylist() {
+    public function action_query_list() {
         $postDb = new Database_Post();
         //设置参数过滤器中需要保留下操作的数据
-        $arrElementNames =
+        $arr_element_names =
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time',
                     'pre_content', 'content', 'user_id', 'status',
                     'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
@@ -23,8 +23,8 @@ class Controller_Post extends Controller {
             $_GET['page'] = 1;
         }
         $pageparam = array('page' => $_GET['page'], 'items_per_page' => 2);
-        $post = Arr::filter_Array($_GET, $arrElementNames);
-        $posts = $postDb->query_list($post, $arrElementNames, $pageparam);
+        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $posts = $postDb->query_list($post, $arr_element_names, $pageparam);
         $posts = Action::sucess_status($posts);
         echo Kohana::debug($posts);
         $view = View::factory('smarty:');
@@ -36,7 +36,7 @@ class Controller_Post extends Controller {
      * 根据条件id查询相应的post表数据
      */
 
-    public function action_getpost($id) {
+    public function action_get_post($id) {
         $postDb = new Database_Post();
         $posts = $postDb->getpost($id);
         $posts = Action::sucess_status($posts);
@@ -51,7 +51,7 @@ class Controller_Post extends Controller {
      * @$id post.ID 
      */
 
-    public function action_getmodifyPost($id) {
+    public function action_get_modify_post($id) {
 
         $postDb = new Database_Post();
         $post = $postDb->getpost($id);
@@ -101,11 +101,11 @@ class Controller_Post extends Controller {
 
     public function action_modify() {
         $postDb = new Database_Post();
-        $arrElementNames =
+        $arr_element_names =
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time',
                     'pre_content', 'content', 'user_id', 'status',
                     'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
-        $post = Arr::filter_Array($_GET, $arrElementNames);
+        $post = Arr::filter_Array($_GET, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
@@ -121,9 +121,9 @@ class Controller_Post extends Controller {
 
     public function action_flag() {
         $postDb = new Database_Post();
-        $arrElementNames =
+        $arr_element_names =
                 array('id', 'flag');
-        $post = Arr::filter_Array($_GET, $arrElementNames);
+        $post = Arr::filter_Array($_GET, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
@@ -139,9 +139,9 @@ class Controller_Post extends Controller {
 
     public function action_multi_flag() {
         $postDb = new Database_Post();
-        $arrElementNames =
+        $arr_element_names =
                 array('id', 'flag');
-        $post = Arr::filter_Array($_GET, $arrElementNames);
+        $post = Arr::filter_Array($_GET, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
@@ -157,9 +157,9 @@ class Controller_Post extends Controller {
 
     public function action_multi_move() {
         $postDb = new Database_Post();
-        $arrElementNames =
+        $arr_element_names =
                 array('id', 'cate_id');
-        $post = Arr::filter_Array($_GET, $arrElementNames);
+        $post = Arr::filter_Array($_GET, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
@@ -175,9 +175,9 @@ class Controller_Post extends Controller {
 
     public function action_multi_trial() {
         $postDb = new Database_Post();
-        $arrElementNames =
+        $arr_element_names =
                 array('id', 'status', 'operation_desc');
-        $post = Arr::filter_Array($_GET, $arrElementNames);
+        $post = Arr::filter_Array($_GET, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
@@ -193,9 +193,9 @@ class Controller_Post extends Controller {
 
     public function action_trial() {
         $postDb = new Database_Post();
-        $arrElementNames =
+        $arr_element_names =
                 array('id', 'status', 'operation_desc');
-        $post = Arr::filter_Array($_GET, $arrElementNames);
+        $post = Arr::filter_Array($_GET, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
