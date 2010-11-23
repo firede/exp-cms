@@ -22,8 +22,8 @@
 
 <div class="clear"></div>
 
-<div class="operation-bar clearfix">
-	<div class="grid_10">
+<div class="operation-bar clearfix radius_top">
+	<div class="grid_12">
 		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-select"></span>全选/取消</a>
 		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-inverse"></span>反选</a>
 		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-audit"></span>审核</a>
@@ -31,11 +31,7 @@
 		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-del"></span>删除</a>
 		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-move"></span>移动</a>
 	</div>
-	<div class="grid_10 right">
-		<div class="grid_4 right">
-			<input type="text" style="width:100px;border:1px solid #9BC;" />
-			<input type="button" value="搜索" style="border:1px solid #9BC;background:#CDF;" />
-		</div>
+	<div class="grid_8 right">
 	</div>
 </div>
 
@@ -66,7 +62,7 @@
 	</tr>
 	<?php endforeach; ?>
 </table>
-<div class="operation-bar clearfix">
+<div class="operation-bar clearfix radius_bottom">
 	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-select"></span>全选/取消</a>
 	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-inverse"></span>反选</a>
 	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-audit"></span>审核</a>
@@ -75,68 +71,9 @@
 	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-move"></span>移动</a>
 </div>
 
-<div class="pagination-bar clearfix">
+<div class="pagination-bar clearfix radius_all">
 	<?php echo $pagination; ?>
 </div>
-
-<script type="text/javascript">
-$(".operation-btn").qtip({
-	content: {
-		title: {
-			text: '批量操作',
-			button: '关闭'
-		},
-		data: {id: 5},
-		method: 'get',
-		url: 'http://daxiniu.cms/welcome',
-		text: 'Loading...'
-	},
-	show: {
-		when: 'click',
-		solo: true
-	},
-	hide: false,
-	api: {
-		beforeShow: function() {
-			$('#qtip-blanket').fadeIn(this.options.show.effect.length);
-		},
-		beforeHide: function() {
-			$('#qtip-blanket').fadeOut(this.options.show.effect.length);
-		}
-	},
-	style: {
-		name: 'light',
-		tip: true,
-		border: {
-			width: 5,
-			radius: 3
-		}
-	},
-	position: {
-		target: $(".container_24"),
-		type: 'fixed',
-		corner: 'center'
-	}
-});
-
-$('<div id="qtip-blanket">')
-	.css({
-		position: 'absolute',
-		top: $(document).scrollTop(), // Use document scrollTop so it's on-screen even if the window is scrolled
-		left: 0,
-		height: $(document).height(), // Span the full document height...
-		width: '100%', // ...and full width
-
-		opacity: 0.6, // Make it slightly transparent
-		backgroundColor: 'black',
-		zIndex: 5000  // Make sure the zIndex is below 6000 to keep it below tooltips!
-	})
-	.appendTo(document.body) // Append to the document body
-	.click(function(){
-		alert('hi')
-	})
-	.hide(); // Hide it initially
-</script>
 
 <?php
 // 后台管理JS

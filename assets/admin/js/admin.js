@@ -1,18 +1,30 @@
-//jQuery.fn.extend = function(){
-//
-//}
-//
-//$('<div id="js-screen-mask">')
-//	.css({
-//		position: 'absolute',
-//		top: $(document).scrollTop(),
-//		left: 0,
-//		height: $(document).height(),
-//		width: '100%',
-//
-//		opacity: 0.6,
-//		backgroundColor: 'black',
-//		zIndex: 5000
-//	})
-//	.appendTo(document.body)
-//	.hide();
+$(".operation-btn").qtip({
+	content: {
+		title: {
+			button: '关闭'
+		},
+		data: {id: 5},
+		method: 'get',
+		url: 'http://daxiniu.cms/welcome',
+		text: 'Loading...'
+	},
+	show: {
+		when: 'click',
+		solo: true
+	},
+	hide: 'click',
+	style: {
+		tip: false,
+		border: {
+			width: 2,
+			color: '#0073B3'
+		},
+		width: 300
+	},
+	position: {
+		corner: {
+			target: 'bottomLeft',
+			toolTip: 'bottomLeft'
+		}
+	}
+});
