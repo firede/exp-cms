@@ -1,30 +1,40 @@
-$(".operation-btn").qtip({
-	content: {
-		title: {
-			button: '关闭'
+$(".operation-btn").each(function(){
+	var me = this;
+
+	$(this).qtip({
+		content: {
+			data: {id: 5},
+			method: 'get',
+			url: 'http://daxiniu.cms/welcome',
+			text: 'Loading...'
 		},
-		data: {id: 5},
-		method: 'get',
-		url: 'http://daxiniu.cms/welcome',
-		text: 'Loading...'
-	},
-	show: {
-		when: 'click',
-		solo: true
-	},
-	hide: 'click',
-	style: {
-		tip: false,
-		border: {
-			width: 2,
-			color: '#0073B3'
+		show: {
+			when: 'click',
+			solo: true
 		},
-		width: 300
-	},
-	position: {
-		corner: {
-			target: 'bottomLeft',
-			toolTip: 'bottomLeft'
+		hide: 'click',
+		style: {
+			tip: false,
+			border: {
+				width: 2,
+				radius: 3,
+				color: '#0073B3'
+			},
+			width: 300
+		},
+		api: {
+			onShow: function() {
+				$(me).addClass('operation-btn-active');
+			},
+			onHide: function() {
+				$(me).removeClass('operation-btn-active');
+			}
+		},
+		position: {
+			corner: {
+				target: 'bottomLeft',
+				toolTip: 'bottomLeft'
+			}
 		}
-	}
+	});
 });
