@@ -17,18 +17,25 @@ class Database_Post {
         foreach ($filedNames as $filedName) {
             if (isset($post[$filedName]))
                 if ($post[$filedName] != null) {
-                    $query->where($filedName, "like", "%" . $post[$filedName] . "%");
+                    $query->where('post.'.$filedName, "like", "%" . $post[$filedName] . "%");
                 }
         }
         $count_Result = $query->execute()->as_array();
         $count = $count_Result[0]['total_post'];
 
         //设置查询数据的sql
-        $query = DB::select()->from('post');
+        $query = DB::select('post.id', 'uuid', 'title', 'cate_id',array("category.name","cate_name"), 'pub_time',
+                    'pre_content', 'content', 'user_id',array("user.username","user_name"), 'post.status',
+                    'read_count', 'operation_id',array("admin.username","operation_name"), 'reference', 'source', 'operation_desc', 'flag')->from('post');
+        $query->join("admin","left")->on("post.operation_id", "=", "admin.id");
+        $query->join("user",'left')->on("post.user_id", "=", "user.id");
+         $query->join("category",'left')->on("post.cate_id", "=", "category.id");
+
+       // echo Kohana::debug($query);
         foreach ($filedNames as $filedName) {
             if (isset($post[$filedName]))
                 if ($post[$filedName] != null) {
-                    $query->where($filedName, "like", "%" . $post[$filedName] . "%");
+                    $query->where('post.'.$filedName, "like", "%" . $post[$filedName] . "%");
                 }
         }
 
@@ -41,6 +48,12 @@ class Database_Post {
         $query->offset($current_item)->limit($current_item + $pageParam["items_per_page"]);
         $posts = $query->execute();
         $posts = $posts->as_array();
+        //加入一些业务值
+        for ($i=0;$i<count($posts);$i++){
+            
+           $posts[$i]["status_name"]= Sysconfig_Business::post_status($posts[$i]["status"]);
+           $posts[$i]["flag"]=Sysconfig_Business::post_flag($posts[$i]["flag"]);
+        }
 
         unset($dao, Database::$instances['default']);
         if ($count > 0)
