@@ -22,7 +22,7 @@ class Database_Post {
         }
         $count_Result = $query->execute()->as_array();
         $count = $count_Result[0]['total_post'];
-       
+
         //设置查询数据的sql
         $query = DB::select()->from('post');
         foreach ($filedNames as $filedName) {
@@ -37,6 +37,7 @@ class Database_Post {
         }
         //获取当前数据起始位置
         $current_item = $pageParam["items_per_page"] * ($pageParam["page"] - 1);
+        $total_page_count =(int) ceil($count / $pageParam["items_per_page"]);
         $query->offset($current_item)->limit($current_item + $pageParam["items_per_page"]);
         $posts = $query->execute();
         $posts = $posts->as_array();
@@ -44,7 +45,8 @@ class Database_Post {
         unset($dao, Database::$instances['default']);
         if ($count > 0)
             return array(
-                'count' => $count, //总记录数
+                'total_items_count' => $count, //总记录数
+                'total_page_count' => $total_page_count,
                 'items_per_page' => $pageParam["items_per_page"], //每页显示数据条数
                 'result' => $posts,
             );
@@ -68,12 +70,12 @@ class Database_Post {
         $posts = $query->execute();
         $posts = $posts->as_array();
         $count = count($posts);
-       // echo Kohana::debug($count);
+        // echo Kohana::debug($count);
         unset($dao, Database::$instances['default']);
         if ($count > 0)
             return $data = array('result' => $posts,);
         else
-           return  'none';
+            return 'none';
     }
 
     /*     * ***
@@ -82,15 +84,15 @@ class Database_Post {
      */
 
     public function delete($id) {
-         if (isset($ids)) {
+        if (isset($ids)) {
             return 'no_id';
         }
         $dao = Database::instance();
         $delete = DB::delete()->table('post')->where('id', '=', $id);
         $count = count($delete->execute());
         unset($dao, Database::$instances['default']);
-         echo Kohana::debug($count);
-        return $count == 0 ? 'error' : 'ok';//返回值有误 需要进一步分析kohana数据库操作的反馈机制
+        echo Kohana::debug($count);
+        return $count == 0 ? 'error' : 'ok'; //返回值有误 需要进一步分析kohana数据库操作的反馈机制
     }
 
     /*     * ***
