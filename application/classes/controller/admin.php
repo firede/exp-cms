@@ -8,7 +8,6 @@ class Controller_Admin extends Controller_AdminTemplate {
 		$this->template = '如果已经登录则跳转到默认页，否则进入登录页面';
 	}
 
-
 	public function action_post() {
 		// 测试分页
 		$pagination = new Pagination(array(

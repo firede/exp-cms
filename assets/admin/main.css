@@ -143,13 +143,24 @@ a:hover {
 	top: 2px;
 	left: 5px;
 }
+.operation-btn-active {
+	background: #008EE8 url('img/menu-bg.png') repeat-x;
+	color:#FFF;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
+}
+.operation-btn-active:hover {
+	color: yellow;
+}
 
 .pagination-bar {
 	border-width:2px;
 	border-style:solid;
 	border-color:#AFCAE4;
 	padding: 5px 10px;
-	margin:10px 0;
+	margin:0 0 10px 0;
 }
 
 
@@ -269,14 +280,21 @@ a:hover {
 /* pagination */
 .pagination span {
 	margin-top: 2px;
+	cursor: pointer;
 }
 
 .pagination a, .pagination strong {
 	float: left;
+	display: block;
 	height: 20px;
 	line-height: 20px;
 	padding:0 3px;
 }
 .pagination a:hover {
 	background: #CADFF9;
+}
+
+/* status tab */
+.status-tab {
+	background:
 }

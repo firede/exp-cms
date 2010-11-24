@@ -22,7 +22,11 @@
 
 <div class="clear"></div>
 
-<div class="operation-bar clearfix radius_top">
+<div class="status-tab clearfix radius_top">
+	
+</div>
+
+<div class="operation-bar clearfix">
 	<div class="grid_12">
 		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-select"></span>全选/取消</a>
 		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-inverse"></span>反选</a>
@@ -40,7 +44,7 @@
 		<th style="width:30px">选择</th>
 		<th>标题</th>
 		<th style="width:45px">状态</th>
-		<th style="width:65px">日期</th>
+		<th style="width:75px">日期</th>
 		<th style="width:100px">作者</th>
 		<th style="width:100px">分类</th>
 		<th style="width:90px">操作</th>
@@ -62,16 +66,8 @@
 	</tr>
 	<?php endforeach; ?>
 </table>
-<div class="operation-bar clearfix radius_bottom">
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-select"></span>全选/取消</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-inverse"></span>反选</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-audit"></span>审核</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-star"></span>精华</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-del"></span>删除</a>
-	<a href="#" onclick="return false;" class="operation-btn"><span class="icon-move"></span>移动</a>
-</div>
 
-<div class="pagination-bar clearfix radius_all">
+<div class="pagination-bar clearfix radius_bottom">
 	<?php echo $pagination; ?>
 </div>
 
