@@ -55,6 +55,11 @@ class Controller_Admin extends Controller_AdminTemplate {
 		$this->template->layout_main = View::factory('admin/post/list', array(
 			'pagination' => $pagination,
 			'items'      => $items,
+			'status'     => 0,
+			'view_data'  => array(
+				'success'    => TRUE,
+				'message'    => ''
+			)
 		));
 	}
 

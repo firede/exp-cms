@@ -165,7 +165,7 @@ a:hover {
 
 
 .list-table {
-	border-width: 2px;
+	border-width: 1px 2px;
 	border-style:solid;
 	border-color:#AFCAE4;
 	width: 100%;
@@ -297,7 +297,7 @@ a:hover {
 /* status tab */
 .status-bar {
 	background:#AFCAE4;
-	height:30px;
+	height:32px;
 	line-height: 30px;
 	padding-left:20px;
 }
@@ -305,15 +305,45 @@ a:hover {
 .status-tab {
 	float:left;
 	text-align: center;
-	margin-top:5px;
+	margin-top:7px;
 	margin-right:10px;
-	height: 25px;
+	height: 22px;
+	padding-top: 3px;
 	width:80px;
-	line-height: 25px;
+	line-height: 21px;
 	background: #E9F3F7;
 	font-weight:700;
 	text-decoration: none;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
 }
+.status-tab:hover {
+	text-decoration: underline;
+}
+
 .status-tab-active {
 	background:#FFF;
+}
+#status-0 { color:#C00; }
+#status-2 { color:#C00; }
+#status-1 { color:#090; }
+#status-5 { color:#C90; }
+#status-3 { color:#666; }
+
+/* message error or success */
+.message-error {
+	padding:10px 15px;
+	margin-bottom: 10px;
+	clear:both;
+	color:#C00;
+	border:2px solid #C00;
+}
+.message-success {
+	padding:10px 15px;
+	margin-bottom: 10px;
+	clear:both;
+	color:#090;
+	border:2px solid #090;
 }
