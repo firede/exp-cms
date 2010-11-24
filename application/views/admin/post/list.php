@@ -56,10 +56,10 @@
 	<tr val="<?php echo $item['id']; ?>">
 		<td><input type="checkbox" val="<?php echo $item['id']; ?>" /></td>
 		<td><a href="#"><?php echo $item['title']; ?></a></td>
-		<td><span class="status_<?php echo $item['status']; ?>"><?php echo $item['status_name']; ?></span></td>
+		<td><span class="status_<?php echo $item['status']; ?>"><?php echo $item['status']; ?></span></td>
 		<td><?php echo $item['pub_time']; ?></td>
-		<td><?php echo $item['user_name']; ?></td>
-		<td><?php echo $item['cate_name']; ?></td>
+		<td><?php echo $item['user_id']; ?></td>
+		<td><?php echo $item['cate_id']; ?></td>
 		<td>
 			<a href="#" onclick="return false;" class="table-btn icon-audit" title="审核"><span>审核</span></a>
 			<a href="#" onclick="return false;" class="table-btn icon-star" title="精华"><span>精华</span></a>
