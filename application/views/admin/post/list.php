@@ -22,8 +22,11 @@
 
 <div class="clear"></div>
 
-<div class="status-tab clearfix radius_top">
-	
+<div class="status-bar clearfix radius_top">
+	<a class="status-tab status-tab-active" href="#1">待审核</a>
+	<a class="status-tab" href="#1">已发布</a>
+	<a class="status-tab" href="#1">草稿</a>
+	<a class="status-tab" href="#1">驳回</a>
 </div>
 
 <div class="operation-bar clearfix">
