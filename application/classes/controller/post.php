@@ -2,10 +2,12 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Post extends Controller {
+class Controller_Post extends Controller_AdminTemplate {
+
+    public $template = 'admin/base/layout'; //加载总模板
 
     public function action_index() {
-        echo '1';
+
     }
 
     /*     * *********
@@ -13,6 +15,16 @@ class Controller_Post extends Controller {
      */
 
     public function action_query_list() {
+        // 测试分页
+        $pagination = new Pagination(array(
+                    'current_page' => array('source' => 'query_string', 'key' => 'page'),
+                    'total_items' =>0,
+                    'items_per_page' => 2,
+                    'view' => 'pagination/admin',
+                    'auto_hide' => TRUE,
+                    'first_page_in_url' => FALSE,
+                ));
+        
         $postDb = new Database_Post();
         //设置参数过滤器中需要保留下操作的数据
         $arr_element_names =
@@ -22,14 +34,22 @@ class Controller_Post extends Controller {
         if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
-        $pageparam = array('page' => $_GET['page'], 'items_per_page' => 2);
+
+
+
+        $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
         $posts = $postDb->query_list($post, $arr_element_names, $pageparam);
         $posts = Action::sucess_status($posts);
         echo Kohana::debug($posts);
-        $view = View::factory('smarty:');
-        $view->posts = $posts;
-        $this->request->response = $view->render();
+        if (isset($posts["total_items_count"])) {
+            $pagination->__set('total_items', $posts["total_items_count"]);
+        }
+
+        $this->template->layout_main = View::factory('admin/post/list', array(
+                    'pagination' => $pagination,
+                    'view_data' => $posts,
+                ));
     }
 
     /*     * *********
@@ -72,7 +92,7 @@ class Controller_Post extends Controller {
 
     public function action_delete($id) {
         $postDb = new Database_Post();
-        $view_data=$postDb->delete($id);
+        $view_data = $postDb->delete($id);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
         $view = View::factory('smarty:');
