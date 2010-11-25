@@ -37,13 +37,14 @@ class Controller_Post extends Controller_AdminTemplate {
          if (!isset($_GET['status'])) {
             $_GET['status'] = 0;
         }
-        
+         echo Kohana::debug( $_GET['status'] );
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
+         echo Kohana::debug($post);
         $posts = $postDb->query_list($post, $arr_element_names, $pageparam);
         $posts = Action::sucess_status($posts);
         $posts['status']=$_GET['status'];
-        echo Kohana::debug($posts);
+         echo Kohana::debug($posts);
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }

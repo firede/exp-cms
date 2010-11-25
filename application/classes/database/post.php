@@ -14,28 +14,50 @@ class Database_Post {
     public function query_list($post, $filedNames, $pageParam) {
         $dao = Database::instance();
         $query = DB::select(array('COUNT("id")', 'total_post'))->from('post');
+        // echo Kohana::debug($query);
         foreach ($filedNames as $filedName) {
             if (isset($post[$filedName]))
                 if ($post[$filedName] != null) {
-                    $query->where('post.'.$filedName, "like", "%" . $post[$filedName] . "%");
+                    if ($filedName = "status") {
+                        $filed_values=explode(',',(string)$post[$filedName]);
+                        if (count( $filed_values) > 0) {
+
+                        $query->where('post.' . $filedName, "in",$filed_values);
+                        } else {
+                            $query->where('post.' . $filedName, "=", $post[$filedName]);
+                        }
+                    } else {
+                        $query->where('post.' . $filedName, "like", "%" . $post[$filedName] . "%");
+                    }
                 }
         }
+
         $count_Result = $query->execute()->as_array();
         $count = $count_Result[0]['total_post'];
 
         //设置查询数据的sql
-        $query = DB::select('post.id', 'uuid', 'title', 'cate_id',array("category.name","cate_name"), 'pub_time',
-                    'pre_content', 'content', 'user_id',array("user.username","user_name"), 'post.status',
-                    'read_count', 'operation_id',array("admin.username","operation_name"), 'reference', 'source', 'operation_desc', 'flag')->from('post');
-        $query->join("admin","left")->on("post.operation_id", "=", "admin.id");
-        $query->join("user",'left')->on("post.user_id", "=", "user.id");
-         $query->join("category",'left')->on("post.cate_id", "=", "category.id");
+        $query = DB::select('post.id', 'uuid', 'title', 'cate_id', array("category.name", "cate_name"), 'pub_time',
+                        'pre_content', 'content', 'user_id', array("user.username", "user_name"), 'post.status',
+                        'read_count', 'operation_id', array("admin.username", "operation_name"), 'reference', 'source', 'operation_desc', 'flag')->from('post');
+        $query->join("admin", "left")->on("post.operation_id", "=", "admin.id");
+        $query->join("user", 'left')->on("post.user_id", "=", "user.id");
+        $query->join("category", 'left')->on("post.cate_id", "=", "category.id");
 
-       // echo Kohana::debug($query);
+        // echo Kohana::debug($query);
         foreach ($filedNames as $filedName) {
             if (isset($post[$filedName]))
                 if ($post[$filedName] != null) {
-                    $query->where('post.'.$filedName, "like", "%" . $post[$filedName] . "%");
+                    if ($filedName = "status") {
+                        $filed_values=explode(',',(string)$post[$filedName]);
+                        if (count( $filed_values) > 0) {
+                          
+                        $query->where('post.' . $filedName, "in",$filed_values);
+                        } else {
+                            $query->where('post.' . $filedName, "=", $post[$filedName]);
+                        }
+                    } else {
+                        $query->where('post.' . $filedName, "like", "%" . $post[$filedName] . "%");
+                    }
                 }
         }
 
@@ -44,15 +66,16 @@ class Database_Post {
         }
         //获取当前数据起始位置
         $current_item = $pageParam["items_per_page"] * ($pageParam["page"] - 1);
-        $total_page_count =(int) ceil($count / $pageParam["items_per_page"]);
+        $total_page_count = (int) ceil($count / $pageParam["items_per_page"]);
         $query->offset($current_item)->limit($current_item + $pageParam["items_per_page"]);
         $posts = $query->execute();
         $posts = $posts->as_array();
         //加入一些业务值
-        for ($i=0;$i<count($posts);$i++){
-            
-           $posts[$i]["status_name"]= Sysconfig_Business::post_status($posts[$i]["status"]);
-           $posts[$i]["flag"]=Sysconfig_Business::post_flag($posts[$i]["flag"]);
+        for ($i = 0; $i < count($posts); $i++) {
+
+            $posts[$i]["status_name"] = Sysconfig_Business::post_status($posts[$i]["status"]);
+            $posts[$i]["flag"] = Sysconfig_Business::post_flag($posts[$i]["flag"]);
+            $posts[$i]["swap"] = "";
         }
 
         unset($dao, Database::$instances['default']);
@@ -140,7 +163,9 @@ class Database_Post {
         // echo Kohana::debug(explode(",", $ids));
         //echo Kohana::debug($ids);
         $dao = Database::instance();
+
         $modify = DB::update()->table('post')->set($post);
+        $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
         //判断是否是批量操作
         if (count($ids) > 1) {
             $modify->where('id', 'in', $ids);
