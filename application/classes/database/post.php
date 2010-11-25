@@ -18,11 +18,10 @@ class Database_Post {
         foreach ($filedNames as $filedName) {
             if (isset($post[$filedName]))
                 if ($post[$filedName] != null) {
-                    if ($filedName = "status") {
-                        $filed_values=explode(',',(string)$post[$filedName]);
-                        if (count( $filed_values) > 0) {
-
-                        $query->where('post.' . $filedName, "in",$filed_values);
+                    if ($filedName == "status" || $filedName == "flag") {
+                        $filed_values = explode(',', (string) $post[$filedName]);
+                        if (count($filed_values) > 0) {
+                            $query->where('post.' . $filedName, "in", $filed_values);
                         } else {
                             $query->where('post.' . $filedName, "=", $post[$filedName]);
                         }
@@ -48,10 +47,10 @@ class Database_Post {
             if (isset($post[$filedName]))
                 if ($post[$filedName] != null) {
                     if ($filedName = "status") {
-                        $filed_values=explode(',',(string)$post[$filedName]);
-                        if (count( $filed_values) > 0) {
-                          
-                        $query->where('post.' . $filedName, "in",$filed_values);
+                        $filed_values = explode(',', (string) $post[$filedName]);
+                        if (count($filed_values) > 0) {
+
+                            $query->where('post.' . $filedName, "in", $filed_values);
                         } else {
                             $query->where('post.' . $filedName, "=", $post[$filedName]);
                         }
@@ -125,10 +124,10 @@ class Database_Post {
         }
         $dao = Database::instance();
         $delete = DB::delete()->table('post')->where('id', '=', $id);
-        $count = count($delete->execute());
+       $result = (bool)$delete->execute();
         unset($dao, Database::$instances['default']);
-        echo Kohana::debug($count);
-        return $count == 0 ? 'error' : 'ok'; //返回值有误 需要进一步分析kohana数据库操作的反馈机制
+  
+        return $result ? 'ok' : 'error'; //返回值有误 需要进一步分析kohana数据库操作的反馈机制
     }
 
     /*     * ***
@@ -142,10 +141,10 @@ class Database_Post {
         }
         $dao = Database::instance();
         $delete = DB::delete()->table('post')->where('id', 'in', $ids);
-        $count = $delete->execute();
+        $result = (bool)$delete->execute();
         unset($dao, Database::$instances['default']);
         echo Kohana::debug($count);
-        return $count == 0 ? 'error' : 'ok';
+        return $result ? 'ok' : 'error';
     }
 
     /*     * ***
@@ -165,18 +164,157 @@ class Database_Post {
         $dao = Database::instance();
 
         $modify = DB::update()->table('post')->set($post);
-        $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
+
+        // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
         //判断是否是批量操作
         if (count($ids) > 1) {
             $modify->where('id', 'in', $ids);
         } else {
             $modify->where('id', '=', $post['id']);
         }
-        $count = $modify->execute();
+        $result = (bool)$modify->execute();
         //   echo Kohana::debug($modify);
 
         unset($dao, Database::$instances['default']);
-        return $count == 0 ? '修改失败' : 'ok';
+        return $result ? 'ok' : 'error';
+    }
+
+    /*     * ***
+     * 根据ID，审核处理内容
+     * @param $post （array(integer)）
+     */
+
+    public function trial($post) {
+        if ($post == null || count($post) == 0 || $post['id'] == null) {
+
+            return 'no_id';
+        }
+        /* 根据需要从请求中取出需要的数据值 */
+        $ids = explode(",", $post['id']);
+        // echo Kohana::debug(explode(",", $ids));
+        //echo Kohana::debug($ids);
+        $dao = Database::instance();
+
+        $modify = DB::update()->table('post')->set($post);
+        if ($post["status"] == 1) {//正式发布的情况下 将会与发布内容与已发布内容进行交换
+            //将预发布内容和内容进行替换
+            $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
+        }
+        //判断是否是批量操作
+        if (count($ids) > 1) {
+            $modify->where('id', 'in', $ids);
+        } else {
+            $modify->where('id', '=', $post['id']);
+        }
+        $result = (bool)$modify->execute();
+        //   echo Kohana::debug($modify);
+
+        unset($dao, Database::$instances['default']);
+        return $result ? 'ok' : 'error';
+    }
+
+    /*     * ***
+     * 根据ID，撤销发布，批量撤销发布
+     * @param $post （array(integer)）
+     */
+
+    public function undo_pub($post) {
+        if ($post == null || count($post) == 0 || $post['id'] == null) {
+
+            return 'no_id';
+        }
+        /* 根据需要从请求中取出需要的数据值 */
+        $ids = explode(",", $post['id']);
+        // echo Kohana::debug(explode(",", $ids));
+        //echo Kohana::debug($ids);
+        $dao = Database::instance();
+        DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
+        $modify = DB::update()->table('post')->set($post);
+        //如果发布过的内容需要进行此操作
+        //将预发布内容和内容进行替换 状态改为创建待审核
+        $modify->set(array('status' => '5', 'swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
+        $modify->where("content", "<>", "")->and_where("pre_content", "=", "");
+        //判断是否是批量操作
+        if (count($ids) > 1) {
+            $modify->where('id', 'in', $ids);
+        } else {
+            $modify->where('id', '=', $post['id']);
+        }
+        $undo_create_result = (bool) $modify->execute();
+
+        $modify = DB::update()->table('post')->set($post);
+        //如果发布过的内容需要进行此操作
+        //将预发布内容和内容进行替换 状态改为修改待审核2
+        $modify->set(array('status' => '2', 'swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
+        $modify->where("content", "<>", "")->and_where("pre_content", "<>", "");
+        //判断是否是批量操作
+        if (count($ids) > 1) {
+            $modify->where('id', 'in', $ids);
+        } else {
+            $modify->where('id', '=', $post['id']);
+        }
+        $undo_update_result = (bool) $modify->execute();
+        //   echo Kohana::debug($modify);
+        if ($undo_create_result and $undo_update_result) {
+            DB::query(NULL, "COMMIT")->execute();
+            unset($dao, Database::$instances['default']);
+            return "ok";
+        } else {
+            DB::query(NULL, "ROLLBACK")->execute();
+            return "error";
+        }
+    }
+
+    /*     * ***
+     * 根据ID，撤销驳回，批量撤销驳回
+     * @param $post （array(integer)）
+     */
+
+    public function undo_reject($post) {
+        if ($post == null || count($post) == 0 || $post['id'] == null) {
+
+            return 'no_id';
+        }
+        /* 根据需要从请求中取出需要的数据值 */
+        $ids = explode(",", $post['id']);
+        // echo Kohana::debug(explode(",", $ids));
+        //echo Kohana::debug($ids);
+        $dao = Database::instance();
+        DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
+        $modify = DB::update()->table('post')->set($post);
+        //如果发布过的内容需要进行此操作
+        //将预发布内容和内容进行替换 状态改为创建待审核
+        $modify->set(array('status' => '5'));
+        $modify->where("content", "<>", "")->and_where("pre_content", "=", "");
+        //判断是否是批量操作
+        if (count($ids) > 1) {
+            $modify->where('id', 'in', $ids);
+        } else {
+            $modify->where('id', '=', $post['id']);
+        }
+        $undo_create_result = (bool) $modify->execute();
+
+        $modify = DB::update()->table('post')->set($post);
+        //如果发布过的内容需要进行此操作
+        //将预发布内容和内容进行替换 状态改为修改待审核2
+        $modify->set(array('status' => '2'));
+        $modify->where("content", "<>", "")->and_where("pre_content", "<>", "");
+        //判断是否是批量操作
+        if (count($ids) > 1) {
+            $modify->where('id', 'in', $ids);
+        } else {
+            $modify->where('id', '=', $post['id']);
+        }
+        $undo_update_result = (bool) $modify->execute();
+        //   echo Kohana::debug($modify);
+        if ($undo_create_result and $undo_update_result) {
+            DB::query(NULL, "COMMIT")->execute();
+            unset($dao, Database::$instances['default']);
+            return "ok";
+        } else {
+            DB::query(NULL, "ROLLBACK")->execute();
+            return "error";
+        }
     }
 
 }

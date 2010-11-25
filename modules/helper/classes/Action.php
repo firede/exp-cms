@@ -26,7 +26,7 @@ class Action {
         } else if ($view_data == "error") {
             $view_data = array(
                 'success' => FALSE,
-                'message' => '失败！',
+                'message' => '操作失败！',
                 'result' => '',
             );
         } else {
