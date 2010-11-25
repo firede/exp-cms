@@ -6,15 +6,41 @@
  * @TODO 删除权限以后作成可在后台启用/关闭的
  */
 return array(
+	
 	// 创建待审核
-	'audit_create' => array(
+	'status_0' => array(
 		// 显示字段（列表表格所显示的列）
 		'column' => array(
-			'select'    => '选择',
-			'title'     => '标题',
-			'time'      => '日期',
-			'author'    => '作者',
-			'category'  => '分类',
+			'select'	    => array(
+				'label'     => '选择',
+				'template'  => 'select',
+				'data'      => 'id',
+				'sortable'  => FALSE,
+			),
+			'title'		    => array(
+				'label'     => '标题',
+				'template'  => 'link',
+				'data'      => 'id,title',
+				'sortable'  => TRUE,
+			),
+			'time'          => array(
+				'label'     => '日期',
+				'template'  => 'time',
+				'data'      => 'pub_time',
+				'sortable'  => TRUE,
+			),
+			'author'        => array(
+				'label'     => '作者',
+				'template'  => 'link',
+				'data'      => 'user_id,user_name',
+				'sortable'  => TRUE,
+			),
+			'category'      => array(
+				'label'     => '分类',
+				'template'  => 'link',
+				'data'      => 'cate_id,cate_name',
+				'sortable'  => TRUE,
+			),
 		),
 		// 操作（行级操作允许的功能）
 		'operation'=> array(
@@ -30,7 +56,9 @@ return array(
 			'delete'    => '删除',
 		),
 	),
-	'audit_modify' => array(
+	
+	// 修改待审核
+	'status_2' => array(
 		'column' => array(
 			'select'    => '选择',
 			'title'     => '标题',
@@ -53,7 +81,9 @@ return array(
 			'delete'    => '删除',
 		),
 	),
-	'publish' => array(
+	
+	// 已发布
+	'status_1' => array(
 		'column' => array(
 			'select'    => '选择',
 			'title'     => '标题',
@@ -75,7 +105,9 @@ return array(
 			'undo_pub'  => '撤销发布',
 		),
 	),
-	'draft' => array(
+	
+	// 草稿
+	'status_5' => array(
 		'column' => array(
 			'select'    => '选择',
 			'title'     => '标题',
@@ -89,7 +121,9 @@ return array(
 		'muti_operation' => array(
 		),
 	),
-	'reject' => array(
+	
+	// 驳回
+	'status_3' => array(
 		'column' => array(
 			'select'    => '选择',
 			'title'     => '标题',
@@ -110,3 +144,5 @@ return array(
 );
 
 ?>
+
+
