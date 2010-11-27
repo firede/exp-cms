@@ -2,7 +2,7 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Post extends Controller_AdminTemplate {
+class Controller_Post extends Controller_Template {
 
     public $template = 'admin/base/layout'; //加载总模板
 
@@ -37,21 +37,22 @@ class Controller_Post extends Controller_AdminTemplate {
          if (!isset($_GET['status'])) {
             $_GET['status'] = 0;
         }
-         echo Kohana::debug( $_GET['status'] );
+        // echo Kohana::debug( $_GET['status'] );
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
-         echo Kohana::debug($post);
+        // echo Kohana::debug($post);
         $posts = $postDb->query_list($post, $arr_element_names, $pageparam);
         $posts = Action::sucess_status($posts);
         $posts['status']=$_GET['status'];
-         echo Kohana::debug($posts);
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }
 
-        $this->template->layout_main = View::factory('admin/post/list', array(
+        echo Kohana::debug($posts);
+        $this->template = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
+					'base_url' => URL::base(),
                 ));
     }
 
