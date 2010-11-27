@@ -61,7 +61,7 @@
 			<td><input type="checkbox" val="<{$items[i].id}>" /></td>
 			<td><a href="#"><{$items[i].title}></a></td>
 			<td><{$items[i].read_count}></td>
-			<td><{$items[i].pub_time}></td>
+			<td><{$items[i].pub_time|date_format:"%Y-%m-%d"}></td>
 			<td><{$items[i].user_id}></td>
 			<td><{$items[i].cate_id}></td>
 			<td>
