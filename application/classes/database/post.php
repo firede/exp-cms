@@ -186,8 +186,9 @@ class Database_Post {
     public function trial($post) {
         if ($post == null || count($post) == 0 || $post['id'] == null) {
 
-            return 'no_id';
+            return "no_id";
         }
+        
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $post['id']);
         // echo Kohana::debug(explode(",", $ids));

@@ -30,7 +30,7 @@ class Controller_AdminUser extends Controller_AdminTemplate {
         if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
-     
+
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $user = Arr::filter_Array($_GET, $arr_element_names);
         echo Kohana::debug($user);
@@ -46,6 +46,16 @@ class Controller_AdminUser extends Controller_AdminTemplate {
                     'pagination' => $pagination,
                     'view_data' => $users,
                 ));
+    }
+
+    public function action_get_user($id) {
+        $userDb = new Database_User();
+        $users = $userDb->get_user($id);
+        $users = Action::sucess_status($users);
+        echo Kohana::debug($users);
+        $view = View::factory('smarty:');
+        $view->posts = $posts;
+        $this->request->response = $view->render();
     }
 
     public function action_delete() {
