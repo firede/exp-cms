@@ -18,6 +18,7 @@ class Controller_Post extends Controller_AdminTemplate {
      */
     public static function filter_xss($params){
         foreach($params as $key=>$value){
+            //将当前参数进行转义
             $params[$key]=htmlspecialchars($value,ENT_QUOTES);
         }
         return $params;
@@ -31,7 +32,7 @@ class Controller_Post extends Controller_AdminTemplate {
      */
 
     public function action_query_list() {
-        echo Kohana::debug($_GET);
+       
         // 测试分页
         $pagination = new Pagination(array(
                     'current_page' => array('source' => 'query_string', 'key' => 'page'),
@@ -58,7 +59,7 @@ class Controller_Post extends Controller_AdminTemplate {
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
         echo Kohana::debug($post);
-        $posts = $postDb->query_list($post, $arr_element_names, $pageparam);
+        $posts = $postDb->query_list($post, $pageparam);
         $posts = Action::sucess_status($posts);
         $posts['status'] = $_GET['status'];
         echo Kohana::debug($posts);

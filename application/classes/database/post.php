@@ -11,22 +11,22 @@ class Database_Post {
      * return post信息+分页信息
      */
 
-    public function query_list($post, $filedNames, $pageParam) {
+    public function query_list($post, $pageParam) {
         $dao = Database::instance();
         $query = DB::select(array('COUNT("id")', 'total_post'))->from('post');
-        // echo Kohana::debug($query);
-        foreach ($filedNames as $filedName) {
-            if (isset($post[$filedName]))
-                if ($post[$filedName] != null) {
+        
+        foreach ($post as $filedName=>$filedvalue) {
+            if (isset($filedvalue))
+                if ($filedvalue != null) {
                     if ($filedName == "status" || $filedName == "flag") {
-                        $filed_values = explode(',', (string) $post[$filedName]);
+                        $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
                             $query->where('post.' . $filedName, "in", $filed_values);
                         } else {
-                            $query->where('post.' . $filedName, "=", $post[$filedName]);
+                            $query->where('post.' . $filedName, "=", $filedvalue);
                         }
                     } else {
-                        $query->where('post.' . $filedName, "like", "%" . $post[$filedName] . "%");
+                        $query->where('post.' . $filedName, "like", "%" . $filedvalue . "%");
                     }
                 }
         }
@@ -43,19 +43,18 @@ class Database_Post {
         $query->join("category", 'left')->on("post.cate_id", "=", "category.id");
 
         // echo Kohana::debug($query);
-        foreach ($filedNames as $filedName) {
-            if (isset($post[$filedName]))
-                if ($post[$filedName] != null) {
-                    if ($filedName = "status") {
-                        $filed_values = explode(',', (string) $post[$filedName]);
+         foreach ($post as $filedName=>$filedvalue) {
+            if (isset($filedvalue))
+                if ($filedvalue != null) {
+                    if ($filedName == "status" || $filedName == "flag") {
+                        $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
-
                             $query->where('post.' . $filedName, "in", $filed_values);
                         } else {
-                            $query->where('post.' . $filedName, "=", $post[$filedName]);
+                            $query->where('post.' . $filedName, "=", $filedvalue);
                         }
                     } else {
-                        $query->where('post.' . $filedName, "like", "%" . $post[$filedName] . "%");
+                        $query->where('post.' . $filedName, "like", "%" . $filedvalue . "%");
                     }
                 }
         }

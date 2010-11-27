@@ -23,7 +23,7 @@ return array
 			'password'   => '123456',
 			'persistent' => FALSE,
 		),
-		'table_prefix' => '',
+		'table_prefix' => '',//在此部分可以修改表的前缀
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
 		'profiling'    => TRUE,
