@@ -76,7 +76,6 @@
 		<{/section}>
 	</tbody>
 </table>
-
 <div class="pagination-bar clearfix radius_bottom">
 	<div class="grid_12"><{$pagination}></div>
 	<div class="grid_8 right">
@@ -96,3 +95,5 @@ $(document).ready(function(){
 </script>
 
 <{include file="admin/base/footer.tpl"}>
+
+<{debug}>
