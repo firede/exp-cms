@@ -6,15 +6,33 @@ class Controller_Post extends Controller_Template {
 
     public $template = 'admin/base/layout'; //加载总模板
 
-    public function action_index() {
+    /*     * ***
+     * 重写系统默认函数 执行一些事前事件
+     */
 
+    public function before() {
+         $_GET=Controller_Post::filter_xss($_GET);
     }
+    /**********
+     * xss过滤
+     */
+    public static function filter_xss($params){
+        foreach($params as $key=>$value){
+            //将当前参数进行转义
+            $params[$key]=htmlspecialchars($value,ENT_QUOTES);
+        }
+        return $params;
+    }
+    
+
+    public function action_index() { }
 
     /*     * *********
      * 根据条件查询相应的post表数据,并加载重绘至post列表页面
      */
 
     public function action_query_list() {
+       
         // 测试分页
         $pagination = new Pagination(array(
                     'current_page' => array('source' => 'query_string', 'key' => 'page'),
@@ -34,17 +52,20 @@ class Controller_Post extends Controller_Template {
         if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
-         if (!isset($_GET['status'])) {
+        if (!isset($_GET['status'])) {
             $_GET['status'] = 0;
         }
-        // echo Kohana::debug( $_GET['status'] );
+
+		echo Kohana::debug($_GET['status']);
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
-        // echo Kohana::debug($post);
-        $posts = $postDb->query_list($post, $arr_element_names, $pageparam);
+        echo Kohana::debug($post);
+        $posts = $postDb->query_list($post, $pageparam);
         $posts = Action::sucess_status($posts);
-        $posts['status']=$_GET['status'];
-        if (isset($posts["total_items_count"])) {
+        $posts['status'] = $_GET['status'];
+        echo Kohana::debug($posts);
+
+		if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }
 
@@ -203,7 +224,7 @@ class Controller_Post extends Controller_Template {
                 array('id', 'status', 'operation_desc');
         $post = Arr::filter_Array($_GET, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
-        $view_data = $postDb->modify($post);
+        $view_data = $postDb->trial($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
         $view = View::factory('smarty:');
@@ -221,7 +242,83 @@ class Controller_Post extends Controller_Template {
                 array('id', 'status', 'operation_desc');
         $post = Arr::filter_Array($_GET, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
-        $view_data = $postDb->modify($post);
+        $view_data = $postDb->trial($post);
+        $view_data = Action::sucess_status($view_data);
+        echo Kohana::debug($view_data);
+        $view = View::factory('smarty:');
+        $view->view_data = $view_data;
+        $this->request->response = $view->render();
+    }
+
+    /*     * ******
+     * 撤销发布
+     */
+
+    public function action_undo_pub() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post['operation_id'] = 'admin'; //临时用户
+        $post['operation_desc'] = '';
+        $view_data = $postDb->undo_pub($post);
+        $view_data = Action::sucess_status($view_data);
+        echo Kohana::debug($view_data);
+        $view = View::factory('smarty:');
+        $view->view_data = $view_data;
+        $this->request->response = $view->render();
+    }
+
+    /*     * ******
+     * 批量撤销发布 id 格式为 &id=1，2,3,4
+     */
+
+    public function action_multi_undo_pub() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post['operation_id'] = 'admin'; //临时用户
+        $post['operation_desc'] = '';
+        $view_data = $postDb->undo_pub($post);
+        $view_data = Action::sucess_status($view_data);
+        echo Kohana::debug($view_data);
+        $view = View::factory('smarty:');
+        $view->view_data = $view_data;
+        $this->request->response = $view->render();
+    }
+
+    /*     * ******
+     * 撤销驳回 
+     */
+
+    public function action_undo_reject() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post['operation_id'] = 'admin'; //临时用户
+        $post['operation_desc'] = '';
+        $view_data = $postDb->undo_reject($post);
+        $view_data = Action::sucess_status($view_data);
+        echo Kohana::debug($view_data);
+        $view = View::factory('smarty:');
+        $view->view_data = $view_data;
+        $this->request->response = $view->render();
+    }
+
+    /*     * ******
+     * 批量撤销驳回 id 格式为 &id=1，2,3,4
+     */
+
+    public function action_multi_undo_reject() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post['operation_id'] = 'admin'; //临时用户
+        $post['operation_desc'] = '';
+        $view_data = $postDb->undo_reject($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
         $view = View::factory('smarty:');
