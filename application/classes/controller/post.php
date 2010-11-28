@@ -2,9 +2,7 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Post extends Controller_Template {
-
-    public $template = 'admin/base/layout'; //加载总模板
+class Controller_Post extends Controller_AdminTemplate {
 
     /*     * ***
      * 重写系统默认函数 执行一些事前事件
@@ -69,7 +67,6 @@ class Controller_Post extends Controller_Template {
         $this->template = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
-					'base_url' => URL::base(),
                 ));
     }
 

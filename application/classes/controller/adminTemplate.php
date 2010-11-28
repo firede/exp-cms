@@ -6,17 +6,14 @@ defined('SYSPATH') or die('No direct script access.');
  */
 class Controller_AdminTemplate extends Controller {
 
-	public $template = 'admin/layout';
+	public $template = 'template';
 
 	public $auto_render = TRUE;
 
 	public function before() {
 		if ($this->auto_render === TRUE)
 		{
-			// Load the template
 			$this->template = View::factory($this->template);
-
-			$this->template->layout_aside = View::factory('admin/base/aside');
 		}
 
 		parent::before();
@@ -25,6 +22,9 @@ class Controller_AdminTemplate extends Controller {
 	public function after() {
 		if ($this->auto_render === TRUE)
 		{
+			// 输出视图前定义变量
+			$this->template->base_url = URL::base();
+
 			$this->request->response = $this->template;
 		}
 
