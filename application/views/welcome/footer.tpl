@@ -1,1 +1,1 @@
-<p>&copy; 2010 daxiniu.com <em><{$hello}></em></p>
+<a href="<{$arg0}>" title="<{$arg1}>"><{$arg1}></a>
