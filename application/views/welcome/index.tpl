@@ -8,6 +8,6 @@
 	<body>
 		<h1><{$hello}></h1>
 		<p><em>这是一个Smarty模板，如果你看到上面有个大标题，说明测试成功了。</em></p>
-		<{basetpl data=$data conf=$conf tpl="welcome/footer.tpl"}>
+		<{basetpl data=$data conf=$conf prefix=$prefix tpl="welcome/footer.tpl"}>
 	</body>
 </html>

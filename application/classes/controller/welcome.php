@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Welcome extends Controller_Template {
+class Controller_Welcome extends Controller_AdminTemplate {
 
 	// 测试Smarty模板
 	public $template = 'smarty:welcome/index';
@@ -11,6 +11,7 @@ class Controller_Welcome extends Controller_Template {
 		$conf_arr = explode(',',$conf);
 
 		$this->template->conf = $conf;
+		$this->template->prefix = array('admin/post/view/', '.html');
 		$this->template->data = array(
 			'id'=> 15,
 			'title' => '测试底层模板设计',

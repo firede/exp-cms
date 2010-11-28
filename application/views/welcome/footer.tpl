@@ -1,1 +1,1 @@
-<a href="<{$arg0}>" title="<{$arg1}>"><{$arg1}></a>
+<a href="<{$base_url}><{$_prefix_0|default}><{$_arg_0}><{$_prefix_1|default}>" title="<{$_arg_1}>"><{$_arg_1}></a>
