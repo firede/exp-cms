@@ -20,6 +20,8 @@ return array(
 			'title'		    => array(
 				'label'     => '标题',
 				'template'  => 'link',
+				//'prefix'    => 'admin/post/view/',
+				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
 				'sortable'  => TRUE,
 			),
