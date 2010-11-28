@@ -25,7 +25,7 @@ function smarty_function_basetpl($params, &$smarty) {
 		}
 	}
 	
-	$smarty->display($tpl);
+	$smarty->display('basetpl/'.$tpl.'.tpl');
 }
 
 ?>
