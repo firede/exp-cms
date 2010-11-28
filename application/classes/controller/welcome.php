@@ -15,6 +15,7 @@ class Controller_Welcome extends Controller_AdminTemplate {
 		$this->template->data = array(
 			'id'=> 15,
 			'title' => '测试底层模板设计',
+			'date' => time(),
 		);
 
 		if (isset ($_GET) AND isset ($_GET['id'])) {
