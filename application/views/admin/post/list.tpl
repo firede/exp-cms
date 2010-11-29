@@ -42,40 +42,8 @@
 	</div>
 </div>
 
-<table class="list-table">
-	<thead>
-		<tr>
-			<th style="width:30px">选择</th>
-			<th>标题</th>
-			<th style="width:45px">点击</th>
-			<th style="width:75px">日期</th>
-			<th style="width:100px">作者</th>
-			<th style="width:100px">分类</th>
-			<th style="width:90px">操作</th>
-		</tr>
-	</thead>
-	<tbody>
-		<{assign var=items value=$view_data.result}>
-		<{section name=i loop=$items}>
-		<tr val="<{$items[i].id}>">
-			<td><input type="checkbox" val="<{$items[i].id}>" /></td>
-			<td><a href="#"><{$items[i].title}></a></td>
-			<td><{$items[i].read_count}></td>
-			<td><{$items[i].pub_time|date_format:"%Y-%m-%d"}></td>
-			<td><{$items[i].user_id}></td>
-			<td><{$items[i].cate_id}></td>
-			<td>
-				<a href="#" onclick="return false;" class="table-btn icon-audit" title="审核"><span>审核</span></a>
-				<a href="#" onclick="return false;" class="table-btn icon-star" title="精华"><span>精华</span></a>
-				<a href="#" onclick="return false;" class="table-btn icon-del" title="删除"><span>删除</span></a>
-				<a href="#" onclick="return false;" class="table-btn icon-preview" title="预览"><span>预览</span></a>
-			</td>
-		</tr>
-		<{sectionelse}>
-		<tr><td colspan="7">木有数据...</td></tr>
-		<{/section}>
-	</tbody>
-</table>
+<{admintable data=$view_data.result conf=$conf}>
+
 <div class="pagination-bar clearfix radius_bottom">
 	<div class="grid_12"><{$pagination}></div>
 	<div class="grid_8 right">
