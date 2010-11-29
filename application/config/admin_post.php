@@ -13,21 +13,20 @@ return array(
 		'column' => array(
 			'select'	    => array(
 				'label'     => '选择',
-				'template'  => 'select',
+				'template'  => 'checkbox',
 				'data'      => 'id',
 				'sortable'  => FALSE,
 			),
 			'title'		    => array(
 				'label'     => '标题',
 				'template'  => 'link',
-				//'prefix'    => 'admin/post/view/',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
 				'sortable'  => TRUE,
 			),
 			'time'          => array(
 				'label'     => '日期',
-				'template'  => 'time',
+				'template'  => 'date',
 				'data'      => 'pub_time',
 				'sortable'  => TRUE,
 			),
@@ -87,13 +86,49 @@ return array(
 	// 已发布
 	'status_1' => array(
 		'column' => array(
-			'select'    => '选择',
-			'title'     => '标题',
-			'flag'      => '标记',
-			'click'     => '点击量',
-			'time'      => '日期',
-			'author'    => '作者',
-			'category'  => '分类',
+			'select'	    => array(
+				'label'     => '选择',
+				'template'  => 'checkbox',
+				'data'      => 'id',
+				'sortable'  => FALSE,
+			),
+			'title'		    => array(
+				'label'     => '标题',
+				'template'  => 'link',
+				'prefix'    => array('admin/post/view/', '.html'),
+				'data'      => 'id,title',
+				'sortable'  => TRUE,
+			),
+			'flag'		    => array(
+				'label'     => '标记',
+				'template'  => 'text',
+				'data'      => 'flag',
+				'sortable'  => TRUE,
+			),
+			'click'         => array(
+				'label'     => '点击量',
+				'template'  => 'text',
+				'data'      => 'read_count',
+				'sortable'  => TRUE,
+			),
+			'time'          => array(
+				'label'     => '日期',
+				'template'  => 'date',
+				'data'      => 'pub_time',
+				'sortable'  => TRUE,
+			),
+			'author'        => array(
+				'label'     => '作者',
+				'template'  => 'link',
+				'data'      => 'user_id,user_name',
+				'sortable'  => TRUE,
+			),
+			'category'      => array(
+				'label'     => '分类',
+				'template'  => 'link',
+				'data'      => 'cate_id,cate_name',
+				'sortable'  => TRUE,
+			),
 		),
 		'operation'=> array(
 			'move'      => '移动',
