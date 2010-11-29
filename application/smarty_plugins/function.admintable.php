@@ -22,10 +22,12 @@ function smarty_function_admintable ($params, &$smarty) {
 		return $smarty->display('system/admintable_empty.tpl');
 	}
 
+	// 如果配置了多行操作，那么将配置仍给模板
 	if(!empty ($conf['muti_operation'])) {
 		$smarty->assign('_muti_operation', $conf['muti_operation']);
 	}
 
+	// 如果配置了操作，那么将配置仍给模板
 	if(!empty ($conf['operation'])) {
 		$smarty->assign('_operation', $conf['operation']);
 	}
