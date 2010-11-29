@@ -199,6 +199,15 @@ a:hover {
 	display: none;
 }
 
+.list-table-empty {
+	border-width: 1px 2px;
+	border-style:solid;
+	border-color:#AFCAE4;
+	padding:60px 10px;
+	text-align: center;
+	font-size:14px;
+	color:#999;
+}
 
 /* icons */
 .icon-position,
