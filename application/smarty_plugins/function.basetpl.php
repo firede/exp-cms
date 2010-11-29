@@ -3,6 +3,7 @@
 /**
  * 通过底层模板、配置、变量数组自动生成代码
  *
+ * @example <{basetpl data=$data conf=$conf prefix=$prefix tpl="link"}>
  * @param <type> $params
  * @param <type> $smarty
  */
@@ -25,7 +26,7 @@ function smarty_function_basetpl($params, &$smarty) {
 		}
 	}
 	
-	$smarty->display('basetpl/'.$tpl.'.tpl');
+	$smarty->display('system/snippet/'.$tpl.'.tpl');
 }
 
 ?>
