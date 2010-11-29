@@ -74,7 +74,7 @@ return array(
 			'move'      => '移动',
 			'delete'    => '删除',
 			'preview'   => '预览',
-			'preview_ol'=> '线上版本预览',
+			'preview-ol'=> '线上版本预览',
 		),
 		'muti_operation' => array(
 			'audit'     => '审核',
@@ -128,18 +128,22 @@ return array(
 				'template'  => 'link',
 				'data'      => 'cate_id,cate_name',
 				'sortable'  => TRUE,
-			),
+			)
 		),
 		'operation'=> array(
+			'flag'      => '标记',
+			'undo-pub'  => '撤销发布',
 			'move'      => '移动',
 			'delete'    => '删除',
-			'undo_pub'  => '撤销发布',
 			'preview'   => '预览',
 		),
 		'muti_operation' => array(
+			'select'    => '全选/取消',
+			'inverse'   => '反选',
+			'flag'      => '标记',
+			'undo-pub'  => '撤销发布',
 			'move'      => '移动',
 			'delete'    => '删除',
-			'undo_pub'  => '撤销发布',
 		),
 	),
 	
@@ -168,14 +172,14 @@ return array(
 			'time'      => '日期',
 			'author'    => '作者',
 			'category'  => '分类',
-			'rej_type'  => '驳回类别',
+			'rej-type'  => '驳回类别',
 		),
 		'operation'=> array(
-			'undo_rej'  => '撤销驳回',
+			'undo-rej'  => '撤销驳回',
 			'preview'   => '预览',
 		),
 		'muti_operation' => array(
-			'undo_rej'  => '撤销驳回',
+			'undo-rej'  => '撤销驳回',
 		),
 	),
 );

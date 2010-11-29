@@ -119,7 +119,7 @@ a:hover {
 
 /* operation table */
 .operation-bar {
-	border-width:0 2px;
+	border-width:1px 2px 0;
 	border-style:solid;
 	border-color:#AFCAE4;
 	padding: 5px 0;
@@ -180,10 +180,12 @@ a:hover {
 	color: #666;
 	font-weight: 700;
 	text-align: left;
+	overflow: hidden;
 }
 .list-table td {
-	line-height: 18px;
-	padding: 3px 5px;
+	line-height: 17px;
+	padding: 2px 5px;
+	overflow: hidden;
 }
 
 .list-table .odd td {
@@ -193,7 +195,7 @@ a:hover {
 .table-btn {
 	float: left;
 	display: inline;
-	margin: 0 3px;
+	margin: 1px 3px 0;
 }
 .table-btn span {
 	display: none;
@@ -215,8 +217,8 @@ a:hover {
 .icon-select,
 .icon-inverse,
 .icon-audit,
-.icon-star,
-.icon-del,
+.icon-flag,
+.icon-delete,
 .icon-move,
 .icon-preview,
 .icon-home,
@@ -243,11 +245,11 @@ a:hover {
 .icon-audit {
 	background: url('img/icon-audit.png') no-repeat;
 }
-.icon-star {
-	background: url('img/icon-star.png') no-repeat;
+.icon-flag {
+	background: url('img/icon-flag.png') no-repeat;
 }
-.icon-del {
-	background: url('img/icon-del.png') no-repeat;
+.icon-delete {
+	background: url('img/icon-delete.png') no-repeat;
 }
 .icon-move {
 	background: url('img/icon-move.png') no-repeat;
@@ -333,6 +335,8 @@ a:hover {
 }
 
 .status-tab-active {
+	height: 23px;
+	margin-bottom: -1px;
 	background:#FFF;
 }
 #status-0 { color:#C00; }

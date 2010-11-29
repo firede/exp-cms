@@ -29,19 +29,6 @@
 	<a id="status-3" class="status-tab" href="?status=3">驳回</a>
 </div>
 
-<div class="operation-bar clearfix">
-	<div class="grid_12">
-		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-select"></span>全选/取消</a>
-		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-inverse"></span>反选</a>
-		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-audit"></span>审核</a>
-		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-star"></span>精华</a>
-		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-del"></span>删除</a>
-		<a href="#" onclick="return false;" class="operation-btn"><span class="icon-move"></span>移动</a>
-	</div>
-	<div class="grid_8 right">
-	</div>
-</div>
-
 <{admintable data=$view_data.result conf=$conf}>
 
 <div class="pagination-bar clearfix radius_bottom">
