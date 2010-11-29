@@ -22,6 +22,14 @@ function smarty_function_admintable ($params, &$smarty) {
 		return $smarty->display('system/admintable_empty.tpl');
 	}
 
+	if(!empty ($conf['muti_operation'])) {
+		$smarty->assign('_muti_operation', $conf['muti_operation']);
+	}
+
+	if(!empty ($conf['operation'])) {
+		$smarty->assign('_operation', $conf['operation']);
+	}
+
 	// 将配置和数据给模板
 	$smarty->assign('_column', $conf['column']);
 	$smarty->assign('_data', $data);
