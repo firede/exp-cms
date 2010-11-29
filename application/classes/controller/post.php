@@ -64,9 +64,12 @@ class Controller_Post extends Controller_AdminTemplate {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }
 
+		$conf_status = 'status_'.$posts['status'];
+		$conf = Kohana::config('admin_post')->$conf_status;
         $this->template = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
+					'conf' => $conf,
                 ));
     }
 
