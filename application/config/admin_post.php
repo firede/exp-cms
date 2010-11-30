@@ -13,12 +13,14 @@ return array(
 		'column' => array(
 			'select'	    => array(
 				'label'     => '选择',
+				'width'     => '30',
 				'template'  => 'checkbox',
 				'data'      => 'id',
 				'sortable'  => FALSE,
 			),
 			'title'		    => array(
 				'label'     => '标题',
+				'width'     => '340',
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
@@ -26,18 +28,21 @@ return array(
 			),
 			'time'          => array(
 				'label'     => '日期',
+				'width'     => '100',
 				'template'  => 'date',
 				'data'      => 'pub_time',
 				'sortable'  => TRUE,
 			),
 			'author'        => array(
 				'label'     => '作者',
+				'width'     => '100',
 				'template'  => 'link',
 				'data'      => 'user_id,user_name',
 				'sortable'  => TRUE,
 			),
 			'category'      => array(
 				'label'     => '分类',
+				'width'     => '100',
 				'template'  => 'link',
 				'data'      => 'cate_id,cate_name',
 				'sortable'  => TRUE,
@@ -52,6 +57,8 @@ return array(
 		),
 		// 批量操作（批量操作允许的功能）
 		'muti_operation' => array(
+			'select'    => '全选/取消',
+			'inverse'   => '反选',
 			'audit'     => '审核',
 			'move'      => '移动',
 			'delete'    => '删除',
@@ -61,13 +68,56 @@ return array(
 	// 修改待审核
 	'status_2' => array(
 		'column' => array(
-			'select'    => '选择',
-			'title'     => '标题',
-			'flag'      => '标记',
-			'click'     => '点击量',
-			'time'      => '日期',
-			'author'    => '作者',
-			'category'  => '分类',
+			'select'	    => array(
+				'label'     => '选择',
+				'width'     => '30',
+				'template'  => 'checkbox',
+				'data'      => 'id',
+				'sortable'  => FALSE,
+			),
+			'title'		    => array(
+				'label'     => '标题',
+				'width'     => '270',
+				'template'  => 'link',
+				'prefix'    => array('admin/post/view/', '.html'),
+				'data'      => 'id,title',
+				'sortable'  => TRUE,
+			),
+			'flag'		    => array(
+				'label'     => '',             // 标记（在表头不显示标题）
+				'width'     => '60',
+				'template'  => 'flag',
+				'data'      => 'flag',
+				'sortable'  => TRUE,
+			),
+			'click'         => array(
+				'label'     => '点击',
+				'width'     => '38',
+				'template'  => 'text',
+				'data'      => 'read_count',
+				'sortable'  => TRUE,
+			),
+			'time'          => array(
+				'label'     => '日期',
+				'width'     => '75',
+				'template'  => 'date',
+				'data'      => 'pub_time',
+				'sortable'  => TRUE,
+			),
+			'author'        => array(
+				'label'     => '作者',
+				'width'     => '90',
+				'template'  => 'link',
+				'data'      => 'user_id,user_name',
+				'sortable'  => TRUE,
+			),
+			'category'      => array(
+				'label'     => '分类',
+				'width'     => '90',
+				'template'  => 'link',
+				'data'      => 'cate_id,cate_name',
+				'sortable'  => TRUE,
+			),
 		),
 		'operation'=> array(
 			'audit'     => '快速审核',
@@ -77,6 +127,8 @@ return array(
 			'preview-ol'=> '线上版本预览',
 		),
 		'muti_operation' => array(
+			'select'    => '全选/取消',
+			'inverse'   => '反选',
 			'audit'     => '审核',
 			'move'      => '移动',
 			'delete'    => '删除',
@@ -88,43 +140,50 @@ return array(
 		'column' => array(
 			'select'	    => array(
 				'label'     => '选择',
+				'width'     => '30',
 				'template'  => 'checkbox',
 				'data'      => 'id',
 				'sortable'  => FALSE,
 			),
 			'title'		    => array(
 				'label'     => '标题',
+				'width'     => '270',
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
 				'sortable'  => TRUE,
 			),
 			'flag'		    => array(
-				'label'     => '标记',
+				'label'     => '',             // 标记（在表头不显示标题）
+				'width'     => '60',
 				'template'  => 'flag',
 				'data'      => 'flag',
 				'sortable'  => TRUE,
 			),
 			'click'         => array(
-				'label'     => '点击量',
+				'label'     => '点击',
+				'width'     => '38',
 				'template'  => 'text',
 				'data'      => 'read_count',
 				'sortable'  => TRUE,
 			),
 			'time'          => array(
 				'label'     => '日期',
+				'width'     => '75',
 				'template'  => 'date',
 				'data'      => 'pub_time',
 				'sortable'  => TRUE,
 			),
 			'author'        => array(
 				'label'     => '作者',
+				'width'     => '80',
 				'template'  => 'link',
 				'data'      => 'user_id,user_name',
 				'sortable'  => TRUE,
 			),
 			'category'      => array(
 				'label'     => '分类',
+				'width'     => '80',
 				'template'  => 'link',
 				'data'      => 'cate_id,cate_name',
 				'sortable'  => TRUE,
@@ -150,40 +209,105 @@ return array(
 	// 草稿
 	'status_5' => array(
 		'column' => array(
-			'select'    => '选择',
-			'title'     => '标题',
-			'time'      => '日期',
-			'author'    => '作者',
-			'category'  => '分类',
+			'title'		    => array(
+				'label'     => '标题',
+				'width'     => '400',
+				'template'  => 'link',
+				'prefix'    => array('admin/post/view/', '.html'),
+				'data'      => 'id,title',
+				'sortable'  => TRUE,
+			),
+			'time'          => array(
+				'label'     => '日期',
+				'width'     => '90',
+				'template'  => 'date',
+				'data'      => 'pub_time',
+				'sortable'  => TRUE,
+			),
+			'author'        => array(
+				'label'     => '作者',
+				'width'     => '120',
+				'template'  => 'link',
+				'data'      => 'user_id,user_name',
+				'sortable'  => TRUE,
+			),
+			'category'      => array(
+				'label'     => '分类',
+				'width'     => '120',
+				'template'  => 'link',
+				'data'      => 'cate_id,cate_name',
+				'sortable'  => TRUE,
+			)
 		),
 		'operation'=> array(
 			'preview'   => '预览',
-		),
-		'muti_operation' => array(
 		),
 	),
 	
 	// 驳回
 	'status_3' => array(
 		'column' => array(
-			'select'    => '选择',
-			'title'     => '标题',
-			'flag'      => '标记',
-			'time'      => '日期',
-			'author'    => '作者',
-			'category'  => '分类',
-			'rej-type'  => '驳回类别',
+			'select'	    => array(
+				'label'     => '选择',
+				'width'     => '30',
+				'template'  => 'checkbox',
+				'data'      => 'id',
+				'sortable'  => FALSE,
+			),
+			'title'		    => array(
+				'label'     => '标题',
+				'width'     => '290',
+				'template'  => 'link',
+				'prefix'    => array('admin/post/view/', '.html'),
+				'data'      => 'id,title',
+				'sortable'  => TRUE,
+			),
+			'flag'		    => array(
+				'label'     => '',             // 标记（在表头不显示标题）
+				'width'     => '60',
+				'template'  => 'flag',
+				'data'      => 'flag',
+				'sortable'  => TRUE,
+			),
+			'time'          => array(
+				'label'     => '日期',
+				'width'     => '75',
+				'template'  => 'date',
+				'data'      => 'pub_time',
+				'sortable'  => TRUE,
+			),
+			'author'        => array(
+				'label'     => '作者',
+				'width'     => '90',
+				'template'  => 'link',
+				'data'      => 'user_id,user_name',
+				'sortable'  => TRUE,
+			),
+			'category'      => array(
+				'label'     => '分类',
+				'width'     => '90',
+				'template'  => 'link',
+				'data'      => 'cate_id,cate_name',
+				'sortable'  => TRUE,
+			),
+			'rej-type'      => array(
+				'label'     => '驳回类别',
+				'width'     => '60',
+				'template'  => 'rej_type',
+				'data'      => 'content',
+				'sortable'  => TRUE,
+			),
 		),
 		'operation'=> array(
 			'undo-rej'  => '撤销驳回',
 			'preview'   => '预览',
 		),
 		'muti_operation' => array(
+			'select'    => '全选/取消',
+			'inverse'   => '反选',
 			'undo-rej'  => '撤销驳回',
 		),
 	),
 );
 
 ?>
-
-
