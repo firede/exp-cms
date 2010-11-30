@@ -101,7 +101,7 @@ return array(
 			),
 			'flag'		    => array(
 				'label'     => '标记',
-				'template'  => 'text',
+				'template'  => 'flag',
 				'data'      => 'flag',
 				'sortable'  => TRUE,
 			),
