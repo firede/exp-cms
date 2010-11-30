@@ -2,21 +2,21 @@
 -- version 3.2.3
 -- http://www.phpmyadmin.net
 --
--- Ö÷»ú: localhost
--- Éú³ÉÈÕÆÚ: 2010 Äê 11 ÔÂ 25 ÈÕ 12:04
--- ·şÎñÆ÷°æ±¾: 5.1.40
--- PHP °æ±¾: 5.3.0
+-- ä¸»æœº: localhost
+-- ç”Ÿæˆæ—¥æœŸ: 2010 å¹´ 11 æœˆ 25 æ—¥ 12:04
+-- æœåŠ¡å™¨ç‰ˆæœ¬: 5.1.40
+-- PHP ç‰ˆæœ¬: 5.3.0
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Êı¾İ¿â: `daxiniu`
+-- æ•°æ®åº“: `daxiniu`
 --
 
 -- --------------------------------------------------------
 
 --
--- ±íµÄ½á¹¹ `admin`
+-- è¡¨çš„ç»“æ„ `admin`
 --
 
 CREATE TABLE IF NOT EXISTS `admin` (
@@ -33,19 +33,19 @@ CREATE TABLE IF NOT EXISTS `admin` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=5 ;
 
 --
--- ×ª´æ±íÖĞµÄÊı¾İ `admin`
+-- è½¬å­˜è¡¨ä¸­çš„æ•°æ® `admin`
 --
 
 INSERT INTO `admin` (`id`, `username`, `password`, `role`) VALUES
 (1, 'firede', '123456', 1),
 (2, 'radeye', '123456', 0),
-(3, 'Ä§Á¦²¨°åÌÇ', '22', 0),
+(3, 'é­”åŠ›æ³¢æ¿ç³–', '22', 0),
 (4, 'daxiniu', 'jimogu', 1);
 
 -- --------------------------------------------------------
 
 --
--- ±íµÄ½á¹¹ `attachment`
+-- è¡¨çš„ç»“æ„ `attachment`
 --
 
 CREATE TABLE IF NOT EXISTS `attachment` (
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `attachment` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=2 ;
 
 --
--- ×ª´æ±íÖĞµÄÊı¾İ `attachment`
+-- è½¬å­˜è¡¨ä¸­çš„æ•°æ® `attachment`
 --
 
 INSERT INTO `attachment` (`id`, `url`, `uuid`, `file_size`, `use_type`, `status`, `file_type`) VALUES
@@ -69,7 +69,7 @@ INSERT INTO `attachment` (`id`, `url`, `uuid`, `file_size`, `use_type`, `status`
 -- --------------------------------------------------------
 
 --
--- ±íµÄ½á¹¹ `category`
+-- è¡¨çš„ç»“æ„ `category`
 --
 
 CREATE TABLE IF NOT EXISTS `category` (
@@ -82,14 +82,14 @@ CREATE TABLE IF NOT EXISTS `category` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1 ;
 
 --
--- ×ª´æ±íÖĞµÄÊı¾İ `category`
+-- è½¬å­˜è¡¨ä¸­çš„æ•°æ® `category`
 --
 
 
 -- --------------------------------------------------------
 
 --
--- ±íµÄ½á¹¹ `post`
+-- è¡¨çš„ç»“æ„ `post`
 --
 
 CREATE TABLE IF NOT EXISTS `post` (
@@ -113,7 +113,7 @@ CREATE TABLE IF NOT EXISTS `post` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=12 ;
 
 --
--- ×ª´æ±íÖĞµÄÊı¾İ `post`
+-- è½¬å­˜è¡¨ä¸­çš„æ•°æ® `post`
 --
 
 INSERT INTO `post` (`id`, `uuid`, `title`, `cate_id`, `pub_time`, `pre_content`, `content`, `user_id`, `status`, `read_count`, `operation_id`, `reference`, `source`, `operation_desc`, `flag`, `swap`) VALUES
@@ -130,7 +130,7 @@ INSERT INTO `post` (`id`, `uuid`, `title`, `cate_id`, `pub_time`, `pre_content`,
 -- --------------------------------------------------------
 
 --
--- ±íµÄ½á¹¹ `user`
+-- è¡¨çš„ç»“æ„ `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=32 ;
 
 --
--- ×ª´æ±íÖĞµÄÊı¾İ `user`
+-- è½¬å­˜è¡¨ä¸­çš„æ•°æ® `user`
 --
 
 INSERT INTO `user` (`id`, `username`, `password`, `email`, `user_type`, `status`, `avatar`, `reg_time`, `last_time`, `admin_id`) VALUES
@@ -159,7 +159,7 @@ INSERT INTO `user` (`id`, `username`, `password`, `email`, `user_type`, `status`
 (22, '4545', '64564', '22@163.com', 0, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 06:48:55', '2010-11-14 06:49:19', '0'),
 (23, '4356346', '3454353', '22@163.com', 0, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 06:49:06', '2010-11-14 06:49:30', '0'),
 (24, '324', '32gdsfs', '22@163.com', 0, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 06:49:17', '2010-11-14 06:49:41', '0'),
-(25, '¶øÎª´Ë', 'dfds ', '22@163.com', 0, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 06:49:29', '2010-11-14 06:49:53', '0'),
+(25, 'è€Œä¸ºæ­¤', 'dfds ', '22@163.com', 0, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 06:49:29', '2010-11-14 06:49:53', '0'),
 (26, '5', '5', '22@163.com', 0, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 07:02:05', '2010-11-14 07:02:29', '0'),
 (27, '565', '65765', '22@163.com', 1, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 07:02:13', '2010-11-14 07:02:37', '0'),
 (28, '768', '345', 'dc2002007@163.com', 0, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 07:02:21', '2010-11-14 07:02:45', '0'),
