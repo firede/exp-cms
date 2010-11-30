@@ -183,8 +183,8 @@ a:hover {
 	overflow: hidden;
 }
 .list-table td {
-	line-height: 17px;
-	padding: 2px 5px;
+	line-height: 16px;
+	padding: 3px 5px;
 	overflow: hidden;
 }
 
@@ -195,9 +195,18 @@ a:hover {
 .table-btn {
 	float: left;
 	display: inline;
-	margin: 1px 3px 0;
+	margin: 0 3px;
+	cursor: pointer;
 }
-.table-btn span {
+
+.table-icon {
+	float: left;
+	display: inline;
+	margin: 0 1px;
+}
+
+.table-btn span,
+.table-icon span {
 	display: none;
 }
 
@@ -221,7 +230,10 @@ a:hover {
 .icon-delete,
 .icon-move,
 .icon-preview,
-.icon-undo-pub {
+.icon-undo-pub,
+.icon-flag-1,
+.icon-flag-2,
+.icon-flag-3 {
 	width:16px;
 	height:16px;
 	display: block;
@@ -267,6 +279,15 @@ a:hover {
 }
 .icon-preview {
 	background-position: -140px 0;
+}
+.icon-flag-1 {
+	background-position: -20px -80px;
+}
+.icon-flag-2 {
+	background-position: -40px -80px;
+}
+.icon-flag-3 {
+	background-position: 0 -80px;
 }
 .icon-home {
 	background: url('img/icon-home.png') no-repeat;
