@@ -163,11 +163,13 @@ a:hover {
 	margin:0 0 10px 0;
 }
 
-
-.list-table {
+.list-table-wrap {
 	border-width: 1px 2px;
 	border-style:solid;
 	border-color:#AFCAE4;
+}
+
+.list-table {
 	width: 100%;
 	margin: 0;
 }
@@ -200,7 +202,7 @@ a:hover {
 }
 
 .table-icon {
-	float: left;
+	float: right;
 	display: inline;
 	margin: 0 1px;
 }
@@ -231,6 +233,7 @@ a:hover {
 .icon-move,
 .icon-preview,
 .icon-undo-pub,
+.icon-undo-rej,
 .icon-flag-1,
 .icon-flag-2,
 .icon-flag-3 {
@@ -262,7 +265,8 @@ a:hover {
 .icon-inverse {
 	background-position: -20px -40px;
 }
-.icon-undo-pub {
+.icon-undo-pub,
+.icon-undo-rej {
 	background-position: -80px 0;
 }
 .icon-audit {
