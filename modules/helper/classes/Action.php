@@ -29,9 +29,15 @@ class Action {
                 'message' => '操作失败！',
                 'result' => '',
             );
+        }else if($view_data == "exist"){
+            $view_data = array(
+                'success' => FALSE,
+                'message' => '已经存在',
+                'result' => '',
+            );
         } else {
             $view_data['success'] = TRUE;
-            $view_data['message'] = 'ok';
+            $view_data['message'] = '操作成功';
         }
         return $view_data;
     }
