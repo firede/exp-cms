@@ -2,7 +2,7 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Post extends Controller_Base {
+class Controller_Admin_Post extends Controller_Base {
     /*     * ***
      * 重写系统默认函数 执行一些事前事件
      */

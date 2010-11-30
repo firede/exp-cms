@@ -95,6 +95,16 @@ Kohana::modules(array(
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
+
+// 后台管理路由设置
+Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'directory'  => 'admin',
+		'controller' => 'post',
+		'action'     => 'list',
+	));
+
+// 默认路由设置
 Route::set('default', '(<controller>(/<action>(/<id>)))')
 	->defaults(array(
 		'controller' => 'welcome',
