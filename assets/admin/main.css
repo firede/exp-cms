@@ -221,6 +221,14 @@ a:hover {
 .icon-delete,
 .icon-move,
 .icon-preview,
+.icon-undo-pub {
+	width:16px;
+	height:16px;
+	display: block;
+	background-image: url('img/icons.png');
+	background-repeat: no-repeat;
+}
+
 .icon-home,
 .icon-next,
 .icon-prev,
@@ -231,31 +239,34 @@ a:hover {
 }
 
 .icon-position {
-	background: url('img/icon-position.png') no-repeat;
+	background-position: -140px -20px;
 }
 .icon-category {
-	background: url('img/icon-category.png') no-repeat;
+	background-position: -20px -20px;
 }
 .icon-select {
-	background: url('img/icon-select.png') no-repeat;
+	background-position: 0 -40px;
 }
 .icon-inverse {
-	background: url('img/icon-inverse.png') no-repeat;
+	background-position: -20px -40px;
+}
+.icon-undo-pub {
+	background-position: -80px 0;
 }
 .icon-audit {
-	background: url('img/icon-audit.png') no-repeat;
+	background-position: -120px 0;
 }
 .icon-flag {
-	background: url('img/icon-flag.png') no-repeat;
+	background-position: -40px -40px;
 }
 .icon-delete {
-	background: url('img/icon-delete.png') no-repeat;
+	background-position: -40px 0;
 }
 .icon-move {
-	background: url('img/icon-move.png') no-repeat;
+	background-position: -20px 0;
 }
 .icon-preview {
-	background: url('img/icon-preview.png') no-repeat;
+	background-position: -140px 0;
 }
 .icon-home {
 	background: url('img/icon-home.png') no-repeat;
