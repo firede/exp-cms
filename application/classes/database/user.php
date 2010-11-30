@@ -1,16 +1,27 @@
 <?php
 
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * 数据库 user表操作类
  */
 
 /**
  * Description of user
  *
- * @author Administrator
+ * @author FanQie
  */
 class Database_User {
+    /*     * ****
+     * 创建一个新的用户数据 于user表里
+     * @$user <array> 用户对象的数据内容
+     * @return message <string> 直接返回执行情况消息
+     */
+    public function create($user) {
+        $save = DB::insert("user", array());
+        $save->values($user);
+        $result = (bool) $save->execute();
+        return $result ? "ok" : "error";
+    }
+
     /*     * **
      * 获取符合条件的数据 进行分页
      * @$user <array>  对应user表列的筛选条件的多个参数
@@ -19,7 +30,7 @@ class Database_User {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($user, $pageParam) {
+    public function query_list($user, $page_Param) {
         $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
         foreach ($user as $filedName => $filedvalue) {
             if (isset($filedvalue))
@@ -62,27 +73,28 @@ class Database_User {
                 }
         }
 
-        if (!isset($pageParam["items_per_page"])) {
-            $pageParam["items_per_page"] = 20;
+        if (!isset($page_Param["items_per_page"])) {
+            $page_Param["items_per_page"] = 20;
         }
         //获取当前数据起始位置
-        $current_item = $pageParam["items_per_page"] * ($pageParam["page"] - 1);
-        $total_page_count = (int) ceil($count / $pageParam["items_per_page"]);
-        $query->offset($current_item)->limit($current_item + $pageParam["items_per_page"]);
+        $current_item = $page_Param["items_per_page"] * ($page_Param["page"] - 1);
+        $total_page_count = (int) ceil($count / $page_Param["items_per_page"]);
+        $query->offset($current_item)->limit($current_item + $page_Param["items_per_page"]);
         $users = $query->execute();
         $users = $users->as_array();
         //加入一些业务值，特殊业务值的替换或者加入
         for ($i = 0; $i < count($users); $i++) {
 
-            $users[$i]["status_name"] = Sysconfig_Business::adminUser_Status($users[$i]["status"]);
-            $users[$i]["user_type_name"] = Sysconfig_Business::adminUser_user_type($users[$i]["user_type"]);
+            $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
+            $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
+            $users[$i]["password"]="";
         }
 
         if ($count > 0)
             return array(
                 'total_items_count' => $count, //总记录数
                 'total_page_count' => $total_page_count,
-                'items_per_page' => $pageParam["items_per_page"], //每页显示数据条数
+                'items_per_page' => $page_Param["items_per_page"], //每页显示数据条数
                 'result' => $users,
             );
         else
@@ -101,11 +113,19 @@ class Database_User {
             return "no_id";
         }
         //设置查询数据的sql
-        $query = DB::select("user.*")->from('user');
+        $query = DB::select('id', 'username',"password", 'email', 'user_type', 'status',
+                    'avatar', 'reg_time', 'last_time', 'admin_id')->from('user');
         $query->where("id", "=", $id);
         $users = $query->execute();
         $users = $users->as_array();
         $count = count($users);
+         //加入一些业务值，特殊业务值的替换或者加入
+        for ($i = 0; $i < count($users); $i++) {
+
+            $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
+            $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
+            $users[$i]["password"]="";
+        }
         // echo Kohana::debug($count);
         if ($count > 0)
             return $data = array('result' => $users,);
@@ -206,14 +226,40 @@ class Database_User {
         $result = (bool) $modify->execute();
         return $result ? "ok" : "error";
     }
-    public function check_user($user){
+    /******
+     * 检测该用户是否已经存在
+     * @$user <array> 用户信息
+     * @return 存在返回exist 不存在返回ok
+     */
+    public function check_user($user) {
         //设置查询数据的sql
         $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
         $query->where("username", "=", $user["username"]);
         $users = $query->execute();
         $users = $users->as_array();
-        $count = count($users);
-        $count > 0 ?"user":"ok";//存在的话返回error 不存在返回ok
+        $count = $users[0]["total_user"];
+        $count > 0 ? "exist" : "ok"; //存在的话返回error 不存在返回ok
+    }
+/*     * ***
+     * 根据ID，修改user表行数据
+     * @param $user （array(integer)）
+     */
+
+    public function modify($user) {
+        if ($user == null || count($user) == 0 || $user['id'] == null) {
+            return 'no_id';
+        }
+        /* 根据需要从请求中取出需要的数据值 */
+        $ids = explode(",", $user['id']);
+        $modify = DB::update()->table('user')->set($user);
+        //判断是否是批量操作
+        if (count($ids) > 1) {
+            $modify->where('id', 'in', $ids);
+        } else {
+            $modify->where('id', '=', $user['id']);
+        }
+        $result = (bool) $modify->execute();
+        return $result ? 'ok' : 'error';
     }
 }
 

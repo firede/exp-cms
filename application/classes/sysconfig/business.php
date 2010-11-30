@@ -39,7 +39,7 @@ class Sysconfig_Business {
      * @$Status int
      * @return 返回用户状态描述
      */
-    public static function adminUser_Status($status) {
+    public static function user_Status($status) {
         $status_box = array(
             '0' => '正常',
             '1' => '锁定',
@@ -51,11 +51,23 @@ class Sysconfig_Business {
      * @$user_type int
      * @return 返回用户类型描述
      */
-    public static function adminUser_user_type($user_type) {
+    public static function user_User_type($user_type) {
         $user_type_box = array(
             '0' => '普通',
         );
         return $user_type_box[$user_type];
+    }
+     /****
+     * admin表字段role标记说明
+     * @$role int
+     * @return 返回用户类型描述
+     */
+    public static function admin_Role($role) {
+        $role_box = array(
+            '0' => '编辑',
+            '1' => '超级管理员',
+        );
+        return $role_box[$role];
     }
 
 }
