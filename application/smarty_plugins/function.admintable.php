@@ -13,31 +13,26 @@
 function smarty_function_admintable ($params, &$smarty) {
 	extract($params);
 
+	// 初始化Smarty变量
+	$smarty->assign('_admintable_empty', NULL);
+	$smarty->assign('_admintable_conf', NULL);
+	$smarty->assign('_admintable_data', NULL);
+
+
 	// 如果数据为空，则返回空表格视图
 	if(empty ($data)) {
 		if (isset ($empty)) {
-			$smarty->assign('_empty', $empty);
+			$smarty->assign('_admintable_empty', $empty);
 		}
 		
 		return $smarty->display('system/admintable_empty.tpl');
+	} else {
+		$smarty->assign('_admintable_conf', $conf);
+		$smarty->assign('_admintable_data', $data);
+
+		// 返回表格视图
+		return $smarty->display('system/admintable.tpl');
 	}
-
-	// 如果配置了多行操作，那么将配置仍给模板
-	if(!empty ($conf['muti_operation'])) {
-		$smarty->assign('_muti_operation', $conf['muti_operation']);
-	}
-
-	// 如果配置了操作，那么将配置仍给模板
-	if(!empty ($conf['operation'])) {
-		$smarty->assign('_operation', $conf['operation']);
-	}
-
-	// 将配置和数据给模板
-	$smarty->assign('_column', $conf['column']);
-	$smarty->assign('_data', $data);
-
-	// 返回表格视图
-	return $smarty->display('system/admintable.tpl');
 }
 
 ?>

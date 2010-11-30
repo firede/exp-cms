@@ -1,35 +1,35 @@
 <{* 判断是否添加批量操作工具栏 *}>
-<{if $_muti_operation|default}>
+<{if $_admintable_conf.muti_operation|default}>
 <div class="operation-bar clearfix">
-	<{foreach from=$_muti_operation item=item key=key}>
-	<span class="operation-btn js-mutiopt-<{$key}>" title="<{$item}>"><span class="icon-<{$key}>"></span><{$item}></span>
+	<{foreach from=$_admintable_conf.muti_operation item=_admintable_item key=_admintable_key}>
+	<span class="operation-btn js-mutiopt-<{$_admintable_key}>" title="<{$_admintable_item}>"><span class="icon-<{$_admintable_key}>"></span><{$_admintable_item}></span>
 	<{/foreach}>
 </div>
 <{/if}>
 <table class="list-table">
 	<thead>
 		<tr>
-			<{foreach from=$_column item=column key=key}>
-			<th col_id="<{$key}>"><{$column.label}></th>
+			<{foreach from=$_admintable_conf.column item=_admintable_column key=_admintable_key}>
+			<th col_id="<{$_admintable_key}>"><{$_admintable_column.label}></th>
 			<{/foreach}>
 			<{* 判断是否添加操作列表头 *}>
-			<{if $_operation|default}>
+			<{if $_admintable_conf.operation|default}>
 			<th>操作</th>
 			<{/if}>
 		</tr>
 	</thead>
 	<tbody>
-		<{foreach from=$_data item=item key=key}>
-		<tr row_id="<{$key}>">
-			<{foreach from=$_column item=column}>
-			<td><{basetpl data=$item conf=$column.data tpl=$column.template prefix=$column.prefix|default}></td>
+		<{foreach from=$_admintable_data item=_admintable_item key=_admintable_key}>
+		<tr row_id="<{$_admintable_key}>">
+			<{foreach from=$_admintable_conf.column item=_admintable_column}>
+			<td><{basetpl data=$_admintable_item conf=$_admintable_column.data tpl=$_admintable_column.template prefix=$_admintable_column.prefix|default}></td>
 			<{/foreach}>
 			<{* 判断是否添加操作列 *}>
-			<{if $_operation|default}>
+			<{if $_admintable_conf.operation|default}>
 			<td>
-				<{foreach from=$_operation item=item key=key}>
-				<span class="table-btn icon-<{$key}> js-opt-<{$key}>" title="<{$item}>">
-					<span><{$item}></span>
+				<{foreach from=$_admintable_conf.operation item=_admintable_item key=_admintable_key}>
+				<span class="table-btn icon-<{$_admintable_key}> js-opt-<{$_admintable_key}>" title="<{$_admintable_item}>">
+					<span><{$_admintable_item}></span>
 				</span>
 				<{/foreach}>
 			</td>

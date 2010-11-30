@@ -6,7 +6,7 @@
  * @example <{basetpl data=$data conf=$conf prefix=$prefix tpl="link"}>
  *          data   <Array>
  *          conf   <Array>
- *          prefix <String|Array>
+ *          prefix <Array>
  *          tpl    <String>
  * @param <type> $params
  * @param <type> $smarty
