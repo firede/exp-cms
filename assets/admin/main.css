@@ -185,26 +185,34 @@ a:hover {
 	overflow: hidden;
 }
 .list-table td {
-	line-height: 16px;
-	padding: 3px 5px;
-	overflow: hidden;
+	vertical-align: middle;
 }
 
 .list-table .odd td {
 	background: #F5FAFC;
 }
 
+.list-table .inner-td {
+	line-height: 18px;
+	height:18px;
+	padding: 3px 5px;
+	display: block;
+	word-break:break-all;
+	word-wrap:break-word;
+	overflow: hidden;
+}
+
 .table-btn {
 	float: left;
 	display: inline;
-	margin: 0 3px;
+	margin: 1px 3px;
 	cursor: pointer;
 }
 
 .table-icon {
 	float: right;
 	display: inline;
-	margin: 0 1px;
+	margin: 1px;
 }
 
 .table-btn span,
