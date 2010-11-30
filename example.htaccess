@@ -1,4 +1,4 @@
-﻿# Turn on URL rewriting
+# Turn on URL rewriting
 RewriteEngine On
 
 # Installation directory
