@@ -3,34 +3,35 @@
 defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Post extends Controller_AdminTemplate {
-
     /*     * ***
      * 重写系统默认函数 执行一些事前事件
      */
 
     public function before() {
-         $_GET=Controller_Post::filter_xss($_GET);
+        $_GET = Controller_Post::filter_xss($_GET);
     }
-    /**********
+
+    /*     * ********
      * xss过滤
      */
-    public static function filter_xss($params){
-        foreach($params as $key=>$value){
+
+    public static function filter_xss($params) {
+        foreach ($params as $key => $value) {
             //将当前参数进行转义
-            $params[$key]=htmlspecialchars($value,ENT_QUOTES);
+            $params[$key] = htmlspecialchars($value, ENT_QUOTES);
         }
         return $params;
     }
-    
 
-    public function action_index() { }
+    public function action_index() {
+
+    }
 
     /*     * *********
      * 根据条件查询相应的post表数据,并加载重绘至post列表页面
      */
 
     public function action_query_list() {
-       
         // 测试分页
         $pagination = new Pagination(array(
                     'current_page' => array('source' => 'query_string', 'key' => 'page'),
@@ -60,16 +61,16 @@ class Controller_Post extends Controller_AdminTemplate {
         $posts = Action::sucess_status($posts);
         $posts['status'] = $_GET['status'];
 
-		if (isset($posts["total_items_count"])) {
+        if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }
 
-		$conf_status = 'status_'.$posts['status'];
-		$conf = Kohana::config('admin_post')->$conf_status;
+        $conf_status = 'status_' . $posts['status'];
+        $conf = Kohana::config('admin_post')->$conf_status;
         $this->template = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
-					'conf' => $conf,
+                    'conf' => $conf,
                 ));
     }
 

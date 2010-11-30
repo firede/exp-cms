@@ -12,11 +12,14 @@
  */
 class Database_User {
     /*     * **
-     *
+     * 获取符合条件的数据 进行分页
+     * @$user <array>  对应user表列的筛选条件的多个参数
+     * @$pageParam <array> 关于分页的一些参数
+     * @return <array> 符合条件的user表数据以及其他参数
+     * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
     public function query_list($user, $pageParam) {
-        $dao = Database::instance();
         $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
         foreach ($user as $filedName => $filedvalue) {
             if (isset($filedvalue))
@@ -75,7 +78,6 @@ class Database_User {
             $users[$i]["user_type_name"] = Sysconfig_Business::adminUser_user_type($users[$i]["user_type"]);
         }
 
-        unset($dao, Database::$instances['default']);
         if ($count > 0)
             return array(
                 'total_items_count' => $count, //总记录数
@@ -85,18 +87,19 @@ class Database_User {
             );
         else
             return "none";
-        unset($dao, Database::$instances['default']);
     }
 
     /*     * *
-     *
+     * 获取指定用户的信息
+     * @$id <int> 用户id
+     * @return <array> 用户信息
+     * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
     public function get_user($id) {
         if (!isset($id)) {
             return "no_id";
         }
-        $dao = Database::instance();
         //设置查询数据的sql
         $query = DB::select("user.*")->from('user');
         $query->where("id", "=", $id);
@@ -104,7 +107,6 @@ class Database_User {
         $users = $users->as_array();
         $count = count($users);
         // echo Kohana::debug($count);
-        unset($dao, Database::$instances['default']);
         if ($count > 0)
             return $data = array('result' => $users,);
         else
@@ -112,24 +114,26 @@ class Database_User {
     }
 
     /*     * ***
-     *
+     * 删除指定用户
+     * @$id <int> 用户id
+     * @return message <string> 直接返回执行情况消息
      */
 
     public function delete($id) {
         if (!isset($id)) {
             return "no_id";
         }
-        $dao = Database::instance();
         //设置删除数据的sql
         $delete = DB::delete()->table('user');
         $delete->where("id", "=", $id);
         $result = (bool) $delete->execute();
-        unset($dao, Database::$instances['default']);
         return $result ? "ok" : "error";
     }
 
     /*     * ***
-     * 
+     * 批量删除指定用户
+     * @$id <int> 一个或多个用户id 多个id 使用“，”分隔
+     * @return message <string> 直接返回执行情况消息
      */
 
     public function mulit_delete($id) {
@@ -138,53 +142,79 @@ class Database_User {
         }
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $post['id']);
-        $dao = Database::instance();
         //设置删除数据的sql
         $delete = DB::delete()->table('user');
         $delete->where('id', 'in', $ids);
         $result = (bool) $delete->execute();
-        unset($dao, Database::$instances['default']);
         return $result ? "ok" : "error";
     }
 
     /*     * ***
-     * 
+     * 修改用户的信息
+     * @$user <array> 用户需要修改信息的多个参数封装 与数据库表结构应该相符  $user->id 字段为必须
+     * @return message <string> 直接返回执行情况消息
      */
 
     public function modify($user) {
         if (!isset($id)) {
             return "no_id";
         }
-        $dao = Database::instance();
         //设置删除数据的sql
         $modify = DB::update()->table("user");
         $modify->set($user);
         $modify->where("id", "=", $id);
         $result = (bool) $modify->execute();
-        unset($dao, Database::$instances['default']);
+        return $result ? "ok" : "error";
+    }
+
+    /*     * ***
+     * 批量修改用户的信息
+     * @$user <array> 用户需要修改信息的多个参数封装 与数据库表结构应该相符 $user->id 字段如果
+     * 有多个则用“,”分隔 ,$user->id为必须字段，每次至少有一个user被执行
+     * @return message <string> 直接返回执行情况消息
+     */
+
+    public function mulit_modify($user) {
+        if (!isset($id)) {
+            return "no_id";
+        }
+        //设置删除数据的sql
+        $modify = DB::update()->table("user");
+        $modify->set($user);
+        /* 根据需要从请求中取出需要的数据值 */
+        $ids = explode(",", $post['id']);
+        $modify->where("id", "in", $id);
+        $result = (bool) $modify->execute();
         return $result ? "ok" : "error";
     }
 
     /*     * ***
      * 清除用户图像
      * @$user->id user对象必须包含中必须包含用户id
+     * @return message <string> 直接返回执行情况消息
      */
 
     public function clear_avtar($user) {
         if (!isset($user['id'])) {
             return "no_id";
         }
-        $user["avtar"]="";
-        $dao = Database::instance();
+        $user["avtar"] = "";
         //设置删除数据的sql
         $modify = DB::update()->table("user");
         $modify->set($user);
         $modify->where("id", "=", $id);
         $result = (bool) $modify->execute();
-        unset($dao, Database::$instances['default']);
         return $result ? "ok" : "error";
     }
-
+    public function check_user($user){
+        //设置查询数据的sql
+        $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
+        $query->where("username", "=", $user["username"]);
+        $users = $query->execute();
+        $users = $users->as_array();
+        $count = count($users);
+        $count > 0 ?"user":"ok";//存在的话返回error 不存在返回ok
+    }
 }
 
 ?>

@@ -12,10 +12,9 @@ class Database_Post {
      */
 
     public function query_list($post, $pageParam) {
-        $dao = Database::instance();
         $query = DB::select(array('COUNT("id")', 'total_post'))->from('post');
-        
-        foreach ($post as $filedName=>$filedvalue) {
+
+        foreach ($post as $filedName => $filedvalue) {
             if (isset($filedvalue))
                 if ($filedvalue != null) {
                     if ($filedName == "status" || $filedName == "flag") {
@@ -43,7 +42,7 @@ class Database_Post {
         $query->join("category", 'left')->on("post.cate_id", "=", "category.id");
 
         // echo Kohana::debug($query);
-         foreach ($post as $filedName=>$filedvalue) {
+        foreach ($post as $filedName => $filedvalue) {
             if (isset($filedvalue))
                 if ($filedvalue != null) {
                     if ($filedName == "status" || $filedName == "flag") {
@@ -75,8 +74,6 @@ class Database_Post {
             $posts[$i]["flag"] = Sysconfig_Business::post_flag($posts[$i]["flag"]);
             $posts[$i]["swap"] = "";
         }
-
-        unset($dao, Database::$instances['default']);
         if ($count > 0)
             return array(
                 'total_items_count' => $count, //总记录数
@@ -99,13 +96,10 @@ class Database_Post {
         if ($id == null) {
             return "no_id";
         }
-        $dao = Database::instance();
         $query = DB::select()->from('post')->where('id', '=', $id);
         $posts = $query->execute();
         $posts = $posts->as_array();
         $count = count($posts);
-        // echo Kohana::debug($count);
-        unset($dao, Database::$instances['default']);
         if ($count > 0)
             return $data = array('result' => $posts,);
         else
@@ -121,11 +115,8 @@ class Database_Post {
         if (isset($ids)) {
             return 'no_id';
         }
-        $dao = Database::instance();
         $delete = DB::delete()->table('post')->where('id', '=', $id);
-       $result = (bool)$delete->execute();
-        unset($dao, Database::$instances['default']);
-  
+        $result = (bool) $delete->execute();
         return $result ? 'ok' : 'error'; //返回值有误 需要进一步分析kohana数据库操作的反馈机制
     }
 
@@ -138,10 +129,8 @@ class Database_Post {
         if (isset($ids)) {
             return 'no_id';
         }
-        $dao = Database::instance();
         $delete = DB::delete()->table('post')->where('id', 'in', $ids);
-        $result = (bool)$delete->execute();
-        unset($dao, Database::$instances['default']);
+        $result = (bool) $delete->execute();
         echo Kohana::debug($count);
         return $result ? 'ok' : 'error';
     }
@@ -158,10 +147,6 @@ class Database_Post {
         }
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $post['id']);
-        // echo Kohana::debug(explode(",", $ids));
-        //echo Kohana::debug($ids);
-        $dao = Database::instance();
-
         $modify = DB::update()->table('post')->set($post);
 
         // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
@@ -171,10 +156,8 @@ class Database_Post {
         } else {
             $modify->where('id', '=', $post['id']);
         }
-        $result = (bool)$modify->execute();
+        $result = (bool) $modify->execute();
         //   echo Kohana::debug($modify);
-
-        unset($dao, Database::$instances['default']);
         return $result ? 'ok' : 'error';
     }
 
@@ -188,12 +171,9 @@ class Database_Post {
 
             return "no_id";
         }
-        
+
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $post['id']);
-        // echo Kohana::debug(explode(",", $ids));
-        //echo Kohana::debug($ids);
-        $dao = Database::instance();
 
         $modify = DB::update()->table('post')->set($post);
         if ($post["status"] == 1) {//正式发布的情况下 将会与发布内容与已发布内容进行交换
@@ -206,10 +186,8 @@ class Database_Post {
         } else {
             $modify->where('id', '=', $post['id']);
         }
-        $result = (bool)$modify->execute();
+        $result = (bool) $modify->execute();
         //   echo Kohana::debug($modify);
-
-        unset($dao, Database::$instances['default']);
         return $result ? 'ok' : 'error';
     }
 
@@ -225,9 +203,6 @@ class Database_Post {
         }
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $post['id']);
-        // echo Kohana::debug(explode(",", $ids));
-        //echo Kohana::debug($ids);
-        $dao = Database::instance();
         DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
         $modify = DB::update()->table('post')->set($post);
         //如果发布过的内容需要进行此操作
@@ -257,7 +232,6 @@ class Database_Post {
         //   echo Kohana::debug($modify);
         if ($undo_create_result and $undo_update_result) {
             DB::query(NULL, "COMMIT")->execute();
-            unset($dao, Database::$instances['default']);
             return "ok";
         } else {
             DB::query(NULL, "ROLLBACK")->execute();
@@ -277,9 +251,6 @@ class Database_Post {
         }
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $post['id']);
-        // echo Kohana::debug(explode(",", $ids));
-        //echo Kohana::debug($ids);
-        $dao = Database::instance();
         DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
         $modify = DB::update()->table('post')->set($post);
         //如果发布过的内容需要进行此操作
@@ -309,7 +280,6 @@ class Database_Post {
         //   echo Kohana::debug($modify);
         if ($undo_create_result and $undo_update_result) {
             DB::query(NULL, "COMMIT")->execute();
-            unset($dao, Database::$instances['default']);
             return "ok";
         } else {
             DB::query(NULL, "ROLLBACK")->execute();
