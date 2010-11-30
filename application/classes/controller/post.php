@@ -7,21 +7,7 @@ class Controller_Post extends Controller_Base {
      * 重写系统默认函数 执行一些事前事件
      */
 
-    public function before() {
-        $_GET = Controller_Post::filter_xss($_GET);
-    }
 
-    /*     * ********
-     * xss过滤
-     */
-
-    public static function filter_xss($params) {
-        foreach ($params as $key => $value) {
-            //将当前参数进行转义
-            $params[$key] = htmlspecialchars($value, ENT_QUOTES);
-        }
-        return $params;
-    }
 
     public function action_index() {
 
