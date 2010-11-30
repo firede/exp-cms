@@ -16,6 +16,10 @@ class Controller_Welcome extends Controller_AdminTemplate {
 			'id'=> 15,
 			'title' => '测试底层模板设计',
 			'date' => time(),
+			'flag' => array(
+				'1' => '精华',
+				'2' => '置顶'
+			),
 		);
 
 		if (isset ($_GET) AND isset ($_GET['id'])) {

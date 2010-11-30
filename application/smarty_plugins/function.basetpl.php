@@ -14,27 +14,31 @@
 function smarty_function_basetpl($params, &$smarty) {
 	extract($params);
 
+	// 初始化_prefix, _arg
+	$_prefix = array();
+	$_arg = array();
+
+	// 初始化Smarty变量
+	$smarty->assign('_prefix', NULL);
+	$smarty->assign('_arg', NULL);
+
 	// 将配置拆成数组
 	$conf_arr = explode(',', $conf);
 
-	// 组合配置与数据，拼接模板变量
-	foreach ($conf_arr as $key => $value) {
-		// 根据顺序，变量名为 "_arg_0", "_arg_1", etc.
-		$smarty->assign('_arg_'.$key, $data[$value]);
-	}
-
-	// 判断是否有常量配置
-	if (isset($prefix)) {
-		if (is_string($prefix)) {
-			// 常量为字符串，则输出模板变量"_prefix"
-			$smarty->assign('_prefix', $prefix);
-		} elseif (is_array($prefix)) {
-			// 有多个常量（为数组时），输出 "_prefix_0", "_prefix_1", etc.
-			foreach ($prefix as $key => $value) {
-				$smarty->assign('_prefix_'.$key, $value);
-			}
+	if (!empty($conf_arr)) {
+		// 组合配置与数据，拼接模板变量
+		foreach ($conf_arr as $key => $value) {
+			$_arg[$key] = $data[$value];
 		}
 	}
+	
+	if (isset($prefix)) {
+		$_prefix = $prefix;
+	}
+
+	// 设置Smarty变量
+	$smarty->assign('_prefix', $_prefix);
+	$smarty->assign('_arg', $_arg);
 
 	// 根据$tpl变量找到对应的底层模板并返回
 	return $smarty->display('system/snippet/'.$tpl.'.tpl');

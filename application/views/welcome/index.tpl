@@ -8,6 +8,7 @@
 	<body>
 		<h1><{$hello}></h1>
 		<p><em>这是一个Smarty模板，如果你看到上面有个大标题，说明测试成功了。</em></p>
+		<{basetpl data=$data conf='flag' tpl='flag'}>
 		<{basetpl data=$data conf=$conf prefix=$prefix tpl="link"}>
 		<p>测试日期底层模板：<{basetpl data=$data conf='date' prefix=$prefix tpl="date"}></p>
 	</body>
