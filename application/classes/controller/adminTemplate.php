@@ -23,7 +23,7 @@ class Controller_AdminTemplate extends Controller {
 		if ($this->auto_render === TRUE)
 		{
 			// 输出视图前定义变量
-			$this->template->base_url = URL::base();
+			$this->template->BASE_URL = URL::base();
 
 			$this->request->response = $this->template;
 		}
