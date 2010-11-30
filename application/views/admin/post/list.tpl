@@ -5,9 +5,9 @@
 <div class="grid_18 alpha">
 	<div class="breadcrumbs">
 		<span class="icon-position"></span>
-		<a href="<{$base_url}>admin">后台首页</a> &raquo
-		<a href="<{$base_url}>admin/post">经验</a> &raquo
-		<a href="<{$base_url}>admin/post?cate_id=12">魔兽世界</a> &raquo
+		<a href="<{$BASE_URL}>admin">后台首页</a> &raquo
+		<a href="<{$BASE_URL}>admin/post">经验</a> &raquo
+		<a href="<{$BASE_URL}>admin/post?cate_id=12">魔兽世界</a> &raquo
 		<span>列表</span>
 	</div>
 </div>
@@ -15,7 +15,7 @@
 <div class="grid_3 omega">
 	<div class="exlink">
 		<span class="icon-category"></span>
-		<a href="<{$base_url}>category">切换分类</a>
+		<a href="<{$BASE_URL}>category">切换分类</a>
 	</div>
 </div>
 
@@ -40,7 +40,7 @@
 
 </div>
 
-<script type="text/javascript" src="<{$base_url}>assets/admin/js/admin.js"></script>
+<script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/admin.js"></script>
 
 <script type="text/javascript">
 $(document).ready(function(){

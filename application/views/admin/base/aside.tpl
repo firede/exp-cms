@@ -1,11 +1,11 @@
 <div class="grid_3 sidebar">
 	<ul class="mainmenu radius_all">
-		<li><a href="<{$base_url}>admin/post">经验</a></li>
-		<li><a href="<{$base_url}>admin/category">分类</a></li>
-		<li><a href="<{$base_url}>admin/attachment">附件</a></li>
-		<li><a href="<{$base_url}>admin/user">用户</a></li>
-		<li><a href="<{$base_url}>admin/admin">管理员</a></li>
-		<li><a href="<{$base_url}>admin/setting">设置</a></li>
+		<li><a href="<{$BASE_URL}>admin/post">经验</a></li>
+		<li><a href="<{$BASE_URL}>admin/category">分类</a></li>
+		<li><a href="<{$BASE_URL}>admin/attachment">附件</a></li>
+		<li><a href="<{$BASE_URL}>admin/user">用户</a></li>
+		<li><a href="<{$BASE_URL}>admin/admin">管理员</a></li>
+		<li><a href="<{$BASE_URL}>admin/setting">设置</a></li>
 	</ul>
 	<div class="sidebox radius_all">
 		<h5>帮助</h5>
