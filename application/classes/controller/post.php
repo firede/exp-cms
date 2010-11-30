@@ -31,7 +31,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 根据条件查询相应的post表数据,并加载重绘至post列表页面
      */
 
-    public function action_query_list() {
+    public function action_list() {
         // 测试分页
         $pagination = new Pagination(array(
                     'current_page' => array('source' => 'query_string', 'key' => 'page'),
@@ -78,7 +78,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 根据条件id查询相应的post表数据
      */
 
-    public function action_get_post($id) {
+    public function action_get($id) {
         $postDb = new Database_Post();
         $posts = $postDb->getpost($id);
         $posts = Action::sucess_status($posts);
@@ -93,7 +93,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * @$id post.ID 
      */
 
-    public function action_get_modify_post($id) {
+    public function action_update($id) {
 
         $postDb = new Database_Post();
         $post = $postDb->getpost($id);
@@ -112,7 +112,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * @param $id integer
      */
 
-    public function action_delete($id) {
+    public function action_del_post($id) {
         $postDb = new Database_Post();
         $view_data = $postDb->delete($id);
         $view_data = Action::sucess_status($view_data);
@@ -127,7 +127,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * @param $ids （array(integer)）
      */
 
-    public function action_multi_delete($ids) {
+    public function action_m_del_post($ids) {
         $postDb = new Database_Post();
         $view_data = $postDb->multi_delete($ids);
         $view_data = Action::sucess_status($view_data);
@@ -141,7 +141,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 修改post数据行 如果id为数字则为单行修改 如果为id=1,2,4,6,34,风格则为批量修改“，”作为分割符号
      */
 
-    public function action_modify() {
+    public function action_update_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time',
@@ -161,7 +161,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 单行操作
      */
 
-    public function action_flag() {
+    public function action_flag_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'flag');
@@ -179,7 +179,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 批量post数据行 如果id为数字则为单行修改 如果为id=1,2,4,6,34,风格则为批量修改“，”作为分割符号
      */
 
-    public function action_multi_flag() {
+    public function action_m_flag_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'flag');
@@ -197,7 +197,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 批量post数据 如果id为数字则为单行修改 如果为id=1,2,4,6,34,风格则为批量修改“，”作为分割符号
      */
 
-    public function action_multi_move() {
+    public function action_m_move_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'cate_id');
@@ -215,7 +215,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 批量post数据 如果id为数字则为单行修改 如果为id=1,2,4,6,34,风格则为批量修改“，”作为分割符号
      */
 
-    public function action_multi_trial() {
+    public function action_m_trial_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'status', 'operation_desc');
@@ -233,7 +233,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 单行 审核
      */
 
-    public function action_trial() {
+    public function action_trial_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'status', 'operation_desc');
@@ -251,7 +251,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 撤销发布
      */
 
-    public function action_undo_pub() {
+    public function action_undo_pub_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
@@ -270,7 +270,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 批量撤销发布 id 格式为 &id=1，2,3,4
      */
 
-    public function action_multi_undo_pub() {
+    public function action_multi_undo_pub_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
@@ -289,7 +289,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 撤销驳回 
      */
 
-    public function action_undo_reject() {
+    public function action_undo_reject_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
@@ -308,7 +308,7 @@ class Controller_Post extends Controller_AdminTemplate {
      * 批量撤销驳回 id 格式为 &id=1，2,3,4
      */
 
-    public function action_multi_undo_reject() {
+    public function action_multi_undo_reject_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
