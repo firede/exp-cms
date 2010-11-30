@@ -1,15 +1,14 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Welcome extends Controller_AdminTemplate {
+class Controller_Welcome extends Controller_Base {
 
 	// 测试Smarty模板
-	public $template = 'smarty:welcome/index';
-
 	public function action_index()
 	{
 		$conf = 'id,title';
 		$conf_arr = explode(',',$conf);
 
+		$this->template = View::factory('smarty:welcome/index');
 		$this->template->conf = $conf;
 		$this->template->prefix = array('admin/post/view/', '.html');
 		$this->template->data = array(
