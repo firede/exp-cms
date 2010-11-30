@@ -6,7 +6,9 @@
 	<link rel="stylesheet" href="<{$base_url}>assets/admin/main.css" />
 	<script type="text/javascript" src="<{$base_url}>assets/common/js/jquery.min.js"></script>
 	<script type="text/javascript" src="<{$base_url}>assets/admin/js/jquery.qtip.min.js"></script>
-	<title><{$title|default:'no title - '}>大犀牛体验版CMS</title>
+	<title><{if $title|default}>
+		<{$title}> - 
+	<{/if}>大犀牛体验版CMS</title>
 </head>
 
 <body>

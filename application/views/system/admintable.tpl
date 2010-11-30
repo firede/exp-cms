@@ -1,7 +1,8 @@
+<{* 判断是否添加批量操作工具栏 *}>
 <{if $_muti_operation|default}>
 <div class="operation-bar clearfix">
 	<{foreach from=$_muti_operation item=item key=key}>
-	<span class="operation-btn" title="<{$item}>"><span class="icon-<{$key}>"></span><{$item}></span>
+	<span class="operation-btn js-mutiopt-<{$key}>" title="<{$item}>"><span class="icon-<{$key}>"></span><{$item}></span>
 	<{/foreach}>
 </div>
 <{/if}>
@@ -27,7 +28,7 @@
 			<{if $_operation|default}>
 			<td>
 				<{foreach from=$_operation item=item key=key}>
-				<span class="table-btn icon-<{$key}>" title="<{$item}>">
+				<span class="table-btn icon-<{$key}> js-opt-<{$key}>" title="<{$item}>">
 					<span><{$item}></span>
 				</span>
 				<{/foreach}>
