@@ -13,6 +13,3 @@
 		<p>测试日期底层模板：<{basetpl data=$data conf='date' prefix=$prefix tpl="date"}></p>
 	</body>
 </html>
-
-
-<{debug}>

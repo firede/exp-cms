@@ -5,7 +5,7 @@ $(".operation-btn").each(function(){
 		content: {
 			data: {id: 5},
 			method: 'get',
-			url: 'http://daxiniu.cms/welcome',
+			url: '/welcome/index',
 			text: 'Loading...'
 		},
 		show: {
