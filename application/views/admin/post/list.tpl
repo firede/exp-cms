@@ -40,14 +40,19 @@
 
 </div>
 
+<script type="text/javascript">
+var PAGE_CONFIG = {
+	"STATUS" : "<{$view_data.status}>",
+	"BASE_URL": "<{$BASE_URL|escape:javascript}>"
+};
+
+$('#status-' + PAGE_CONFIG.STATUS).addClass('status-tab-active');
+
+</script>
+
+<script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/table.js"></script>
 <script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/admin.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){
-	$('#status-<{$view_data.status}>').addClass('status-tab-active');
-	$('.list-table tbody tr:odd').addClass('odd');
-});
-</script>
 
 <{include file="admin/base/footer.tpl"}>
 

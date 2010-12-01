@@ -1,2 +1,2 @@
 <{* 直接输出文本 *}>
-<{$_arg.0|default}>
+<span title="<{$_prefix.0|default}><{$_arg.0|default}>"><{$_arg.0|default}></span>

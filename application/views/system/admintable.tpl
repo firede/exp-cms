@@ -34,9 +34,7 @@
 				<td>
 					<span class="inner-td">
 					<{foreach from=$_admintable_conf.operation item=_admintable_item key=_admintable_key}>
-					<span class="table-btn icon-<{$_admintable_key}> js-opt-<{$_admintable_key}>" title="<{$_admintable_item}>">
-						<span><{$_admintable_item}></span>
-					</span>
+					<span class="table-btn icon-<{$_admintable_key}> js-opt-<{$_admintable_key}>" title="<{$_admintable_item}>"></span>
 					<{/foreach}>
 					</span>
 				</td>
