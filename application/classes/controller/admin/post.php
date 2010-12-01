@@ -108,6 +108,16 @@ class Controller_Admin_Post extends Controller_Base {
         $this->request->response = $view->render();
     }
 
+	public function action_m_del() {
+		$ids = $_GET['id'];
+		$ids_arr = explode(',', $ids);
+
+		$this->template = View::factory('smarty:admin/post/m_del', array(
+			'ids' => $ids,
+			'id_sum' => count($ids_arr),
+		));
+	}
+
     /*     * ***
      * 根据多个ID，批量删除post表数据
      * @param $ids （array(integer)）

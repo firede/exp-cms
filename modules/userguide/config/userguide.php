@@ -6,7 +6,7 @@ return array
 	'default_page' => 'about.kohana',
 
 	// Default the userguide language.
-	'lang'         => 'en-us',
+	'lang'         => 'zh-cn',
 	
 	// Enable the API browser.  TRUE or FALSE
 	'api_browser'  => TRUE,
