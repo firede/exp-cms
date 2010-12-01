@@ -63,20 +63,24 @@ class Database_Category {
 
     private function as_tree_array($categorys) {
 
-        $this->build_child("-1", $categorys);
-        return $categorys = $this->cate_tree;
+        $this->build_child("-1", $categorys, $this->cate_tree);
+        echo Kohana::debug($this->cate_tree);
     }
 
-    private function build_child($parent_id, $categorys, $cate_tree_now) {
+    private function build_child($parent_id, $categorys) {
+     
         foreach ($categorys as $category) {
             if ($category["parent_id"] == $parent_id) {
 
-                $cate_tree_now = $this->cate_tree[$category["parent_id"]][$category["id"]] = $category;
-                $this->build_child($category["id"], $categorys, $cate_tree_now);
+            
+
+                $this->build_child($category["id"], $categorys);
             } else {
                 continue;
             }
         }
+       
+        $this->cate_tree = $cate_tree_now;
     }
 
     /*     * *
