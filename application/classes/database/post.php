@@ -93,7 +93,7 @@ class Database_Post {
 
     public function getpost($id) {
 
-        if ($id == null) {
+       if($post["id"]==null||$post["id"]==""){
             return "no_id";
         }
         $query = DB::select()->from('post')->where('id', '=', $id);
@@ -112,8 +112,8 @@ class Database_Post {
      */
 
     public function delete($id) {
-        if (isset($id)) {
-            return 'no_id';
+        if($post["id"]==null||$post["id"]==""){
+            return "no_id";
         }
         $delete = DB::delete()->table('post')->where('id', '=', $id);
         $result = (bool) $delete->execute();

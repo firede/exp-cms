@@ -60,6 +60,7 @@ class Controller_Admin_Post extends Controller_Base {
      */
 
     public function action_get($id) {
+        $id = !isset($id) ? $id : "";
         $postDb = new Database_Post();
         $posts = $postDb->getpost($id);
         $posts = Action::sucess_status($posts);
@@ -75,7 +76,7 @@ class Controller_Admin_Post extends Controller_Base {
      */
 
     public function action_update($id) {
-
+        $id = !isset($id) ? $id : "";
         $postDb = new Database_Post();
         $post = $postDb->getpost($id);
         if (count($post) > 1) {
@@ -95,7 +96,7 @@ class Controller_Admin_Post extends Controller_Base {
 
     public function action_del_post() {
 
-        $id = !isset($_POST["id"]) ? $id = $_POST["id"] : "";
+        $id = !isset($_POST["id"]) ?$_POST["id"] : "";
         $postDb = new Database_Post();
         $view_data = $postDb->delete($id);
         $view_data = Action::sucess_status($view_data);
