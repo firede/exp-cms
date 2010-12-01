@@ -269,6 +269,7 @@ a:hover {
 	height:16px;
 	display: block;
 	background-image: url('img/icons.png');
+	_background-image: url('img/icons-ie6.png');
 	background-repeat: no-repeat;
 }
 
