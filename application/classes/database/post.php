@@ -34,7 +34,7 @@ class Database_Post {
         $count = $count_Result[0]['total_post'];
 
         //设置查询数据的sql
-        $query = DB::select('post.id', 'uuid', 'title', 'cate_id', array("category.name", "cate_name"), 'pub_time',
+        $query = DB::select('post.id', 'uuid', 'title', 'cate_id', array("category.name", "cate_name"), 'pub_time','update_time',
                         'pre_content', 'content', 'user_id', array("user.username", "user_name"), 'post.status',
                         'read_count', 'operation_id', array("admin.username", "operation_name"), 'reference', 'source', 'operation_desc', 'flag')->from('post');
         $query->join("admin", "left")->on("post.operation_id", "=", "admin.id");
@@ -93,7 +93,7 @@ class Database_Post {
 
     public function getpost($id) {
 
-        if ($id == null) {
+       if($post["id"]==null||$post["id"]==""){
             return "no_id";
         }
         $query = DB::select()->from('post')->where('id', '=', $id);
@@ -112,8 +112,8 @@ class Database_Post {
      */
 
     public function delete($id) {
-        if (isset($ids)) {
-            return 'no_id';
+        if($post["id"]==null||$post["id"]==""){
+            return "no_id";
         }
         $delete = DB::delete()->table('post')->where('id', '=', $id);
         $result = (bool) $delete->execute();
@@ -125,13 +125,14 @@ class Database_Post {
      * @param $ids （array(integer)）
      */
 
-    public function multi_delete($ids) {
-        if (isset($ids)) {
-            return 'no_id';
+    public function multi_delete($post) {
+        if($post["id"]==null||$post["id"]==""){
+            return "no_id";
         }
+        $ids = explode(",", $ids);
         $delete = DB::delete()->table('post')->where('id', 'in', $ids);
         $result = (bool) $delete->execute();
-        echo Kohana::debug($count);
+        ECHO Kohana::debug($result);
         return $result ? 'ok' : 'error';
     }
 

@@ -1,66 +1,38 @@
 <?php
 
-/*
- * 数据库 user表操作类
- */
-
 /**
- * Description of user
+ * 内容分类数据操作类
  *
  * @author FanQie
  */
-class Database_User {
+class Database_Category {
     /*     * ****
-     * 创建一个新的用户数据 于user表里
-     * @$user <array> 用户对象的数据内容
+     * 创建一个新的用户数据 于category表里
+     * @$category <array> 用户对象的数据内容
      * @return message <string> 直接返回执行情况消息
      */
-    public function create($user) {
-        $save = DB::insert("user", array());
-        $save->values($user);
+
+    public function create($category) {
+        $save = DB::insert("category", array());
+        $save->values($category);
         $result = (bool) $save->execute();
         return $result ? "ok" : "error";
     }
 
     /*     * **
-     * 获取符合条件的数据 进行分页
-     * @$user <array>  对应user表列的筛选条件的多个参数
-     * @$pageParam <array> 关于分页的一些参数
-     * @return <array> 符合条件的user表数据以及其他参数
+     * 获取符合条件的数据 并返回tree 格式的数据结构数组
+     * @$category <array>  对应category表列的筛选条件的多个参数
+     * @return <array> 符合条件的category表数据以及其他参数
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($user, $page_Param) {
-        $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
-        foreach ($user as $filedName => $filedvalue) {
-            if (isset($filedvalue))
-                if ($filedvalue != null) {
-                    if ($filedName == "status" || $filedName == "user_type") {
-                        $filed_values = explode(',', (string) $filedvalue);
-                        if (count($filed_values) > 0) {
-                            $query->where('user.' . $filedName, "in", $filed_values);
-                        } else {
-                            $query->where('user.' . $filedName, "=", $filedvalue);
-                        }
-                    } else {
-                        $query->where('user.' . $filedName, "like", "%" . $filedvalue . "%");
-                    }
-                }
-        }
-
-        $count_Result = $query->execute()->as_array();
-        $count = $count_Result[0]['total_user'];
-
+    public function query_list($category) {
         //设置查询数据的sql
-        $query = DB::select("user.*", array("admin.username", "admin_name"))->from('user');
-        $query->join("admin", "left")->on("user.admin_id", "=", "admin.id");
-
-
-        // echo Kohana::debug($query);
-        foreach ($user as $filedName => $filedvalue) {
+        $query = DB::select("category.*")->from('category');
+        foreach ($category as $filedName => $filedvalue) {
             if (isset($filedvalue))
                 if ($filedvalue != null) {
-                    if ($filedName == "status" || $filedName == "user_type") {
+                    if ($filedName == "parent_id") {
                         $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
                             $query->where('user.' . $filedName, "in", $filed_values);
@@ -73,32 +45,38 @@ class Database_User {
                 }
         }
 
-        if (!isset($page_Param["items_per_page"])) {
-            $page_Param["items_per_page"] = 20;
-        }
-        //获取当前数据起始位置
-        $current_item = $page_Param["items_per_page"] * ($page_Param["page"] - 1);
-        $total_page_count = (int) ceil($count / $page_Param["items_per_page"]);
-        $query->offset($current_item)->limit($current_item + $page_Param["items_per_page"]);
-        $users = $query->execute();
-        $users = $users->as_array();
+        $categorys = $query->execute();
+        $categorys = $categorys->as_array();
         //加入一些业务值，特殊业务值的替换或者加入
-        for ($i = 0; $i < count($users); $i++) {
+        //
+        $categorys = $this->as_tree_array($categorys);
 
-            $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
-            $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
-            $users[$i]["password"]="";
-        }
-
-        if ($count > 0)
+        if (count($categorys) > 0)
             return array(
-                'total_items_count' => $count, //总记录数
-                'total_page_count' => $total_page_count,
-                'items_per_page' => $page_Param["items_per_page"], //每页显示数据条数
-                'result' => $users,
+                'result' => $categorys,
             );
         else
             return "none";
+    }
+
+    private $cate_tree = array();
+
+    private function as_tree_array($categorys) {
+
+        $this->build_child("-1", $categorys);
+        return $categorys = $this->cate_tree;
+    }
+
+    private function build_child($parent_id, $categorys, $cate_tree_now) {
+        foreach ($categorys as $category) {
+            if ($category["parent_id"] == $parent_id) {
+
+                $cate_tree_now = $this->cate_tree[$category["parent_id"]][$category["id"]] = $category;
+                $this->build_child($category["id"], $categorys, $cate_tree_now);
+            } else {
+                continue;
+            }
+        }
     }
 
     /*     * *
@@ -113,18 +91,18 @@ class Database_User {
             return "no_id";
         }
         //设置查询数据的sql
-        $query = DB::select('id', 'username',"password", 'email', 'user_type', 'status',
-                    'avatar', 'reg_time', 'last_time', 'admin_id')->from('user');
+        $query = DB::select('id', 'username', "password", 'email', 'user_type', 'status',
+                        'avatar', 'reg_time', 'last_time', 'admin_id')->from('user');
         $query->where("id", "=", $id);
         $users = $query->execute();
         $users = $users->as_array();
         $count = count($users);
-         //加入一些业务值，特殊业务值的替换或者加入
+        //加入一些业务值，特殊业务值的替换或者加入
         for ($i = 0; $i < count($users); $i++) {
 
             $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
             $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
-            $users[$i]["password"]="";
+            $users[$i]["password"] = "";
         }
         // echo Kohana::debug($count);
         if ($count > 0)
@@ -176,9 +154,10 @@ class Database_User {
      */
 
     public function modify($user) {
-        if (!isset($id)) {
-            return "no_id";
+        if ($user == null || count($user) == 0 || $user['id'] == null) {
+            return 'no_id';
         }
+        $id = $user['id'];
         //设置删除数据的sql
         $modify = DB::update()->table("user");
         $modify->set($user);
@@ -226,11 +205,13 @@ class Database_User {
         $result = (bool) $modify->execute();
         return $result ? "ok" : "error";
     }
-    /******
+
+    /*     * ****
      * 检测该用户是否已经存在
      * @$user <array> 用户信息
      * @return 存在返回exist 不存在返回ok
      */
+
     public function check_exist($user) {
         //设置查询数据的sql
         $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
@@ -240,27 +221,7 @@ class Database_User {
         $count = $users[0]["total_user"];
         $count > 0 ? "exist" : "ok"; //存在的话返回error 不存在返回ok
     }
-/*     * ***
-     * 根据ID，修改user表行数据
-     * @param $user （array(integer)）
-     */
 
-    public function modify($user) {
-        if ($user == null || count($user) == 0 || $user['id'] == null) {
-            return 'no_id';
-        }
-        /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $user['id']);
-        $modify = DB::update()->table('user')->set($user);
-        //判断是否是批量操作
-        if (count($ids) > 1) {
-            $modify->where('id', 'in', $ids);
-        } else {
-            $modify->where('id', '=', $user['id']);
-        }
-        $result = (bool) $modify->execute();
-        return $result ? 'ok' : 'error';
-    }
 }
 
 ?>
