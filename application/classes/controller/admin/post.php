@@ -3,11 +3,6 @@
 defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Admin_Post extends Controller_Base {
-    /*     * ***
-     * 重写系统默认函数 执行一些事前事件
-     */
-
-
 
     public function action_index() {
 
@@ -98,7 +93,9 @@ class Controller_Admin_Post extends Controller_Base {
      * @param $id integer
      */
 
-    public function action_del_post($id) {
+    public function action_del_post() {
+
+        $id = !isset($_POST["id"]) ? $id = $_POST["id"] : "";
         $postDb = new Database_Post();
         $view_data = $postDb->delete($id);
         $view_data = Action::sucess_status($view_data);
@@ -113,9 +110,15 @@ class Controller_Admin_Post extends Controller_Base {
      * @param $ids （array(integer)）
      */
 
-    public function action_m_del_post($ids) {
+    public function action_m_del_post() {
         $postDb = new Database_Post();
-        $view_data = $postDb->multi_delete($ids);
+        $arr_element_names =
+                array('id', 'uuid', 'title', 'cate_id', 'pub_time',
+                    'pre_content', 'content', 'user_id', 'status',
+                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
+        $post = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $postDb->multi_delete($post);
+
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
         $view = View::factory('smarty:');
@@ -133,7 +136,7 @@ class Controller_Admin_Post extends Controller_Base {
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time',
                     'pre_content', 'content', 'user_id', 'status',
                     'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
@@ -151,7 +154,7 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'flag');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
@@ -169,7 +172,7 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'flag');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
@@ -187,7 +190,7 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'cate_id');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
@@ -205,7 +208,7 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'status', 'operation_desc');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
         $view_data = $postDb->trial($post);
         $view_data = Action::sucess_status($view_data);
@@ -223,7 +226,7 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'status', 'operation_desc');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
         $view_data = $postDb->trial($post);
         $view_data = Action::sucess_status($view_data);
@@ -241,7 +244,7 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_pub($post);
@@ -260,7 +263,7 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_pub($post);
@@ -279,7 +282,7 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_reject($post);
@@ -298,7 +301,7 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_reject($post);

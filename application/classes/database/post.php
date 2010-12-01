@@ -112,7 +112,7 @@ class Database_Post {
      */
 
     public function delete($id) {
-        if (isset($ids)) {
+        if (isset($id)) {
             return 'no_id';
         }
         $delete = DB::delete()->table('post')->where('id', '=', $id);
@@ -125,13 +125,14 @@ class Database_Post {
      * @param $ids （array(integer)）
      */
 
-    public function multi_delete($ids) {
-        if (isset($ids)) {
-            return 'no_id';
+    public function multi_delete($post) {
+        if($post["id"]==null||$post["id"]==""){
+            return "no_id";
         }
+        $ids = explode(",", $ids);
         $delete = DB::delete()->table('post')->where('id', 'in', $ids);
         $result = (bool) $delete->execute();
-        echo Kohana::debug($count);
+        ECHO Kohana::debug($result);
         return $result ? 'ok' : 'error';
     }
 
@@ -146,7 +147,7 @@ class Database_Post {
             return 'no_id';
         }
         /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $post['id']);
+        $ids = explode("_", $post['id']);
         $modify = DB::update()->table('post')->set($post);
 
         // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));

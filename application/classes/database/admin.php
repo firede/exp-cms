@@ -141,6 +141,20 @@ class Database_admin {
         $result = (bool) $modify->execute();
         return $result ? 'ok' : 'error';
     }
+     /******
+     * 检测该账号是否已经存在
+     * @$admin <array> 用户信息
+     * @return 存在返回exist 不存在返回ok
+     */
+    public function check_exist($admin) {
+        //设置查询数据的sql
+        $query = DB::select(array('COUNT("id")', 'total_admin'))->from('admin');
+        $query->where("username", "=", $admin["username"]);
+        $admins = $query->execute();
+        $admins = $admins->as_array();
+        $count = $admins[0]["total_admin"];
+        $count > 0 ? "exist" : "ok"; //存在的话返回error 不存在返回ok
+    }
 
 }
 

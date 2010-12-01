@@ -231,7 +231,7 @@ class Database_User {
      * @$user <array> 用户信息
      * @return 存在返回exist 不存在返回ok
      */
-    public function check_user($user) {
+    public function check_exist($user) {
         //设置查询数据的sql
         $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
         $query->where("username", "=", $user["username"]);
