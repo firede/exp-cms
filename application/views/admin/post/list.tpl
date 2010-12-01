@@ -41,17 +41,14 @@
 </div>
 
 <script type="text/javascript">
-var PAGE_CONFIG = {
-	"STATUS" : "<{$view_data.status}>",
-	"BASE_URL": "<{$BASE_URL|escape:javascript}>"
-};
-
-$('#status-' + PAGE_CONFIG.STATUS).addClass('status-tab-active');
-
+	<{* 页面环境变量&配置 *}>
+	var PAGEENV = {
+		"base": "<{$BASE_URL|escape:javascript}>",
+		"param": <{$URL_PARAMS}>
+	};
 </script>
 
 <script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/table.js"></script>
 <script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/admin.js"></script>
-
 
 <{include file="admin/base/footer.tpl"}>

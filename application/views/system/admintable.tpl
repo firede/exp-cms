@@ -11,7 +11,7 @@
 		<thead>
 			<tr>
 <{foreach from=$_admintable_conf.column item=_admintable_column key=_admintable_key}>
-<th col_id="<{$_admintable_key}>"<{if $_admintable_column.width|default}> style="width:<{$_admintable_column.width}>px;"<{/if}><{if $_admintable_column.sortable|default}> class="js-sortable"<{/if}>>
+<th<{if $_admintable_column.width|default}> style="width:<{$_admintable_column.width}>px;"<{/if}><{if $_admintable_column.order_by|default}> order_by="<{$_admintable_column.order_by}>" class="js-sortable"<{/if}>>
 	<span class="title"><{$_admintable_column.label}></span>
 </th>
 <{/foreach}>
