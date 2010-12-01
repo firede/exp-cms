@@ -21,6 +21,7 @@ a:hover {
 	position: relative;
 	padding-bottom: 12px;
 	margin: 0 5px;
+	zoom:1;
 }
 #logo {
 	width: 230px;
@@ -211,7 +212,7 @@ a:hover {
 .list-table .inner-td {
 	line-height: 18px;
 	height:18px;
-	padding: 3px 5px;
+	margin: 3px 5px;
 	display: block;
 	word-break:break-all;
 	word-wrap:break-word;
