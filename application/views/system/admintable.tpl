@@ -24,7 +24,7 @@
 		</thead>
 		<tbody>
 			<{foreach from=$_admintable_data item=_admintable_item key=_admintable_key}>
-			<tr row_id="<{$_admintable_key}>">
+			<tr row_id="<{$_admintable_item[$_admintable_conf.primary]}>">
 				<{foreach from=$_admintable_conf.column item=_admintable_column}>
 				<td>
 					<span class="inner-td"<{if $_admintable_column.width|default}> style="width:<{$_admintable_column.width}>px;"<{/if}>>

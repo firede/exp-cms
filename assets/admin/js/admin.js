@@ -1,7 +1,7 @@
 (function( $ ) {
 
 // 初始化提示层
-$('span[qtip]').qtip({
+$('span[qtip=1]').qtip({
 	style: { name: 'cream', tip: false },
 	position: { target: 'mouse' },
 	show: { effect: { type: 'fade', length:0 } },
@@ -75,6 +75,7 @@ $(".js-opt-delete").each(function(){
 		api: {
 			onShow: function(){
 				$(me).addClass('table-btn-active');
+				alert($(me).closest("tr").attr("row_id"));
 			},
 			onHide: function(){
 				$(me).removeClass('table-btn-active');

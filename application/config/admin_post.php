@@ -9,6 +9,8 @@ return array(
 	
 	// 创建待审核
 	'status_0' => array(
+		// 主键，用于行级操作的数据来源
+		'primary' => 'id',
 		// 显示字段（列表表格所显示的列）
 		'column' => array(
 			'select'	    => array(
@@ -68,6 +70,7 @@ return array(
 	
 	// 修改待审核
 	'status_2' => array(
+		'primary' => 'id',
 		'column' => array(
 			'select'	    => array(
 				'label'     => '选择',
@@ -138,6 +141,7 @@ return array(
 	
 	// 已发布
 	'status_1' => array(
+		'primary' => 'id',
 		'column' => array(
 			'select'	    => array(
 				'label'     => '选择',
@@ -209,6 +213,7 @@ return array(
 	
 	// 草稿
 	'status_5' => array(
+		'primary' => 'id',
 		'column' => array(
 			'title'		    => array(
 				'label'     => '标题',
@@ -249,6 +254,7 @@ return array(
 	
 	// 驳回
 	'status_3' => array(
+		'primary' => 'id',
 		'column' => array(
 			'select'	    => array(
 				'label'     => '选择',
