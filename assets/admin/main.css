@@ -176,16 +176,30 @@ a:hover {
 	margin: 0;
 }
 .list-table th {
-	height: 20px;
-	padding: 3px 5px;
-	line-height: 20px;
-	overflow: hidden;
+	padding: 0 5px;
 	background: url('img/box-bg.png') repeat-x;
-	color: #666;
-	font-weight: 700;
 	text-align: left;
-	overflow: hidden;
 }
+
+.list-table th .title {
+	float: left;
+	padding:3px 0;
+	height: 20px;
+	line-height: 20px;
+	overflow: hidden;	
+	font-weight: 700;
+	color: #666;
+}
+
+.list-table th .sort {
+	float: left;
+	padding:3px 5px 3px 0;
+	line-height: 20px;
+	height: 20px;
+	overflow: hidden;
+	color:#CCC;
+}
+
 .list-table td {
 	vertical-align: middle;
 }
@@ -207,7 +221,7 @@ a:hover {
 .table-btn {
 	float: left;
 	display: inline;
-	margin: 1px 3px;
+	padding: 1px 3px;
 	cursor: pointer;
 }
 
@@ -216,8 +230,6 @@ a:hover {
 	border-top-right-radius: 3px;
 	-moz-border-radius-topleft: 3px;
 	-moz-border-radius-topright: 3px;
-	margin:-1px 1px;
-	border:2px solid #0073B3;
 	background-color:#0073B3;
 }
 
@@ -225,11 +237,6 @@ a:hover {
 	float: right;
 	display: inline;
 	margin: 1px;
-}
-
-.table-btn span,
-.table-icon span {
-	display: none;
 }
 
 .list-table-empty {

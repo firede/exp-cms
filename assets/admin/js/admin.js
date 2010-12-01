@@ -1,43 +1,24 @@
 (function( $ ) {
 
 // 初始化提示层
-//$('a[title]').qtip({ style: { name: 'blue', tip: false }, position: { target: 'mouse' } })
-//$('span[title]').qtip({ style: { name: 'blue', tip: false }, position: { target: 'mouse' } })
+$('span[qtip]').qtip({
+	style: { name: 'cream', tip: false },
+	position: { target: 'mouse' },
+	show: { effect: { type: 'fade', length:0 } },
+	hide: { effect: { type: 'fade', length:0 } }
+});
 
 var mutiConfig = {
 	style: {
 		tip: false,
-		border: {
-			width: 2,
-			radius: 0,
-			color: '#0073B3'
-		},
+		border: { width: 2, radius: 0, color: '#0073B3' },
 		width: 300
 	},
-	show: {
-		when: 'click',
-		solo: true,
-		effect: {
-			type: 'fade',
-			length: 0
-		}
-	},
-	hide: {
-		when: 'click',
-		effect: {
-			type: 'fade',
-			length: 0
-		}
-	},
+	show: { when: 'click', solo: true, effect: { type: 'fade', length:0 } },
+	hide: { when: 'click', effect: { type: 'fade', length:0 } },
 	position: {
-		corner: {
-			target: 'bottomLeft',
-			tooltip: 'topLeft'
-		},
-		adjust: {
-			x: -8,
-			y: 0
-		}
+		corner: { target: 'bottomLeft', tooltip: 'topLeft' },
+		adjust: { x: -8, y: 0 }
 	}
 }
 
@@ -70,37 +51,14 @@ $(".js-mutiopt-delete").each(function(){
 var lineConfig = {
 	style: {
 		tip: false,
-		border: {
-			width: 2,
-			radius: 0,
-			color: '#0073B3'
-		},
+		border: { width: 2, radius: 0, color: '#0073B3' },
 		width: 300
 	},
-	show: {
-		when: 'click',
-		solo: true,
-		effect: {
-			type: 'fade',
-			length: 0
-		}
-	},
-	hide: {
-		when: 'click',
-		effect: {
-			type: 'fade',
-			length: 0
-		}
-	},
+	show: { when: 'click', solo: true, effect: { type: 'fade', length:0 } },
+	hide: { when: 'click', effect: { type: 'fade', length:0 } },
 	position: {
-		corner: {
-			target: 'rightBottom',
-			tooltip: 'rightTop'
-		},
-		adjust: {
-			x: 10,
-			y: 2
-		}
+		corner: { target: 'rightBottom', tooltip: 'rightTop' },
+		adjust: { x: 8, y: 0 }
 	}
 }
 

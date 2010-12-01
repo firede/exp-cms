@@ -11,11 +11,14 @@
 		<thead>
 			<tr>
 				<{foreach from=$_admintable_conf.column item=_admintable_column key=_admintable_key}>
-				<th col_id="<{$_admintable_key}>"<{if $_admintable_column.width|default}> style="width:<{$_admintable_column.width}>px;"<{/if}>><{$_admintable_column.label}></th>
+				<th col_id="<{$_admintable_key}>"<{if $_admintable_column.width|default}> style="width:<{$_admintable_column.width}>px;"<{/if}>>
+					<span class="title"><{$_admintable_column.label}></span>
+					<{if $_admintable_column.sortable|default}><span class="sort">@</span><{/if}>
+				</th>
 				<{/foreach}>
 				<{* 判断是否添加操作列表头 *}>
 				<{if $_admintable_conf.operation|default}>
-				<th>操作</th>
+				<th><span class="title">操作</span></th>
 				<{/if}>
 			</tr>
 		</thead>
@@ -34,7 +37,9 @@
 				<td>
 					<span class="inner-td">
 					<{foreach from=$_admintable_conf.operation item=_admintable_item key=_admintable_key}>
-					<span class="table-btn icon-<{$_admintable_key}> js-opt-<{$_admintable_key}>" title="<{$_admintable_item}>"></span>
+						<span class="table-btn js-opt-<{$_admintable_key}>" title="<{$_admintable_item}>">
+							<span class="icon-<{$_admintable_key}>"></span>
+						</span>
 					<{/foreach}>
 					</span>
 				</td>

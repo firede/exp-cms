@@ -16,7 +16,6 @@ return array(
 				'width'     => '30',
 				'template'  => 'checkbox',
 				'data'      => 'id',
-				'sortable'  => FALSE,
 			),
 			'title'		    => array(
 				'label'     => '标题',
@@ -27,10 +26,10 @@ return array(
 				'sortable'  => TRUE,
 			),
 			'time'          => array(
-				'label'     => '日期',
+				'label'     => '更新日期',
 				'width'     => '100',
 				'template'  => 'date',
-				'data'      => 'pub_time',
+				'data'      => 'update_time,pub_time',
 				'sortable'  => TRUE,
 			),
 			'author'        => array(
@@ -75,11 +74,10 @@ return array(
 				'width'     => '30',
 				'template'  => 'checkbox',
 				'data'      => 'id',
-				'sortable'  => FALSE,
 			),
 			'title'		    => array(
 				'label'     => '标题',
-				'width'     => '270',
+				'width'     => '260',
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
@@ -90,25 +88,24 @@ return array(
 				'width'     => '60',
 				'template'  => 'flag',
 				'data'      => 'flag',
-				'sortable'  => TRUE,
 			),
 			'click'         => array(
 				'label'     => '点击',
-				'width'     => '38',
+				'width'     => '45',
 				'template'  => 'text',
 				'data'      => 'read_count',
 				'sortable'  => TRUE,
 			),
 			'time'          => array(
-				'label'     => '日期',
+				'label'     => '更新日期',
 				'width'     => '75',
 				'template'  => 'date',
-				'data'      => 'pub_time',
+				'data'      => 'update_time,pub_time',
 				'sortable'  => TRUE,
 			),
 			'author'        => array(
 				'label'     => '作者',
-				'width'     => '90',
+				'width'     => '80',
 				'template'  => 'text',
 				'prefix'    => array('作者：'),
 				'data'      => 'user_name',
@@ -116,7 +113,7 @@ return array(
 			),
 			'category'      => array(
 				'label'     => '分类',
-				'width'     => '90',
+				'width'     => '80',
 				'template'  => 'text',
 				'prefix'    => array('分类：'),
 				'data'      => 'cate_name',
@@ -147,11 +144,10 @@ return array(
 				'width'     => '30',
 				'template'  => 'checkbox',
 				'data'      => 'id',
-				'sortable'  => FALSE,
 			),
 			'title'		    => array(
 				'label'     => '标题',
-				'width'     => '270',
+				'width'     => '260',
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
@@ -162,20 +158,19 @@ return array(
 				'width'     => '60',
 				'template'  => 'flag',
 				'data'      => 'flag',
-				'sortable'  => TRUE,
 			),
 			'click'         => array(
 				'label'     => '点击',
-				'width'     => '38',
+				'width'     => '45',
 				'template'  => 'text',
 				'data'      => 'read_count',
 				'sortable'  => TRUE,
 			),
 			'time'          => array(
-				'label'     => '日期',
+				'label'     => '更新日期',
 				'width'     => '75',
 				'template'  => 'date',
-				'data'      => 'pub_time',
+				'data'      => 'update_time,pub_time',
 				'sortable'  => TRUE,
 			),
 			'author'        => array(
@@ -217,17 +212,17 @@ return array(
 		'column' => array(
 			'title'		    => array(
 				'label'     => '标题',
-				'width'     => '400',
+				'width'     => '390',
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
 				'sortable'  => TRUE,
 			),
 			'time'          => array(
-				'label'     => '日期',
+				'label'     => '更新日期',
 				'width'     => '90',
 				'template'  => 'date',
-				'data'      => 'pub_time',
+				'data'      => 'update_time,pub_time',
 				'sortable'  => TRUE,
 			),
 			'author'        => array(
@@ -259,12 +254,11 @@ return array(
 				'label'     => '选择',
 				'width'     => '30',
 				'template'  => 'checkbox',
-				'data'      => 'id',
-				'sortable'  => FALSE,
+				'data'      => 'id'
 			),
 			'title'		    => array(
 				'label'     => '标题',
-				'width'     => '290',
+				'width'     => '280',
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
@@ -274,14 +268,13 @@ return array(
 				'label'     => '',             // 标记（在表头不显示标题）
 				'width'     => '60',
 				'template'  => 'flag',
-				'data'      => 'flag',
-				'sortable'  => TRUE,
+				'data'      => 'flag'
 			),
 			'time'          => array(
-				'label'     => '日期',
+				'label'     => '更新日期',
 				'width'     => '75',
 				'template'  => 'date',
-				'data'      => 'pub_time',
+				'data'      => 'update_time,pub_time',
 				'sortable'  => TRUE,
 			),
 			'author'        => array(
@@ -302,7 +295,7 @@ return array(
 			),
 			'rej-type'      => array(
 				'label'     => '驳回类别',
-				'width'     => '60',
+				'width'     => '70',
 				'template'  => 'rej_type',
 				'data'      => 'content',
 				'sortable'  => TRUE,

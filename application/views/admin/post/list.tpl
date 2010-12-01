@@ -55,5 +55,3 @@ $('#status-' + PAGE_CONFIG.STATUS).addClass('status-tab-active');
 
 
 <{include file="admin/base/footer.tpl"}>
-
-<{debug}>
