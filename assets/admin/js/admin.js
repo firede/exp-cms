@@ -1,8 +1,8 @@
 (function( $ ) {
 
 // 初始化提示层
-$('a[title]').qtip({ style: { name: 'blue', tip: false }, position: { target: 'mouse' } })
-$('span[title]').qtip({ style: { name: 'blue', tip: false }, position: { target: 'mouse' } })
+//$('a[title]').qtip({ style: { name: 'blue', tip: false }, position: { target: 'mouse' } })
+//$('span[title]').qtip({ style: { name: 'blue', tip: false }, position: { target: 'mouse' } })
 
 var mutiConfig = {
 	style: {
@@ -16,9 +16,19 @@ var mutiConfig = {
 	},
 	show: {
 		when: 'click',
-		solo: true
+		solo: true,
+		effect: {
+			type: 'fade',
+			length: 0
+		}
 	},
-	hide: 'click',
+	hide: {
+		when: 'click',
+		effect: {
+			type: 'fade',
+			length: 0
+		}
+	},
 	position: {
 		corner: {
 			target: 'bottomLeft',
@@ -69,9 +79,19 @@ var lineConfig = {
 	},
 	show: {
 		when: 'click',
-		solo: true
+		solo: true,
+		effect: {
+			type: 'fade',
+			length: 0
+		}
 	},
-	hide: 'click',
+	hide: {
+		when: 'click',
+		effect: {
+			type: 'fade',
+			length: 0
+		}
+	},
 	position: {
 		corner: {
 			target: 'rightBottom',
