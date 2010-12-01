@@ -180,6 +180,15 @@ a:hover {
 	padding: 0 5px;
 	background: url('img/box-bg.png') repeat-x;
 	text-align: left;
+	color: #666;
+}
+
+.list-table th.js-sortable {
+	cursor: pointer;
+}
+
+.list-table th.js-sortable-hover {
+	background: none;
 }
 
 .list-table th .title {
@@ -189,7 +198,6 @@ a:hover {
 	line-height: 20px;
 	overflow: hidden;	
 	font-weight: 700;
-	color: #666;
 }
 
 .list-table th .sort {

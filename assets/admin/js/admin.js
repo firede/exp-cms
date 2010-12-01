@@ -1,5 +1,21 @@
 (function( $ ) {
 
+$('.list-table .js-sortable').each(function(){
+	var el = $(this);
+	el.hover(
+		function(){
+			el.addClass('js-sortable-hover');
+		},
+		function(){
+			el.removeClass('js-sortable-hover');
+		}
+	);
+	if (el.attr('col_id') === 'time') {
+		el.append('<span class="sort">@</span>');
+	}
+});
+
+
 // 初始化提示层
 $('span[qtip=1]').qtip({
 	style: { name: 'cream', tip: false },
