@@ -89,6 +89,19 @@ class Controller_Admin_Post extends Controller_Base {
         $this->request->response = $view->render();
     }
 
+	public function action_del() {
+		if (!isset($_GET['id'])) {
+			echo "请指定ID";
+			exit;
+		}
+
+		$id = $_GET["id"];
+
+		$this->template = View::factory('smarty:admin/post/del', array(
+			'id' => $id,
+		));
+	}
+
     /*     * ***
      * 根据ID删除post表数据
      * @param $id integer

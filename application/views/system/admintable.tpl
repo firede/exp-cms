@@ -10,12 +10,11 @@
 	<table class="list-table">
 		<thead>
 			<tr>
-				<{foreach from=$_admintable_conf.column item=_admintable_column key=_admintable_key}>
-				<th col_id="<{$_admintable_key}>"<{if $_admintable_column.width|default}> style="width:<{$_admintable_column.width}>px;"<{/if}>>
-					<span class="title"><{$_admintable_column.label}></span>
-					<{if $_admintable_column.sortable|default}><span class="sort">@</span><{/if}>
-				</th>
-				<{/foreach}>
+<{foreach from=$_admintable_conf.column item=_admintable_column key=_admintable_key}>
+<th col_id="<{$_admintable_key}>"<{if $_admintable_column.width|default}> style="width:<{$_admintable_column.width}>px;"<{/if}><{if $_admintable_column.sortable|default}> class="js-sortable"<{/if}>>
+	<span class="title"><{$_admintable_column.label}></span>
+</th>
+<{/foreach}>
 				<{* 判断是否添加操作列表头 *}>
 				<{if $_admintable_conf.operation|default}>
 				<th><span class="title">操作</span></th>

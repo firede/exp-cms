@@ -262,6 +262,10 @@ a:hover {
 .icon-preview,
 .icon-undo-pub,
 .icon-undo-rej,
+.icon-home,
+.icon-next,
+.icon-prev,
+.icon-end,
 .icon-flag-1,
 .icon-flag-2,
 .icon-flag-3 {
@@ -271,15 +275,6 @@ a:hover {
 	background-image: url('img/icons.png');
 	_background-image: url('img/icons-ie6.png');
 	background-repeat: no-repeat;
-}
-
-.icon-home,
-.icon-next,
-.icon-prev,
-.icon-end {
-	width:16px;
-	height:16px;
-	display: block;
 }
 
 .icon-position {
@@ -323,16 +318,16 @@ a:hover {
 	background-position: 0 -80px;
 }
 .icon-home {
-	background: url('img/icon-home.png') no-repeat;
-}
-.icon-next {
-	background: url('img/icon-next.png') no-repeat;
+	background-position: -60px -40px;
 }
 .icon-prev {
-	background: url('img/icon-prev.png') no-repeat;
+	background-position: -80px -40px;
+}
+.icon-next {
+	background-position: -100px -40px;
 }
 .icon-end {
-	background: url('img/icon-end.png') no-repeat;
+	background-position: -120px -40px;
 }
 
 /* round corner */

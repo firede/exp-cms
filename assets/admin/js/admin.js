@@ -67,15 +67,17 @@ $(".js-opt-delete").each(function(){
 
 	$(this).qtip({
 		content: {
-			data: { id: '1,2,3,7,9'},
 			method: 'get',
-			url: '/admin/post/m_del',
+			url: '/admin/post/del',
 			text: 'Loading...'
 		},
 		api: {
 			onShow: function(){
 				$(me).addClass('table-btn-active');
-				alert($(me).closest("tr").attr("row_id"));
+			},
+			onRender: function() {
+				var row_id = $(me).closest("tr").attr("row_id");
+				this.loadContent('/admin/post/del', { id: row_id }, 'get');
 			},
 			onHide: function(){
 				$(me).removeClass('table-btn-active');
