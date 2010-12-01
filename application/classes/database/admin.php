@@ -81,8 +81,8 @@ class Database_admin {
      */
 
     public function get_user($id) {
-        if (!isset($id)) {
-            return "no_id";
+        if ($id == null || $id="") {
+            return 'no_id';
         }
         //设置查询数据的sql
         $query = DB::select('id', 'username', "password", "role")->from('admin');
@@ -110,8 +110,8 @@ class Database_admin {
      */
 
     public function delete($id) {
-        if (!isset($id)) {
-            return "no_id";
+       if ($id == null || $id="") {
+            return 'no_id';
         }
         //设置删除数据的sql
         $delete = DB::delete()->table('admin');

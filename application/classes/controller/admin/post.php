@@ -26,13 +26,13 @@ class Controller_Admin_Post extends Controller_Base {
         $postDb = new Database_Post();
         //设置参数过滤器中需要保留下操作的数据
         $arr_element_names =
-                array('id', 'uuid', 'title', 'cate_id', 'pub_time',
+                array('id', 'uuid', 'title', 'cate_id', 'pub_time','update_time',
                     'pre_content', 'content', 'user_id', 'status',
                     'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
-        if (!isset($_GET['page'])) {
+        if (isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
-        if (!isset($_GET['status'])) {
+        if (isset($_GET['status'])) {
             $_GET['status'] = 0;
         }
 

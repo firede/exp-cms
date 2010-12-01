@@ -34,7 +34,7 @@ class Database_Post {
         $count = $count_Result[0]['total_post'];
 
         //设置查询数据的sql
-        $query = DB::select('post.id', 'uuid', 'title', 'cate_id', array("category.name", "cate_name"), 'pub_time',
+        $query = DB::select('post.id', 'uuid', 'title', 'cate_id', array("category.name", "cate_name"), 'pub_time','update_time',
                         'pre_content', 'content', 'user_id', array("user.username", "user_name"), 'post.status',
                         'read_count', 'operation_id', array("admin.username", "operation_name"), 'reference', 'source', 'operation_desc', 'flag')->from('post');
         $query->join("admin", "left")->on("post.operation_id", "=", "admin.id");
