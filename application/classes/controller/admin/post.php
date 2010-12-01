@@ -29,10 +29,10 @@ class Controller_Admin_Post extends Controller_Base {
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time','update_time',
                     'pre_content', 'content', 'user_id', 'status',
                     'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
-        if (isset($_GET['page'])) {
+        if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
-        if (isset($_GET['status'])) {
+        if (!isset($_GET['status'])) {
             $_GET['status'] = 0;
         }
 

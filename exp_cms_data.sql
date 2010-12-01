@@ -100,6 +100,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `title` varchar(256) COLLATE utf8_bin NOT NULL,
   `cate_id` int(11) DEFAULT NULL,
   `pub_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT '1990-01-01 00:00:00',
   `pre_content` text COLLATE utf8_bin,
   `content` text COLLATE utf8_bin,
   `user_id` varchar(32) COLLATE utf8_bin NOT NULL,

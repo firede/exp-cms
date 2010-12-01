@@ -18,7 +18,7 @@ class Controller_Admin_Category extends Controller_Base{
         $categorys = $categoryDb->query_list($category);
         $categorys = Action::sucess_status($categorys);
         
-        echo Kohana::debug($categorys);
+       
        
       /*  $this->template->layout_main = View::factory('admin/user/list', array(
                     'pagination' => $pagination,
