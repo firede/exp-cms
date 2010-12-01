@@ -147,7 +147,7 @@ class Database_Post {
             return 'no_id';
         }
         /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode("_", $post['id']);
+        $ids = explode(",", $post['id']);
         $modify = DB::update()->table('post')->set($post);
 
         // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
