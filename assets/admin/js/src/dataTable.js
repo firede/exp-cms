@@ -6,27 +6,13 @@ var dataTable = (function( $ ){
 		thSort		= wrap.find('.js-sort'),
 		tbody		= wrap.find('tbody'),
 		tooltips	= wrap.find('span[qtip=1]'),
+		dialogBtns  = tbody.find('span[action]'),
 		btnsDelete	= tbody.find('.js-opt-delete'),
 		btnsAudit	= tbody.find('.js-opt-audit'),
 		btnsMove	= tbody.find('.js-opt-move'),
 		btnsFlag	= tbody.find('.js-opt-flag'),
 		btnUndoRej	= tbody.find('.js-opt-undo-rej'),
-		btnsPreview	= tbody.find('.js-opt-preview'),
-		btnsAll		= tbody.find('.table-btn'),
-		// 对话框基本参数设置，所有单行操作对话框都基于此设置创建
-		dialogCfg	= {
-			show: {when: 'click', solo: true},
-			hide: {when: 'click'},
-			position: {
-				corner: {target: 'rightBottom', tooltip: 'rightTop'},
-				adjust: {x: 8, y: 0}
-			},
-			style: { name: 'blue', width: 280 },
-			content: {
-				text: 'Loading...',
-				title: { button: 'Close' }
-			}
-		};
+		btnsPreview	= tbody.find('.js-opt-preview');
 
 	// 给偶数行表格添加样式
 	tbody.find('tr:odd').addClass('tr-odd');
@@ -76,13 +62,42 @@ var dataTable = (function( $ ){
 		position: {target: 'mouse'}
 	});
 
-	btnsAll.each(function(){
-		$(this).qtip(dialogCfg);
+	// 对话框基本参数设置，所有单行操作对话框都基于此设置创建
+	dialogBtns.each(function(){
+		var el = $(this);
+
+		el.qtip({
+			show: {when: 'click', solo: true},
+			hide: {when: 'click'},
+			position: {
+				corner: {target: 'rightBottom', tooltip: 'rightTop'},
+				adjust: {x: 20, y: 0}
+			},
+			style: { name: 'blue', width: 280 },
+			content: {
+				text: 'Loading...',
+				title: { text: el.attr('title'), button: '关闭' }
+			},
+			api: {
+				beforeShow: function(){
+					el.addClass('table-btn-active');
+				},
+				beforeHide: function(){
+					el.removeClass('table-btn-active');
+				}
+			}
+		});
 	});
 
 	btnsDelete.each(function(){
-		$(this).qtip('api').onRender = function() {
-			alert('haha')
+		var el = $(this);
+
+		el.qtip('api').onShow = function() {
+			this.loadContent(
+				PAGEENV.base + el.attr('action'),
+				{ id: el.closest("tr").attr("row_id") },
+				'get'
+			);
 		}
 	});
 
