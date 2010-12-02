@@ -22,7 +22,6 @@ class Controller_Admin_Post extends Controller_Base {
                     'auto_hide' => TRUE,
                     'first_page_in_url' => FALSE,
                 ));
-
         $postDb = new Database_Post();
         //设置参数过滤器中需要保留下操作的数据
         $arr_element_names =

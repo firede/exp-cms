@@ -80,7 +80,7 @@ class Database_admin {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function get_user($id) {
+    public function get_admin($id) {
         if ($id == null || $id="") {
             return 'no_id';
         }
@@ -99,6 +99,37 @@ class Database_admin {
         // echo Kohana::debug($count);
         if ($count > 0)
             return $data = array('result' => $users,);
+        else
+            return 'none';
+    }
+    /*     * *
+     * 管理员登录检测
+     * @$id <int> 用户id
+     * @return <array> 用户信息
+     * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
+     */
+
+    public function check_login($admin) {
+        if ($admin["username"] == null || $admin["username"]=="") {
+            return 'no_id';
+        }
+     
+        //设置查询数据的sql
+        $query = DB::select('id', 'username', "password", "role")->from('admin');
+        $query->where('username', "=",$admin["username"])->where('password', "=",$admin["password"]);
+        $admins = $query->execute();
+        
+        $admins = $admins->as_array();
+        $count = count($admins);
+        //加入一些业务值，特殊业务值的替换或者加入
+        for ($i = 0; $i < count($admins); $i++) {
+
+            $admins[$i]["role_name"] = Sysconfig_Business::admin_Role($admins[$i]["role"]);
+            $admins[$i]["password"] = "";
+        }
+        // echo Kohana::debug($count);
+        if ($count > 0)
+            return $data = array('result' => $admins,);
         else
             return 'none';
     }
