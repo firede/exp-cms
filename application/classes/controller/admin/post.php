@@ -2,7 +2,7 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Admin_Post extends Controller_Base {
+class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_index() {
 
@@ -22,11 +22,10 @@ class Controller_Admin_Post extends Controller_Base {
                     'auto_hide' => TRUE,
                     'first_page_in_url' => FALSE,
                 ));
-
         $postDb = new Database_Post();
         //设置参数过滤器中需要保留下操作的数据
         $arr_element_names =
-                array('id', 'uuid', 'title', 'cate_id', 'pub_time','update_time',
+                array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
                     'pre_content', 'content', 'user_id', 'status',
                     'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
         if (!isset($_GET['page'])) {
@@ -52,6 +51,39 @@ class Controller_Admin_Post extends Controller_Base {
                     'view_data' => $posts,
                     'conf' => $conf,
                 ));
+    }
+
+    /*     * **
+     * 跳转至新增文章页面 并推送uuid
+     */
+
+    public function action_create() {
+       $uuid = Text::uuid();
+        echo Kohana::debug($_POST["uuid"]);
+
+        $this->template = View::factory('smarty:', array(
+                    'uuid' => $uuid,
+                    'conf' => $conf,
+                ));
+    }
+
+    /*     * **
+     * 创建保存一个新的post文章对象
+     */
+
+    public function action_create_post() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id', 'uuid', 'title', 'cate_id', 'pub_time',
+                    'pre_content', 'content', 'user_id', 'status',
+                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
+        $post = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $postDb->save($post);
+        $view_data = Action::sucess_status($view_data);
+        echo Kohana::debug($view_data);
+        $view = View::factory('smarty:');
+        $view->view_data = $view_data;
+        $this->request->response = $view->render();
     }
 
     /*     * *********
@@ -88,18 +120,18 @@ class Controller_Admin_Post extends Controller_Base {
         $this->request->response = $view->render();
     }
 
-	public function action_del() {
-		if (!isset($_GET['id'])) {
-			echo "请指定ID";
-			exit;
-		}
+    public function action_del() {
+        if (!isset($_GET['id'])) {
+            echo "请指定ID";
+            exit;
+        }
 
-		$id = $_GET["id"];
+        $id = $_GET["id"];
 
-		$this->template = View::factory('smarty:admin/post/del', array(
-			'id' => $id,
-		));
-	}
+        $this->template = View::factory('smarty:admin/post/del', array(
+                    'id' => $id,
+                ));
+    }
 
     /*     * ***
      * 根据ID删除post表数据
@@ -108,7 +140,7 @@ class Controller_Admin_Post extends Controller_Base {
 
     public function action_del_post() {
 
-        $id = !isset($_POST["id"]) ?$_POST["id"] : "";
+        $id = !isset($_POST["id"]) ? $_POST["id"] : "";
         $postDb = new Database_Post();
         $view_data = $postDb->delete($id);
         $view_data = Action::sucess_status($view_data);
@@ -118,15 +150,15 @@ class Controller_Admin_Post extends Controller_Base {
         $this->request->response = $view->render();
     }
 
-	public function action_m_del() {
-		$ids = $_GET['id'];
-		$ids_arr = explode(',', $ids);
+    public function action_m_del() {
+        $ids = $_GET['id'];
+        $ids_arr = explode(',', $ids);
 
-		$this->template = View::factory('smarty:admin/post/m_del', array(
-			'ids' => $ids,
-			'id_sum' => count($ids_arr),
-		));
-	}
+        $this->template = View::factory('smarty:admin/post/m_del', array(
+                    'ids' => $ids,
+                    'id_sum' => count($ids_arr),
+                ));
+    }
 
     /*     * ***
      * 根据多个ID，批量删除post表数据

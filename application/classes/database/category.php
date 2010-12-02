@@ -44,13 +44,13 @@ class Database_Category {
                     }
                 }
         }
-
+        $query->order_by("sort","ASC");
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
         //加入一些业务值，特殊业务值的替换或者加入
         //
         $categorys = $this->as_tree_array($categorys);
-
+        echo Kohana::debug($categorys);
         if (count($categorys) > 0)
             return array(
                 'result' => $categorys,
@@ -59,28 +59,36 @@ class Database_Category {
             return "none";
     }
 
-    private $cate_tree = array();
-
     private function as_tree_array($categorys) {
-
-        $this->build_child("-1", $categorys, $this->cate_tree);
-        echo Kohana::debug($this->cate_tree);
+        
+        return $this->build_child("-1", $categorys, array());
+    // echo Kohana::debug($aaa["计算机"]["child"]);
+        
     }
 
-    private function build_child($parent_id, $categorys) {
-     
+    private function build_child($parent_id, $categorys, $parent_childs) {
+        //$temp = array();
+        $childs = array();
         foreach ($categorys as $category) {
+
             if ($category["parent_id"] == $parent_id) {
-
-            
-
-                $this->build_child($category["id"], $categorys);
+                $child = array();
+                $child = $category;
+                
+                //    $parent_childs=count($parent_childs<1)?$childs:$parent_childs;
+                $child["child"] = $this->build_child($category["id"], $categorys,$parent_childs);
+                $childs[$category["id"]] = $child;
+                
             } else {
                 continue;
             }
         }
-       
-        $this->cate_tree = $cate_tree_now;
+        $parent_childs = $childs;
+       // echo "换行";
+       // echo Kohana::debug($parent_childs);
+        return $parent_childs;
+        //  $this->cate_tree, $cate_tree_now;
+        //   $this->cate_tree["child"]=$cate_tree_now;
     }
 
     /*     * *

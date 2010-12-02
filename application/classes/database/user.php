@@ -240,6 +240,35 @@ class Database_User {
         $count = $users[0]["total_user"];
         $count > 0 ? "exist" : "ok"; //存在的话返回error 不存在返回ok
     }
+     /******
+     * 检测登录
+     * @$user <array> 用户信息
+     * @return 存在返回该用户信息 不存在返回ok
+     */
+    public function check_login($user) {
+        if (!isset($id)) {
+            return "no_id";
+        }
+        //设置查询数据的sql
+        $query = DB::select('id', 'username',"password", 'email', 'user_type', 'status',
+                    'avatar', 'reg_time', 'last_time', 'admin_id')->from('user');
+        $query->where("id", "=", $id);
+        $users = $query->execute();
+        $users = $users->as_array();
+        $count = count($users);
+         //加入一些业务值，特殊业务值的替换或者加入
+        for ($i = 0; $i < count($users); $i++) {
+
+            $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
+            $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
+            $users[$i]["password"]="";
+        }
+        // echo Kohana::debug($count);
+        if ($count > 0)
+            return $data = array('result' => $users,);
+        else
+            return 'none';
+    }
 /*     * ***
      * 根据ID，修改user表行数据
      * @param $user （array(integer)）
