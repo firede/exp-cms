@@ -1,5 +1,6 @@
 /* 整体设置 */
 body {
+	color: #000;
 	font-size: 12px;
 }
 .container_24 {
@@ -291,10 +292,6 @@ a:hover {
 	width:180px;
 }
 
-.list-search .keyword-focus {
-	border: 1px solid #008EE8;
-}
-
 .list-search .keyword input {
 	position: absolute;
 	left:4px;
@@ -304,10 +301,17 @@ a:hover {
 	line-height: 14px;
 	text-align: left;
 	font-size: 14px;
-	color:#666;
+	color:#999;
 	padding:1px;
 	margin:0;
 	border: 0;
+}
+
+.list-search .keyword-focus {
+	border: 1px solid #008EE8;
+}
+.list-search .keyword-focus input {
+	color:#000;
 }
 
 .list-search .search {

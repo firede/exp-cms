@@ -13,8 +13,13 @@ function initSearch() {
 		return;
 	}
 
-	keywordInput.val(keywordValue);
-	
+	keywordInput.val(keywordValue)
+	.keypress(function(event){
+		if (event.keyCode === 13) {
+			searchBtn.click();
+		}
+	});
+
 	searchBtn.hover(
 		function(){
 			$(this).addClass(searchHoverClass);
@@ -22,14 +27,13 @@ function initSearch() {
 		function(){
 			$(this).removeClass(searchHoverClass);
 		});
-	keywordBox.focusin(
-		function(){
-			$(this).addClass(keywordFocusClass);
-		});
-	keywordBox.focusout(
-		function(){
-			$(this).removeClass(keywordFocusClass);
-		});
+
+	keywordBox.focusin(function(){
+		$(this).addClass(keywordFocusClass);
+	})
+	.focusout(function(){
+		$(this).removeClass(keywordFocusClass);
+	});
 
 	searchBtn.click(function(){
 		PAGEENV.param.keyword = keywordInput.val();
