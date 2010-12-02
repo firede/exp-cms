@@ -284,21 +284,21 @@ a:hover {
 .list-search .keyword {
 	display: inline;
 	float: left;
-	height:18px;
-	border: 2px solid #FFF;
+	height:20px;
+	border: 1px solid #FFF;
 	background: #FFF;
 	position: relative;
 	width:180px;
 }
 
 .list-search .keyword-focus {
-	border: 2px solid #008EE8;
+	border: 1px solid #008EE8;
 }
 
 .list-search .keyword input {
 	position: absolute;
-	left:3px;
-	top:1px;
+	left:4px;
+	top:2px;
 	width: 170px;
 	height: 14px;
 	line-height: 14px;
