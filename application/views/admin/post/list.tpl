@@ -27,6 +27,12 @@
 	<a id="status-1" class="status-tab" href="?status=1">已发布</a>
 	<a id="status-5" class="status-tab" href="?status=5">草稿</a>
 	<a id="status-3" class="status-tab" href="?status=3">驳回</a>
+	<span class="list-search right">
+		<span class="keyword radius_all">
+			<input type="text" name="keyword" />
+		</span>
+		<span class="search radius_all">搜索</span>
+	</span>
 </div>
 
 <{admintable data=$view_data.result conf=$conf}>

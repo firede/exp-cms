@@ -136,7 +136,8 @@ a:hover {
 	line-height: 20px;
 	cursor: pointer;
 }
-.operation-btn:hover {
+.operation-btn-hover {
+	font-weight: 700;
 	text-decoration: underline;
 }
 
@@ -183,16 +184,16 @@ a:hover {
 	color: #666;
 }
 
-.list-table th.js-sortable {
+.list-table th.js-sort {
 	cursor: pointer;
 }
 
-.list-table th.js-sortable-hover {
+.list-table th.js-sort-hover {
 	background: url('img/bgs.png') 0 -90px repeat-x;
 	color: #333;
 }
 
-.list-table th.js-sortable .title {
+.list-table th.js-sort .title {
 	text-decoration: underline;
 }
 
@@ -272,6 +273,60 @@ a:hover {
 	text-align: center;
 	font-size:14px;
 	color:#999;
+}
+
+/* list search */
+.list-search {
+	padding-top:6px;
+	line-height: 0px;
+}
+
+.list-search .keyword {
+	display: inline;
+	float: left;
+	height:18px;
+	border: 2px solid #FFF;
+	background: #FFF;
+	position: relative;
+	width:180px;
+}
+
+.list-search .keyword-focus {
+	border: 2px solid #008EE8;
+}
+
+.list-search .keyword input {
+	position: absolute;
+	left:3px;
+	top:1px;
+	width: 170px;
+	height: 14px;
+	line-height: 14px;
+	text-align: left;
+	font-size: 14px;
+	color:#666;
+	padding:1px;
+	margin:0;
+	border: 0;
+}
+
+.list-search .search {
+	display: float;
+	float: left;
+	padding: 4px 10px;
+	height:14px;
+	line-height: 14px;
+	font-size: 14px;
+	font-weight: 700;
+	text-align: center;
+	margin:0 10px 0 6px;
+	background: #EEF;
+	cursor: pointer;
+}
+
+.list-search .search-hover {
+	color:#FFF;
+	background:#008EE8;
 }
 
 /* icons */

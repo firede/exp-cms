@@ -1,7 +1,44 @@
 (function( $ ) {
 
+function initSearch() {
+	var searchBox = $(".list-search"),
+		searchBtn = searchBox.find(".search"),
+		keywordBox = searchBox.find(".keyword"),
+		keywordInput = searchBox.find("input"),
+		searchHoverClass = 'search-hover',
+		keywordFocusClass = 'keyword-focus',
+		keywordValue = PAGEENV.param.keyword || "";
+	
+	if (searchBox.length === 0) {
+		return;
+	}
+
+	keywordInput.val(keywordValue);
+	
+	searchBtn.hover(
+		function(){
+			$(this).addClass(searchHoverClass);
+		},
+		function(){
+			$(this).removeClass(searchHoverClass);
+		});
+	keywordBox.focusin(
+		function(){
+			$(this).addClass(keywordFocusClass);
+		});
+	keywordBox.focusout(
+		function(){
+			$(this).removeClass(keywordFocusClass);
+		});
+
+	searchBtn.click(function(){
+		PAGEENV.param.keyword = keywordInput.val();
+		window.location.search = $.param(PAGEENV.param);
+	});
+}
+
 function initSort() {
-	$('.list-table .js-sortable').each(function(){
+	$('.list-table .js-sort').each(function(){
 		var el = $(this),
 			orderBy = el.attr('order_by'),
 			envType = PAGEENV.param.sort_type,
@@ -18,15 +55,16 @@ function initSort() {
 		el.click(function(){
 			PAGEENV.param.order_by = orderBy;
 			PAGEENV.param.sort_type = sortType;
+			PAGEENV.param.page = '1';
 			window.location.search = $.param(PAGEENV.param);
 		});
 
 		el.hover(
 			function(){
-				el.addClass('js-sortable-hover');
+				el.addClass('js-sort-hover');
 			},
 			function(){
-				el.removeClass('js-sortable-hover');
+				el.removeClass('js-sort-hover');
 			}
 		);
 	});
@@ -40,9 +78,6 @@ function initTooltip() {
 		hide: {effect: {type: 'fade', length:0}}
 	});
 }
-
-initSort();
-initTooltip();
 
 var mutiConfig = {
 	style: {
@@ -59,9 +94,18 @@ var mutiConfig = {
 }
 
 $(".js-mutiopt-delete").each(function(){
-	var me = this;
+	var el = $(this);
 	
-	$(this).qtip({
+	el.hover(
+		function() {
+			el.addClass('operation-btn-hover');
+		},
+		function() {
+			el.removeClass('operation-btn-hover');
+		}
+	);
+
+	el.qtip({
 		content: {
 			data: {id: '1,2,3,7,9'},
 			method: 'get',
@@ -70,10 +114,10 @@ $(".js-mutiopt-delete").each(function(){
 		},
 		api: {
 			onShow: function(){
-				$(me).addClass('operation-btn-active');
+				el.addClass('operation-btn-active');
 			},
 			onHide: function(){
-				$(me).removeClass('operation-btn-active');
+				el.removeClass('operation-btn-active');
 			}
 		},
 		style: mutiConfig.style,
@@ -125,5 +169,10 @@ $(".js-opt-delete").each(function(){
 		position: lineConfig.position
 	});
 });
+
+initSearch();
+initSort();
+initTooltip();
+
 
 })( jQuery );
