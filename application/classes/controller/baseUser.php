@@ -2,10 +2,10 @@
 
 defined('SYSPATH') or die('No direct script access.');
 /* * ******
- * admin控制器的父类
+ * 前台控制器的父类
  */
 
-class Controller_Base_Admin extends Controller_Base {
+class Controller_BaseUser extends Controller_Base {
     public function before() {
         parent::before();
     }

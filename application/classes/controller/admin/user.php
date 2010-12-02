@@ -2,13 +2,9 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_User extends Controller_Base_Admin {
+class Controller_User extends Controller_Admin_BaseAdmin {
 
-
-    public function action_index() {
-
-    }
-
+ 
     public function action_query_list() {
 
         // 测试分页
