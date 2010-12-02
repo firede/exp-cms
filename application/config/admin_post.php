@@ -60,7 +60,7 @@ return array(
 		),
 		// 批量操作（批量操作允许的功能）
 		'muti_operation' => array(
-			'select'    => '全选/取消',
+			'select'    => '全选',
 			'inverse'   => '反选',
 			'audit'     => '审核',
 			'move'      => '移动',
@@ -131,7 +131,7 @@ return array(
 			'preview-ol'=> '线上版本预览',
 		),
 		'muti_operation' => array(
-			'select'    => '全选/取消',
+			'select'    => '全选',
 			'inverse'   => '反选',
 			'audit'     => '审核',
 			'move'      => '移动',
@@ -202,7 +202,7 @@ return array(
 			'preview'   => '预览',
 		),
 		'muti_operation' => array(
-			'select'    => '全选/取消',
+			'select'    => '全选',
 			'inverse'   => '反选',
 			'flag'      => '标记',
 			'undo-pub'  => '撤销发布',
@@ -312,7 +312,7 @@ return array(
 			'preview'   => '预览',
 		),
 		'muti_operation' => array(
-			'select'    => '全选/取消',
+			'select'    => '全选',
 			'inverse'   => '反选',
 			'undo-rej'  => '撤销驳回',
 		),
