@@ -39,13 +39,12 @@ class Controller_Admin_Post extends Controller_Base {
         $post = Arr::filter_Array($_GET, $arr_element_names);
         $posts = $postDb->query_list($post, $pageparam);
         $posts = Action::sucess_status($posts);
-        $posts['status'] = $_GET['status'];
 
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }
 
-        $conf_status = 'status_' . $posts['status'];
+        $conf_status = 'status_' . $_GET['status'];
         $conf = Kohana::config('admin_post')->$conf_status;
         $this->template = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
@@ -87,6 +86,19 @@ class Controller_Admin_Post extends Controller_Base {
         $view->posts = $posts;
         $this->request->response = $view->render();
     }
+
+	public function action_del() {
+		if (!isset($_GET['id'])) {
+			echo "请指定ID";
+			exit;
+		}
+
+		$id = $_GET["id"];
+
+		$this->template = View::factory('smarty:admin/post/del', array(
+			'id' => $id,
+		));
+	}
 
     /*     * ***
      * 根据ID删除post表数据

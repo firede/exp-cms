@@ -33,6 +33,7 @@ class Controller_Base extends Controller {
 
         // 输出视图前定义变量
         $this->template->BASE_URL = URL::base();
+		$this->template->URL_PARAMS = json_encode($_GET);
 
         $this->request->response = $this->template;
 

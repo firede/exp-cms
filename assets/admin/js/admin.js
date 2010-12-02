@@ -1,24 +1,60 @@
 (function( $ ) {
 
-// 初始化提示层
-$('span[qtip=1]').qtip({
-	style: { name: 'cream', tip: false },
-	position: { target: 'mouse' },
-	show: { effect: { type: 'fade', length:0 } },
-	hide: { effect: { type: 'fade', length:0 } }
-});
+function initSort() {
+	$('.list-table .js-sortable').each(function(){
+		var el = $(this),
+			orderBy = el.attr('order_by'),
+			envType = PAGEENV.param.sort_type,
+			sortType = 'asc';
+		
+		if (orderBy === PAGEENV.param.order_by) {
+			if (PAGEENV.param.sort_type === 'asc') {
+				sortType = 'desc';
+			}
+
+			el.append('<span class="sort-' + envType + '"></span>');
+		}
+
+		el.click(function(){
+			PAGEENV.param.order_by = orderBy;
+			PAGEENV.param.sort_type = sortType;
+			window.location.search = $.param(PAGEENV.param);
+		});
+
+		el.hover(
+			function(){
+				el.addClass('js-sortable-hover');
+			},
+			function(){
+				el.removeClass('js-sortable-hover');
+			}
+		);
+	});
+}
+
+function initTooltip() {
+	$('span[qtip=1]').qtip({
+		style: {name: 'cream', tip: false},
+		position: {target: 'mouse'},
+		show: {effect: {type: 'fade', length:0}},
+		hide: {effect: {type: 'fade', length:0}}
+	});
+}
+
+initSort();
+initTooltip();
 
 var mutiConfig = {
 	style: {
 		tip: false,
-		border: { width: 2, radius: 0, color: '#0073B3' },
+		border: {width: 2, radius: 0, color: '#0073B3'},
 		width: 300
 	},
-	show: { when: 'click', solo: true, effect: { type: 'fade', length:0 } },
-	hide: { when: 'click', effect: { type: 'fade', length:0 } },
+	show: {when: 'click', solo: true, effect: {type: 'fade', length:0}},
+	hide: {when: 'click', effect: {type: 'fade', length:0}},
 	position: {
-		corner: { target: 'bottomLeft', tooltip: 'topLeft' },
-		adjust: { x: -8, y: 0 }
+		corner: {target: 'bottomLeft', tooltip: 'topLeft'},
+		adjust: {x: -8, y: 0}
 	}
 }
 
@@ -27,7 +63,7 @@ $(".js-mutiopt-delete").each(function(){
 	
 	$(this).qtip({
 		content: {
-			data: { id: '1,2,3,7,9'},
+			data: {id: '1,2,3,7,9'},
 			method: 'get',
 			url: '/admin/post/m_del',
 			text: 'Loading...'
@@ -51,14 +87,14 @@ $(".js-mutiopt-delete").each(function(){
 var lineConfig = {
 	style: {
 		tip: false,
-		border: { width: 2, radius: 0, color: '#0073B3' },
+		border: {width: 2, radius: 0, color: '#0073B3'},
 		width: 300
 	},
-	show: { when: 'click', solo: true, effect: { type: 'fade', length:0 } },
-	hide: { when: 'click', effect: { type: 'fade', length:0 } },
+	show: {when: 'click', solo: true, effect: {type: 'fade', length:0}},
+	hide: {when: 'click', effect: {type: 'fade', length:0}},
 	position: {
-		corner: { target: 'rightBottom', tooltip: 'rightTop' },
-		adjust: { x: 8, y: 0 }
+		corner: {target: 'rightBottom', tooltip: 'rightTop'},
+		adjust: {x: 8, y: 0}
 	}
 }
 
@@ -67,15 +103,17 @@ $(".js-opt-delete").each(function(){
 
 	$(this).qtip({
 		content: {
-			data: { id: '1,2,3,7,9'},
 			method: 'get',
-			url: '/admin/post/m_del',
+			url: '/admin/post/del',
 			text: 'Loading...'
 		},
 		api: {
 			onShow: function(){
 				$(me).addClass('table-btn-active');
-				alert($(me).closest("tr").attr("row_id"));
+			},
+			onRender: function() {
+				var row_id = $(me).closest("tr").attr("row_id");
+				this.loadContent('/admin/post/del', {id: row_id}, 'get');
 			},
 			onHide: function(){
 				$(me).removeClass('table-btn-active');
@@ -87,6 +125,5 @@ $(".js-opt-delete").each(function(){
 		position: lineConfig.position
 	});
 });
-
 
 })( jQuery );

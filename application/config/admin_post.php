@@ -25,14 +25,14 @@ return array(
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
-				'sortable'  => TRUE,
+				'order_by'  => 'title',      // 配置此字段则本列启用排序
 			),
 			'time'          => array(
 				'label'     => '更新日期',
 				'width'     => '100',
 				'template'  => 'date',
 				'data'      => 'update_time,pub_time',
-				'sortable'  => TRUE,
+				'order_by'  => 'update_time',
 			),
 			'author'        => array(
 				'label'     => '作者',
@@ -40,7 +40,7 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('作者：'),
 				'data'      => 'user_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'user_name',
 			),
 			'category'      => array(
 				'label'     => '分类',
@@ -48,7 +48,7 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('分类：'),
 				'data'      => 'cate_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'cate_name',
 			),
 		),
 		// 操作（行级操作允许的功能）
@@ -84,7 +84,7 @@ return array(
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
-				'sortable'  => TRUE,
+				'order_by'  => 'title',
 			),
 			'flag'		    => array(
 				'label'     => '',             // 标记（在表头不显示标题）
@@ -97,14 +97,14 @@ return array(
 				'width'     => '45',
 				'template'  => 'text',
 				'data'      => 'read_count',
-				'sortable'  => TRUE,
+				'order_by'  => 'read_count',
 			),
 			'time'          => array(
 				'label'     => '更新日期',
 				'width'     => '75',
 				'template'  => 'date',
 				'data'      => 'update_time,pub_time',
-				'sortable'  => TRUE,
+				'order_by'  => 'update_time',
 			),
 			'author'        => array(
 				'label'     => '作者',
@@ -112,7 +112,7 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('作者：'),
 				'data'      => 'user_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'user_name',
 			),
 			'category'      => array(
 				'label'     => '分类',
@@ -120,7 +120,7 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('分类：'),
 				'data'      => 'cate_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'cate_time',
 			),
 		),
 		'operation'=> array(
@@ -155,7 +155,7 @@ return array(
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
-				'sortable'  => TRUE,
+				'order_by'  => 'title',
 			),
 			'flag'		    => array(
 				'label'     => '',             // 标记（在表头不显示标题）
@@ -168,14 +168,14 @@ return array(
 				'width'     => '45',
 				'template'  => 'text',
 				'data'      => 'read_count',
-				'sortable'  => TRUE,
+				'order_by'  => 'read_count',
 			),
 			'time'          => array(
 				'label'     => '更新日期',
 				'width'     => '75',
 				'template'  => 'date',
 				'data'      => 'update_time,pub_time',
-				'sortable'  => TRUE,
+				'order_by'  => 'update_time',
 			),
 			'author'        => array(
 				'label'     => '作者',
@@ -183,7 +183,7 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('作者：'),
 				'data'      => 'user_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'user_name',
 			),
 			'category'      => array(
 				'label'     => '分类',
@@ -191,7 +191,7 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('分类：'),
 				'data'      => 'cate_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'cate_name',
 			)
 		),
 		'operation'=> array(
@@ -221,14 +221,14 @@ return array(
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
-				'sortable'  => TRUE,
+				'order_by'  => 'title',
 			),
 			'time'          => array(
 				'label'     => '更新日期',
 				'width'     => '90',
 				'template'  => 'date',
 				'data'      => 'update_time,pub_time',
-				'sortable'  => TRUE,
+				'order_by'  => 'update_time',
 			),
 			'author'        => array(
 				'label'     => '作者',
@@ -236,7 +236,7 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('作者：'),
 				'data'      => 'user_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'user_name',
 			),
 			'category'      => array(
 				'label'     => '分类',
@@ -244,7 +244,7 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('分类：'),
 				'data'      => 'cate_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'cate_name',
 			)
 		),
 		'operation'=> array(
@@ -268,7 +268,7 @@ return array(
 				'template'  => 'link',
 				'prefix'    => array('admin/post/view/', '.html'),
 				'data'      => 'id,title',
-				'sortable'  => TRUE,
+				'order_by'  => 'title',
 			),
 			'flag'		    => array(
 				'label'     => '',             // 标记（在表头不显示标题）
@@ -281,7 +281,7 @@ return array(
 				'width'     => '75',
 				'template'  => 'date',
 				'data'      => 'update_time,pub_time',
-				'sortable'  => TRUE,
+				'order_by'  => 'update_time',
 			),
 			'author'        => array(
 				'label'     => '作者',
@@ -289,7 +289,7 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('作者：'),
 				'data'      => 'user_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'user_name',
 			),
 			'category'      => array(
 				'label'     => '分类',
@@ -297,14 +297,14 @@ return array(
 				'template'  => 'text',
 				'prefix'    => array('分类：'),
 				'data'      => 'cate_name',
-				'sortable'  => TRUE,
+				'order_by'  => 'cate_name',
 			),
 			'rej-type'      => array(
 				'label'     => '驳回类别',
 				'width'     => '70',
 				'template'  => 'rej_type',
 				'data'      => 'content',
-				'sortable'  => TRUE,
+				'order_by'  => 'content',
 			),
 		),
 		'operation'=> array(

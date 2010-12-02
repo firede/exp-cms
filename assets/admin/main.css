@@ -21,6 +21,7 @@ a:hover {
 	position: relative;
 	padding-bottom: 12px;
 	margin: 0 5px;
+	zoom:1;
 }
 #logo {
 	width: 230px;
@@ -55,7 +56,7 @@ a:hover {
 .mainmenu li a {
 	border-radius: 3px;
 	-moz-border-radius: 3px;
-	background: #008EE8 url('img/menu-bg.png') repeat-x;
+	background: #008EE8 url('img/bgs.png') 0 0 repeat-x;
 	display: block;
 	height: 26px;
 	line-height: 26px;
@@ -64,7 +65,7 @@ a:hover {
 	color: #FFF;
 }
 .mainmenu li a:hover {
-	background: #FE8B01 url('img/menu-bg-active.png') repeat-x;
+	background: #FE8B01 url('img/bgs.png') 0 -30px repeat-x;
 	color:yellow;
 }
 .sidebox {
@@ -78,7 +79,7 @@ a:hover {
 	font-size: 14px;
 	font-weight: 700;
 	padding-left: 5px;
-	background: #ACCAE4 url('img/box-bg.png') repeat-x;
+	background: #ACCAE4 url('img/bgs.png') 0 -60px repeat-x;
 	height: 26px;
 	line-height: 26px;
 	margin: 1px 1px 0;
@@ -145,7 +146,7 @@ a:hover {
 	left: 5px;
 }
 .operation-btn-active {
-	background: #008EE8 url('img/menu-bg.png') repeat-x;
+	background: #008EE8 url('img/bgs.png') 0 0 repeat-x;
 	color:#FFF;
 	font-weight: 700;
 	border-top-left-radius: 3px;
@@ -177,8 +178,22 @@ a:hover {
 }
 .list-table th {
 	padding: 0 5px;
-	background: url('img/box-bg.png') repeat-x;
+	background: url('img/bgs.png') 0 -60px repeat-x;
 	text-align: left;
+	color: #666;
+}
+
+.list-table th.js-sortable {
+	cursor: pointer;
+}
+
+.list-table th.js-sortable-hover {
+	background: url('img/bgs.png') 0 -90px repeat-x;
+	color: #333;
+}
+
+.list-table th.js-sortable .title {
+	text-decoration: underline;
 }
 
 .list-table th .title {
@@ -188,17 +203,27 @@ a:hover {
 	line-height: 20px;
 	overflow: hidden;	
 	font-weight: 700;
-	color: #666;
 }
 
-.list-table th .sort {
+/* table sort style */
+.list-table th .sort-asc,
+.list-table th .sort-desc {
+	margin: 5px 1px;
 	float: left;
-	padding:3px 0 3px 5px;
-	line-height: 20px;
-	height: 20px;
-	overflow: hidden;
-	color:#CCC;
+	display: inline;
+	height: 16px;
+	width: 16px;
+	background-image: url('img/icons.png');
+	background-repeat: no-repeat;
 }
+
+.list-table th .sort-asc {
+	background-position: -80px -60px;
+}
+.list-table th .sort-desc {
+	background-position: -100px -60px;
+}
+
 
 .list-table td {
 	vertical-align: middle;
@@ -211,7 +236,7 @@ a:hover {
 .list-table .inner-td {
 	line-height: 18px;
 	height:18px;
-	padding: 3px 5px;
+	margin: 3px 5px;
 	display: block;
 	word-break:break-all;
 	word-wrap:break-word;
@@ -261,6 +286,10 @@ a:hover {
 .icon-preview,
 .icon-undo-pub,
 .icon-undo-rej,
+.icon-home,
+.icon-next,
+.icon-prev,
+.icon-end,
 .icon-flag-1,
 .icon-flag-2,
 .icon-flag-3 {
@@ -268,16 +297,8 @@ a:hover {
 	height:16px;
 	display: block;
 	background-image: url('img/icons.png');
+	_background-image: url('img/icons-ie6.png');
 	background-repeat: no-repeat;
-}
-
-.icon-home,
-.icon-next,
-.icon-prev,
-.icon-end {
-	width:16px;
-	height:16px;
-	display: block;
 }
 
 .icon-position {
@@ -321,16 +342,16 @@ a:hover {
 	background-position: 0 -80px;
 }
 .icon-home {
-	background: url('img/icon-home.png') no-repeat;
-}
-.icon-next {
-	background: url('img/icon-next.png') no-repeat;
+	background-position: -60px -40px;
 }
 .icon-prev {
-	background: url('img/icon-prev.png') no-repeat;
+	background-position: -80px -40px;
+}
+.icon-next {
+	background-position: -100px -40px;
 }
 .icon-end {
-	background: url('img/icon-end.png') no-repeat;
+	background-position: -120px -40px;
 }
 
 /* round corner */
