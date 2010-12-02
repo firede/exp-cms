@@ -231,8 +231,12 @@ a:hover {
 	vertical-align: middle;
 }
 
-.list-table .odd td {
+.list-table .tr-odd td {
 	background: #F5FAFC;
+}
+
+.list-table .tr-hover td {
+	background: #FFC;
 }
 
 .list-table .inner-td {

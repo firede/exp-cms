@@ -1,78 +1,11 @@
+document.write('<script type="text/javascript" src="/assets/admin/js/src/util.js"></script>');
+document.write('<script type="text/javascript" src="/assets/admin/js/src/dataTable.js"></script>');
+document.write('<script type="text/javascript" src="/assets/admin/js/src/tableSearch.js"></script>');
+document.write('<script type="text/javascript" src="/assets/admin/js/src/mutiOperation.js"></script>');
+
+$('#status-' + util.param.get('status')).addClass('status-tab-active');
+
 (function( $ ) {
-
-function initSearch() {
-	var searchBox = $(".list-search"),
-		searchBtn = searchBox.find(".search"),
-		keywordBox = searchBox.find(".keyword"),
-		keywordInput = searchBox.find("input"),
-		searchHoverClass = 'search-hover',
-		keywordFocusClass = 'keyword-focus',
-		keywordValue = PAGEENV.param.keyword || "";
-	
-	if (searchBox.length === 0) {
-		return;
-	}
-
-	keywordInput.val(keywordValue)
-	.keypress(function(event){
-		if (event.keyCode === 13) {
-			searchBtn.click();
-		}
-	});
-
-	searchBtn.hover(
-		function(){
-			$(this).addClass(searchHoverClass);
-		},
-		function(){
-			$(this).removeClass(searchHoverClass);
-		});
-
-	keywordBox.focusin(function(){
-		$(this).addClass(keywordFocusClass);
-	})
-	.focusout(function(){
-		$(this).removeClass(keywordFocusClass);
-	});
-
-	searchBtn.click(function(){
-		PAGEENV.param.keyword = keywordInput.val();
-		window.location.search = $.param(PAGEENV.param);
-	});
-}
-
-function initSort() {
-	$('.list-table .js-sort').each(function(){
-		var el = $(this),
-			orderBy = el.attr('order_by'),
-			envType = PAGEENV.param.sort_type,
-			sortType = 'asc';
-		
-		if (orderBy === PAGEENV.param.order_by) {
-			if (PAGEENV.param.sort_type === 'asc') {
-				sortType = 'desc';
-			}
-
-			el.append('<span class="sort-' + envType + '"></span>');
-		}
-
-		el.click(function(){
-			PAGEENV.param.order_by = orderBy;
-			PAGEENV.param.sort_type = sortType;
-			PAGEENV.param.page = '1';
-			window.location.search = $.param(PAGEENV.param);
-		});
-
-		el.hover(
-			function(){
-				el.addClass('js-sort-hover');
-			},
-			function(){
-				el.removeClass('js-sort-hover');
-			}
-		);
-	});
-}
 
 function initTooltip() {
 	$('span[qtip=1]').qtip({
@@ -99,7 +32,7 @@ var mutiConfig = {
 
 $(".js-mutiopt-delete").each(function(){
 	var el = $(this);
-	
+
 	el.hover(
 		function() {
 			el.addClass('operation-btn-hover');
@@ -174,8 +107,6 @@ $(".js-opt-delete").each(function(){
 	});
 });
 
-initSearch();
-initSort();
 initTooltip();
 
 
