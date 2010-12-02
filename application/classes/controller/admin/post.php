@@ -13,6 +13,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      */
 
     public function action_list() {
+       
         // 测试分页
         $pagination = new Pagination(array(
                     'current_page' => array('source' => 'query_string', 'key' => 'page'),
@@ -32,20 +33,24 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
             $_GET['page'] = 1;
         }
         if (!isset($_GET['status'])) {
-            $_GET['status'] = 0;
+            $_GET['status'] = '0';
         }
 
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
-        $posts = $postDb->query_list($post, $pageparam);
+        $sort= Arr::filter_Array($_GET, array("order_by","sort_type"));
+        $posts = $postDb->query_list($post, $pageparam,$sort);
         $posts = Action::sucess_status($posts);
-
+        $posts["total_items_count"]= count($posts["result"])=="0"?0:$posts["total_items_count"];
+        $posts["total_page_count"]= count($posts["result"])=="0"?0:$posts["total_page_count"];
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
+            
         }
 
         $conf_status = 'status_' . $_GET['status'];
         $conf = Kohana::config('admin_post')->$conf_status;
+       
         $this->template = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,

@@ -11,7 +11,7 @@ class Database_Post {
      * return post信息+分页信息
      */
 
-    public function query_list($post, $pageParam) {
+    public function query_list($post, $pageParam,$sort) {
         $query = DB::select(array('COUNT("id")', 'total_post'))->from('post');
 
         foreach ($post as $filedName => $filedvalue) {
@@ -57,7 +57,9 @@ class Database_Post {
                     }
                 }
         }
-
+        if(isset($sort["order_by"])&&isset($sort["sort_type"])){
+            $query->order_by($sort["order_by"], $sort["sort_type"]);
+        }
         if (!isset($pageParam["items_per_page"])) {
             $pageParam["items_per_page"] = 20;
         }
