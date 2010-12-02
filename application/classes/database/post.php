@@ -34,7 +34,7 @@ class Database_Post {
         $count = $count_Result[0]['total_post'];
 
         //设置查询数据的sql
-        $query = DB::select('post.id', 'uuid', 'title', 'cate_id', array("category.name", "cate_name"), 'pub_time','update_time',
+        $query = DB::select('post.id', 'uuid', 'title', 'cate_id', array("category.name", "cate_name"), 'pub_time', 'update_time',
                         'pre_content', 'content', 'user_id', array("user.username", "user_name"), 'post.status',
                         'read_count', 'operation_id', array("admin.username", "operation_name"), 'reference', 'source', 'operation_desc', 'flag')->from('post');
         $query->join("admin", "left")->on("post.operation_id", "=", "admin.id");
@@ -85,6 +85,22 @@ class Database_Post {
             return "none";
     }
 
+    /*     * ****
+     * 保存数据至post表里
+     * @$post <array> post数据的字段集合
+     * @return 执行成功返回ok 失败返回error
+     */
+
+    public function save($post) {
+        $columns =
+                array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
+                    'pre_content', 'content', 'user_id', 'status',
+                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
+        $save = DB::insert("post", $columns);
+        $result = (bool) $save->values($post);
+        return $result ? "ok" : "error";
+    }
+
     /*     * *
      * 根据参数$id 查询指定的post表行数据
      * @param $id integer
@@ -93,7 +109,7 @@ class Database_Post {
 
     public function getpost($id) {
 
-       if($post["id"]==null||$post["id"]==""){
+        if ($post["id"] == null || $post["id"] == "") {
             return "no_id";
         }
         $query = DB::select()->from('post')->where('id', '=', $id);
@@ -112,7 +128,7 @@ class Database_Post {
      */
 
     public function delete($id) {
-        if($post["id"]==null||$post["id"]==""){
+        if ($post["id"] == null || $post["id"] == "") {
             return "no_id";
         }
         $delete = DB::delete()->table('post')->where('id', '=', $id);
@@ -126,7 +142,7 @@ class Database_Post {
      */
 
     public function multi_delete($post) {
-        if($post["id"]==null||$post["id"]==""){
+        if ($post["id"] == null || $post["id"] == "") {
             return "no_id";
         }
         $ids = explode(",", $ids);
