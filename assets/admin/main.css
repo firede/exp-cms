@@ -347,6 +347,7 @@ a:hover {
 .icon-delete,
 .icon-move,
 .icon-preview,
+.icon-preview-ol,
 .icon-undo-pub,
 .icon-undo-rej,
 .icon-home,
@@ -394,6 +395,9 @@ a:hover {
 }
 .icon-preview {
 	background-position: -140px 0;
+}
+.icon-preview-ol {
+	background-position: -160px 0;
 }
 .icon-flag-1 {
 	background-position: -20px -80px;
