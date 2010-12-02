@@ -76,7 +76,7 @@ for ($i = $n7; $i <= $n8; $i++)
 	<?php foreach ($links as $number => $content): ?>
 
 		<?php if ($number === $current_page): ?>
-			<strong><?php echo $content ?></strong>
+			<a href="<?php echo HTML::chars($page->url($number)) ?>" class="current"><?php echo $content ?></a>
 		<?php else: ?>
 			<a href="<?php echo HTML::chars($page->url($number)) ?>"><?php echo $content ?></a>
 		<?php endif ?>
