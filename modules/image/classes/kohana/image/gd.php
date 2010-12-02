@@ -102,7 +102,7 @@ class Kohana_Image_GD extends Image {
 				$create = 'imagecreatefrompng';
 			break;
 		}
-
+                  
 		if ( ! isset($create) OR ! function_exists($create))
 		{
 			throw new Kohana_Exception('Installed GD does not support :type images',
@@ -141,6 +141,7 @@ class Kohana_Image_GD extends Image {
 		{
 			// Gets create function
 			$create = $this->_create_function;
+                        
 
 			// Open the temporary image
 			$this->_image = $create($this->file);
