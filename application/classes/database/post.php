@@ -11,7 +11,7 @@ class Database_Post {
      * return post信息+分页信息
      */
 
-    public function query_list($post, $pageParam,$sort) {
+    public function query_list($post, $pageParam, $sort) {
         $query = DB::select(array('COUNT("id")', 'total_post'))->from('post');
 
         foreach ($post as $filedName => $filedvalue) {
@@ -57,7 +57,7 @@ class Database_Post {
                     }
                 }
         }
-        if(isset($sort["order_by"])&&isset($sort["sort_type"])){
+        if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
             $query->order_by($sort["order_by"], $sort["sort_type"]);
         }
         if (!isset($pageParam["items_per_page"])) {
@@ -82,9 +82,16 @@ class Database_Post {
                 'total_page_count' => $total_page_count,
                 'items_per_page' => $pageParam["items_per_page"], //每页显示数据条数
                 'result' => $posts,
+                "message" => "ok"
             );
         else
-            return "none";
+            return array (
+            'total_items_count' => $count, //总记录数
+            'total_page_count' => $total_page_count,
+            'items_per_page' => $pageParam["items_per_page"], //每页显示数据条数
+            'result' => $posts,
+            "message" => "none"
+        );
     }
 
     /*     * ****
@@ -264,7 +271,7 @@ class Database_Post {
      */
 
     public function undo_reject($post) {
-        if ($post == null || count($post) == 0 || $post['id'] == null) {
+        if ($post == null || count($post) == 0 || !isset($post['id'])) {
 
             return 'no_id';
         }
