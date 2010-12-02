@@ -2,9 +2,8 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_User extends Controller_Base{
+class Controller_User extends Controller_Base_Admin {
 
-  //  public $template = 'admin/base/layout';
 
     public function action_index() {
 
@@ -36,7 +35,7 @@ class Controller_User extends Controller_Base{
         echo Kohana::debug($user);
         $users = $userDb->query_list($user, $pageparam);
         $users = Action::sucess_status($users);
-        
+
         echo Kohana::debug($users);
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $users["total_items_count"]);
