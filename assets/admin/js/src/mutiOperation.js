@@ -3,7 +3,8 @@
  */
 var mutiOperation = (function( $ ){
 	var wrap			= $('.operation-bar'),
-		btnAll			= wrap.find('.operation-btn'),
+		allBtns			= wrap.find('.operation-btn'),
+		dialogBtns		= wrap.find('span[action]'),
 		btnSelect		= wrap.find('.js-mutiopt-select'),
 		btnInverse		= wrap.find('.js-mutiopt-inverse'),
 		btnDelete		= wrap.find('.js-mutiopt-delete'),
@@ -11,10 +12,11 @@ var mutiOperation = (function( $ ){
 		btnFlag			= wrap.find('.js-mutiopt-flag'),
 		btnMove			= wrap.find('.js-mutiopt-move'),
 		btnUndoPub		= wrap.find('.js-mutiopt-undo-pub'),
-		btnUndoRej		= wrap.find('.js-mutiopt-undo-rej');
+		btnUndoRej		= wrap.find('.js-mutiopt-undo-rej'),
+		classActive		= 'operation-btn-active';
 
 	// 整体设置
-	btnAll.each(function() {
+	allBtns.each(function() {
 		var el				= $(this),
 			classBtnHover	= 'operation-btn-hover';
 
@@ -38,6 +40,40 @@ var mutiOperation = (function( $ ){
 			this.checked = !this.checked;
 		});
 	});
+
+	// 统一对批量操作的对话框初始化
+	dialogBtns.each(function() {
+		var el = $(this);
+
+		el.qtip({
+			show: {when: 'click', solo: true},
+			hide: {when: 'click'},
+			position: {
+				corner: {target: 'bottomLeft', tooltip: 'topLeft'},
+				adjust: {x: -20, y: 0}
+			},
+			style: { name: 'blue', width: 280 },
+			content: {
+				text: '载入中...',
+				title: { text: '批量' + el.attr('title'), button: '关闭' }
+			},
+			api: {
+				beforeShow: function(){
+					el.addClass(classActive);
+				},
+				beforeHide: function(){
+					el.removeClass(classActive);
+				}
+			}
+		});
+	});
+
+	btnDelete.qtip('api').onShow = function() {
+		this.loadContent(
+			PAGEENV.base + btnDelete.attr('action'),
+			{ id: '1,6,9,52' }
+		);
+	}
 
 	// 批量删除
 

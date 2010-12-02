@@ -5,14 +5,15 @@ var dataTable = (function( $ ){
 	var wrap		= $('.list-table'),
 		thSort		= wrap.find('.js-sort'),
 		tbody		= wrap.find('tbody'),
-		tooltips	= wrap.find('span[qtip=1]'),
+		tooltips	= tbody.find('span[qtip=1]'),
 		dialogBtns  = tbody.find('span[action]'),
 		btnsDelete	= tbody.find('.js-opt-delete'),
 		btnsAudit	= tbody.find('.js-opt-audit'),
 		btnsMove	= tbody.find('.js-opt-move'),
 		btnsFlag	= tbody.find('.js-opt-flag'),
 		btnUndoRej	= tbody.find('.js-opt-undo-rej'),
-		btnsPreview	= tbody.find('.js-opt-preview');
+		btnsPreview	= tbody.find('.js-opt-preview'),
+		classActive	= 'table-btn-active';
 
 	// 给偶数行表格添加样式
 	tbody.find('tr:odd').addClass('tr-odd');
@@ -62,7 +63,7 @@ var dataTable = (function( $ ){
 		position: {target: 'mouse'}
 	});
 
-	// 对话框基本参数设置，所有单行操作对话框都基于此设置创建
+	// 统一对行级操作的对话框初始化
 	dialogBtns.each(function(){
 		var el = $(this);
 
@@ -75,28 +76,28 @@ var dataTable = (function( $ ){
 			},
 			style: { name: 'blue', width: 280 },
 			content: {
-				text: 'Loading...',
+				text: '载入中...',
 				title: { text: el.attr('title'), button: '关闭' }
 			},
 			api: {
 				beforeShow: function(){
-					el.addClass('table-btn-active');
+					el.addClass(classActive);
 				},
 				beforeHide: function(){
-					el.removeClass('table-btn-active');
+					el.removeClass(classActive);
 				}
 			}
 		});
 	});
 
+	// 删除行操作
 	btnsDelete.each(function(){
 		var el = $(this);
 
 		el.qtip('api').onShow = function() {
 			this.loadContent(
 				PAGEENV.base + el.attr('action'),
-				{ id: el.closest("tr").attr("row_id") },
-				'get'
+				{ id: el.closest("tr").attr("row_id") }
 			);
 		}
 	});
