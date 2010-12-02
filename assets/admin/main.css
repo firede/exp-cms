@@ -328,7 +328,7 @@ a:hover {
 	font-weight: 700;
 	text-align: center;
 	margin:0 10px 0 6px;
-	background: #EEF;
+	background: #E9F3F7;
 	cursor: pointer;
 }
 
@@ -497,6 +497,14 @@ a:hover {
 #status-1 { color:#090; }
 #status-5 { color:#C90; }
 #status-3 { color:#666; }
+
+/* qtip style hack */
+.qtip-blue .qtip-button {
+	color: yellow;
+}
+.qtip-blue .qtip-button:hover {
+	text-decoration: underline;
+}
 
 /* message error or success */
 .message-error {

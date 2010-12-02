@@ -3,8 +3,30 @@
  */
 var dataTable = (function( $ ){
 	var wrap		= $('.list-table'),
+		thSort		= wrap.find('.js-sort'),
 		tbody		= wrap.find('tbody'),
-		thSort		= wrap.find('.js-sort');
+		tooltips	= wrap.find('span[qtip=1]'),
+		btnsDelete	= tbody.find('.js-opt-delete'),
+		btnsAudit	= tbody.find('.js-opt-audit'),
+		btnsMove	= tbody.find('.js-opt-move'),
+		btnsFlag	= tbody.find('.js-opt-flag'),
+		btnUndoRej	= tbody.find('.js-opt-undo-rej'),
+		btnsPreview	= tbody.find('.js-opt-preview'),
+		btnsAll		= tbody.find('.table-btn'),
+		// 对话框基本参数设置，所有单行操作对话框都基于此设置创建
+		dialogCfg	= {
+			show: {when: 'click', solo: true},
+			hide: {when: 'click'},
+			position: {
+				corner: {target: 'rightBottom', tooltip: 'rightTop'},
+				adjust: {x: 8, y: 0}
+			},
+			style: { name: 'blue', width: 280 },
+			content: {
+				text: 'Loading...',
+				title: { button: 'Close' }
+			}
+		};
 
 	// 给偶数行表格添加样式
 	tbody.find('tr:odd').addClass('tr-odd');
@@ -46,6 +68,22 @@ var dataTable = (function( $ ){
 			function(){ el.addClass(classSortHover); },
 			function(){ el.removeClass(classSortHover); }
 		);
+	});
+
+	// 为标记了qtip标志的字段启用tips
+	tooltips.qtip({
+		style: {name: 'blue'},
+		position: {target: 'mouse'}
+	});
+
+	btnsAll.each(function(){
+		$(this).qtip(dialogCfg);
+	});
+
+	btnsDelete.each(function(){
+		$(this).qtip('api').onRender = function() {
+			alert('haha')
+		}
 	});
 
 })( jQuery );

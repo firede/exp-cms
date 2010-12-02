@@ -39,4 +39,6 @@ var mutiOperation = (function( $ ){
 		});
 	});
 
+	// 批量删除
+
 })( jQuery );
