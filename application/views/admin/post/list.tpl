@@ -40,7 +40,7 @@
 <div class="pagination-bar clearfix radius_bottom">
 	<div class="grid_12"><{$pagination}></div>
 	<div class="grid_8 right">
-	共<{$view_data.total_page_count|default:0}>页/<{$view_data.total_items_count|default:0}>条
+	共<{$view_data.total_page_count|default:0}>页, 共<{$view_data.total_items_count|default:0}>条
 	</div>
 </div>
 

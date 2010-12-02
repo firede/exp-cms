@@ -437,7 +437,7 @@ a:hover {
 	cursor: pointer;
 }
 
-.pagination a, .pagination strong {
+.pagination a {
 	float: left;
 	display: block;
 	height: 20px;
@@ -446,6 +446,11 @@ a:hover {
 }
 .pagination a:hover {
 	background: #CADFF9;
+}
+.pagination a.current {
+	text-decoration: none;
+	font-weight: 700;
+	color: #000;
 }
 
 /* status tab */
