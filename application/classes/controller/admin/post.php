@@ -20,7 +20,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                     'total_items' => 0,
                     'items_per_page' => 20,
                     'view' => 'pagination/admin',
-                    'auto_hide' => TRUE,
+                    'auto_hide' => FALSE,
                     'first_page_in_url' => FALSE,
                 ));
         $postDb = new Database_Post();
@@ -40,12 +40,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post = Arr::filter_Array($_GET, $arr_element_names);
         $sort= Arr::filter_Array($_GET, array("order_by","sort_type"));
         $posts = $postDb->query_list($post, $pageparam,$sort);
-        $posts = Action::sucess_status($posts);
-        $posts["total_items_count"]= count($posts["result"])=="0"?0:$posts["total_items_count"];
-        $posts["total_page_count"]= count($posts["result"])=="0"?0:$posts["total_page_count"];
-        if (isset($posts["total_items_count"])) {
+        $posts["message"] = Action::sucess_status($posts["message"]);
+        if (isset($posts["total_items_count"])&&isset($posts["total_page_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
-            
         }
 
         $conf_status = 'status_' . $_GET['status'];
