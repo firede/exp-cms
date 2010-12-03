@@ -98,7 +98,7 @@ var dataTable = (function( $ ){
 		el.qtip('api').onShow = function() {
 			this.loadContent(
 				PAGEENV.base + el.attr('action'),
-				{id: el.closest("tr").attr("row_id")}
+				{ 'v': util.version }
 			);
 		}
 	});
@@ -132,10 +132,15 @@ var dataTable = (function( $ ){
 		/**
 		 * 获取选中条目的值（用逗号分隔的字符串）
 		 *
+		 * @param {string} separator 分隔符，默认为逗号
 		 * @return {string}
 		 */
-		getSelectedString: function() {
-			return this.getSelected().join(',');
+		getSelectedString: function(separator) {
+			if (!separator) {
+				separator = ',';
+			}
+
+			return this.getSelected().join(separator);
 		},
 
 		/**
