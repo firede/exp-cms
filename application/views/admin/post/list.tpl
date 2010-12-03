@@ -54,7 +54,6 @@
 	};
 </script>
 
-<script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/table.js"></script>
 <script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/admin.js"></script>
 
 <{include file="admin/base/footer.tpl"}>

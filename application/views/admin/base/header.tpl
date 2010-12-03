@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="<{$BASE_URL}>assets/common/960gs.css" />
 	<link rel="stylesheet" href="<{$BASE_URL}>assets/admin/main.css" />
 	<script type="text/javascript" src="<{$BASE_URL}>assets/common/js/jquery.min.js"></script>
-	<script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/jquery.qtip.min.js"></script>
+	<script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/src/jquery.qtip.js"></script>
 	<title><{if $title|default}>
 		<{$title}> - 
 	<{/if}>大犀牛体验版CMS</title>

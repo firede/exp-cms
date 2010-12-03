@@ -231,8 +231,12 @@ a:hover {
 	vertical-align: middle;
 }
 
-.list-table .odd td {
+.list-table .tr-odd td {
 	background: #F5FAFC;
+}
+
+.list-table .tr-hover td {
+	background: #FFC;
 }
 
 .list-table .inner-td {
@@ -324,7 +328,7 @@ a:hover {
 	font-weight: 700;
 	text-align: center;
 	margin:0 10px 0 6px;
-	background: #EEF;
+	background: #E9F3F7;
 	cursor: pointer;
 }
 
@@ -343,6 +347,7 @@ a:hover {
 .icon-delete,
 .icon-move,
 .icon-preview,
+.icon-preview-ol,
 .icon-undo-pub,
 .icon-undo-rej,
 .icon-home,
@@ -390,6 +395,9 @@ a:hover {
 }
 .icon-preview {
 	background-position: -140px 0;
+}
+.icon-preview-ol {
+	background-position: -160px 0;
 }
 .icon-flag-1 {
 	background-position: -20px -80px;
@@ -493,6 +501,14 @@ a:hover {
 #status-1 { color:#090; }
 #status-5 { color:#C90; }
 #status-3 { color:#666; }
+
+/* qtip style hack */
+.qtip-blue .qtip-button {
+	color: yellow;
+}
+.qtip-blue .qtip-button:hover {
+	text-decoration: underline;
+}
 
 /* message error or success */
 .message-error {

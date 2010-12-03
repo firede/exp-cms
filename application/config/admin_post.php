@@ -53,18 +53,39 @@ return array(
 		),
 		// 操作（行级操作允许的功能）
 		'operation'=> array(
-			'audit'     => '快速审核',
-			'move'      => '移动',
-			'delete'    => '删除',
-			'preview'   => '预览',
+			'audit'     => array(
+				'title'     => '快速审核',
+				'action'    => 'admin/post/audit',
+			),
+			'move'      => array(
+				'title'     => '移动',
+				'action'    => 'admin/post/move',
+			),
+			'delete'    => array(
+				'title'     => '删除',
+				'action'    => 'admin/post/del',
+			),
+			'preview'   => array(
+				'title'     => '预览',
+				'action'    => 'admin/post/preview',
+			),
 		),
 		// 批量操作（批量操作允许的功能）
 		'muti_operation' => array(
-			'select'    => '全选',
-			'inverse'   => '反选',
-			'audit'     => '审核',
-			'move'      => '移动',
-			'delete'    => '删除',
+			'select'    => array('title' => '全选'),
+			'inverse'   => array('title' => '反选'),
+			'audit'     => array(
+				'title'     => '审核',
+				'action'    => 'admin/post/m_audit',
+			),
+			'move'      => array(
+				'title'     => '移动',
+				'action'    => 'admin/post/m_move',
+			),
+			'delete'    => array(
+				'title'     => '删除',
+				'action'    => 'admin/post/m_del',
+			),
 		),
 	),
 	
@@ -124,18 +145,39 @@ return array(
 			),
 		),
 		'operation'=> array(
-			'audit'     => '快速审核',
-			'move'      => '移动',
-			'delete'    => '删除',
-			'preview'   => '预览',
-			'preview-ol'=> '线上版本预览',
+			'audit'     => array(
+				'title'     => '快速审核',
+				'action'    => 'admin/post/audit',
+			),
+			'move'      => array(
+				'title'     => '移动',
+				'action'    => 'admin/post/move',
+			),
+			'delete'    => array(
+				'title'     => '删除',
+				'action'    => 'admin/post/del',
+			),
+			'preview'   => array(
+				'title'     => '预览',
+				'action'    => 'admin/post/preview',
+			),
+			'preview-ol'=> array( 'title' => '线上版本预览'),
 		),
 		'muti_operation' => array(
-			'select'    => '全选',
-			'inverse'   => '反选',
-			'audit'     => '审核',
-			'move'      => '移动',
-			'delete'    => '删除',
+			'select'    => array('title' => '全选'),
+			'inverse'   => array('title' => '反选'),
+			'audit'     => array(
+				'title'     => '审核',
+				'action'    => 'admin/post/m_audit',
+			),
+			'move'      => array(
+				'title'     => '移动',
+				'action'    => 'admin/post/m_move',
+			),
+			'delete'    => array(
+				'title'     => '删除',
+				'action'    => 'admin/post/m_del',
+			),
 		),
 	),
 	
@@ -195,19 +237,46 @@ return array(
 			)
 		),
 		'operation'=> array(
-			'flag'      => '标记',
-			'undo-pub'  => '撤销发布',
-			'move'      => '移动',
-			'delete'    => '删除',
-			'preview'   => '预览',
+			'flag'      => array(
+				'title'     => '标记',
+				'action'    => 'admin/post/flag',
+			),
+			'undo-pub'  => array(
+				'title'     => '撤销发布',
+				'action'    => 'admin/post/undo_pub'
+			),
+			'move'      => array(
+				'title'     => '移动',
+				'action'    => 'admin/post/move',
+			),
+			'delete'    => array(
+				'title'     => '删除',
+				'action'    => 'admin/post/del',
+			),
+			'preview'   => array(
+				'title'     => '预览',
+				'action'    => 'admin/post/preview',
+			),
 		),
 		'muti_operation' => array(
-			'select'    => '全选',
-			'inverse'   => '反选',
-			'flag'      => '标记',
-			'undo-pub'  => '撤销发布',
-			'move'      => '移动',
-			'delete'    => '删除',
+			'select'    => array('title' => '全选'),
+			'inverse'   => array('title' => '反选'),
+			'flag'      => array(
+				'title'     => '标记',
+				'action'    => 'admin/post/m_flag',
+			),
+			'undo-pub'  => array(
+				'title'     => '撤销发布',
+				'action'    => 'admin/post/m_undo_pub'
+			),
+			'move'      => array(
+				'title'     => '移动',
+				'action'    => 'admin/post/m_move',
+			),
+			'delete'    => array(
+				'title'     => '删除',
+				'action'    => 'admin/post/m_del',
+			),
 		),
 	),
 	
@@ -248,7 +317,10 @@ return array(
 			)
 		),
 		'operation'=> array(
-			'preview'   => '预览',
+			'preview'   => array(
+				'title'     => '预览',
+				'action'    => 'admin/post/preview',
+			),
 		),
 	),
 	
@@ -308,13 +380,22 @@ return array(
 			),
 		),
 		'operation'=> array(
-			'undo-rej'  => '撤销驳回',
-			'preview'   => '预览',
+			'undo-rej'  => array(
+				'title'     => '撤销驳回',
+				'action'    => 'admin/post/undo_rej',
+			),
+			'preview'   => array(
+				'title'     => '预览',
+				'action'    => 'admin/post/preview',
+			),
 		),
 		'muti_operation' => array(
-			'select'    => '全选',
-			'inverse'   => '反选',
-			'undo-rej'  => '撤销驳回',
+			'select'    => array('title' => '全选'),
+			'inverse'   => array('title' => '反选'),
+			'undo-rej'  => array(
+				'title'     => '撤销驳回',
+				'action'    => 'admin/post/m_undo_rej',
+			),
 		),
 	),
 );
