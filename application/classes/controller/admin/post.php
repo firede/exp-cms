@@ -123,16 +123,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     }
 
     public function action_del() {
-        if (!isset($_GET['id'])) {
-            echo "请指定ID";
-            exit;
-        }
+		$this->request->headers['Cache-control'] = 'max-age=86400';
 
-        $id = $_GET["id"];
-
-        $this->template = View::factory('smarty:admin/post/del', array(
-                    'id' => $id,
-                ));
+		$this->template = View::factory('smarty:admin/post/del');
     }
 
     /*     * ***
@@ -153,13 +146,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     }
 
     public function action_m_del() {
-        $ids = $_GET['id'];
-        $ids_arr = explode(',', $ids);
+		$this->request->headers['Cache-control'] = 'max-age=86400';
 
-        $this->template = View::factory('smarty:admin/post/m_del', array(
-                    'ids' => $ids,
-                    'id_sum' => count($ids_arr),
-                ));
+		$this->template = View::factory('smarty:admin/post/m_del');
     }
 
     /*     * ***

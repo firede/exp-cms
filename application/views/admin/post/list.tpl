@@ -50,7 +50,8 @@
 	<{* 页面环境变量&配置 *}>
 	var PAGEENV = {
 		"base": "<{$BASE_URL|escape:javascript}>",
-		"param": <{$URL_PARAMS}>
+		"param": <{$URL_PARAMS}>,
+		"version": "<{$VERSION}>"
 	};
 </script>
 
