@@ -28,18 +28,10 @@ var mutiOperation = (function( $ ){
 	});
 
 	// 全选
-	btnSelect.click(function(){
-		$('.list-table input[name=select]').each(function() {
-			this.checked = true;
-		});
-	});
+	btnSelect.click(dataTable.option.setAll);
 
 	// 反选
-	btnInverse.click(function() {
-		$('.list-table input[name=select]').each(function() {
-			this.checked = !this.checked;
-		});
-	});
+	btnInverse.click(dataTable.option.setInverse);
 
 	// 统一对批量操作的对话框初始化
 	dialogBtns.each(function() {
@@ -68,13 +60,22 @@ var mutiOperation = (function( $ ){
 		});
 	});
 
-	btnDelete.qtip('api').onShow = function() {
-		this.loadContent(
-			PAGEENV.base + btnDelete.attr('action'),
-			{ id: '1,6,9,52' }
-		);
+	// 批量删除
+	btnDelete.each(function(){
+		$(this).qtip('api').onShow = function() {
+			this.updateTitle('批量操作：选中<strong>'
+				+ dataTable.option.getSelectedCount()
+				+ '</strong>项')
+			this.loadContent(
+				util.base + btnDelete.attr('action'),
+				{ 'v': util.version }
+			);
+		}
+	});
+
+	return {
+		'dialogBtns': dialogBtns
 	}
 
-	// 批量删除
 
 })( jQuery );
