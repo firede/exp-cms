@@ -62,10 +62,14 @@ var mutiOperation = (function( $ ){
 
 	// 批量删除
 	btnDelete.each(function(){
-		$(this).qtip('api').onShow = function() {
-			this.updateTitle('批量操作：选中<strong>'
+		var el = $(this);
+
+		el.qtip('api').onShow = function() {
+			this.updateTitle('批量'
+				+ el.attr('title')
+				+ '：选中<strong>'
 				+ dataTable.option.getSelectedCount()
-				+ '</strong>项')
+				+ '</strong>条数据');
 			this.loadContent(
 				util.base + btnDelete.attr('action'),
 				{ 'v': util.version }

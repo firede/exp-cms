@@ -123,7 +123,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     }
 
     public function action_del() {
-		$this->request->headers['Cache-control'] = 'max-age=86400';
+		// $this->request->headers['Cache-control'] = 'max-age=86400';
 
 		$this->template = View::factory('smarty:admin/post/del');
     }
@@ -146,7 +146,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     }
 
     public function action_m_del() {
-		$this->request->headers['Cache-control'] = 'max-age=86400';
+		// $this->request->headers['Cache-control'] = 'max-age=86400';
 
 		$this->template = View::factory('smarty:admin/post/m_del');
     }
