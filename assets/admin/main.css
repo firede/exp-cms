@@ -509,6 +509,14 @@ a:hover {
 .qtip-blue .qtip-button:hover {
 	text-decoration: underline;
 }
+.qtip-content {
+	word-break:break-all;
+	word-wrap:break-word;
+}
+.qtip-title strong {
+	color:yellow;
+	padding:0 3px;
+}
 
 /* message error or success */
 .message-error {
