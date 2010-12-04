@@ -33,6 +33,7 @@ class Controller_Base extends Controller {
     public function after() {
 
         // 输出视图前定义变量
+		$this->template->VERSION = '1-0-0-pre';
         $this->template->BASE_URL = URL::base();
 		$this->template->URL_PARAMS = json_encode($_GET);
 

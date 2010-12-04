@@ -138,7 +138,6 @@ a:hover {
 	cursor: pointer;
 }
 .operation-btn-hover {
-	font-weight: 700;
 	text-decoration: underline;
 }
 
@@ -149,8 +148,7 @@ a:hover {
 }
 .operation-btn-active {
 	background: #008EE8 url('img/bgs.png') 0 0 repeat-x;
-	color:#FFF;
-	font-weight: 700;
+	color:yellow;
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	-moz-border-radius-topleft: 3px;
@@ -508,6 +506,14 @@ a:hover {
 }
 .qtip-blue .qtip-button:hover {
 	text-decoration: underline;
+}
+.qtip-content {
+	word-break:break-all;
+	word-wrap:break-word;
+}
+.qtip-title strong {
+	color:yellow;
+	padding:0 3px;
 }
 
 /* message error or success */

@@ -2,11 +2,14 @@
  * 通用工具
  */
 var util = (function( $ ) {
+	var env			= PAGEENV,
+		base		= env.base,
+		paramSource	= env.param,
+		version		= env.version;
 	/**
 	 * 参数管理器
 	 */
-	var paramSource = PAGEENV.param,
-	param = {
+	var param = {
 		/**
 		 * 设置参数并自动跳转页面
 		 *
@@ -31,6 +34,8 @@ var util = (function( $ ) {
 	 * 外部可访问的接口
 	 */
 	return {
-		'param': param
-	}
+		'base'		: base,
+		'param'		: param,
+		'version'	: version
+	};
 })( jQuery );

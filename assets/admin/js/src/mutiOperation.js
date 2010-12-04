@@ -28,18 +28,10 @@ var mutiOperation = (function( $ ){
 	});
 
 	// 全选
-	btnSelect.click(function(){
-		$('.list-table input[name=select]').each(function() {
-			this.checked = true;
-		});
-	});
+	btnSelect.click(dataTable.option.setAll);
 
 	// 反选
-	btnInverse.click(function() {
-		$('.list-table input[name=select]').each(function() {
-			this.checked = !this.checked;
-		});
-	});
+	btnInverse.click(dataTable.option.setInverse);
 
 	// 统一对批量操作的对话框初始化
 	dialogBtns.each(function() {
@@ -52,7 +44,7 @@ var mutiOperation = (function( $ ){
 				corner: {target: 'bottomLeft', tooltip: 'topLeft'},
 				adjust: {x: -20, y: 0}
 			},
-			style: { name: 'blue', width: 280 },
+			style: { name: 'blue', width: 300 },
 			content: {
 				text: '载入中...',
 				title: { text: '批量' + el.attr('title'), button: '关闭' }
@@ -68,13 +60,26 @@ var mutiOperation = (function( $ ){
 		});
 	});
 
-	btnDelete.qtip('api').onShow = function() {
-		this.loadContent(
-			PAGEENV.base + btnDelete.attr('action'),
-			{ id: '1,6,9,52' }
-		);
-	}
-
 	// 批量删除
+	btnDelete.each(function(){
+		var el = $(this);
+
+		el.qtip('api').onShow = function() {
+			this.updateTitle('批量' +
+				el.attr('title') +
+				'：选中<strong>' +
+				dataTable.option.getSelectedCount() +
+				'</strong>条数据');
+			this.loadContent(
+				util.base + btnDelete.attr('action'),
+				{ 'v': util.version }
+			);
+		};
+	});
+
+	return {
+		'dialogBtns': dialogBtns
+	};
+
 
 })( jQuery );

@@ -50,8 +50,13 @@
 	<{* 页面环境变量&配置 *}>
 	var PAGEENV = {
 		"base": "<{$BASE_URL|escape:javascript}>",
-		"param": <{$URL_PARAMS}>
+		"param": <{$URL_PARAMS}>,
+		"version": "<{$VERSION}>"
 	};
+	
+	$(document).ready(function(){
+		$('#status-' + util.param.get('status')).addClass('status-tab-active');
+	});
 </script>
 
 <script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/admin.js"></script>
