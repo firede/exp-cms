@@ -1,3 +1,0 @@
-[submodule "vendor/ready.js"]
-	path = vendor/ready.js
-	url = git@github.com:firede/ready.js.git
