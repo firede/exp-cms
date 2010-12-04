@@ -44,7 +44,7 @@ var mutiOperation = (function( $ ){
 				corner: {target: 'bottomLeft', tooltip: 'topLeft'},
 				adjust: {x: -20, y: 0}
 			},
-			style: { name: 'blue', width: 280 },
+			style: { name: 'blue', width: 300 },
 			content: {
 				text: '载入中...',
 				title: { text: '批量' + el.attr('title'), button: '关闭' }
@@ -65,21 +65,21 @@ var mutiOperation = (function( $ ){
 		var el = $(this);
 
 		el.qtip('api').onShow = function() {
-			this.updateTitle('批量'
-				+ el.attr('title')
-				+ '：选中<strong>'
-				+ dataTable.option.getSelectedCount()
-				+ '</strong>条数据');
+			this.updateTitle('批量' +
+				el.attr('title') +
+				'：选中<strong>' +
+				dataTable.option.getSelectedCount() +
+				'</strong>条数据');
 			this.loadContent(
 				util.base + btnDelete.attr('action'),
 				{ 'v': util.version }
 			);
-		}
+		};
 	});
 
 	return {
 		'dialogBtns': dialogBtns
-	}
+	};
 
 
 })( jQuery );

@@ -37,5 +37,5 @@ var util = (function( $ ) {
 		'base'		: base,
 		'param'		: param,
 		'version'	: version
-	}
+	};
 })( jQuery );

@@ -23,7 +23,7 @@ var tableSearch = (function( $ ) {
 	btn.click(function(){
 		util.param.set({
 			'keyword': keywordInput.val()
-		})
+		});
 	});
 
 	// 设置按钮Hover样式

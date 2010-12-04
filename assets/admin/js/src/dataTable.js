@@ -100,7 +100,7 @@ var dataTable = (function( $ ){
 				PAGEENV.base + el.attr('action'),
 				{ 'v': util.version }
 			);
-		}
+		};
 	});
 
 	// 当选项状态发生变化时隐藏多行操作的tips
@@ -171,10 +171,10 @@ var dataTable = (function( $ ){
 				$(this).click();
 			});
 		}
-	}
+	};
 
 	return {
 		'option': option
-	}
+	};
 
 })( jQuery );
