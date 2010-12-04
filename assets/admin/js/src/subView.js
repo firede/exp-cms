@@ -1,7 +1,7 @@
 /**
  * 子视图控件
  */
-var subView = (function( $ ){
+dxn.subView = (function ($) {
 	var curViewParam;
 
 	/**
@@ -13,18 +13,18 @@ var subView = (function( $ ){
 		 *
 		 * @param {string|Object} param 要设置的参数
 		 */
-		set: function( param ) {
+		set: function (param) {
 			curViewParam = param;
 		},
 
 		/**
 		 * 返回当前视图参数
 		 */
-		get: function() {
+		get: function () {
 			return curViewParam;
 		},
 
-		clean: function() {
+		clean: function () {
 			curViewParam = null;
 		}
 	};
@@ -33,4 +33,4 @@ var subView = (function( $ ){
 		'curParam': curParam
 	};
 
-})( jQuery );
+}(jQuery));

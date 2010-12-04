@@ -48,14 +48,14 @@
 
 <script type="text/javascript">
 	<{* 页面环境变量&配置 *}>
-	var PAGEENV = {
+	window.PAGEENV = {
 		"base": "<{$BASE_URL|escape:javascript}>",
 		"param": <{$URL_PARAMS}>,
 		"version": "<{$VERSION}>"
 	};
 	
 	$(document).ready(function(){
-		$('#status-' + util.param.get('status')).addClass('status-tab-active');
+		$('#status-' + dxn.util.param.get('status')).addClass('status-tab-active');
 	});
 </script>
 

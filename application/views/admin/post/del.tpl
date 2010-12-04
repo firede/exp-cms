@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-	var id = subView.curParam.get();
+	var id = dxn.subView.curParam.get();
 
 	$('.operation-content').append('<strong>ID是：' + id + '</strong>');
 });

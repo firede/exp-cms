@@ -1,7 +1,7 @@
 /**
  * 多行操作栏组件
  */
-var mutiOperation = (function( $ ){
+dxn.mutiOperation = (function ($) {
 	var wrap			= $('.operation-bar'),
 		allBtns			= wrap.find('.operation-btn'),
 		dialogBtns		= wrap.find('span[action]'),
@@ -16,30 +16,34 @@ var mutiOperation = (function( $ ){
 		classActive		= 'operation-btn-active';
 
 	// 整体设置
-	allBtns.each(function() {
+	allBtns.each(function () {
 		var el				= $(this),
 			classBtnHover	= 'operation-btn-hover';
 
 		// 增加操作栏Hover效果
 		el.hover(
-			function() { el.addClass(classBtnHover); },
-			function() { el.removeClass(classBtnHover); }
+			function () {
+				el.addClass(classBtnHover);
+			},
+			function () {
+				el.removeClass(classBtnHover);
+			}
 		);
 	});
 
 	// 全选
-	btnSelect.click(dataTable.option.setAll);
+	btnSelect.click(dxn.dataTable.option.setAll);
 
 	// 反选
-	btnInverse.click(dataTable.option.setInverse);
+	btnInverse.click(dxn.dataTable.option.setInverse);
 
 	// 统一对批量操作的对话框初始化
-	dialogBtns.each(function() {
+	dialogBtns.each(function () {
 		var el = $(this);
 
 		el.qtip({
-			show: {when: 'click', solo: true},
-			hide: {when: 'click'},
+			show: { when: 'click', solo: true },
+			hide: { when: 'click' },
 			position: {
 				corner: {target: 'bottomLeft', tooltip: 'topLeft'},
 				adjust: {x: -20, y: 0}
@@ -50,10 +54,10 @@ var mutiOperation = (function( $ ){
 				title: { text: '批量' + el.attr('title'), button: '关闭' }
 			},
 			api: {
-				beforeShow: function(){
+				beforeShow: function () {
 					el.addClass(classActive);
 				},
-				beforeHide: function(){
+				beforeHide: function () {
 					el.removeClass(classActive);
 				}
 			}
@@ -61,18 +65,18 @@ var mutiOperation = (function( $ ){
 	});
 
 	// 批量删除
-	btnDelete.each(function(){
+	btnDelete.each(function () {
 		var el = $(this);
 
-		el.qtip('api').onShow = function() {
+		el.qtip('api').onShow = function () {
 			this.updateTitle('批量' +
 				el.attr('title') +
 				'：选中<strong>' +
-				dataTable.option.getSelectedCount() +
+				dxn.dataTable.option.getSelectedCount() +
 				'</strong>条数据');
 			this.loadContent(
-				util.base + btnDelete.attr('action'),
-				{ 'v': util.version }
+				dxn.util.base + btnDelete.attr('action'),
+				{ 'v': dxn.util.version }
 			);
 		};
 	});
@@ -82,4 +86,4 @@ var mutiOperation = (function( $ ){
 	};
 
 
-})( jQuery );
+}(jQuery));

@@ -1,18 +1,18 @@
 /**
  * 数据表格组件
  */
-var dataTable = (function( $ ){
+dxn.dataTable = (function ($) {
 	var wrap		= $('.list-table'),
 		thSort		= wrap.find('.js-sort'),
 		tbody		= wrap.find('tbody'),
 		tooltips	= tbody.find('span[qtip=1]'),
 		dialogBtns  = tbody.find('span[action]'),
-		btnsDelete	= tbody.find('.js-opt-delete'),
-		btnsAudit	= tbody.find('.js-opt-audit'),
-		btnsMove	= tbody.find('.js-opt-move'),
-		btnsFlag	= tbody.find('.js-opt-flag'),
-		btnUndoRej	= tbody.find('.js-opt-undo-rej'),
-		btnsPreview	= tbody.find('.js-opt-preview'),
+//		btnsDelete	= tbody.find('.js-opt-delete'),
+//		btnsAudit	= tbody.find('.js-opt-audit'),
+//		btnsMove	= tbody.find('.js-opt-move'),
+//		btnsFlag	= tbody.find('.js-opt-flag'),
+//		btnUndoRej	= tbody.find('.js-opt-undo-rej'),
+//		btnsPreview	= tbody.find('.js-opt-preview'),
 		cbOptions	= tbody.find('input[name=select]'),
 		classActive	= 'table-btn-active';
 
@@ -21,17 +21,21 @@ var dataTable = (function( $ ){
 
 	// 给表格行添加Hover样式
 	tbody.find('tr').hover(
-		function(){$(this).addClass('tr-hover');},
-		function(){$(this).removeClass('tr-hover');}
+		function () {
+			$(this).addClass('tr-hover');
+		},
+		function () {
+			$(this).removeClass('tr-hover');
+		}
 	);
 
 	// 表头排序设置
-	thSort.each(function(){
+	thSort.each(function () {
 		var el				= $(this),
 			orderBy			= el.attr('order_by'),
 			sortType		= 'asc',
-			envOrderBy		= util.param.get('order_by'),
-			envSortType		= util.param.get('sort_type'),
+			envOrderBy		= dxn.util.param.get('order_by'),
+			envSortType		= dxn.util.param.get('sort_type'),
 			classSortHover	= 'js-sort-hover';
 
 		// 添加当前排序状态图标
@@ -43,8 +47,8 @@ var dataTable = (function( $ ){
 		}
 
 		// 排序点击事件
-		el.click(function(){
-			util.param.set({
+		el.click(function () {
+			dxn.util.param.set({
 				'order_by'	: orderBy,
 				'sort_type'	: sortType,
 				'page'		: '1'
@@ -53,8 +57,12 @@ var dataTable = (function( $ ){
 
 		// 排序Hover样式
 		el.hover(
-			function(){el.addClass(classSortHover);},
-			function(){el.removeClass(classSortHover);}
+			function () {
+				el.addClass(classSortHover);
+			},
+			function () {
+				el.removeClass(classSortHover);
+			}
 		);
 	});
 
@@ -65,7 +73,7 @@ var dataTable = (function( $ ){
 	});
 
 	// 统一对行级操作的对话框初始化
-	dialogBtns.each(function(){
+	dialogBtns.each(function () {
 		var el = $(this);
 
 		el.qtip({
@@ -81,18 +89,18 @@ var dataTable = (function( $ ){
 				title: {text: el.attr('title'), button: '关闭'}
 			},
 			api: {
-				beforeShow: function() {
+				beforeShow: function () {
 					el.addClass(classActive);
 				},
-				beforeHide: function() {
+				beforeHide: function () {
 					el.removeClass(classActive);
 					this.updateContent(this.options.content.text);
 				},
-				onShow: function() {
-					subView.curParam.set(el.closest('tr[row_id]').attr('row_id'));
+				onShow: function () {
+					dxn.subView.curParam.set(el.closest('tr[row_id]').attr('row_id'));
 					this.loadContent(
-						PAGEENV.base + el.attr('action'),
-						{ 'v': util.version }
+						dxn.util.base + el.attr('action'),
+						{ 'v': dxn.util.version }
 					);
 				}
 			}
@@ -100,8 +108,8 @@ var dataTable = (function( $ ){
 	});
 
 	// 当选项状态发生变化时隐藏多行操作的tips
-	cbOptions.click(function(){
-		mutiOperation.dialogBtns.each(function(){
+	cbOptions.click(function () {
+		dxn.mutiOperation.dialogBtns.each(function () {
 			$(this).qtip("api").hide();
 		});
 	});
@@ -115,10 +123,10 @@ var dataTable = (function( $ ){
 		 *
 		 * @return {Array}
 		 */
-		getSelected: function() {
+		getSelected: function () {
 			var valueList = [];
 
-			cbOptions.filter('[checked!=]').each(function(){
+			cbOptions.filter('[checked!=]').each(function () {
 				valueList.push($(this).val());
 			});
 
@@ -131,7 +139,7 @@ var dataTable = (function( $ ){
 		 * @param {string} separator 分隔符，默认为逗号
 		 * @return {string}
 		 */
-		getSelectedString: function(separator) {
+		getSelectedString: function (separator) {
 			if (!separator) {
 				separator = ',';
 			}
@@ -144,15 +152,15 @@ var dataTable = (function( $ ){
 		 *
 		 * @return {number}
 		 */
-		getSelectedCount: function() {
+		getSelectedCount: function () {
 			return this.getSelected().length;
 		},
 
 		/**
 		 * 全选
 		 */
-		setAll: function() {
-			cbOptions.each(function() {
+		setAll: function () {
+			cbOptions.each(function () {
 				this.checked = false;
 				// 此处采用click，以触发绑定在checkbox上的事件
 				$(this).click();
@@ -162,8 +170,8 @@ var dataTable = (function( $ ){
 		/**
 		 * 反选
 		 */
-		setInverse: function() {
-			cbOptions.each(function() {
+		setInverse: function () {
+			cbOptions.each(function () {
 				$(this).click();
 			});
 		}
@@ -173,4 +181,4 @@ var dataTable = (function( $ ){
 		'option': option
 	};
 
-})( jQuery );
+}(jQuery));
