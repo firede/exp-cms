@@ -96,6 +96,7 @@ var dataTable = (function( $ ){
 		var el = $(this);
 
 		el.qtip('api').onShow = function() {
+			subView.curParam.set(el.closest('tr[row_id]').attr('row_id'));
 			this.loadContent(
 				PAGEENV.base + el.attr('action'),
 				{ 'v': util.version }

@@ -7,7 +7,9 @@
 </div>
 
 <script type="text/javascript">
-(function( $ ) {
-	$('.operation-content');
-})( jQuery );
+$(document).ready(function(){
+	var id = subView.curParam.get();
+
+	$('.operation-content').append('<strong>ID是：' + id + '</strong>');
+});
 </script>
