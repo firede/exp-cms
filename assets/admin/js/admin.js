@@ -2,7 +2,3 @@ document.write('<script type="text/javascript" src="/assets/admin/js/src/util.js
 document.write('<script type="text/javascript" src="/assets/admin/js/src/dataTable.js"></script>');
 document.write('<script type="text/javascript" src="/assets/admin/js/src/tableSearch.js"></script>');
 document.write('<script type="text/javascript" src="/assets/admin/js/src/mutiOperation.js"></script>');
-
-$(document).ready(function(){
-	$('#status-' + util.param.get('status')).addClass('status-tab-active');
-});

@@ -53,6 +53,10 @@
 		"param": <{$URL_PARAMS}>,
 		"version": "<{$VERSION}>"
 	};
+	
+	$(document).ready(function(){
+		$('#status-' + util.param.get('status')).addClass('status-tab-active');
+	});
 </script>
 
 <script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/admin.js"></script>
