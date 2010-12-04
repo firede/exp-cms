@@ -81,27 +81,22 @@ var dataTable = (function( $ ){
 				title: {text: el.attr('title'), button: '关闭'}
 			},
 			api: {
-				beforeShow: function(){
+				beforeShow: function() {
 					el.addClass(classActive);
 				},
-				beforeHide: function(){
+				beforeHide: function() {
 					el.removeClass(classActive);
+					this.updateContent(this.options.content.text);
+				},
+				onShow: function() {
+					subView.curParam.set(el.closest('tr[row_id]').attr('row_id'));
+					this.loadContent(
+						PAGEENV.base + el.attr('action'),
+						{ 'v': util.version }
+					);
 				}
 			}
 		});
-	});
-
-	// 删除行操作
-	btnsDelete.each(function(){
-		var el = $(this);
-
-		el.qtip('api').onShow = function() {
-			subView.curParam.set(el.closest('tr[row_id]').attr('row_id'));
-			this.loadContent(
-				PAGEENV.base + el.attr('action'),
-				{ 'v': util.version }
-			);
-		};
 	});
 
 	// 当选项状态发生变化时隐藏多行操作的tips
