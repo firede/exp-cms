@@ -1,5 +1,6 @@
-mkdir -p application/classes/{controller,model}
-mkdir -p application/{config,views}
-mkdir -m 0777 -p application/{cache,logs}
+mkdir -p application/cache
+mkdir -p application/logs
+chmod -R 0777 application/cache
+chmod -R 0777 application/logs
 
 cp example.htaccess .htaccess
