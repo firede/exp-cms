@@ -18,8 +18,8 @@ class Controller_Upload extends Controller_BaseUser {
     public static $IMG_MAX_WIDTH = 1048; //图片宽度最大值 单位px
     public static $IMG_MAX_HEIGHT = 768; //图片高度最大值 单位px
     public static $IMG_TYPE = "jpg,jpeg,png,bmp,gif"; //允许上传的图片类型，多个用“,”分隔
-    public static $IMG_WATERMARK_PATH = "D:\project\exp-cms\watermarklogo\xiniu.jpg"; //图片水印路径
-    public static $IMG_WATERMARK_POSITION = 1; //图片水印位置 1上左 |2上中|3上右|4中左 |5中中|6中右|7下左 |8下中|9下右
+    public static $IMG_WATERMARK_PATH = "D:\project\exp-cms\assets\admin\img\logo.png"; //图片水印路径
+    public static $IMG_WATERMARK_POSITION = 9; //图片水印位置 1上左 |2上中|3上右|4中左 |5中中|6中右|7下左 |8下中|9下右
     public static $IMG_WATERMARK_OPACITY = 70; //图片水印透明度
     public static $IMG_WATERMARK_STATUS = TRUE; //是否使用图片水印 TRUE使用 FALSE不使用
     public static $IMG_WATERMARK_BORDER_SPACE = 10; //水印与边框距离 单位：px
@@ -60,19 +60,25 @@ class Controller_Upload extends Controller_BaseUser {
         }
         Controller_Upload::$IMG_DIR = APPPATH;
 
-        
-        $img_name = "test" . "." . $type; //新的文件名
+        $img_name = str_replace("-", "", Text::uuid());
+        $img_name = $img_name . "." . $type; //新的文件名
+        $son_path = date("Y/m/d");
         $upload_path = Controller_Upload::$IMG_DIR . $son_path;
-        if(file_exists($upload_path)){
-            
-        }
-        $url = $upload_path . "" . $img_name;
+
+        echo "upload_path:" . $upload_path;
+        /*         * *
+         * 判断文件夹是否存在不存在则创建
+         */
+        $path = str_replace("\\", "/", $upload_path);
+        $upload_path = $this->path_mkdir($upload_path);
+        echo "upload_path2:" . $upload_path;
+        $url = str_replace("/", "\\", $upload_path . "" . $img_name);
         ECHO $url;
         Upload::save($_FILES["file"], $img_name, $upload_path, "0644"); //上传
 
 
         $img_File = Image::factory($url);
-        echo Kohana::debug($img_File);
+        //echo Kohana::debug($img_File);
         $img_File->resize(Controller_Upload::$IMG_MAX_WIDTH, Controller_Upload::$IMG_MAX_HEIGHT, Image::AUTO);
         //判断是否需要打水印
         if (Controller_Upload::$IMG_WATERMARK_STATUS) {
@@ -92,8 +98,51 @@ class Controller_Upload extends Controller_BaseUser {
         
     }
 
+    /*     * ***
+     * 判断文件夹路径是否存在 如果不存在则创建缺失路径
+     * @$path <string> 文件路径 每层路径使用“\”来分隔
+     * @return <string> 返回创建完成的路径
+     */
+
+    public function path_mkdir($path) {
+        $file_boxs = explode("/", $path);
+        // echo
+        $path = "";
+        foreach ($file_boxs as $key => $file_box) {
+            //过滤空路径
+            if ($file_box == "/") {
+                continue;
+            } else {
+                $path = $path . $file_box . "/";
+                $file_boxs[$key]=$path;
+            }
+        }
+        $exists_flag=array();
+        echo kohana::debug($file_boxs);
+        $count=0;
+        for($i=count($file_boxs)-1;$i>=0;$i--){
+            if (!file_exists($file_boxs[$i])) {
+                $exists_flag[$count++]=$file_boxs[$i];
+             }else{break;}
+        }
+        echo kohana::debug($exists_flag);
+        for($i=(count($exists_flag)-1);$i>=0;$i--){
+            mkdir($exists_flag[$i]);
+        }
+        return $path;
+    }
+
+    /*     * **
+     * 计算图片打水印的位置
+     * @$img_File <Image>主图片对象
+     * @$watermark <Image> 水印图片对象
+     * @$position_flag <integer> 图片水印位置 1上左 |2上中|3上右|4中左 |5中中|6中右|7下左 |8下中|9下右
+     * @$border_space <integer> 水印距离图片边缘的位置 px
+     * @return  $xy_postion <array> $xy_postion["x"],$xy_postion["y"] 分别为X，Y轴坐标
+     */
+
     public function watermark_position($img_File, $watermark, $position_flag, $border_space) {
-        $position_flag=9;
+
         //获取到 图片 和水印的 高宽
         $img_File_w = $img_File->width;
         $img_File_h = $img_File->height;

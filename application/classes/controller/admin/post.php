@@ -1,8 +1,8 @@
-<?php
+﻿<?php
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
+class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
 
     public function action_index() {
 
@@ -13,7 +13,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      */
 
     public function action_list() {
-       
+
         // 测试分页
         $pagination = new Pagination(array(
                     'current_page' => array('source' => 'query_string', 'key' => 'page'),
@@ -38,21 +38,23 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
-        $sort= Arr::filter_Array($_GET, array("order_by","sort_type"));
-        $posts = $postDb->query_list($post, $pageparam,$sort);
+        $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
+        $posts = $postDb->query_list($post, $pageparam, $sort);
         $posts["message"] = Action::sucess_status($posts["message"]);
-        if (isset($posts["total_items_count"])&&isset($posts["total_page_count"])) {
+        if (isset($posts["total_items_count"]) && isset($posts["total_page_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }
 
         $conf_status = 'status_' . $_GET['status'];
         $conf = Kohana::config('admin_post')->$conf_status;
-       
-        $this->template = View::factory('smarty:admin/post/list', array(
+        $this->cache = Cache::instance("apc");
+        $view = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
                     'conf' => $conf,
                 ));
+        $this->cache->set("post_list_view", $view);
+        $this->template = $this->cache->get("post_list_view");
     }
 
     /*     * **
@@ -60,7 +62,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      */
 
     public function action_create() {
-       $uuid = Text::uuid();
+        $uuid = Text::uuid();
         echo Kohana::debug($_POST["uuid"]);
 
         $this->template = View::factory('smarty:', array(
