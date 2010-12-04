@@ -297,14 +297,14 @@ a:hover {
 .list-search .keyword input {
 	position: absolute;
 	left:4px;
-	top:2px;
+	top:1px;
 	width: 170px;
 	height: 14px;
 	line-height: 14px;
 	text-align: left;
 	font-size: 14px;
 	color:#999;
-	padding:1px;
+	padding:2px;
 	margin:0;
 	border: 0;
 }
