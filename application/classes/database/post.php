@@ -142,7 +142,7 @@ class Database_Post {
             return "no_id";
         }
         $delete = DB::delete()->table('post')->where('id', '=', $id);
-        echo Kohana::debug($delete);
+        
         $result = (bool) $delete->execute();
         return $result ? 'ok' : 'error'; //返回值有误 需要进一步分析kohana数据库操作的反馈机制
     }
@@ -159,7 +159,7 @@ class Database_Post {
         $ids = explode(",", $ids);
         $delete = DB::delete()->table('post')->where('id', 'in', $ids);
         $result = (bool) $delete->execute();
-        ECHO Kohana::debug($result);
+      
         return $result ? 'ok' : 'error';
     }
 
