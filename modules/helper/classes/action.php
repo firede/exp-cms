@@ -4,7 +4,7 @@
  * 控制器中action的工具包
  */
 
-class Action {
+class Action { 
     /*     * **
      * 根据数据状态返回相应的数据集合
      * @$posts 
