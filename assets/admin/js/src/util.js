@@ -2,7 +2,7 @@
  * 通用工具
  */
 dxn.util = (function ($) {
-	var env			= window.PAGEENV,
+	var env			= dxn.PAGEENV,
 		base		= env.base,
 		paramSource	= env.param,
 		version		= env.version;

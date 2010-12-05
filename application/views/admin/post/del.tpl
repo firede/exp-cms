@@ -1,15 +1,25 @@
-<div class="operation-content">
+<div class="operation-container">
 	<p>你确定要删除文章么？</p>
 	<div>
-		<input id="operationOk" type="button" value="确定" />
-		<input type="button" value="取消" onclick="$('.js-opt-delete').qtip('hide')" />
+		<input type="submit" value="确定" class="submit" />
+		<input type="button" value="取消" class="cancel" />
 	</div>
 </div>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	var id = dxn.subView.curParam.get();
+$(document).ready(function () {
+	var container	= $('.operation-container'),
+		submit		= container.find('.submit'),
+		cancel		= container.find('.cancel'),
+		id			= dxn.subView.curParam.get(),
+		baseUrl		= dxn.util.base;
 
-	$('.operation-content').append('<strong>ID是：' + id + '</strong>');
+	submit.click(function () {
+		$.post(baseUrl + 'admin/post/del_post', { 'id': id });
+	});
+
+	cancel.click(function () {
+		$('.js-opt-delete').qtip('hide');
+	});
 });
 </script>

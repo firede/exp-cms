@@ -48,7 +48,8 @@
 
 <script type="text/javascript">
 	<{* 页面环境变量&配置 *}>
-	window.PAGEENV = {
+	var dxn = window.dxn || {};
+	dxn.PAGEENV = {
 		"base": "<{$BASE_URL|escape:javascript}>",
 		"param": <{$URL_PARAMS}>,
 		"version": "<{$VERSION}>"
