@@ -4,7 +4,7 @@
 dxn.mutiOperation = (function ($) {
 	var wrap			= $('.operation-bar'),
 		allBtns			= wrap.find('.operation-btn'),
-		dialogBtns		= wrap.find('span[action]'),
+		dialogBtns		= wrap.find('.operation-btn[action!=]'),
 		btnSelect		= wrap.find('.js-mutiopt-select'),
 		btnInverse		= wrap.find('.js-mutiopt-inverse'),
 		btnDelete		= wrap.find('.js-mutiopt-delete'),

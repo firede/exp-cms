@@ -6,7 +6,7 @@ dxn.dataTable = (function ($) {
 		thSort		= wrap.find('.js-sort'),
 		tbody		= wrap.find('tbody'),
 		tooltips	= tbody.find('span[qtip=1]'),
-		dialogBtns  = tbody.find('span[action]'),
+		dialogBtns  = tbody.find('.table-btn[action!=]'),
 		cbOptions	= tbody.find('input[name=select]'),
 		classActive	= 'table-btn-active',
 		btn			= {
@@ -76,7 +76,9 @@ dxn.dataTable = (function ($) {
 
 	// 统一对行级操作的对话框初始化
 	dialogBtns.each(function () {
-		var el = $(this);
+		var el = $(this),
+			elSizeX = el.attr('size_x'),
+			dialogWidth = (elSizeX == '') ? 280 : parseInt(elSizeX);
 
 		el.qtip({
 			show: {when: 'click', solo: true},
@@ -85,7 +87,7 @@ dxn.dataTable = (function ($) {
 				corner: {target: 'rightBottom', tooltip: 'rightTop'},
 				adjust: {x: 20, y: 0}
 			},
-			style: {name: 'blue', width: 280},
+			style: {name: 'blue', width: dialogWidth },
 			content: {
 				text: '载入中...',
 				title: {text: el.attr('title'), button: '关闭'}
@@ -99,7 +101,9 @@ dxn.dataTable = (function ($) {
 					this.updateContent(this.options.content.text);
 				},
 				onShow: function () {
+					dxn.subView.curTarget.set(el);
 					dxn.subView.curParam.set(el.closest('tr[row_id]').attr('row_id'));
+					
 					this.loadContent(
 						dxn.util.base + el.attr('action'),
 						{ 'v': dxn.util.version }

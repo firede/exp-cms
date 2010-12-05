@@ -2,7 +2,8 @@
  * 子视图控件
  */
 dxn.subView = (function ($) {
-	var curViewParam;
+	var curViewParam,
+		curViewTarget;
 
 	/**
 	 * 当前视图参数操作
@@ -29,8 +30,21 @@ dxn.subView = (function ($) {
 		}
 	};
 
+	var curTarget = {
+		set: function (el) {
+			curViewTarget = el;
+		},
+		get: function () {
+			return curViewTarget;
+		},
+		clean: function () {
+			curViewTarget = null;
+		}
+	}
+
 	return {
-		'curParam': curParam
+		'curParam'	: curParam,
+		'curTarget'	: curTarget
 	};
 
 }(jQuery));

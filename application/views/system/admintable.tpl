@@ -2,7 +2,7 @@
 <{if $_admintable_conf.muti_operation|default}>
 <div class="operation-bar clearfix">
 	<{foreach from=$_admintable_conf.muti_operation item=_admintable_item key=_admintable_key}>
-	<span class="operation-btn js-mutiopt-<{$_admintable_key}>"<{if $_admintable_item.action|default}> action="<{$_admintable_item.action}>"<{/if}> title="<{$_admintable_item.title}>"><span class="icon-<{$_admintable_key}>"></span><{$_admintable_item.title}></span>
+	<span class="operation-btn js-mutiopt-<{$_admintable_key}>" action="<{$_admintable_item.action|default}>" title="<{$_admintable_item.title}>"><span class="icon-<{$_admintable_key}>"></span><{$_admintable_item.title}></span>
 	<{/foreach}>
 </div>
 <{/if}>
@@ -36,7 +36,7 @@
 				<td>
 					<span class="inner-td">
 					<{foreach from=$_admintable_conf.operation item=_admintable_item key=_admintable_key}>
-						<span class="table-btn js-opt-<{$_admintable_key}>"<{if $_admintable_item.action|default}> action="<{$_admintable_item.action}>"<{/if}> title="<{$_admintable_item.title}>">
+						<span class="table-btn js-opt-<{$_admintable_key}>" action="<{$_admintable_item.action|default}>" title="<{$_admintable_item.title}>" size_x="<{$_admintable_item.size_x|default}>">
 							<span class="icon-<{$_admintable_key}>"></span>
 						</span>
 					<{/foreach}>

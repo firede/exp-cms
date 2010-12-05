@@ -11,6 +11,7 @@ $(document).ready(function () {
 	var container	= $('.operation-subview'),
 		submit		= container.find('.submit'),
 		cancel		= container.find('.cancel'),
+		target		= dxn.subView.curTarget.get(),
 		id			= dxn.subView.curParam.get(),
 		baseUrl		= dxn.util.base;
 
@@ -29,7 +30,7 @@ $(document).ready(function () {
 	});
 
 	cancel.click(function () {
-		dxn.dataTable.btn.del.qtip('hide');
+		target.qtip('hide');
 	});
 });
 </script>

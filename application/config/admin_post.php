@@ -68,6 +68,7 @@ return array(
 			'preview'   => array(
 				'title'     => '预览',
 				'action'    => 'admin/post/preview',
+				'size_x'	=> '500',
 			),
 		),
 		// 批量操作（批量操作允许的功能）
@@ -160,6 +161,7 @@ return array(
 			'preview'   => array(
 				'title'     => '预览',
 				'action'    => 'admin/post/preview',
+				'size_x'	=> '500',
 			),
 			'preview-ol'=> array( 'title' => '线上版本预览'),
 		),
@@ -256,6 +258,7 @@ return array(
 			'preview'   => array(
 				'title'     => '预览',
 				'action'    => 'admin/post/preview',
+				'size_x'	=> '500',
 			),
 		),
 		'muti_operation' => array(
@@ -320,6 +323,7 @@ return array(
 			'preview'   => array(
 				'title'     => '预览',
 				'action'    => 'admin/post/preview',
+				'size_x'	=> '500',
 			),
 		),
 	),
@@ -387,6 +391,7 @@ return array(
 			'preview'   => array(
 				'title'     => '预览',
 				'action'    => 'admin/post/preview',
+				'size_x'	=> '500',
 			),
 		),
 		'muti_operation' => array(
