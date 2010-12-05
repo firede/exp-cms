@@ -61,7 +61,7 @@ return array(
 				'title'     => '移动',
 				'action'    => 'admin/post/move',
 			),
-			'delete'    => array(
+			'del'       => array(
 				'title'     => '删除',
 				'action'    => 'admin/post/del',
 			),
@@ -82,7 +82,7 @@ return array(
 				'title'     => '移动',
 				'action'    => 'admin/post/m_move',
 			),
-			'delete'    => array(
+			'del'       => array(
 				'title'     => '删除',
 				'action'    => 'admin/post/m_del',
 			),
@@ -153,7 +153,7 @@ return array(
 				'title'     => '移动',
 				'action'    => 'admin/post/move',
 			),
-			'delete'    => array(
+			'del'       => array(
 				'title'     => '删除',
 				'action'    => 'admin/post/del',
 			),
@@ -174,7 +174,7 @@ return array(
 				'title'     => '移动',
 				'action'    => 'admin/post/m_move',
 			),
-			'delete'    => array(
+			'del'       => array(
 				'title'     => '删除',
 				'action'    => 'admin/post/m_del',
 			),
@@ -249,7 +249,7 @@ return array(
 				'title'     => '移动',
 				'action'    => 'admin/post/move',
 			),
-			'delete'    => array(
+			'del'       => array(
 				'title'     => '删除',
 				'action'    => 'admin/post/del',
 			),
@@ -273,7 +273,7 @@ return array(
 				'title'     => '移动',
 				'action'    => 'admin/post/m_move',
 			),
-			'delete'    => array(
+			'del'       => array(
 				'title'     => '删除',
 				'action'    => 'admin/post/m_del',
 			),

@@ -342,7 +342,7 @@ a:hover {
 .icon-inverse,
 .icon-audit,
 .icon-flag,
-.icon-delete,
+.icon-del,
 .icon-move,
 .icon-preview,
 .icon-preview-ol,
@@ -385,7 +385,7 @@ a:hover {
 .icon-flag {
 	background-position: -40px -40px;
 }
-.icon-delete {
+.icon-del {
 	background-position: -40px 0;
 }
 .icon-move {
@@ -515,6 +515,45 @@ a:hover {
 	color:yellow;
 	padding:0 3px;
 }
+
+/* operation subpage style */
+.operation-subview {
+	
+}
+.operation-subview strong {
+	color: orangered;
+	padding: 0 3px;
+}
+.operation-subview .desc {
+	padding:5px;
+}
+.operation-subview .submit,
+.operation-subview .cancel {
+	display: inline;
+	float: left;
+	height: 25px;
+	line-height: 25px;
+	padding: 0 10px;
+	cursor: pointer;
+	margin: 5px;
+}
+.operation-subview .submit {
+	font-weight: 700;
+	background: #008EE8;
+	color:#FFF;
+}
+.operation-subview .cancel {
+	background: #E9F3F7;
+}
+
+.operation-subview .msg-success {
+	color: green;
+}
+.operation-subview .msg-error {
+	color: red;
+}
+
+
 
 /* message error or success */
 .message-error {

@@ -7,14 +7,16 @@ dxn.dataTable = (function ($) {
 		tbody		= wrap.find('tbody'),
 		tooltips	= tbody.find('span[qtip=1]'),
 		dialogBtns  = tbody.find('span[action]'),
-//		btnsDelete	= tbody.find('.js-opt-delete'),
-//		btnsAudit	= tbody.find('.js-opt-audit'),
-//		btnsMove	= tbody.find('.js-opt-move'),
-//		btnsFlag	= tbody.find('.js-opt-flag'),
-//		btnUndoRej	= tbody.find('.js-opt-undo-rej'),
-//		btnsPreview	= tbody.find('.js-opt-preview'),
 		cbOptions	= tbody.find('input[name=select]'),
-		classActive	= 'table-btn-active';
+		classActive	= 'table-btn-active',
+		btn			= {
+			'del'		: tbody.find('.js-opt-del'),
+			'audit'		: tbody.find('.js-opt-audit'),
+			'move'		: tbody.find('.js-opt-move'),
+			'flag'		: tbody.find('.js-opt-flag'),
+			'undoRej'	: tbody.find('.js-opt-undo-rej'),
+			'preview'	: tbody.find('.js-opt-preview')
+		};
 
 	// 给偶数行表格添加样式
 	tbody.find('tr:odd').addClass('tr-odd');
@@ -178,7 +180,8 @@ dxn.dataTable = (function ($) {
 	};
 
 	return {
-		'option': option
+		'option': option,
+		'btn'	: btn
 	};
 
 }(jQuery));

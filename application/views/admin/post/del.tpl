@@ -1,14 +1,14 @@
-<div class="operation-container">
-	<p>你确定要删除文章么？</p>
-	<div>
-		<input type="submit" value="确定" class="submit" />
-		<input type="button" value="取消" class="cancel" />
+<div class="operation-subview">
+	<div class="desc">你确定要<strong>删除</strong>这条经验么？</div>
+	<div class="clearfix">
+		<span class="submit radius_all">确定</span>
+		<span class="cancel radius_all">取消</span>
 	</div>
 </div>
 
 <script type="text/javascript">
 $(document).ready(function () {
-	var container	= $('.operation-container'),
+	var container	= $('.operation-subview'),
 		submit		= container.find('.submit'),
 		cancel		= container.find('.cancel'),
 		id			= dxn.subView.curParam.get(),
@@ -20,16 +20,16 @@ $(document).ready(function () {
 			{ 'id': id },
 			function(obj){
 				if (obj.success == true) {
-					container.append('<div style="color:green;">' + obj.message + '</div>');
+					container.append('<div class="msg-success">' + obj.message + '</div>');
 					location.reload();
 				} else {
-					container.append('<div style="color:red;">' + obj.message + '</div>');
+					container.append('<div class="msg-error">' + obj.message + '</div>');
 				}
 			}, 'json');
 	});
 
 	cancel.click(function () {
-		$('.js-opt-delete').qtip('hide');
+		dxn.dataTable.btn.del.qtip('hide');
 	});
 });
 </script>

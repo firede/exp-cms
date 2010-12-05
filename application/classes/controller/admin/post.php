@@ -99,10 +99,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $postDb = new Database_Post();
         $posts = $postDb->getpost($id);
         $posts = Action::sucess_status($posts);
-        echo Kohana::debug($posts);
-        $view = View::factory('smarty:');
-        $view->posts = $posts;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $posts;
+
+//        echo Kohana::debug($posts);
+//        $view = View::factory('smarty:');
+//        $view->posts = $posts;
+//        $this->request->response = $view->render();
     }
 
     /*     * *********
@@ -224,10 +228,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->modify($post);
        
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('json:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /*     * ******
@@ -242,10 +245,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('json:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /**
@@ -275,10 +277,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->modify($post);
          
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('json:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /**
@@ -308,10 +309,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post['operation_id'] = 'admin'; //临时用户
         $view_data = $postDb->trial($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('json:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /*     * ******
@@ -326,10 +326,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post['operation_id'] = 'admin'; //临时用户
         $view_data = $postDb->trial($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('json:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /**
@@ -359,10 +358,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_pub($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /*     * ******
@@ -378,10 +376,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_pub($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /**
@@ -411,10 +408,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_reject($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /*     * ******
@@ -430,10 +426,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_reject($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /**
