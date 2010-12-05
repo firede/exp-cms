@@ -137,7 +137,7 @@ class Database_Post {
      */
 
     public function delete($id) {
-        echo "id:".$id;
+     
         if ($id == null || $id == "") {
             return "no_id";
         }
