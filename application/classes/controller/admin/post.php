@@ -152,12 +152,10 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
         $postDb = new Database_Post();
         $view_data = $postDb->delete($id);
-         echo "aaaa:".$view_data;
         $view_data = Action::sucess_status($view_data);
-       echo Kohana::debug($view_data);
-        $view = View::factory('json:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /*     * ***
@@ -175,10 +173,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->multi_delete($post);
 
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('json:');
-        $view->view_data = $view_data;
-        $this->request->response = $view->render();
+
+		$this->template = View::factory('json:');
+		$this->template->_data = $view_data;
     }
 
     /*     * ******

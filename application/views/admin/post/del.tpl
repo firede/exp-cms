@@ -15,7 +15,17 @@ $(document).ready(function () {
 		baseUrl		= dxn.util.base;
 
 	submit.click(function () {
-		$.post(baseUrl + 'admin/post/del_post', { 'id': id });
+		$.post(
+			baseUrl + 'admin/post/del_post',
+			{ 'id': id },
+			function(obj){
+				if (obj.success == true) {
+					container.append('<div style="color:green;">' + obj.message + '</div>');
+					location.reload();
+				} else {
+					container.append('<div style="color:red;">' + obj.message + '</div>');
+				}
+			}, 'json');
 	});
 
 	cancel.click(function () {
