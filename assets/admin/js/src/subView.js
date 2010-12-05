@@ -23,24 +23,29 @@ dxn.subView = (function ($) {
 		 */
 		get: function () {
 			return curViewParam;
-		},
-
-		clean: function () {
-			curViewParam = null;
 		}
 	};
 
+	/**
+	 * 当前视图目标元素操作（绑定弹窗的按钮）
+	 */
 	var curTarget = {
+		/**
+		 * 设置当前视图目标元素
+		 *
+		 * @param {jQueryElement} 要设置的对象
+		 */
 		set: function (el) {
 			curViewTarget = el;
 		},
+
+		/**
+		 * 返回当前视图目标元素
+		 */
 		get: function () {
 			return curViewTarget;
-		},
-		clean: function () {
-			curViewTarget = null;
 		}
-	}
+	};
 
 	return {
 		'curParam'	: curParam,

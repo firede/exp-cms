@@ -39,18 +39,18 @@ dxn.util = (function ($) {
 	 * @return {string} 格式化后的字符串
 	 * @author 原版来自erik
 	 */
-	function format (source, opts) {
+	function format(source, opts) {
 		source = String(source);
 
-		if ('undefined' != typeof opts) {
-			if ('[object Object]' == Object.prototype.toString.call(opts)) {
-				return source.replace(/\$\{(.+?)\}/g,
+		if ('undefined' !== typeof opts) {
+			if ('[object Object]' === Object.prototype.toString.call(opts)) {
+				return source.replace(/\$\{(\.+?)\}/g,
 					function (match, key) {
 						var replacer = opts[key];
-						if ('function' == typeof replacer) {
+						if ('function' === typeof replacer) {
 							replacer = replacer(key);
 						}
-						return ('undefined' == typeof replacer ? '' : replacer);
+						return ('undefined' === typeof replacer ? '' : replacer);
 					});
 			} else {
 				var data = Array.prototype.slice.call(arguments, 1),

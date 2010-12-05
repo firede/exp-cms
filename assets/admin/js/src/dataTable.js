@@ -78,7 +78,7 @@ dxn.dataTable = (function ($) {
 	dialogBtns.each(function () {
 		var el = $(this),
 			elSizeX = el.attr('size_x'),
-			dialogWidth = (elSizeX == '') ? 280 : parseInt(elSizeX);
+			dialogWidth = (elSizeX === '') ? 280 : parseInt(elSizeX, 10);
 
 		el.qtip({
 			show: {when: 'click', solo: true},
