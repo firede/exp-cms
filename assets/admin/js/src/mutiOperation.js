@@ -7,7 +7,7 @@ dxn.mutiOperation = (function ($) {
 		dialogBtns		= wrap.find('.operation-btn[action!=]'),
 		btnSelect		= wrap.find('.js-mutiopt-select'),
 		btnInverse		= wrap.find('.js-mutiopt-inverse'),
-		btnDelete		= wrap.find('.js-mutiopt-delete'),
+		btnDelete		= wrap.find('.js-mutiopt-del'),
 		btnAudit		= wrap.find('.js-mutiopt-audit'),
 		btnFlag			= wrap.find('.js-mutiopt-flag'),
 		btnMove			= wrap.find('.js-mutiopt-move'),
@@ -39,7 +39,8 @@ dxn.mutiOperation = (function ($) {
 
 	// 统一对批量操作的对话框初始化
 	dialogBtns.each(function () {
-		var el = $(this);
+		var el = $(this),
+			elTitle = el.attr('title');
 
 		el.qtip({
 			show: { when: 'click', solo: true },
@@ -51,7 +52,7 @@ dxn.mutiOperation = (function ($) {
 			style: { name: 'blue', width: 300 },
 			content: {
 				text: '载入中...',
-				title: { text: '批量' + el.attr('title'), button: '关闭' }
+				title: { text: '批量' + elTitle, button: '关闭' }
 			},
 			api: {
 				beforeShow: function () {
@@ -59,26 +60,18 @@ dxn.mutiOperation = (function ($) {
 				},
 				beforeHide: function () {
 					el.removeClass(classActive);
+				},
+				onShow: function () {
+					var count = dxn.dataTable.option.getSelectedCount(),
+						tpl = '批量{0}：选中<strong>{1}</strong>条数据';
+					this.updateTitle(dxn.util.format(tpl, elTitle, count));
+					this.loadContent(
+						dxn.util.base + el.attr('action'),
+						{ 'v': dxn.util.version }
+					);
 				}
 			}
 		});
-	});
-
-	// 批量删除
-	btnDelete.each(function () {
-		var el = $(this);
-
-		el.qtip('api').onShow = function () {
-			this.updateTitle('批量' +
-				el.attr('title') +
-				'：选中<strong>' +
-				dxn.dataTable.option.getSelectedCount() +
-				'</strong>条数据');
-			this.loadContent(
-				dxn.util.base + btnDelete.attr('action'),
-				{ 'v': dxn.util.version }
-			);
-		};
 	});
 
 	return {
