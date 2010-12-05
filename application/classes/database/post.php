@@ -118,7 +118,7 @@ class Database_Post {
 
     public function getpost($id) {
 
-        if ($post["id"] == null || $post["id"] == "") {
+        if ($id == null ||$id == "") {
             return "no_id";
         }
         $query = DB::select()->from('post')->where('id', '=', $id);
@@ -137,10 +137,12 @@ class Database_Post {
      */
 
     public function delete($id) {
-        if ($post["id"] == null || $post["id"] == "") {
+        echo "id:".$id;
+        if ($id == null || $id == "") {
             return "no_id";
         }
         $delete = DB::delete()->table('post')->where('id', '=', $id);
+        echo Kohana::debug($delete);
         $result = (bool) $delete->execute();
         return $result ? 'ok' : 'error'; //返回值有误 需要进一步分析kohana数据库操作的反馈机制
     }

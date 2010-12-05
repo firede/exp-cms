@@ -70,7 +70,8 @@ class Controller_Upload extends Controller_BaseUser {
          * 判断文件夹是否存在不存在则创建
          */
         $path = str_replace("\\", "/", $upload_path);
-        $upload_path = $this->path_mkdir($upload_path);
+        $upload_path = File::path_mkdirs($upload_path);
+
         echo "upload_path2:" . $upload_path;
         $url = str_replace("/", "\\", $upload_path . "" . $img_name);
         ECHO $url;
@@ -98,39 +99,7 @@ class Controller_Upload extends Controller_BaseUser {
         
     }
 
-    /*     * ***
-     * 判断文件夹路径是否存在 如果不存在则创建缺失路径
-     * @$path <string> 文件路径 每层路径使用“\”来分隔
-     * @return <string> 返回创建完成的路径
-     */
-
-    public function path_mkdir($path) {
-        $file_boxs = explode("/", $path);
-        // echo
-        $path = "";
-        foreach ($file_boxs as $key => $file_box) {
-            //过滤空路径
-            if ($file_box == "/") {
-                continue;
-            } else {
-                $path = $path . $file_box . "/";
-                $file_boxs[$key]=$path;
-            }
-        }
-        $exists_flag=array();
-        echo kohana::debug($file_boxs);
-        $count=0;
-        for($i=count($file_boxs)-1;$i>=0;$i--){
-            if (!file_exists($file_boxs[$i])) {
-                $exists_flag[$count++]=$file_boxs[$i];
-             }else{break;}
-        }
-        echo kohana::debug($exists_flag);
-        for($i=(count($exists_flag)-1);$i>=0;$i--){
-            mkdir($exists_flag[$i]);
-        }
-        return $path;
-    }
+  
 
     /*     * **
      * 计算图片打水印的位置

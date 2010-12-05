@@ -1,8 +1,7 @@
 ﻿<?php
-
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
+class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_index() {
 
@@ -54,7 +53,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
                     'conf' => $conf,
                 ));
         // $this->cache->set("post_list_view", $view);
-		$this->template = $view;
+        $this->template = $view;
         // $this->template = $this->cache->get("post_list_view");
     }
 
@@ -96,7 +95,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
      */
 
     public function action_get($id) {
-        $id = !isset($id) ? $id : "";
+        $id = isset($id) ? $id : "";
         $postDb = new Database_Post();
         $posts = $postDb->getpost($id);
         $posts = Action::sucess_status($posts);
@@ -112,7 +111,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
      */
 
     public function action_update($id) {
-        $id = !isset($id) ? $id : "";
+        $id = isset($id) ? $id : "";
         $postDb = new Database_Post();
         $post = $postDb->getpost($id);
         if (count($post) > 1) {
@@ -125,37 +124,38 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
         $this->request->response = $view->render();
     }
 
-	/**
-	 * 删除功能子视图
-	 */
+    /**
+     * 删除功能子视图
+     */
     public function action_del() {
-		// $this->request->headers['Cache-control'] = 'max-age=86400';
+        // $this->request->headers['Cache-control'] = 'max-age=86400';
 
-		$this->template = View::factory('smarty:admin/post/del');
+        $this->template = View::factory('smarty:admin/post/del');
     }
 
-	/**
-	 * 批量删除功能子视图
-	 */
+    /**
+     * 批量删除功能子视图
+     */
     public function action_m_del() {
-		// $this->request->headers['Cache-control'] = 'max-age=86400';
+        // $this->request->headers['Cache-control'] = 'max-age=86400';
 
-		$this->template = View::factory('smarty:admin/post/m_del');
+        $this->template = View::factory('smarty:admin/post/m_del');
     }
 
-	/*     * ***
+    /*     * ***
      * 根据ID删除post表数据
      * @param $id integer
      */
 
     public function action_del_post() {
 
-        $id = !isset($_POST["id"]) ? $_POST["id"] : "";
+        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
         $postDb = new Database_Post();
         $view_data = $postDb->delete($id);
+         echo "aaaa:".$view_data;
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
+       echo Kohana::debug($view_data);
+        $view = View::factory('json:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
     }
@@ -176,7 +176,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
 
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
+        $view = View::factory('json:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
     }
@@ -195,46 +195,49 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
+        $view = View::factory('json:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
     }
 
-	/**
-	 * 标记功能子视图
-	 */
-	public function action_flag() {
-		$this->template = View::factory('smarty:admin/post/flag');
-	}
+    /**
+     * 标记功能子视图
+     */
+    public function action_flag() {
+        $this->template = View::factory('smarty:admin/post/flag');
+    }
 
-	/**
-	 * 批量标记功能子视图
-	 */
-	public function action_m_flag() {
-		$this->template = View::factory('smarty:admin/post/m_flag');
-	}
+    /**
+     * 批量标记功能子视图
+     */
+    public function action_m_flag() {
+        $this->template = View::factory('smarty:admin/post/m_flag');
+    }
 
-	/*     * ******
+    /*     * ******
      * 加精/取消精华
      * 单行操作
      */
+
     public function action_flag_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'flag');
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
+       
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
+        $view = View::factory('json:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
     }
 
-	/*     * ******
+    /*     * ******
      * 批量 加精/取消精华
      * 批量post数据行 如果id为数字则为单行修改 如果为id=1,2,4,6,34,风格则为批量修改“，”作为分割符号
      */
+
     public function action_m_flag_post() {
         $postDb = new Database_Post();
         $arr_element_names =
@@ -243,61 +246,63 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
+        $view = View::factory('json:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
     }
 
-	/**
-	 * 移动功能子视图
-	 */
-	public function action_move() {
-		$this->template = View::factory('smarty:admin/post/move');
-	}
+    /**
+     * 移动功能子视图
+     */
+    public function action_move() {
+        $this->template = View::factory('smarty:admin/post/move');
+    }
 
-	/**
-	 * 批量移动功能子视图
-	 */
-	public function action_m_move() {
-		$this->template = View::factory('smarty:admin/post/m_move');
-	}
-
+    /**
+     * 批量移动功能子视图
+     */
+    public function action_m_move() {
+        $this->template = View::factory('smarty:admin/post/m_move');
+    }
 
     /*     * ******
      * 批量 移动
      * 批量post数据 如果id为数字则为单行修改 如果为id=1,2,4,6,34,风格则为批量修改“，”作为分割符号
      */
+
     public function action_m_move_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'cate_id');
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
+         
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
+        $view = View::factory('json:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
     }
 
-	/**
-	 * 审核功能子视图
-	 */
-	public function action_audit() {
-		$this->template = View::factory('smarty:admin/post/audit');
-	}
+    /**
+     * 审核功能子视图
+     */
+    public function action_audit() {
+        $this->template = View::factory('smarty:admin/post/audit');
+    }
 
-	/**
-	 * 批量审核功能子视图
-	 */
-	public function action_m_audit() {
-		$this->template = View::factory('smarty:admin/post/m_audit');
-	}
+    /**
+     * 批量审核功能子视图
+     */
+    public function action_m_audit() {
+        $this->template = View::factory('smarty:admin/post/m_audit');
+    }
 
-	/*     * ******
+    /*     * ******
      * 批量 审核
      * 批量post数据 如果id为数字则为单行修改 如果为id=1,2,4,6,34,风格则为批量修改“，”作为分割符号
      */
+
     public function action_m_trial_post() {
         $postDb = new Database_Post();
         $arr_element_names =
@@ -307,7 +312,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
         $view_data = $postDb->trial($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
+        $view = View::factory('json:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
     }
@@ -325,28 +330,29 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
         $view_data = $postDb->trial($post);
         $view_data = Action::sucess_status($view_data);
         echo Kohana::debug($view_data);
-        $view = View::factory('smarty:');
+        $view = View::factory('json:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
     }
 
-	/**
-	 * 撤销发布子视图
-	 */
-	public function action_undo_pub() {
-		$this->template = View::factory('smarty:admin/post/undo_pub');
-	}
+    /**
+     * 撤销发布子视图
+     */
+    public function action_undo_pub() {
+        $this->template = View::factory('smarty:admin/post/undo_pub');
+    }
 
-	/**
-	 * 批量撤销发布子视图
-	 */
-	public function action_m_undo_pub() {
-		$this->template = View::factory('smarty:admin/post/m_undo_pub');
-	}
+    /**
+     * 批量撤销发布子视图
+     */
+    public function action_m_undo_pub() {
+        $this->template = View::factory('smarty:admin/post/m_undo_pub');
+    }
 
-	/*     * ******
+    /*     * ******
      * 撤销发布
      */
+
     public function action_undo_pub_post() {
         $postDb = new Database_Post();
         $arr_element_names =
@@ -381,23 +387,24 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
         $this->request->response = $view->render();
     }
 
-	/**
-	 * 撤销驳回子视图
-	 */
-	public function action_undo_rej() {
-		$this->template = View::factory('smarty:admin/post/undo_rej');
-	}
+    /**
+     * 撤销驳回子视图
+     */
+    public function action_undo_rej() {
+        $this->template = View::factory('smarty:admin/post/undo_rej');
+    }
 
-	/**
-	 * 批量撤销驳回子视图
-	 */
-	public function action_m_undo_rej() {
-		$this->template = View::factory('smarty:admin/post/m_undo_rej');
-	}
+    /**
+     * 批量撤销驳回子视图
+     */
+    public function action_m_undo_rej() {
+        $this->template = View::factory('smarty:admin/post/m_undo_rej');
+    }
 
-	/*     * ******
+    /*     * ******
      * 撤销驳回 
      */
+
     public function action_undo_reject_post() {
         $postDb = new Database_Post();
         $arr_element_names =
@@ -432,15 +439,32 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin  {
         $this->request->response = $view->render();
     }
 
-	/**
-	 * 快速预览功能子视图
-	 */
+    /**
+     * 快速预览功能子视图
+     */
     public function action_preview() {
-		// $this->request->headers['Cache-control'] = 'max-age=86400';
+        // $this->request->headers['Cache-control'] = 'max-age=86400';
 
-		$this->template = View::factory('smarty:admin/post/preview');
+        $this->template = View::factory('smarty:admin/post/preview');
+    }
+
+    public function action_info() {
+        ob_start();
+        phpinfo(INFO_MODULES);//只查看 模块信息的列表
+        $phpinfo = array('phpinfo' => array());
+        if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER))
+        {
+            echo Kohana::debug($matches);
+            foreach ($matches as $match){
+                 
+                if(isset($match[2])&&$match[2]=="APC Support"){
+                    echo $match[2].":".$match[3];
+                }
+            }
+        }
+      
+//       echo Kohana::debug(phpinfo_array());
     }
 
 }
-
 ?>

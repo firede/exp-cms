@@ -29,6 +29,14 @@ class Arr extends Kohana_Arr {
 
         return $newArry;
     }
+    /*********
+     * 将数组写入固定的php文件内
+     * @$arr <array>数组
+     * @$config_file <string> 需要覆盖入的文件
+     */
+    public static function as_config_file($arr,$config_file){
+        File::path_mkdirs();
+    }
 
 }
 
