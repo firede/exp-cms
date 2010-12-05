@@ -186,7 +186,7 @@ class StrongKohana  extends Kohana_Core{
 		}
 		else
 		{
-			return gettype($var).htmlspecialchars(print_r($var, TRUE), ENT_NOQUOTES, Kohana::$charset);
+			return htmlspecialchars(print_r($var, TRUE), ENT_NOQUOTES, Kohana::$charset);
 		}
 	}
 }
