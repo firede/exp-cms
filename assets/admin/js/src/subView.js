@@ -33,7 +33,7 @@ dxn.subView = (function ($) {
 		/**
 		 * 设置当前视图目标元素
 		 *
-		 * @param {jQueryElement} 要设置的对象
+		 * @param {jQueryElement} el 要设置的对象
 		 */
 		set: function (el) {
 			curViewTarget = el;
