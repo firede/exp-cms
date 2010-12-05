@@ -414,7 +414,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_reject($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
+       
         $view = View::factory('smarty:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
@@ -433,7 +433,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post['operation_desc'] = '';
         $view_data = $postDb->undo_reject($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
+     
         $view = View::factory('smarty:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
@@ -454,7 +454,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $phpinfo = array('phpinfo' => array());
         if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER))
         {
-            echo Kohana::debug($matches);
+         
             foreach ($matches as $match){
                  
                 if(isset($match[2])&&$match[2]=="APC Support"){

@@ -48,7 +48,7 @@ class Controller_Upload extends Controller_BaseUser {
         }
 
         $name = (explode(".", $file["name"]));
-        echo Kohana::debug($name);
+    
         $type = $img_types[1];
         switch ($img_types[1]) {
             case "x-png":
@@ -65,16 +65,16 @@ class Controller_Upload extends Controller_BaseUser {
         $son_path = date("Y/m/d");
         $upload_path = Controller_Upload::$IMG_DIR . $son_path;
 
-        echo "upload_path:" . $upload_path;
+     
         /*         * *
          * 判断文件夹是否存在不存在则创建
          */
         $path = str_replace("\\", "/", $upload_path);
         $upload_path = File::path_mkdirs($upload_path);
 
-        echo "upload_path2:" . $upload_path;
+    
         $url = str_replace("/", "\\", $upload_path . "" . $img_name);
-        ECHO $url;
+    
         Upload::save($_FILES["file"], $img_name, $upload_path, "0644"); //上传
 
 

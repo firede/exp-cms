@@ -62,8 +62,6 @@ class Database_Category {
     private function as_tree_array($categorys) {
         
         return $this->build_child("-1", $categorys, array());
-    // echo Kohana::debug($aaa["计算机"]["child"]);
-        
     }
 
     private function build_child($parent_id, $categorys, $parent_childs) {

@@ -5,14 +5,13 @@
  */
 
 class File extends Kohana_File {
-  
-     /*     * ***
+    /*     * ***
      * 判断文件夹路径是否存在 如果不存在则创建缺失路径
      * @$path <string> 文件路径 每层路径使用“\”来分隔
      * @return <string> 返回创建完成的路径
      */
 
-    public static  function path_mkdirs($path) {
+    public static function path_mkdirs($path) {
         $file_boxs = explode("/", $path);
         // echo
         $path = "";
@@ -22,23 +21,45 @@ class File extends Kohana_File {
                 continue;
             } else {
                 $path = $path . $file_box . "/";
-                $file_boxs[$key]=$path;
+
+                $file_boxs[$key] = $path;
             }
         }
-        $exists_flag=array();
-        echo kohana::debug($file_boxs);
-        $count=0;
-        for($i=count($file_boxs)-1;$i>=0;$i--){
+        $exists_flag = array();
+        // echo kohana::debug($file_boxs);
+        $count = 0;
+        for ($i = count($file_boxs) - 1; $i >= 0; $i--) {
+
             if (!file_exists($file_boxs[$i])) {
-                $exists_flag[$count++]=$file_boxs[$i];
-             }else{break;}
+                $exists_flag[$count++] = $file_boxs[$i];
+            } else {
+                break;
+            }
         }
-        echo kohana::debug($exists_flag);
-        for($i=(count($exists_flag)-1);$i>=0;$i--){
-            mkdir($exists_flag[$i]);
+        // echo kohana::debug($exists_flag);
+        for ($i = (count($exists_flag) - 1); $i >= 0; $i--) {
+            if (strpos($exists_flag[$i], ".") > 0) {
+                //  $file=new File($exists_flag[$i]);
+                $exists_flag[$i] = str_replace("/", "\\", $exists_flag[$i]);
+               /* $file_name = explode("\\", $exists_flag[$i]);
+                $file_name = $file_name[count($file_name) - 2];
+                file_put_contents($file_name, "");*/
+                
+                $fp=fopen(substr($exists_flag[$i],0,strlen($exists_flag[$i])-1),"a+");
+                fclose($fp);
+              
+            } else {
+                mkdir($exists_flag[$i]);
+            }
+
+
+
+            // if (is_dir($exists_flag[$i])) {
+            // }
         }
         return $path;
     }
+
 }
 
 ?>

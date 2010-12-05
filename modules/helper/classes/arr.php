@@ -21,21 +21,34 @@ class Arr extends Kohana_Arr {
 
         for ($i = 0; $i < count($arrElementkeys); $i++) {
             if (!isset($arr[$arrElementkeys[$i]])) {
-             
-            } else{ $newArry[$arrElementkeys[$i]] = $arr[$arrElementkeys[$i]];}
-               
-            
+                
+            } else {
+                $newArry[$arrElementkeys[$i]] = $arr[$arrElementkeys[$i]];
+            }
         }
 
         return $newArry;
     }
-    /*********
+
+    /*     * *******
      * 将数组写入固定的php文件内
      * @$arr <array>数组
      * @$config_file <string> 需要覆盖入的文件
      */
-    public static function as_config_file($arr,$config_file){
-        File::path_mkdirs();
+
+    public static function as_config_file($arr, $config_file) {
+
+        $config_file = File::path_mkdirs($config_file); //保持路径的完整性,如果不存在则创建 
+        $data = StrongKohana::my_dump($arr);
+         echo Kohana::debug($arr);
+        $data = "<?php defined('SYSPATH') or die('No direct script access.');\n return array" . $data;
+        $data=$data."; ?>";
+        $config_file = str_replace("/", "\\", $config_file);
+        echo $config_file;
+        $config_file = substr($config_file, 0, strlen($config_file) - 1);
+        $fopen = fopen($config_file, 'w'); //新建文件命令
+        fwrite($fopen, $data); //向文件中写入内容;
+        fclose($fopen);
     }
 
 }
