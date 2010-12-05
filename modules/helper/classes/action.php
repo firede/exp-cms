@@ -4,7 +4,7 @@
  * 控制器中action的工具包
  */
 
-class Action { 
+class Action {
     /*     * **
      * 根据数据状态返回相应的数据集合
      * @$posts 
@@ -29,15 +29,23 @@ class Action {
                 'message' => '操作失败！',
                 'result' => '',
             );
-        }else if($view_data == "exist"){
+        } else if ($view_data == "exist") {
             $view_data = array(
                 'success' => FALSE,
                 'message' => '已经存在',
                 'result' => '',
             );
         } else {
-            $view_data['success'] = TRUE;
-            $view_data['message'] = '操作成功';
+            if (is_array($view_data)) {
+                $view_data['success'] = TRUE;
+                $view_data['message'] = '操作成功';
+            } else {
+                $view_data = array(
+                    'success' => TRUE,
+                    'message' => '操作成功',
+                    'result' => '',
+                );
+            }
         }
         return $view_data;
     }
