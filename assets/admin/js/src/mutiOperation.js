@@ -7,12 +7,6 @@ dxn.mutiOperation = (function ($) {
 		dialogBtns		= wrap.find('.operation-btn[action!=]'),
 		btnSelect		= wrap.find('.js-mutiopt-select'),
 		btnInverse		= wrap.find('.js-mutiopt-inverse'),
-		btnDelete		= wrap.find('.js-mutiopt-del'),
-		btnAudit		= wrap.find('.js-mutiopt-audit'),
-		btnFlag			= wrap.find('.js-mutiopt-flag'),
-		btnMove			= wrap.find('.js-mutiopt-move'),
-		btnUndoPub		= wrap.find('.js-mutiopt-undo-pub'),
-		btnUndoRej		= wrap.find('.js-mutiopt-undo-rej'),
 		classActive		= 'operation-btn-active';
 
 	// 整体设置
@@ -62,6 +56,11 @@ dxn.mutiOperation = (function ($) {
 					el.removeClass(classActive);
 				},
 				onShow: function () {
+					dxn.subView.curTarget.set(el);
+					dxn.subView.curParam.set(
+						dxn.dataTable.option.getSelectedString()
+					);
+					
 					var count = dxn.dataTable.option.getSelectedCount(),
 						tpl = '批量{0}：选中<strong>{1}</strong>条数据';
 					this.updateTitle(dxn.util.format(tpl, elTitle, count));

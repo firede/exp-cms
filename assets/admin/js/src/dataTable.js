@@ -8,15 +8,7 @@ dxn.dataTable = (function ($) {
 		tooltips	= tbody.find('span[qtip=1]'),
 		dialogBtns  = tbody.find('.table-btn[action!=]'),
 		cbOptions	= tbody.find('input[name=select]'),
-		classActive	= 'table-btn-active',
-		btn			= {
-			'del'		: tbody.find('.js-opt-del'),
-			'audit'		: tbody.find('.js-opt-audit'),
-			'move'		: tbody.find('.js-opt-move'),
-			'flag'		: tbody.find('.js-opt-flag'),
-			'undoRej'	: tbody.find('.js-opt-undo-rej'),
-			'preview'	: tbody.find('.js-opt-preview')
-		};
+		classActive	= 'table-btn-active';
 
 	// 给偶数行表格添加样式
 	tbody.find('tr:odd').addClass('tr-odd');
@@ -184,8 +176,7 @@ dxn.dataTable = (function ($) {
 	};
 
 	return {
-		'option': option,
-		'btn'	: btn
+		'option': option
 	};
 
 }(jQuery));
