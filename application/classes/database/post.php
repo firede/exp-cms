@@ -156,7 +156,7 @@ class Database_Post {
         if ($post["id"] == null || $post["id"] == "") {
             return "no_id";
         }
-        $ids = explode(",", $ids);
+        $ids = explode(",", $post["id"]);
         $delete = DB::delete()->table('post')->where('id', 'in', $ids);
         $result = (bool) $delete->execute();
       
