@@ -301,7 +301,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 批量post数据 如果id为数字则为单行修改 如果为id=1,2,4,6,34,风格则为批量修改“，”作为分割符号
      */
 
-    public function action_m_trial_post() {
+    public function action_m_audit_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'status', 'operation_desc');
@@ -318,7 +318,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 单行 审核
      */
 
-    public function action_trial_post() {
+    public function action_audit_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'status', 'operation_desc');
