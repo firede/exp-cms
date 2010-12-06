@@ -112,6 +112,11 @@ dxn.dataTable = (function ($) {
 		});
 	});
 
+	// 初次载入时，将checkbox都设置成未选中状态（因为firefox会多管闲事记录上次状态）
+	cbOptions.each(function () {
+		$(this).attr('checked', 0);
+	});
+
 	/**
 	 * 表格Checkbox选项操作
 	 */

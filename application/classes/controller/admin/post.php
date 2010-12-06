@@ -368,7 +368,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 批量撤销发布 id 格式为 &id=1，2,3,4
      */
 
-    public function action_multi_undo_pub_post() {
+    public function action_m_undo_pub_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
@@ -400,7 +400,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 撤销驳回 
      */
 
-    public function action_undo_reject_post() {
+    public function action_undo_rej_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
@@ -418,7 +418,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 批量撤销驳回 id 格式为 &id=1，2,3,4
      */
 
-    public function action_multi_undo_reject_post() {
+    public function action_m_undo_rej_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
