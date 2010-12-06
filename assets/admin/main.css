@@ -517,9 +517,6 @@ a:hover {
 }
 
 /* operation subpage style */
-.operation-subview {
-	
-}
 .operation-subview strong {
 	color: orangered;
 	padding: 0 3px;
@@ -557,8 +554,10 @@ a:hover {
 .operation-subview .msg-error {
 	color: red;
 }
-
-
+/* preview subview */
+.subview-preview {
+	
+}
 
 /* message error or success */
 .message-error {
