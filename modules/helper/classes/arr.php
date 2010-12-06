@@ -21,20 +21,57 @@ class Arr extends Kohana_Arr {
 
         for ($i = 0; $i < count($arrElementkeys); $i++) {
             if (!isset($arr[$arrElementkeys[$i]])) {
-             
-            } else{ $newArry[$arrElementkeys[$i]] = $arr[$arrElementkeys[$i]];}
-               
-            
+                
+            } else {
+                $newArry[$arrElementkeys[$i]] = $arr[$arrElementkeys[$i]];
+            }
         }
 
         return $newArry;
     }
-    /*********
+
+    /*     * ***********************
+     * 移除数组中的指定值
+     * 从$arr（array）中剔除$arrElement（array）中指定的相等值返回
+     * 如 $arr=array('a'=>'1','b'=>'2','c'=>'3','d'=>5);
+     * $arrElementkeys=array('a','b','d');则返回的数组值为 array('a'=>'1','b'=>'2','d'=>5)
+     * @param $arr array 原始数组
+     * @param $arrElementNames array 需要保留的元素名
+     * @return  array() 返回新的数组
+     */
+
+    public static function _move_value_Array($arr, $arrElementkeys) {
+        $newArry = array();
+        if (count($arrElementkeys) == 0) {
+            return $arr;
+        }
+
+        for ($i = 0; $i < count($arrElementkeys); $i++) {
+            if (in_array($arrElementkeys[$i], $arr)) {
+                for ($f = 0; $f < count($arr); $f++) {
+                    if (isset($arr[$f])) {
+                        if ($arr[$f] == $arrElementkeys[$i]) {
+                          $arr[$f]=NULL;
+                        }
+                    }
+                }
+            }  
+        }
+        foreach ($arr as $key=>$value){
+            if($value!=NULL){
+                $newArry[$key]=$value;
+            }
+        }
+        return $newArry;
+    }
+
+    /*     * *******
      * 将数组写入固定的php文件内
      * @$arr <array>数组
      * @$config_file <string> 需要覆盖入的文件
      */
-    public static function as_config_file($arr,$config_file){
+
+    public static function as_config_file($arr, $config_file) {
         File::path_mkdirs();
     }
 

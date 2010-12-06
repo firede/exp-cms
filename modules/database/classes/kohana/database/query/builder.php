@@ -137,7 +137,7 @@ abstract class Kohana_Database_Query_Builder extends Database_Query {
                 // Use the parameter value
                 $value = $this->_parameters[$value];
             }
-            echo  $value."::".strpos($value, 'Filed:')."\t\n";
+         
             if(strpos($value, 'Filed:') === 0 ){
               
                 $value=$db->quote_identifier(substr($value, 6));
