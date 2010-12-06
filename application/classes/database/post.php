@@ -85,13 +85,13 @@ class Database_Post {
                 "message" => "ok"
             );
         else
-            return array (
-            'total_items_count' => $count, //总记录数
-            'total_page_count' => $total_page_count,
-            'items_per_page' => $pageParam["items_per_page"], //每页显示数据条数
-            'result' => $posts,
-            "message" => "none"
-        );
+            return array(
+                'total_items_count' => $count, //总记录数
+                'total_page_count' => $total_page_count,
+                'items_per_page' => $pageParam["items_per_page"], //每页显示数据条数
+                'result' => $posts,
+                "message" => "none"
+            );
     }
 
     /*     * ****
@@ -118,7 +118,7 @@ class Database_Post {
 
     public function getpost($id) {
 
-        if ($id == null ||$id == "") {
+        if ($id == null || $id == "") {
             return "no_id";
         }
         $query = DB::select()->from('post')->where('id', '=', $id);
@@ -137,12 +137,12 @@ class Database_Post {
      */
 
     public function delete($id) {
-     
+
         if ($id == null || $id == "") {
             return "no_id";
         }
         $delete = DB::delete()->table('post')->where('id', '=', $id);
-        
+
         $result = (bool) $delete->execute();
         return $result ? 'ok' : 'error'; //返回值有误 需要进一步分析kohana数据库操作的反馈机制
     }
@@ -159,7 +159,7 @@ class Database_Post {
         $ids = explode(",", $post["id"]);
         $delete = DB::delete()->table('post')->where('id', 'in', $ids);
         $result = (bool) $delete->execute();
-      
+
         return $result ? 'ok' : 'error';
     }
 
@@ -170,13 +170,11 @@ class Database_Post {
 
     public function modify($post) {
         if ($post == null || count($post) == 0 || $post['id'] == null) {
-
             return 'no_id';
         }
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $post['id']);
         $modify = DB::update()->table('post')->set($post);
-
         // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
         //判断是否是批量操作
         if (count($ids) > 1) {
@@ -185,8 +183,58 @@ class Database_Post {
             $modify->where('id', '=', $post['id']);
         }
         $result = (bool) $modify->execute();
-        //   echo Kohana::debug($modify);
         return $result ? 'ok' : 'error';
+    }
+
+    /*     * *****
+     * 批量修改标记
+     * @$post 需要修改的值
+     * @$type 操作类型 0撤销 | 1增加
+     */
+
+    public function m_flag($post, $type) {
+        if ($post == null || count($post) == 0 || $post['id'] == null) {
+            return 'no_id';
+        }
+        
+        /* 根据需要从请求中取出需要的数据值 */
+        $ids = explode(",", $post['id']);
+      
+        $select = DB::select_array(array("flag", "id"))->from("post");   
+        //判断是否是批量操作
+        if (count($ids) > 1) {
+
+            $select->where('id', 'in', $ids);
+        } else {
+            // $modify->where('id', '=', $post['id']);
+            $select->where('id', '=', $post['id']);
+        }
+        $result = $select->execute();
+        $flags = explode(",", $post["flag"]);
+        $flag_result = array();
+        DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
+        foreach ($result as $key => $value) {
+            $values = explode(",", $value["flag"]);
+            if ($type == "0") {//取消指定标记
+                $values = Arr::_move_value_Array($values, $flags);
+            } elseif ($type == "1") {//增加标记并去除重复标记
+                $values = array_unique(array_merge($flags, $values));
+            }
+            $modify = DB::update()->table('post');
+            $modify->set(array("flag" => implode(",", $values)));
+          
+            $modify->where('id', '=', $value["id"]);
+          
+            $flag_result[$key] = (bool) $modify->execute();
+        }
+        //事务处理
+        if (!in_array(FALSE, $flag_result)) {
+            DB::query(NULL, "COMMIT")->execute();
+            return "ok";
+        } else {
+            DB::query(NULL, "ROLLBACK")->execute();
+            return "error";
+        }
     }
 
     /*     * ***

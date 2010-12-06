@@ -63,7 +63,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_create() {
         $uuid = Text::uuid();
-        echo Kohana::debug($_POST["uuid"]);
+
 
         $this->template = View::factory('smarty:', array(
                     'uuid' => $uuid,
@@ -84,7 +84,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->save($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
+
         $view = View::factory('smarty:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
@@ -100,8 +100,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $posts = $postDb->getpost($id);
         $posts = Action::sucess_status($posts);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $posts;
+        $this->template = View::factory('json:');
+        $this->template->_data = $posts;
 
 //        echo Kohana::debug($posts);
 //        $view = View::factory('smarty:');
@@ -122,7 +122,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
             $post["uuid"] = Text::uuid();
         }
         $posts = Action::sucess_status($posts);
-        echo Kohana::debug($posts);
+
         $view = View::factory('smarty:');
         $view->posts = $posts;
         $this->request->response = $view->render();
@@ -158,8 +158,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->delete($id);
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /*     * ***
@@ -178,8 +178,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /*     * ******
@@ -195,7 +195,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
+
         $view = View::factory('json:');
         $view->view_data = $view_data;
         $this->request->response = $view->render();
@@ -226,11 +226,11 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                 array('id', 'flag');
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
-       
+
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /*     * ******
@@ -240,14 +240,15 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_m_flag_post() {
         $postDb = new Database_Post();
-        $arr_element_names =
-                array('id', 'flag');
-        $post = Arr::filter_Array($_POST, $arr_element_names);
-        $view_data = $postDb->modify($post);
+        //获取操作类型
+        $type = isset($_POST["type"]) ? $_POST["type"] : $_GET["type"];
+        $arr_element_names = array('id', 'flag');
+        //$post = Arr::filter_Array($_POST, $arr_element_names);
+        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $view_data = $postDb->m_flag($post, $type);
         $view_data = Action::sucess_status($view_data);
-
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /**
@@ -275,11 +276,11 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                 array('id', 'cate_id');
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
-         
+
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /**
@@ -310,8 +311,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->trial($post);
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /*     * ******
@@ -327,8 +328,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->trial($post);
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /**
@@ -359,8 +360,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->undo_pub($post);
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /*     * ******
@@ -377,8 +378,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->undo_pub($post);
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /**
@@ -409,8 +410,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->undo_reject($post);
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /*     * ******
@@ -427,8 +428,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = $postDb->undo_reject($post);
         $view_data = Action::sucess_status($view_data);
 
-		$this->template = View::factory('json:');
-		$this->template->_data = $view_data;
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
     /**
@@ -442,19 +443,18 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_info() {
         ob_start();
-        phpinfo(INFO_MODULES);//只查看 模块信息的列表
+        phpinfo(INFO_MODULES); //只查看 模块信息的列表
         $phpinfo = array('phpinfo' => array());
-        if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER))
-        {
-            echo Kohana::debug($matches);
-            foreach ($matches as $match){
-                 
-                if(isset($match[2])&&$match[2]=="APC Support"){
-                    echo $match[2].":".$match[3];
+        if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER)) {
+
+            foreach ($matches as $match) {
+
+                if (isset($match[2]) && $match[2] == "APC Support") {
+                    echo $match[2] . ":" . $match[3];
                 }
             }
         }
-      
+
 //       echo Kohana::debug(phpinfo_array());
     }
 
