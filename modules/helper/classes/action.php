@@ -35,6 +35,12 @@ class Action {
                 'message' => '已经存在',
                 'result' => '',
             );
+        }else if($view_data == "data_equal"){
+             $view_data = array(
+                'success' => TRUE,
+                'message' => '操作成功，但数据没有变动',
+                'result' => '',
+            );
         } else {
             if (is_array($view_data)) {
                 $view_data['success'] = TRUE;

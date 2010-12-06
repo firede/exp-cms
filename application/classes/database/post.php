@@ -105,9 +105,13 @@ class Database_Post {
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
                     'pre_content', 'content', 'user_id', 'status',
                     'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
+        try{
         $save = DB::insert("post", $columns);
         $result = (bool) $save->values($post);
-        return $result ? "ok" : "error";
+           return 'ok';
+        } catch (Exception $e) {
+            return "error";
+        }
     }
 
     /*     * *
@@ -141,10 +145,14 @@ class Database_Post {
         if ($id == null || $id == "") {
             return "no_id";
         }
+        try{
         $delete = DB::delete()->table('post')->where('id', '=', $id);
 
         $result = (bool) $delete->execute();
-        return $result ? 'ok' : 'error'; //返回值有误 需要进一步分析kohana数据库操作的反馈机制
+          return 'ok';
+        } catch (Exception $e) {
+            return "error";
+        } //返回值有误 需要进一步分析kohana数据库操作的反馈机制
     }
 
     /*     * ***
@@ -156,11 +164,15 @@ class Database_Post {
         if ($post["id"] == null || $post["id"] == "") {
             return "no_id";
         }
+        try{
         $ids = explode(",", $post["id"]);
         $delete = DB::delete()->table('post')->where('id', 'in', $ids);
         $result = (bool) $delete->execute();
 
-        return $result ? 'ok' : 'error';
+         return 'ok';
+        } catch (Exception $e) {
+            return "error";
+        }
     }
 
     /*     * ***
@@ -172,18 +184,22 @@ class Database_Post {
         if ($post == null || count($post) == 0 || $post['id'] == null) {
             return 'no_id';
         }
-        /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $post['id']);
-        $modify = DB::update()->table('post')->set($post);
-        // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
-        //判断是否是批量操作
-        if (count($ids) > 1) {
-            $modify->where('id', 'in', $ids);
-        } else {
-            $modify->where('id', '=', $post['id']);
+        try {
+            /* 根据需要从请求中取出需要的数据值 */
+            $ids = explode(",", $post['id']);
+            $modify = DB::update()->table('post')->set($post);
+            // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
+            //判断是否是批量操作
+            if (count($ids) > 1) {
+                $modify->where('id', 'in', $ids);
+            } else {
+                $modify->where('id', '=', $post['id']);
+            }
+            $result = (bool) $modify->execute();
+            return 'ok';
+        } catch (Exception $e) {
+            return "error";
         }
-        $result = (bool) $modify->execute();
-        return $result ? 'ok' : 'error';
     }
 
     /*     * *****
@@ -196,42 +212,47 @@ class Database_Post {
         if ($post == null || count($post) == 0 || $post['id'] == null) {
             return 'no_id';
         }
-        
+
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $post['id']);
-      
-        $select = DB::select_array(array("flag", "id"))->from("post");   
-        //判断是否是批量操作
-        if (count($ids) > 1) {
+        try {
+            $select = DB::select_array(array("flag", "id"))->from("post");
+            //判断是否是批量操作
+            if (count($ids) > 1) {
 
-            $select->where('id', 'in', $ids);
-        } else {
-            // $modify->where('id', '=', $post['id']);
-            $select->where('id', '=', $post['id']);
-        }
-        $result = $select->execute();
-        $flags = explode(",", $post["flag"]);
-        $flag_result = array();
-        DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
-        foreach ($result as $key => $value) {
-            $values = explode(",", $value["flag"]);
-            if ($type == "0") {//取消指定标记
-                $values = Arr::_move_value_Array($values, $flags);
-            } elseif ($type == "1") {//增加标记并去除重复标记
-                $values = array_unique(array_merge($flags, $values));
+                $select->where('id', 'in', $ids);
+            } else {
+                // $modify->where('id', '=', $post['id']);
+                $select->where('id', '=', $post['id']);
             }
-            $modify = DB::update()->table('post');
-            $modify->set(array("flag" => implode(",", $values)));
-          
-            $modify->where('id', '=', $value["id"]);
-          
-            $flag_result[$key] = (bool) $modify->execute();
-        }
-        //事务处理
-        if (!in_array(FALSE, $flag_result)) {
+            $result = $select->execute();
+            $flags = explode(",", $post["flag"]);
+
+            $flag_result = array();
+            DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
+            foreach ($result as $key => $value) {
+                $values = explode(",", $value["flag"]);
+                if ($type == "0") {//取消指定标记
+                    $values = Arr::_move_value_Array($values, $flags);
+                } elseif ($type == "1") {//增加标记并去除重复标记
+                    $values = array_unique(array_merge($flags, $values));
+                }
+
+                if (implode(",", $values) != $value["flag"]) {
+                    $modify = DB::update()->table('post');
+                    $modify->set(array("flag" => implode(",", $values)));
+
+                    $modify->where('id', '=', $value["id"]);
+
+                    $flag_result[$key] = (bool) $modify->execute();
+                }
+            }
+
+            //事务处理
+
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
-        } else {
+        } catch (Exception $e) {
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
         }
@@ -250,21 +271,23 @@ class Database_Post {
 
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $post['id']);
-
-        $modify = DB::update()->table('post')->set($post);
-        if ($post["status"] == 1) {//正式发布的情况下 将会与发布内容与已发布内容进行交换
-            //将预发布内容和内容进行替换
-            $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
+        try {
+            $modify = DB::update()->table('post')->set($post);
+            if ($post["status"] == 1) {//正式发布的情况下 将会与发布内容与已发布内容进行交换
+                //将预发布内容和内容进行替换
+                $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
+            }
+            //判断是否是批量操作
+            if (count($ids) > 1) {
+                $modify->where('id', 'in', $ids);
+            } else {
+                $modify->where('id', '=', $post['id']);
+            }
+            $modify->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
         }
-        //判断是否是批量操作
-        if (count($ids) > 1) {
-            $modify->where('id', 'in', $ids);
-        } else {
-            $modify->where('id', '=', $post['id']);
-        }
-        $result = (bool) $modify->execute();
-        //   echo Kohana::debug($modify);
-        return $result ? 'ok' : 'error';
     }
 
     /*     * ***
@@ -277,39 +300,42 @@ class Database_Post {
 
             return 'no_id';
         }
+        $id = $post['id'];
+        unset($post['id']);
         /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $post['id']);
+        $ids = explode(",", $id);
         DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
-        $modify = DB::update()->table('post')->set($post);
-        //如果发布过的内容需要进行此操作
-        //将预发布内容和内容进行替换 状态改为创建待审核
-        $modify->set(array('status' => '5', 'swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
-        $modify->where("content", "<>", "")->and_where("pre_content", "=", "");
-        //判断是否是批量操作
-        if (count($ids) > 1) {
-            $modify->where('id', 'in', $ids);
-        } else {
-            $modify->where('id', '=', $post['id']);
-        }
-        $undo_create_result = (bool) $modify->execute();
+        try {
+            $modify = DB::update()->table('post')->set($post);
+            //如果发布过的内容需要进行此操作
+            //将预发布内容和内容进行替换 状态改为创建待审核
+            $modify->set(array('status' => '5', 'swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
+            $modify->where("content", "<>", "")->and_where("pre_content", "=", "");
+            //判断是否是批量操作
+            if (count($ids) > 1) {
+                $modify->where('id', 'in', $ids);
+            } else {
+                $modify->where('id', '=', $id);
+            }
+            $undo_create_result = (bool) $modify->execute();
 
-        $modify = DB::update()->table('post')->set($post);
-        //如果发布过的内容需要进行此操作
-        //将预发布内容和内容进行替换 状态改为修改待审核2
-        $modify->set(array('status' => '2', 'swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
-        $modify->where("content", "<>", "")->and_where("pre_content", "<>", "");
-        //判断是否是批量操作
-        if (count($ids) > 1) {
-            $modify->where('id', 'in', $ids);
-        } else {
-            $modify->where('id', '=', $post['id']);
-        }
-        $undo_update_result = (bool) $modify->execute();
-        //   echo Kohana::debug($modify);
-        if ($undo_create_result and $undo_update_result) {
+
+            $modify = DB::update()->table('post')->set($post);
+            //如果发布过的内容需要进行此操作
+            //将预发布内容和内容进行替换 状态改为修改待审核2
+            $modify->set(array('status' => '2', 'swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
+            $modify->where("content", "<>", "")->and_where("pre_content", "<>", "");
+            //判断是否是批量操作
+            if (count($ids) > 1) {
+                $modify->where('id', 'in', $ids);
+            } else {
+                $modify->where('id', '=', $id);
+            }
+            $undo_update_result = (bool) $modify->execute();
+
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
-        } else {
+        } catch (Exception $E) {
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
         }
@@ -325,39 +351,41 @@ class Database_Post {
 
             return 'no_id';
         }
+        $id = $post['id'];
+        unset($post['id']);
         /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $post['id']);
+        $ids = explode(",", $id);
         DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
-        $modify = DB::update()->table('post')->set($post);
-        //如果发布过的内容需要进行此操作
-        //将预发布内容和内容进行替换 状态改为创建待审核
-        $modify->set(array('status' => '5'));
-        $modify->where("content", "<>", "")->and_where("pre_content", "=", "");
-        //判断是否是批量操作
-        if (count($ids) > 1) {
-            $modify->where('id', 'in', $ids);
-        } else {
-            $modify->where('id', '=', $post['id']);
-        }
-        $undo_create_result = (bool) $modify->execute();
+        try {
+            $modify = DB::update()->table('post')->set($post);
+            //如果发布过的内容需要进行此操作
+            //将预发布内容和内容进行替换 状态改为创建待审核
+            $modify->set(array('status' => '5'));
+            $modify->where("content", "<>", "")->and_where("pre_content", "=", "");
+            //判断是否是批量操作
+            if (count($ids) > 1) {
+                $modify->where('id', 'in', $ids);
+            } else {
+                $modify->where('id', '=', $id);
+            }
+            $undo_create_result = (bool) $modify->execute();
 
-        $modify = DB::update()->table('post')->set($post);
-        //如果发布过的内容需要进行此操作
-        //将预发布内容和内容进行替换 状态改为修改待审核2
-        $modify->set(array('status' => '2'));
-        $modify->where("content", "<>", "")->and_where("pre_content", "<>", "");
-        //判断是否是批量操作
-        if (count($ids) > 1) {
-            $modify->where('id', 'in', $ids);
-        } else {
-            $modify->where('id', '=', $post['id']);
-        }
-        $undo_update_result = (bool) $modify->execute();
-        //   echo Kohana::debug($modify);
-        if ($undo_create_result and $undo_update_result) {
+            $modify = DB::update()->table('post')->set($post);
+            //如果发布过的内容需要进行此操作
+            //将预发布内容和内容进行替换 状态改为修改待审核2
+            $modify->set(array('status' => '2'));
+            $modify->where("content", "<>", "")->and_where("pre_content", "<>", "");
+            //判断是否是批量操作
+            if (count($ids) > 1) {
+                $modify->where('id', 'in', $ids);
+            } else {
+                $modify->where('id', '=', $id);
+            }
+            $undo_update_result = (bool) $modify->execute();
+
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
-        } else {
+        } catch (Exception $e) {
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
         }
