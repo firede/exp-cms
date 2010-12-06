@@ -16,7 +16,7 @@ $(document).ready(function () {
 		baseUrl		= dxn.util.base;
 
 	if (id === '') {
-		container.html('<div>请先钩选需要批量删除的经验再进行操作。</div>');
+		container.html('<div>请先钩选需要<strong>删除</strong>的经验再进行操作。</div>');
 	}
 
 	submit.click(function () {
