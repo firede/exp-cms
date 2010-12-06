@@ -26,7 +26,7 @@ class Database_Category {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($category) {
+    public function query_list($category, $sort) {
         //设置查询数据的sql
         $query = DB::select("category.*")->from('category');
         foreach ($category as $filedName => $filedvalue) {
@@ -44,13 +44,16 @@ class Database_Category {
                     }
                 }
         }
-        $query->order_by("sort","ASC");
+        if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
+            $query->order_by($sort["order_by"], $sort["sort_type"]);
+        } else {
+            $query->order_by("sort", "ASC");
+        }
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
         //加入一些业务值，特殊业务值的替换或者加入
         //
         $categorys = $this->as_tree_array($categorys);
-        echo Kohana::debug($categorys);
         if (count($categorys) > 0)
             return array(
                 'result' => $categorys,
@@ -60,10 +63,9 @@ class Database_Category {
     }
 
     private function as_tree_array($categorys) {
-        
+
         return $this->build_child("-1", $categorys, array());
-    // echo Kohana::debug($aaa["计算机"]["child"]);
-        
+        // echo Kohana::debug($aaa["计算机"]["child"]);
     }
 
     private function build_child($parent_id, $categorys, $parent_childs) {
@@ -74,18 +76,17 @@ class Database_Category {
             if ($category["parent_id"] == $parent_id) {
                 $child = array();
                 $child = $category;
-                
+
                 //    $parent_childs=count($parent_childs<1)?$childs:$parent_childs;
-                $child["child"] = $this->build_child($category["id"], $categorys,$parent_childs);
+                $child["child"] = $this->build_child($category["id"], $categorys, $parent_childs);
                 $childs[$category["id"]] = $child;
-                
             } else {
                 continue;
             }
         }
         $parent_childs = $childs;
-       // echo "换行";
-       // echo Kohana::debug($parent_childs);
+        // echo "换行";
+        // echo Kohana::debug($parent_childs);
         return $parent_childs;
         //  $this->cate_tree, $cate_tree_now;
         //   $this->cate_tree["child"]=$cate_tree_now;

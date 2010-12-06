@@ -41,7 +41,6 @@ class Database_Post {
         $query->join("user", 'left')->on("post.user_id", "=", "user.id");
         $query->join("category", 'left')->on("post.cate_id", "=", "category.id");
 
-        // echo Kohana::debug($query);
         foreach ($post as $filedName => $filedvalue) {
             if (isset($filedvalue))
                 if ($filedvalue != null) {

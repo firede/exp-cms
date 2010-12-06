@@ -241,11 +241,11 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     public function action_m_flag_post() {
         $postDb = new Database_Post();
         //获取操作类型
-        $type = isset($_POST["type"]) ? $_POST["type"] :"";
+        $type = isset($_POST["type"]) ? $_POST["type"] : "";
         $arr_element_names = array('id', 'flag');
         //$post = Arr::filter_Array($_POST, $arr_element_names);
         $post = Arr::filter_Array($_POST, $arr_element_names);
-       
+
         $view_data = $postDb->m_flag($post, $type);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
@@ -432,22 +432,23 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
- /*     * ******
-     * 批量撤销驳回 id 格式为 &id=1，2,3,4
+
+    /*     * ******
+     * 获取分类数据 结构为 树形数据结构
      */
 
     public function action_category() {
         $categoryDb = new Database_Category();
         $arr_element_names =
-                array('id','name','short_name','parent_id','sort','child');
-        $category = Arr::filter_Array($_POST, $arr_element_names);
-        $categoryDb->query_list($category);
-        $view_data = $postDb->undo_reject($category);
+                array('id', 'name', 'short_name', 'parent_id', 'sort', 'child');
+        $category = Arr::filter_Array($_GET, $arr_element_names);
+        $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
+        $view_data = $categoryDb->query_list($category, $sort);
         $view_data = Action::sucess_status($view_data);
-
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
+
     /**
      * 快速预览功能子视图
      */
