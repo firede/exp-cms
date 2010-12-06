@@ -29,7 +29,7 @@ $(document).ready(function () {
 		var desc = getDesc();
 
 		$.post(
-			baseUrl + 'admin/post/flag_post',
+			baseUrl + 'admin/post/audit_post',
 			{
 				'id': id,
 				'status': status,
