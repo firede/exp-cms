@@ -105,10 +105,10 @@ class Database_Post {
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
                     'pre_content', 'content', 'user_id', 'status',
                     'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
-        try{
-        $save = DB::insert("post", $columns);
-        $result = (bool) $save->values($post);
-           return 'ok';
+        try {
+            $save = DB::insert("post", $columns);
+            $result = (bool) $save->values($post);
+            return 'ok';
         } catch (Exception $e) {
             return "error";
         }
@@ -145,11 +145,11 @@ class Database_Post {
         if ($id == null || $id == "") {
             return "no_id";
         }
-        try{
-        $delete = DB::delete()->table('post')->where('id', '=', $id);
+        try {
+            $delete = DB::delete()->table('post')->where('id', '=', $id);
 
-        $result = (bool) $delete->execute();
-          return 'ok';
+            $result = (bool) $delete->execute();
+            return 'ok';
         } catch (Exception $e) {
             return "error";
         } //返回值有误 需要进一步分析kohana数据库操作的反馈机制
@@ -164,12 +164,12 @@ class Database_Post {
         if ($post["id"] == null || $post["id"] == "") {
             return "no_id";
         }
-        try{
-        $ids = explode(",", $post["id"]);
-        $delete = DB::delete()->table('post')->where('id', 'in', $ids);
-        $result = (bool) $delete->execute();
+        try {
+            $ids = explode(",", $post["id"]);
+            $delete = DB::delete()->table('post')->where('id', 'in', $ids);
+            $result = (bool) $delete->execute();
 
-         return 'ok';
+            return 'ok';
         } catch (Exception $e) {
             return "error";
         }
@@ -185,15 +185,17 @@ class Database_Post {
             return 'no_id';
         }
         try {
+            $id=$post['id'];
+            unset($post['id']);
             /* 根据需要从请求中取出需要的数据值 */
-            $ids = explode(",", $post['id']);
+            $ids = explode(",", $id);
             $modify = DB::update()->table('post')->set($post);
             // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
             //判断是否是批量操作
             if (count($ids) > 1) {
                 $modify->where('id', 'in', $ids);
             } else {
-                $modify->where('id', '=', $post['id']);
+                $modify->where('id', '=', $id);
             }
             $result = (bool) $modify->execute();
             return 'ok';
@@ -212,9 +214,10 @@ class Database_Post {
         if ($post == null || count($post) == 0 || $post['id'] == null) {
             return 'no_id';
         }
-
+        $id=$post['id'];
+         unset($post['id']);
         /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $post['id']);
+        $ids = explode(",",$id );
         try {
             $select = DB::select_array(array("flag", "id"))->from("post");
             //判断是否是批量操作
@@ -223,7 +226,7 @@ class Database_Post {
                 $select->where('id', 'in', $ids);
             } else {
                 // $modify->where('id', '=', $post['id']);
-                $select->where('id', '=', $post['id']);
+                $select->where('id', '=', $id);
             }
             $result = $select->execute();
             $flags = explode(",", $post["flag"]);
@@ -242,7 +245,7 @@ class Database_Post {
                     $modify = DB::update()->table('post');
                     $modify->set(array("flag" => implode(",", $values)));
 
-                    $modify->where('id', '=', $value["id"]);
+                    $modify->where('id', '=', $id);
 
                     $flag_result[$key] = (bool) $modify->execute();
                 }
@@ -268,9 +271,10 @@ class Database_Post {
 
             return "no_id";
         }
-
+        $id = $post['id'];
+        unset($post['id']);
         /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $post['id']);
+        $ids = explode(",", $id);
         try {
             $modify = DB::update()->table('post')->set($post);
             if ($post["status"] == 1) {//正式发布的情况下 将会与发布内容与已发布内容进行交换
@@ -281,7 +285,7 @@ class Database_Post {
             if (count($ids) > 1) {
                 $modify->where('id', 'in', $ids);
             } else {
-                $modify->where('id', '=', $post['id']);
+                $modify->where('id', '=', $id);
             }
             $modify->execute();
             return "ok";
