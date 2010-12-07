@@ -103,36 +103,46 @@ class Database_Category {
 
     public function set_config($category) {
         $categorys = $this->query_list($category, array());
-        Arr::as_config_file($categorys,APPPATH."config/category.php");
+        Arr::as_config_file($categorys, APPPATH . "config/category.php");
         return Kohana::config("category");
-       /// return $this->build_parent("-1",$categorys, array());
+        /// return $this->build_parent("-1",$categorys, array());
     }
 
-    private function build_parent($parent_id,$categorys, $arr) {
+    /*     * **
+     * 通过分类ID获取 所有包含的上层目录名称
+     */
+
+    public function crumb($id) {
+        $categorys = Kohana::config("category");
+        $parent_id = "";
+        $arr = array();
+        foreach ($categorys as $this_category) {
+            if ($this_category["id"] == $id) {
+                $parent_id = $this_category["id"];
+            }
+        }
+        $crumbs = $this->build_crumbs($parent_id, $categorys, $arr);
+        return $crumbs;
+    }
+    /***
+     * 使用递归算法 从分类集合中取出符合
+     */
+    private function build_crumbs($parent_id, $categorys, $arr) {
+        $crumbs = array();
         $count = 0;
-
-
-        $childs = array();
         foreach ($categorys as $category) {
-            
-            if($category["id"]=="-1"){
-                 $childs[$category["id"]][$count] = $child;
-            }elseif ($category["id"] == $parent_id) {
-             
-                $child = $category["name"];
-                echo $child;
-                //    $parent_childs=count($parent_childs<1)?$childs:$parent_childs;
-                $child = $this->build_parent($category["parent_id"], $categorys, $child);
-               
-                $count++;
+            $count++;
+            if ($category["id"] == $parent_id) {
+                $parent["id"] = $category["id"];
+                $parent["name"] = $category["name"];
+                $parent["parent_id"] = $category["parent_id"];
+                $crumbs = $this->build_crumbs($category["parent_id"], $categorys, $parent);
+                $crumbs[$count] = $parent;
             } else {
                 continue;
             }
         }
-        $arr = $childs;
-        return $arr;
-        
-        
+        return $crumbs;
     }
 
 }

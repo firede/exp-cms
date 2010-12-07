@@ -107,10 +107,10 @@ class StrongKohana  extends Kohana_Core{
 				foreach ($var as $key => & $val)
 				{
 					if ($key === $marker) continue;
-					//if ( ! is_int($key))
-					//{
+					if ( ! is_int($key))
+					{
 						$key = '"'.htmlspecialchars($key, ENT_NOQUOTES, self::$charset).'"';
-					//}
+					}
                                        // $key='"'.$key.'"';
 					$output[] = "$space$s $key => ".StrongKohana::my_dump($val, $length, $level + 1).",";
 				}

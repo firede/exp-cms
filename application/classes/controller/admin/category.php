@@ -13,20 +13,33 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
                 array('id', "name", "short_name", "parent_id", "sort");
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $category = Arr::filter_Array($_GET, $arr_element_names);
-        $categorys = $categoryDb->query_tree_array($category,$sort);
+        $categorys = $categoryDb->query_tree_array($category, $sort);
         $categorys = Action::sucess_status($categorys);
-
- echo Kohana::debug($categorys);
 
         /*  $this->template->layout_main = View::factory('admin/user/list', array(
           'pagination' => $pagination,
           'view_data' => $categorys,
           )); */
     }
-    public function action_conf() {
-        $categoryDb=new Database_Category();
-       $categorys =$categoryDb->set_config(array(),array());
-       echo Kohana::debug($categorys);
+
+    /*     * *
+     * 将数据加载至文件缓存中
+     */
+
+    public function action_set_category() {
+        $categoryDb = new Database_Category();
+        $categorys = $categoryDb->set_config(array(), array());
+    }
+
+    /*     * *
+     * 将数据加载至文件缓存中
+     */
+
+    public function action_crumb() {
+        $id = isset($_GET["id"]) ? $_GET["id"] : "";
+        $categoryDb = new Database_Category();
+        $categorys = $categoryDb->crumb($id);
+        echo Kohana::debug($categorys);
     }
 
     public function action_delete() {
