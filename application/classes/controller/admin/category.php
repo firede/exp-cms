@@ -11,27 +11,22 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         //设置参数过滤器中需要保留下操作的数据
         $arr_element_names =
                 array('id', "name", "short_name", "parent_id", "sort");
+        $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $category = Arr::filter_Array($_GET, $arr_element_names);
-
-        $categorys = $categoryDb->query_list($category);
+        $categorys = $categoryDb->query_tree_array($category,$sort);
         $categorys = Action::sucess_status($categorys);
 
-
+ echo Kohana::debug($categorys);
 
         /*  $this->template->layout_main = View::factory('admin/user/list', array(
           'pagination' => $pagination,
           'view_data' => $categorys,
           )); */
     }
-
-    public function action_get_user($id) {
-        $userDb = new Database_User();
-        $users = $userDb->get_user($id);
-        $users = Action::sucess_status($users);
-        echo Kohana::debug($users);
-        $view = View::factory('smarty:');
-        $view->posts = $posts;
-        $this->request->response = $view->render();
+    public function action_conf() {
+        $categoryDb=new Database_Category();
+       $categorys =$categoryDb->set_config(array(),array());
+       echo Kohana::debug($categorys);
     }
 
     public function action_delete() {

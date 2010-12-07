@@ -43,7 +43,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         if (isset($posts["total_items_count"]) && isset($posts["total_page_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }
-
+      
         $conf_status = 'status_' . $_GET['status'];
         $conf = Kohana::config('admin_post')->$conf_status;
         // $this->cache = Cache::instance("apc");
@@ -52,9 +52,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                     'view_data' => $posts,
                     'conf' => $conf,
                 ));
-        // $this->cache->set("post_list_view", $view);
+       
         $this->template = $view;
-        // $this->template = $this->cache->get("post_list_view");
+     
     }
 
     /*     * **
@@ -63,8 +63,6 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_create() {
         $uuid = Text::uuid();
-
-
         $this->template = View::factory('smarty:', array(
                     'uuid' => $uuid,
                     'conf' => $conf,
@@ -443,7 +441,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                 array('id', 'name', 'short_name', 'parent_id', 'sort', 'child');
         $category = Arr::filter_Array($_GET, $arr_element_names);
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
-        $view_data = $categoryDb->query_list($category, $sort);
+        $view_data = $categoryDb->query_tree_array($category, $sort);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;

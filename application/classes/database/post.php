@@ -68,6 +68,7 @@ class Database_Post {
         $query->offset($current_item)->limit($current_item + $pageParam["items_per_page"]);
         $posts = $query->execute();
         $posts = $posts->as_array();
+       
         //加入一些业务值
         for ($i = 0; $i < count($posts); $i++) {
 
