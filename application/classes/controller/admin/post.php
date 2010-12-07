@@ -3,10 +3,6 @@ defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
-    public function action_index() {
-
-    }
-
     /*     * *********
      * 根据条件查询相应的post表数据,并加载重绘至post列表页面
      */
