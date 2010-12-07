@@ -46,14 +46,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
       
         $conf_status = 'status_' . $_GET['status'];
         $conf = Kohana::config('admin_post')->$conf_status;
-        // $this->cache = Cache::instance("apc");
+
         $view = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
                     'conf' => $conf,
                 ));
-       
-        $this->template = $view;
+        
+        $this->template =AppCache::app_cache("view", $view);
      
     }
 

@@ -14,6 +14,7 @@ class Controller_Base extends Controller {
         $_GET = $this->filter_XSS($_GET); //xss过滤
         $_POST = $this->filter_XSS($_POST); //xss过滤
         parent::before();
+        
     }
 
     /*     * ********
