@@ -72,7 +72,14 @@ class Arr extends Kohana_Arr {
      */
 
     public static function as_config_file($arr, $config_file) {
-        File::path_mkdirs();
+       $config_file=File::path_mkdirs($config_file);
+       $config_file=str_replace("/", "\\", $config_file);
+       $config_file=substr($config_file, 0,strlen($config_file)-1);
+       $fp=fopen($config_file, "w+");
+       $arr_str=StrongKohana::my_dump($arr);
+       $arr_str="<?php defined('SYSPATH') or die('No direct script access.'); \n return ".$arr_str." ;\n?>";
+       fwrite($fp, $arr_str);
+       fclose($fp);
     }
 
 }
