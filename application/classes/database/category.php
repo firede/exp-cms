@@ -40,22 +40,21 @@ class Database_Category {
         else
             return "none";
     }
-
+    /********
+     * 根据数据父子关系 构造一个树形分级数组
+     */
     private function as_tree_array($categorys) {
 
         return $this->build_child("-1", $categorys, array());
     }
 
     private function build_child($parent_id, $categorys, $parent_childs) {
-        //$temp = array();
         $childs = array();
         foreach ($categorys as $category) {
 
             if ($category["parent_id"] == $parent_id) {
                 $child = array();
                 $child = $category;
-
-                //    $parent_childs=count($parent_childs<1)?$childs:$parent_childs;
                 $child["child"] = $this->build_child($category["id"], $categorys, $parent_childs);
                 $childs[$category["id"]] = $child;
             } else {

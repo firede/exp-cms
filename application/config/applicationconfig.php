@@ -23,5 +23,8 @@ return array(
         "max_size" => 2048, //图片上传的总路径 单位kb
         "type" => "jpg,jpeg,png,bmp,gif,rar,txt,doc,pdf,xml,7zip,zip,", //允许上传的文件类型，多个用“,”分隔
     ),
+    "user"=>array(
+      "default_avatar" =>"",//默认用户头像路径
+    ),
 );
 ?>

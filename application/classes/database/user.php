@@ -15,6 +15,7 @@ class Database_User {
      * @$user <array> 用户对象的数据内容
      * @return message <string> 直接返回执行情况消息
      */
+
     public function create($user) {
         $save = DB::insert("user", array());
         $save->values($user);
@@ -30,7 +31,7 @@ class Database_User {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($user, $page_Param) {
+    public function query_list($user, $page_Param, $sort) {
         $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
         foreach ($user as $filedName => $filedvalue) {
             if (isset($filedvalue))
@@ -72,7 +73,9 @@ class Database_User {
                     }
                 }
         }
-
+        if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
+            $query->order_by($sort["order_by"], $sort["sort_type"]);
+        }
         if (!isset($page_Param["items_per_page"])) {
             $page_Param["items_per_page"] = 20;
         }
@@ -87,7 +90,7 @@ class Database_User {
 
             $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
             $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
-            $users[$i]["password"]="";
+            $users[$i]["password"] = "";
         }
 
         if ($count > 0)
@@ -113,18 +116,18 @@ class Database_User {
             return "no_id";
         }
         //设置查询数据的sql
-        $query = DB::select('id', 'username',"password", 'email', 'user_type', 'status',
-                    'avatar', 'reg_time', 'last_time', 'admin_id')->from('user');
+        $query = DB::select('id', 'username', "password", 'email', 'user_type', 'status',
+                        'avatar', 'reg_time', 'last_time', 'admin_id')->from('user');
         $query->where("id", "=", $id);
         $users = $query->execute();
         $users = $users->as_array();
         $count = count($users);
-         //加入一些业务值，特殊业务值的替换或者加入
+        //加入一些业务值，特殊业务值的替换或者加入
         for ($i = 0; $i < count($users); $i++) {
 
             $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
             $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
-            $users[$i]["password"]="";
+            $users[$i]["password"] = "";
         }
         // echo Kohana::debug($count);
         if ($count > 0)
@@ -140,14 +143,18 @@ class Database_User {
      */
 
     public function delete($id) {
-        if (!isset($id)) {
-            return "no_id";
+        try {
+            if (!isset($id)) {
+                return "no_id";
+            }
+            //设置删除数据的sql
+            $delete = DB::delete()->table('user');
+            $delete->where("id", "=", $id);
+            $result = (bool) $delete->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
         }
-        //设置删除数据的sql
-        $delete = DB::delete()->table('user');
-        $delete->where("id", "=", $id);
-        $result = (bool) $delete->execute();
-        return $result ? "ok" : "error";
     }
 
     /*     * ***
@@ -157,16 +164,20 @@ class Database_User {
      */
 
     public function mulit_delete($id) {
-        if (!isset($id)) {
-            return "no_id";
+        try {
+            if (!isset($id)) {
+                return "no_id";
+            }
+            /* 根据需要从请求中取出需要的数据值 */
+            $ids = explode(",", $post['id']);
+            //设置删除数据的sql
+            $delete = DB::delete()->table('user');
+            $delete->where('id', 'in', $ids);
+            $result = (bool) $delete->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
         }
-        /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $post['id']);
-        //设置删除数据的sql
-        $delete = DB::delete()->table('user');
-        $delete->where('id', 'in', $ids);
-        $result = (bool) $delete->execute();
-        return $result ? "ok" : "error";
     }
 
     /*     * ***
@@ -176,15 +187,21 @@ class Database_User {
      */
 
     public function modify($user) {
-        if (!isset($id)) {
-            return "no_id";
+        try {
+            if (!isset($user["id"])) {
+                return "no_id";
+            }
+            $id = $user["id"];
+            unset($user["id"]);
+            //设置删除数据的sql
+            $modify = DB::update()->table("user");
+            $modify->set($user);
+            $modify->where("id", "=", $id);
+            $result = (bool) $modify->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
         }
-        //设置删除数据的sql
-        $modify = DB::update()->table("user");
-        $modify->set($user);
-        $modify->where("id", "=", $id);
-        $result = (bool) $modify->execute();
-        return $result ? "ok" : "error";
     }
 
     /*     * ***
@@ -195,17 +212,23 @@ class Database_User {
      */
 
     public function mulit_modify($user) {
-        if (!isset($id)) {
-            return "no_id";
+        try {
+            if (!isset($user["id"])) {
+                return "no_id";
+            }
+            $ids = $user["id"];
+            unset($user["id"]);
+            //设置删除数据的sql
+            $modify = DB::update()->table("user");
+            $modify->set($user);
+            /* 根据需要从请求中取出需要的数据值 */
+            $ids = explode(",", $ids);
+            $modify->where("id", "in", $ids);
+            $modify->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
         }
-        //设置删除数据的sql
-        $modify = DB::update()->table("user");
-        $modify->set($user);
-        /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $post['id']);
-        $modify->where("id", "in", $id);
-        $result = (bool) $modify->execute();
-        return $result ? "ok" : "error";
     }
 
     /*     * ***
@@ -215,22 +238,30 @@ class Database_User {
      */
 
     public function clear_avtar($user) {
-        if (!isset($user['id'])) {
-            return "no_id";
+        try {
+            if (!isset($user['id'])) {
+                return "no_id";
+            }
+            $id = $user["id"];
+            unset($user["id"]);
+            $user["avtar"] = "";
+            //设置删除数据的sql
+            $modify = DB::update()->table("user");
+            $modify->set($user);
+            $modify->where("id", "=", $id);
+            $result = (bool) $modify->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
         }
-        $user["avtar"] = "";
-        //设置删除数据的sql
-        $modify = DB::update()->table("user");
-        $modify->set($user);
-        $modify->where("id", "=", $id);
-        $result = (bool) $modify->execute();
-        return $result ? "ok" : "error";
     }
-    /******
+
+    /*     * ****
      * 检测该用户是否已经存在
      * @$user <array> 用户信息
      * @return 存在返回exist 不存在返回ok
      */
+
     public function check_exist($user) {
         //设置查询数据的sql
         $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
@@ -240,28 +271,30 @@ class Database_User {
         $count = $users[0]["total_user"];
         $count > 0 ? "exist" : "ok"; //存在的话返回error 不存在返回ok
     }
-     /******
+
+    /*     * ****
      * 检测登录
      * @$user <array> 用户信息
      * @return 存在返回该用户信息 不存在返回ok
      */
+
     public function check_login($user) {
         if (!isset($id)) {
             return "no_id";
         }
         //设置查询数据的sql
-        $query = DB::select('id', 'username',"password", 'email', 'user_type', 'status',
-                    'avatar', 'reg_time', 'last_time', 'admin_id')->from('user');
+        $query = DB::select('id', 'username', "password", 'email', 'user_type', 'status',
+                        'avatar', 'reg_time', 'last_time', 'admin_id')->from('user');
         $query->where("id", "=", $id);
         $users = $query->execute();
         $users = $users->as_array();
         $count = count($users);
-         //加入一些业务值，特殊业务值的替换或者加入
+        //加入一些业务值，特殊业务值的替换或者加入
         for ($i = 0; $i < count($users); $i++) {
 
             $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
             $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
-            $users[$i]["password"]="";
+            $users[$i]["password"] = "";
         }
         // echo Kohana::debug($count);
         if ($count > 0)
@@ -269,27 +302,7 @@ class Database_User {
         else
             return 'none';
     }
-/*     * ***
-     * 根据ID，修改user表行数据
-     * @param $user （array(integer)）
-     */
 
-    public function modify($user) {
-        if ($user == null || count($user) == 0 || $user['id'] == null) {
-            return 'no_id';
-        }
-        /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",", $user['id']);
-        $modify = DB::update()->table('user')->set($user);
-        //判断是否是批量操作
-        if (count($ids) > 1) {
-            $modify->where('id', 'in', $ids);
-        } else {
-            $modify->where('id', '=', $user['id']);
-        }
-        $result = (bool) $modify->execute();
-        return $result ? 'ok' : 'error';
-    }
 }
 
 ?>

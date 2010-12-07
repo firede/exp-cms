@@ -1,8 +1,8 @@
 <?php
+
 defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
-
     /*     * *********
      * 根据条件查询相应的post表数据,并加载重绘至post列表页面
      */
@@ -39,7 +39,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         if (isset($posts["total_items_count"]) && isset($posts["total_page_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }
-      
+
         $conf_status = 'status_' . $_GET['status'];
         $conf = Kohana::config('admin_post')->$conf_status;
 
@@ -48,9 +48,57 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                     'view_data' => $posts,
                     'conf' => $conf,
                 ));
-        
-        $this->template =AppCache::app_cache("view", $view);
-     
+
+        $this->template = AppCache::app_cache("post_view", $view);
+    }
+     /*     * *********
+     * 根据关键字查询相应的post表数据,并加载重绘至post列表页面
+      * 链接示意 admin/post/search?status=2&page=1&keyword=神说，要有光
+     */
+
+    public function action_search() {
+
+        // 测试分页
+        $pagination = new Pagination(array(
+                    'current_page' => array('source' => 'query_string', 'key' => 'page'),
+                    'total_items' => 0,
+                    'items_per_page' => 20,
+                    'view' => 'pagination/admin',
+                    'auto_hide' => FALSE,
+                    'first_page_in_url' => FALSE,
+                ));
+        $postDb = new Database_Post();
+        //设置参数过滤器中需要保留下操作的数据
+        $arr_element_names =array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
+                    'pre_content', 'content', 'user_id', 'status',
+                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag',"keyword");
+        if (!isset($_GET['page'])) {
+            $_GET['page'] = 1;
+        }
+        if (!isset($_GET['status'])) {
+            $_GET['status'] = '0';
+        }
+
+        $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
+        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post["keyword"]=isset($post["keyword"])?$post["keyword"]:"";
+        $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
+        $posts = $postDb->query_list_search($post, $pageparam, $sort);
+        $posts["message"] = Action::sucess_status($posts["message"]);
+        if (isset($posts["total_items_count"]) && isset($posts["total_page_count"])) {
+            $pagination->__set('total_items', $posts["total_items_count"]);
+        }
+
+        $conf_status = 'status_' . $_GET['status'];
+        $conf = Kohana::config('admin_post')->$conf_status;
+
+        $view = View::factory('smarty:admin/post/list', array(
+                    'pagination' => $pagination,
+                    'view_data' => $posts,
+                    'conf' => $conf,
+                ));
+
+        $this->template = AppCache::app_cache("post_view", $view);
     }
 
     /*     * **
@@ -59,10 +107,11 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_create() {
         $uuid = Text::uuid();
-        $this->template = View::factory('smarty:', array(
+        $view = View::factory('smarty:', array(
                     'uuid' => $uuid,
                     'conf' => $conf,
                 ));
+        $this->template = AppCache::app_cache("post_view", $view);
     }
 
     /*     * **
@@ -81,7 +130,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
         $view = View::factory('smarty:');
         $view->view_data = $view_data;
-        $this->request->response = $view->render();
+        $this->request->response = AppCache::app_cache("post_view", $view)->render();
     }
 
     /*     * *********
@@ -119,7 +168,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
         $view = View::factory('smarty:');
         $view->posts = $posts;
-        $this->request->response = $view->render();
+        $this->request->response = AppCache::app_cache("post_view", $view)->render();
     }
 
     /**
@@ -127,8 +176,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      */
     public function action_del() {
         // $this->request->headers['Cache-control'] = 'max-age=86400';
-
-        $this->template = View::factory('smarty:admin/post/del');
+        $view = View::factory('smarty:admin/post/del');
+        $this->template = AppCache::app_cache("post_del", $view);
     }
 
     /**
@@ -136,8 +185,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      */
     public function action_m_del() {
         // $this->request->headers['Cache-control'] = 'max-age=86400';
-
-        $this->template = View::factory('smarty:admin/post/m_del');
+        $view = View::factory('smarty:admin/post/m_del');
+        $this->template = AppCache::app_cache("post_m_del", $view);
     }
 
     /*     * ***
@@ -192,21 +241,23 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
         $view = View::factory('json:');
         $view->view_data = $view_data;
-        $this->request->response = $view->render();
+        $this->request->response = AppCache::app_cache("post_update_post", $view)->render();
     }
 
     /**
      * 标记功能子视图
      */
     public function action_flag() {
-        $this->template = View::factory('smarty:admin/post/flag');
+        View::factory('smarty:admin/post/flag');
+        $this->template = AppCache::app_cache("post_flag", $view);
     }
 
     /**
      * 批量标记功能子视图
      */
     public function action_m_flag() {
-        $this->template = View::factory('smarty:admin/post/m_flag');
+        $view = View::factory('smarty:admin/post/m_flag');
+        $this->template = AppCache::app_cache("post_m_flag", $view);
     }
 
     /*     * ******
@@ -250,14 +301,16 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 移动功能子视图
      */
     public function action_move() {
-        $this->template = View::factory('smarty:admin/post/move');
+        $view = View::factory('smarty:admin/post/move');
+        $this->template = AppCache::app_cache("post_move", $view);
     }
 
     /**
      * 批量移动功能子视图
      */
     public function action_m_move() {
-        $this->template = View::factory('smarty:admin/post/m_move');
+        $view = View::factory('smarty:admin/post/m_move');
+        $this->template = AppCache::app_cache("post_m_move", $view);
     }
 
     /*     * ******
@@ -282,14 +335,16 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 审核功能子视图
      */
     public function action_audit() {
-        $this->template = View::factory('smarty:admin/post/audit');
+        $view = View::factory('smarty:admin/post/audit');
+        $this->template = AppCache::app_cache("post_audit", $view);
     }
 
     /**
      * 批量审核功能子视图
      */
     public function action_m_audit() {
-        $this->template = View::factory('smarty:admin/post/m_audit');
+        $view = View::factory('smarty:admin/post/m_audit');
+        $this->template = AppCache::app_cache("post_m_audit", $view);
     }
 
     /*     * ******
@@ -331,14 +386,16 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 撤销发布子视图
      */
     public function action_undo_pub() {
-        $this->template = View::factory('smarty:admin/post/undo_pub');
+        $view = View::factory('smarty:admin/post/undo_pub');
+        $this->template = AppCache::app_cache("post_undo_pub", $view);
     }
 
     /**
      * 批量撤销发布子视图
      */
     public function action_m_undo_pub() {
-        $this->template = View::factory('smarty:admin/post/m_undo_pub');
+        $view = View::factory('smarty:admin/post/m_undo_pub');
+        $this->template = AppCache::app_cache("post_m_undo_pub", $view);
     }
 
     /*     * ******
@@ -381,14 +438,17 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 撤销驳回子视图
      */
     public function action_undo_rej() {
-        $this->template = View::factory('smarty:admin/post/undo_rej');
+        $view = View::factory('smarty:admin/post/undo_rej');
+
+        $this->template = AppCache::app_cache("post_undo_rej", $view);
     }
 
     /**
      * 批量撤销驳回子视图
      */
     public function action_m_undo_rej() {
-        $this->template = View::factory('smarty:admin/post/m_undo_rej');
+        $view = View::factory('smarty:admin/post/m_undo_rej');
+        $this->template = AppCache::app_cache("post_m_undo_rej", $view);
     }
 
     /*     * ******
@@ -448,8 +508,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      */
     public function action_preview() {
         // $this->request->headers['Cache-control'] = 'max-age=86400';
-
-        $this->template = View::factory('smarty:admin/post/preview');
+        $view = View::factory('smarty:admin/post/preview');
+        $this->template = AppCache::app_cache("post_preview", $view);
     }
 
     public function action_info() {
@@ -470,4 +530,5 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     }
 
 }
+
 ?>

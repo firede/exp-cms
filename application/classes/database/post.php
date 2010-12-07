@@ -12,22 +12,57 @@ class Database_Post {
      */
 
     public function query_list($post, $pageParam, $sort) {
-        $query = DB::select(array('COUNT("id")', 'total_post'))->from('post');
+        return $this->_query_list($post, $pageParam, $sort, "0");
+    }
 
+    /*     * ***
+     * 根据条件综合搜索查询相应的post表数据 条件对所有字段进行匹配
+     * @$post
+     * @$filedNames
+     * @$pageParam
+     * return post信息+分页信息
+     */
+
+    public function query_list_search($post, $pageParam, $sort) {
+        return $this->_query_list($post, $pageParam, $sort, "1");
+    }
+
+    /*     * ***
+     * 根据条件查询相应的post表数据
+     * @$post
+     * @$filedNames
+     * @$pageParam
+     * @$type <integer> 查询类型： 0 普通 |1 综合搜索
+     * return post信息+分页信息
+     */
+
+    public function _query_list($post, $pageParam, $sort, $type) {
+        $query = DB::select(array('COUNT("*")', 'total_post'))->from('post');
+        $query->join("admin", "left")->on("post.operation_id", "=", "admin.id");
+        $query->join("user", 'left')->on("post.user_id", "=", "user.id");
+        $query->join("category", 'left')->on("post.cate_id", "=", "category.id");
         foreach ($post as $filedName => $filedvalue) {
-            if (isset($filedvalue))
+            if (isset($filedvalue)) {
+
                 if ($filedvalue != null) {
                     if ($filedName == "status" || $filedName == "flag") {
                         $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
-                            $query->where('post.' . $filedName, "in", $filed_values);
+                            $query->and_where('post.' . $filedName, "in", $filed_values);
                         } else {
-                            $query->where('post.' . $filedName, "=", $filedvalue);
+                            $query->and_where('post.' . $filedName, "=", $filedvalue);
                         }
-                    } else {
-                        $query->where('post.' . $filedName, "like", "%" . $filedvalue . "%");
                     }
                 }
+            }
+        }
+        if ($type == "1") {
+
+            $query->and_where_open();
+            $query->where('title', "like", "%" . $post["keyword"] . "%");
+            $query->or_where("user.username", "like", "%" . $post["keyword"] . "%");
+            $query->or_where("category.name", "like", "%" . $post["keyword"] . "%");
+            $query->and_where_close();
         }
 
         $count_Result = $query->execute()->as_array();
@@ -41,21 +76,31 @@ class Database_Post {
         $query->join("user", 'left')->on("post.user_id", "=", "user.id");
         $query->join("category", 'left')->on("post.cate_id", "=", "category.id");
 
+
         foreach ($post as $filedName => $filedvalue) {
-            if (isset($filedvalue))
+            if (isset($filedvalue)) {
+
                 if ($filedvalue != null) {
                     if ($filedName == "status" || $filedName == "flag") {
                         $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
-                            $query->where('post.' . $filedName, "in", $filed_values);
+                            $query->and_where('post.' . $filedName, "in", $filed_values);
                         } else {
-                            $query->where('post.' . $filedName, "=", $filedvalue);
+                            $query->and_where('post.' . $filedName, "=", $filedvalue);
                         }
-                    } else {
-                        $query->where('post.' . $filedName, "like", "%" . $filedvalue . "%");
                     }
                 }
+            }
         }
+        if ($type == "1") {
+
+            $query->and_where_open();
+            $query->where('title', "like", "%" . $post["keyword"] . "%");
+            $query->or_where("user.username", "like", "%" . $post["keyword"] . "%");
+            $query->or_where("category.name", "like", "%" . $post["keyword"] . "%");
+            $query->and_where_close();
+        }
+
         if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
             $query->order_by($sort["order_by"], $sort["sort_type"]);
         }
@@ -68,7 +113,7 @@ class Database_Post {
         $query->offset($current_item)->limit($current_item + $pageParam["items_per_page"]);
         $posts = $query->execute();
         $posts = $posts->as_array();
-       
+
         //加入一些业务值
         for ($i = 0; $i < count($posts); $i++) {
 
@@ -185,7 +230,7 @@ class Database_Post {
             return 'no_id';
         }
         try {
-            $id=$post['id'];
+            $id = $post['id'];
             unset($post['id']);
             /* 根据需要从请求中取出需要的数据值 */
             $ids = explode(",", $id);
@@ -214,10 +259,10 @@ class Database_Post {
         if ($post == null || count($post) == 0 || $post['id'] == null) {
             return 'no_id';
         }
-        $id=$post['id'];
-         unset($post['id']);
+        $id = $post['id'];
+        unset($post['id']);
         /* 根据需要从请求中取出需要的数据值 */
-        $ids = explode(",",$id );
+        $ids = explode(",", $id);
         try {
             $select = DB::select_array(array("flag", "id"))->from("post");
             //判断是否是批量操作
