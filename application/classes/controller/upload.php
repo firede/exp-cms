@@ -8,7 +8,9 @@ class Controller_Upload extends Controller_BaseUser {
         $this->template = View::factory('smarty:upload/uptest', array(
                 ));
     }
-
+    /********
+     * 上传图片
+     */
     public function action_up_img() {
         try {
             $conf = Kohana::config("applicationconfig");
@@ -16,16 +18,31 @@ class Controller_Upload extends Controller_BaseUser {
             $son_path = ""; //这个 是通过日期生成的
             //判断图片是否合法
             $img_types = explode("/", $file["type"]);
-
-            if ($img_types[0] != "image") {
-                return "error:该文件类型不正确";
-            }
-
-            if (($file["size"] / 1024) > $conf["up_img"]["max_size"]) {
-
-                return "error:该文件过大，上传文件不能超过" . (string) ($conf["up_img"]["max_size"]) . "KB";
-            }
             $name = (explode(".", $file["name"]));
+            $limit_type_status = FALSE;
+            if (!isset($name[0])) {
+                echo "错误：图片类型必须是" . $conf["up_img"]["type"] . "为后缀的";
+                return;
+            }
+            if ($img_types[0] != "image") {
+                return "错误:该文件类型不正确";
+            }
+            $limit_types = explode(",", $conf["up_img"]["type"]);
+
+            foreach ($limit_types as $limit_type) {
+                if ($limit_type == $name[1]) {
+                    $limit_type_status = TRUE;
+                    break;
+                }
+            }
+            if (!$limit_type_status) {
+                echo "错误：图片类型必须是" . $conf["up_img"]["type"] . "为后缀的";
+                return;
+            }
+            if (($file["size"] / 1024) > $conf["up_img"]["max_size"] || ($file["size"] / 1024) < $conf["up_img"]["min_size"]) {
+                echo "错误:文件大小必须在" . (string) $conf["up_img"]["min_size"] . "KB 到 " . (string) $conf["up_img"]["max_size"] . "KB 之间";
+                return;
+            }
             $type = $img_types[1];
             switch ($img_types[1]) {
                 case "x-png":
@@ -35,8 +52,9 @@ class Controller_Upload extends Controller_BaseUser {
                     $type = "jpeg";
                     break;
             }
-            $conf["up_img"]["dir"] = APPPATH;
-
+            if ($conf["up_img"]["dir"] = "") {
+                $conf["up_img"]["dir"] = APPPATH;
+            }
             $img_name = str_replace("-", "", Text::uuid());
             $img_name = $img_name . "." . $type; //新的文件名
             $son_path = date("Y/m/d");
@@ -45,8 +63,10 @@ class Controller_Upload extends Controller_BaseUser {
              * 判断文件夹是否存在不存在则创建
              */
             $path = str_replace("\\", "/", $upload_path);
+
             $upload_path = File::path_mkdirs($upload_path);
-            $url = str_replace("/", "\\", $upload_path . "" . $img_name);
+            $url = str_replace("/", "\\", $upload_path . "\\" . $img_name);
+            $relative_url = str_replace("/","\\",("\\".$son_path . "\\" . $img_name));
             Upload::save($_FILES["file"], $img_name, $upload_path, "0644"); //上传
             $img_File = Image::factory($url);
             $img_File->resize($conf["up_img"]["max_width"], $conf["up_img"]["max_height"], Image::AUTO);
@@ -60,14 +80,79 @@ class Controller_Upload extends Controller_BaseUser {
                 $img_File->watermark($watermark, $xy_position["x"], $xy_position["y"], $conf["up_img"]["watermark_opacity"]);
             }
             $img_File->save($img_File->file);
-            return "ok";
+            $result = array(
+                "sucess" => "ok",
+                "relative_url" => $relative_url,
+                "message"=>"图片上传成功",
+            );
+           
+            return $result;
         } catch (Exception $e) {
-            return "error";
+            return array(
+                "sucess" => "error",
+                "message"=>"图片上传失败",
+            );
         }
     }
 
+    /*     * *********
+     * 文件上传
+     */
+
     public function action_up_file() {
-        
+        try {
+            $file = $_FILES["file"];
+            $conf = Kohana::config("applicationconfig");
+            if ($file["size"] / 1024 < $conf["up_file"]["min_size"] || $file["size"] / 1024 > $conf["up_file"]["max_size"]) {
+                echo "错误:文件大小必须在" . $conf["up_file"]["min_size"] . "KB 到 " . $conf["up_file"]["max_size"] . "KB 之间";
+                return;
+            }
+            $name = (explode(".", $file["name"]));
+            $limit_type_status = FALSE;
+            if (!isset($name[1])) {
+                echo "错误：文件类型必须是" . $conf["up_file"]["type"] . "为后缀的";
+                return;
+            }
+            $limit_types = explode(",", $conf["up_file"]["type"]);
+
+            foreach ($limit_types as $limit_type) {
+                if ($limit_type == $name[1]) {
+                    $limit_type_status = TRUE;
+                    break;
+                }
+            }
+            if (!$limit_type_status) {
+                echo "错误：文件类型必须是" . $conf["up_file"]["type"] . "为后缀的";
+                return;
+            }
+
+            if ($conf["up_file"]["dir"] == "") {
+                $conf["up_file"]["dir"] = APPPATH;
+            }
+            $file_name = str_replace("-", "", Text::uuid());
+            $file_name = $file_name . "." . $name[1]; //新的文件名
+            $son_path = date("Y/m/d");
+            $relative_url = str_replace("/","\\",("\\".$son_path . "\\" . $file_name));
+            $upload_path = $conf["up_file"]["dir"] . $son_path;
+            /*             * *
+             * 判断文件夹是否存在不存在则创建
+             */
+            $path = str_replace("\\", "/", $upload_path);
+            $upload_path = File::path_mkdirs($upload_path);
+            $url = str_replace("/", "\\",($upload_path . "" . $file_name));
+            Upload::save($_FILES["file"], $file_name, $upload_path, "0644"); //上传
+            $result = array(
+                    "suess" => "ok",
+                    "relative_url" => $relative_url,
+                    "message" => "文件上传成功",
+            );
+            return $result;
+        } catch (Exception $e) {
+            return $result = array(
+                    "suess" => "error",
+                    "message"=>"文件上传失败",
+            );
+        }
     }
 
     /*     * **
