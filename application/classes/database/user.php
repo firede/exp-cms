@@ -17,7 +17,8 @@ class Database_User {
      */
 
     public function create($user) {
-        $save = DB::insert("user", array());
+        $save = DB::insert("user", array('id', 'username', "password", 'email', 'user_type', 'status',
+                        'avatar', 'reg_time', 'last_time', 'admin_id'));
         $save->values($user);
         $result = (bool) $save->execute();
         return $result ? "ok" : "error";

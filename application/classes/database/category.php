@@ -40,9 +40,11 @@ class Database_Category {
         else
             return "none";
     }
-    /********
+
+    /*     * ******
      * 根据数据父子关系 构造一个树形分级数组
      */
+
     private function as_tree_array($categorys) {
 
         return $this->build_child("-1", $categorys, array());
@@ -104,7 +106,6 @@ class Database_Category {
         $categorys = $this->query_list($category, array());
         Arr::as_config_file($categorys, APPPATH . "config/category.php");
         return Kohana::config("category");
-        /// return $this->build_parent("-1",$categorys, array());
     }
 
     /*     * **
@@ -123,9 +124,11 @@ class Database_Category {
         $crumbs = $this->build_crumbs($parent_id, $categorys, $arr);
         return $crumbs;
     }
-    /***
+
+    /*     * *
      * 使用递归算法 从分类集合中取出符合
      */
+
     private function build_crumbs($parent_id, $categorys, $arr) {
         $crumbs = array();
         $count = 0;
@@ -142,6 +145,60 @@ class Database_Category {
             }
         }
         return $crumbs;
+    }
+    /**********
+     * 删除分类 支持批量删除 批量删除 用 ","分隔
+     */
+    public function del($category) {
+        try {
+             if (isset($category["id"])) {
+                return "no_id";
+            }
+            $id = $category["id"];
+            $delete=DB::delete()->table("category");
+            $modify->where("id", "in", $ids);
+            $modify->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
+        }
+    }
+
+    /*     * ***
+     * 修改 一个或多个分类信息 批量删除 ID用“,”分隔
+     */
+
+    public function modify($category) {
+        try {
+            if (isset($category["id"])) {
+                return "no_id";
+            }
+            $id = $category["id"];
+            unset($category["id"]);
+            $ids = explode(",", $category["id"]);
+            $modify = DB::update()->table("category")->set($category);
+            $modify->where("id", "in", $ids);
+            $modify->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
+        }
+    }
+
+    /*     * ***
+     * 添加一个新的 分类信息
+     * @$category 分类信息封装对象 与 数据库category表字段完全对应
+     */
+
+    public function save($category) {
+        try {
+            $save = DB::insert("category", array("id", "name", "short_name", "parent_id", "sort"));
+            $save->values($category);
+            $save->execute();
+            return "ok";
+        } catch (exception $e) {
+            return "error";
+        }
     }
 
 }
