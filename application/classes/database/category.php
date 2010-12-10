@@ -113,7 +113,11 @@ class Database_Category {
      */
 
     public function crumb($id) {
+
         $categorys = Kohana::config("category");
+        if (count($categorys) == 0) {
+            $this->set_config(array());
+        }
         $parent_id = "";
         $arr = array();
         foreach ($categorys as $this_category) {
@@ -146,18 +150,21 @@ class Database_Category {
         }
         return $crumbs;
     }
-    /**********
+
+    /*     * ********
      * 删除分类 支持批量删除 批量删除 用 ","分隔
      */
+
     public function del($category) {
         try {
-             if (isset($category["id"])) {
+            if (isset($category["id"])) {
                 return "no_id";
             }
             $id = $category["id"];
-            $delete=DB::delete()->table("category");
+            $delete = DB::delete()->table("category");
             $modify->where("id", "in", $ids);
             $modify->execute();
+            $this->set_config(array());
             return "ok";
         } catch (Exception $e) {
             return "error";
@@ -179,6 +186,7 @@ class Database_Category {
             $modify = DB::update()->table("category")->set($category);
             $modify->where("id", "in", $ids);
             $modify->execute();
+            $this->set_config(array());
             return "ok";
         } catch (Exception $e) {
             return "error";
@@ -195,6 +203,7 @@ class Database_Category {
             $save = DB::insert("category", array("id", "name", "short_name", "parent_id", "sort"));
             $save->values($category);
             $save->execute();
+            $this->set_config(array());
             return "ok";
         } catch (exception $e) {
             return "error";

@@ -38,7 +38,7 @@ class Controller_Base extends Controller {
         if (isset($_GET["category_crumbs_id"])) {
             $categoryDb = new Database_Category();
             $crumb = $categoryDb->crumb($_GET["category_crumbs_id"]);
-            //$this->template->CATEGORY_CRUMBS = $crumb;
+            $this->template->CATEGORY_CRUMBS = $crumb;
         }
         // 输出视图前定义变量
         $this->template->VERSION = '1-0-0-pre';

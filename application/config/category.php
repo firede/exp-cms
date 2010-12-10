@@ -1,0 +1,81 @@
+<?php defined('SYSPATH') or die('No direct script access.'); 
+ return array(
+     0 => array(
+         "id" => "1",
+         "name" => "计算机",
+         "short_name" => "computer",
+         "parent_id" => "-1",
+         "sort" => "0",
+    ),
+     1 => array(
+         "id" => "11",
+         "name" => "android应用程序",
+         "short_name" => "android",
+         "parent_id" => "8",
+         "sort" => "0",
+    ),
+     2 => array(
+         "id" => "10",
+         "name" => "服务器",
+         "short_name" => "server",
+         "parent_id" => "1",
+         "sort" => "0",
+    ),
+     3 => array(
+         "id" => "9",
+         "name" => "网络工程",
+         "short_name" => "net",
+         "parent_id" => "1",
+         "sort" => "0",
+    ),
+     4 => array(
+         "id" => "8",
+         "name" => "软件开发",
+         "short_name" => "soft",
+         "parent_id" => "1",
+         "sort" => "0",
+    ),
+     5 => array(
+         "id" => "6",
+         "name" => "龙与地下城",
+         "short_name" => "LONG",
+         "parent_id" => "2",
+         "sort" => "0",
+    ),
+     6 => array(
+         "id" => "5",
+         "name" => "穿越火线",
+         "short_name" => "CF",
+         "parent_id" => "2",
+         "sort" => "0",
+    ),
+     7 => array(
+         "id" => "4",
+         "name" => "激战2",
+         "short_name" => "GW2",
+         "parent_id" => "2",
+         "sort" => "0",
+    ),
+     8 => array(
+         "id" => "3",
+         "name" => "魔兽世界",
+         "short_name" => "wow",
+         "parent_id" => "2",
+         "sort" => "0",
+    ),
+     9 => array(
+         "id" => "2",
+         "name" => "游戏",
+         "short_name" => "game",
+         "parent_id" => "-1",
+         "sort" => "0",
+    ),
+     10 => array(
+         "id" => "12",
+         "name" => "iphone应用",
+         "short_name" => "iphone",
+         "parent_id" => "8",
+         "sort" => "0",
+    ),
+) ;
+?>
