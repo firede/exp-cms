@@ -26,23 +26,25 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
                     'first_page_in_url' => FALSE,
                 ));
         $arr_element_names = array("url", "uuid", "file_size", "use_type", "status", "file_type");
-        $attachemenDb = new Database_Attachment();
+        $attachmenDb = new Database_Attachment();
         if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
 
-        $attachement = Arr::filter_Array($_GET, $arr_element_names);
-        $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
-        $attachemenDb->query_list($attachement, $page_Param, $sort);
-        $attachements = Action::sucess_status($users);
-        if (isset($posts["total_items_count"])) {
-            $pagination->__set('total_items', $users["total_items_count"]);
-        }
-        $view = View::factory('admin/attachement/list', array(
-                    'pagination' => $pagination,
-                    'view_data' => $attachements,
-                ));
+        $attachment = Arr::filter_Array($_GET, $arr_element_names);
+        $page_Param = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
+        $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
+        $attachments = $attachmenDb->query_list($attachment, $page_Param, $sort);
 
+        $attachments = Action::sucess_status($attachments);
+        echo Kohana::debug($attachments);
+        if (isset($attachments["total_items_count"])) {
+            $pagination->__set('total_items', $attachments["total_items_count"]);
+        }
+        $view = View::factory('admin/attachment/list', array(
+                    'pagination' => $pagination,
+                    'view_data' => $attachments,
+                ));
         $this->template->layout_main = AppCache::app_cache("attachement_list", $view);
     }
 
@@ -71,10 +73,12 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
-    /*****
-     * 清理垃圾无用附件 
+
+    /*     * ***
+     * 清理垃圾无用附件
      */
-    public function clear_file(){
+
+    public function clear_file() {
         
     }
 
