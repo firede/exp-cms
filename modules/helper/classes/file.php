@@ -28,7 +28,6 @@ class File extends Kohana_File {
         echo kohana::debug($file_boxs);
         $count = 0;
         for ($i = count($file_boxs) - 1; $i >= 0; $i--) {
-            echo "[$i]:::::::" . $file_boxs[$i];
             if (!file_exists($file_boxs[$i])) {
                 $exists_flag[$count++] = $file_boxs[$i];
             } else {
@@ -37,9 +36,6 @@ class File extends Kohana_File {
         }
 
         for ($i = (count($exists_flag) - 1); $i >= 0; $i--) {
-            echo $exists_flag[$i];
-
-            // echo "aaaaa:".strpos( $exists_flag[$i],".");
             if (strpos($exists_flag[$i], ".") != 0) {
                 $config_file = substr($exists_flag[$i], 0, strlen($exists_flag[$i]) - 1);
                 $fp = fopen($exists_flag[$i], "a+");
