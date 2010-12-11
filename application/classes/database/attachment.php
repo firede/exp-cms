@@ -8,6 +8,20 @@ defined('SYSPATH') or die('No direct script access.');
  * @author attachment
  */
 class Database_Attachment {
+    /*******
+     *新增一个新的 附件信息
+     */
+    public function insert($attachement) {
+        try {
+            $insert = DB::insert("attachement", array("url", "uuid", "file_size", "use_type", "status", "file_type"));
+            $insert->values($attachement);
+            $insert->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
+        }
+    }
+
     /*     * **
      * 获取符合条件的数据 进行分页
      * @$user <array>  对应user表列的筛选条件的多个参数
@@ -16,7 +30,7 @@ class Database_Attachment {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($user, $page_Param, $sort) {
+    public function query_list($attachement, $page_Param, $sort) {
         $query = DB::select(array('COUNT("id")', 'total_user'))->from('attachement');
         foreach ($user as $filedName => $filedvalue) {
             if (isset($filedvalue))
@@ -67,7 +81,43 @@ class Database_Attachment {
         else
             return "none";
     }
-
+     /*******
+     *修改一个或者多个 附件信息 多个id 请使用“,”分隔
+     */
+    public function modify($attachement) {
+        try {
+            if(!isset($attachement["id"])){
+                return "no_id";
+            }
+            $id=$attachement["id"];
+            unset($attachement["id"]);
+            $modify = DB::update()->table("attachement")->set($attachement);
+            $ids=explode(",", $id);
+            $modify->where("id", "in", $ids);
+            $modify->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
+        }
+    }
+     /*******
+     *删除一个或者多个 附件信息多个id 请使用“,”分隔
+     */
+    public function del($attachement) {
+        try {
+            if(!isset($attachement["id"])){
+                return "no_id";
+            }
+            $id=$attachement["id"];
+            $delete = DB::delete()->table("attachement");
+            $ids=explode(",", $id);
+            $delete->where("id", "in", $ids);
+            $delete->execute();
+            return "ok";
+        } catch (Exception $e) {
+            return "error";
+        }
+    }
 }
 
 ?>

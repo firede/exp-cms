@@ -237,6 +237,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                     'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->modify($post);
+        ///这里还需要对附件进行更新处理
         $view_data = Action::sucess_status($view_data);
 
         $view = View::factory('json:');

@@ -63,7 +63,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      */
 
     public function action_del_post() {
-         $id = isset($_POST["id"]) ? $_POST["id"] :  $_GET["id"];
+         $id = isset($_POST["id"]) ? $_POST["id"] : "";
         $userDb = new Database_User();
        $view_data= $userDb->delete($id);
         $view_data = Action::sucess_status($view_data);
