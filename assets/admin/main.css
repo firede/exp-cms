@@ -559,18 +559,21 @@ a:hover {
 	
 }
 
-/* message error or success */
-.message-error {
-	padding:10px 15px;
-	margin-bottom: 10px;
-	clear:both;
-	color:#C00;
-	border:2px solid #C00;
+/* form table */
+.form-table-wrap {
+	
 }
-.message-success {
-	padding:10px 15px;
-	margin-bottom: 10px;
-	clear:both;
-	color:#090;
-	border:2px solid #090;
+.form-table {
+	width:100%;
+}
+.form-table th {
+	vertical-align: top;
+	text-align: left;
+	font-size: 14px;
+	background:#EEE;
+	width:110px;
+}
+.form-table td {
+	padding-left:20px;
+	vertical-align: top;
 }
