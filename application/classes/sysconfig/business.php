@@ -69,6 +69,18 @@ class Sysconfig_Business {
         );
         return $role_box[$role];
     }
+    /****
+     * attachment表字段use_type标记说明
+     * @$use_type int
+     * @return 返回附件类型描述
+     */
+    public static function attachment_Use_type($use_type) {
+        $use_type_box = array(
+            '0' => '文章',
+            '1' => '图像',
+        );
+        return $use_type_box[$use_type];
+    }
 
 }
 

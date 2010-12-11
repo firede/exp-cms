@@ -145,7 +145,7 @@ class Database_Post {
      * @return 执行成功返回ok 失败返回error
      */
 
-    public function save($post) {
+    public function insert($post) {
         $columns =
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
                     'pre_content', 'content', 'user_id', 'status',
