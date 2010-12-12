@@ -101,13 +101,18 @@ class Database_Category {
         }
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
-        /*    $conf = Kohana::config("applicationconfig");
-          //加入一些业务值，特殊业务值的替换或者加入
-          for ($i = 0; $i < count($categorys); $i++) {
-          if ($categorys[$i]["parent_name"] == "" || $categorys[$i]["parent_name"] == NULL) {//如果没有设置图像则使用默认图像
-          $categorys[$i]["parent_name"] =$conf["site"]["category_root_name"];
-          }
-          } */
+        $parent_ids = array();
+        for ($f = 0; $f < count($categorys); $f++) {
+            $parent_ids[$f] = $categorys[$f]["parent_id"];
+        }
+        //加入一些业务值，特殊业务值的替换或者加入
+        for ($i = 0; $i < count($categorys); $i++) {
+            if (in_array($categorys[$i]["id"], $parent_ids)) {
+                $categorys[$i]["has_child"] = TRUE;
+            } else {
+                $categorys[$i]["has_child"] = FALSE;
+            }
+        }
 
         return $categorys;
     }
@@ -173,7 +178,18 @@ class Database_Category {
         }
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
-
+        $parent_ids = array();
+        for ($f = 0; $f < count($categorys); $f++) {
+            $parent_ids[$f] = $categorys[$f]["parent_id"];
+        }
+        //加入一些业务值，特殊业务值的替换或者加入
+        for ($i = 0; $i < count($categorys); $i++) {
+            if (in_array($categorys[$i]["id"], $parent_ids)) {
+                $categorys[$i]["has_child"] = TRUE;
+            } else {
+                $categorys[$i]["has_child"] = FALSE;
+            }
+        }
         if ($count > 0)
             return array(
                 'total_items_count' => $count, //总记录数
