@@ -32,7 +32,7 @@ return array(
 		'parent'        => array(
 			'label'     => '父级分类',
 			'width'     => '130',
-			'template'  => 'link',
+			'template'  => 'link_cate',
 			'prefix'    => array('admin/category/list?category='),
 			'data'      => 'parent_id,parent_name',
 			'order_by'  => 'parent_name',
