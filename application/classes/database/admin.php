@@ -53,12 +53,12 @@ class Database_admin {
         $current_item = $page_Param["items_per_page"] * ($page_Param["page"] - 1);
         $total_page_count = (int) ceil($count / $page_Param["items_per_page"]);
         $query->offset($current_item)->limit($current_item + $page_Param["items_per_page"]);
-        $users = $query->execute();
+        $admins = $query->execute();
         $admins = $admins->as_array();
         //加入一些业务值，特殊业务值的替换或者加入
         for ($i = 0; $i < count($admins); $i++) {
 
-            $admins[$i]["role_name"] = Sysconfig_Business::admin_Role($users[$i]["role"]);
+            $admins[$i]["role_name"] = Sysconfig_Business::admin_Role($admins[$i]["role"]);
             $admins[$i]["password"] = "";
         }
 
