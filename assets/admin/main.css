@@ -348,6 +348,8 @@ a:hover {
 .icon-preview-ol,
 .icon-undo-pub,
 .icon-undo-rej,
+.icon-cate-del,
+.icon-cate-modify,
 .icon-home,
 .icon-next,
 .icon-prev,
@@ -396,6 +398,12 @@ a:hover {
 }
 .icon-preview-ol {
 	background-position: -160px 0;
+}
+.icon-cate-del {
+	background-position: -40px -20px;
+}
+.icon-cate-modify {
+	background-position: -60px -20px;
 }
 .icon-flag-1 {
 	background-position: -20px -80px;
