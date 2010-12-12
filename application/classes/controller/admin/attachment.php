@@ -37,15 +37,16 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
         $attachments = $attachmenDb->query_list($attachment, $page_Param, $sort);
 
         $attachments = Action::sucess_status($attachments);
-        echo Kohana::debug($attachments);
         if (isset($attachments["total_items_count"])) {
             $pagination->__set('total_items', $attachments["total_items_count"]);
         }
+		$conf = Kohana::config('admin_attachment_list');
         $view = View::factory('admin/attachment/list', array(
                     'pagination' => $pagination,
                     'view_data' => $attachments,
+					'conf' => $conf,
                 ));
-        $this->template->layout_main = AppCache::app_cache("attachement_list", $view);
+        $this->template = AppCache::app_cache("attachement_list", $view);
     }
 
     /*     * ***

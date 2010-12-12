@@ -51,7 +51,7 @@ return array(
 			'order_by'  => 'reg_time',
 		),
 		'last_time'      => array(
-			'label'     => '最后登录时间',
+			'label'     => '最后登录',
 			'width'     => '80',
 			'template'  => 'date',
 			'data'      => 'last_time',
