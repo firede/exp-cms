@@ -81,7 +81,7 @@ class Database_admin {
      */
 
     public function get_admin($id) {
-        if ($id == null || $id="") {
+        if ($id == null || $id = "") {
             return 'no_id';
         }
         //设置查询数据的sql
@@ -102,6 +102,7 @@ class Database_admin {
         else
             return 'none';
     }
+
     /*     * *
      * 管理员登录检测
      * @$id <int> 用户id
@@ -110,15 +111,15 @@ class Database_admin {
      */
 
     public function check_login($admin) {
-        if ($admin["username"] == null || $admin["username"]=="") {
+        if ($admin["username"] == null || $admin["username"] == "") {
             return 'no_id';
         }
-     
+
         //设置查询数据的sql
         $query = DB::select('id', 'username', "password", "role")->from('admin');
-        $query->where('username', "=",$admin["username"])->where('password', "=",$admin["password"]);
+        $query->where('username', "=", $admin["username"])->where('password', "=", $admin["password"]);
         $admins = $query->execute();
-        
+
         $admins = $admins->as_array();
         $count = count($admins);
         //加入一些业务值，特殊业务值的替换或者加入
@@ -141,7 +142,7 @@ class Database_admin {
      */
 
     public function delete($id) {
-       if ($id == null || $id="") {
+        if ($id == null || $id = "") {
             return 'no_id';
         }
         //设置删除数据的sql
@@ -172,10 +173,11 @@ class Database_admin {
         $result = (bool) $modify->execute();
         return $result ? 'ok' : 'error';
     }
-     /******
-     * 检测该账号是否已经存在
-     * @$admin <array> 用户信息
-     * @return 存在返回exist 不存在返回ok
+
+    /**     * ***
+     * 检测该管理员是否已经存在
+     * @param $admin array 用户信息
+     * @return bool 存在返回FALSE 不存在返回TRUE
      */
     public function check_exist($admin) {
         //设置查询数据的sql
@@ -184,7 +186,7 @@ class Database_admin {
         $admins = $query->execute();
         $admins = $admins->as_array();
         $count = $admins[0]["total_admin"];
-        $count > 0 ? "exist" : "ok"; //存在的话返回error 不存在返回ok
+        $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
     }
 
 }

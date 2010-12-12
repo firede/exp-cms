@@ -390,11 +390,10 @@ class Database_Post {
         }
     }
 
-    /*     * ***
+    /***
      * 根据ID，撤销驳回，批量撤销驳回
      * @param $post （array(integer)）
      */
-
     public function undo_reject($post) {
         if ($post == null || count($post) == 0 || !isset($post['id'])) {
 
@@ -438,6 +437,21 @@ class Database_Post {
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
         }
+    }
+
+    /**     * ***
+     * 检测该文章标题是否已经存在
+     * @param $post array 文章信息
+     * @return bool 存在返回FALSE 不存在返回TRUE
+     */
+    public function check_exist($post) {
+        //设置查询数据的sql
+        $query = DB::select(array('COUNT("id")', 'total_post'))->from('post');
+        $query->where("title", "=", $post["title"]);
+        $posts = $query->execute();
+        $posts = $posts->as_array();
+        $count = $posts[0]["total_post"];
+        $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回ok
     }
 
 }

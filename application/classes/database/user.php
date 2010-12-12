@@ -17,8 +17,7 @@ class Database_User {
      */
 
     public function create($user) {
-        $m_user=new  Model_User();
-        $m_user->Validate($_GET);
+
         $save = DB::insert("user", array('username', "password", 'email', 'user_type', 'status',
                     'avatar', 'reg_time', 'last_time', 'admin_id'));
         $save->values($user);
@@ -267,12 +266,11 @@ class Database_User {
         }
     }
 
-    /*     * ****
+    /**     * ***
      * 检测该用户是否已经存在
-     * @$user <array> 用户信息
-     * @return 存在返回exist 不存在返回ok
+     * @param $user array 用户信息
+     * @return bool 存在返回FALSE 不存在返回TRUE
      */
-
     public function check_exist($user) {
         //设置查询数据的sql
         $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
@@ -280,7 +278,7 @@ class Database_User {
         $users = $query->execute();
         $users = $users->as_array();
         $count = $users[0]["total_user"];
-        $count > 0 ? "exist" : "ok"; //存在的话返回error 不存在返回ok
+        $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
     }
 
     /*     * ****

@@ -36,7 +36,12 @@ return array(
         "type" => "jpg,jpeg,png,bmp,gif,rar,txt,doc,pdf,xml,7zip,zip,", //允许上传的文件类型，多个用“,”分隔
     ),
     "user" => array(
+        "reg_open"=>TRUE,//注册开关 TRUE 开启 FALSE关闭
         "default_avatar" => "", //默认用户头像路径
+
+    ),
+    "post"=>array(
+        "title_repeat"=>TRUE,//文章标题是否可以重复  TRUE 可以重复|FALSE 不可以重复
     ),
 );
 ?>

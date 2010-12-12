@@ -11,7 +11,11 @@
  */
 class StrongKohana  extends Kohana_Core{
     /****
-     * sss
+     * 将对象解析成字符串格式
+     * @param $var object 对象
+     * @param $length=128 integer
+     * @param $level=0 integer
+     * @return string
      */
    public static function my_dump( & $var, $length = 128, $level = 0)
 	{

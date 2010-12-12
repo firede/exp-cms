@@ -3,7 +3,7 @@
 defined('SYSPATH') or die('No direct script access.');
 
 class Arr extends Kohana_Arr {
-    /*     * ***********************
+    /** ***********************
      * 过滤数组
      * 从$arr（array）中剔除$arrElement（array）中指定的元素之外的下标值返回
      * 如 $arr=array('a'=>'1','b'=>'2','c'=>'3','d'=>5);
@@ -12,7 +12,6 @@ class Arr extends Kohana_Arr {
      * @param $arrElementNames array 需要保留的元素名
      * @return  array() 返回新的数组
      */
-
     public static function filter_Array($arr, $arrElementkeys) {
         $newArry = array();
         if (count($arrElementkeys) == 0) {
@@ -30,7 +29,7 @@ class Arr extends Kohana_Arr {
         return $newArry;
     }
 
-    /*     * ***********************
+    /*************************
      * 移除数组中的指定值
      * 从$arr（array）中剔除$arrElement（array）中指定的相等值返回
      * 如 $arr=array('a'=>'1','b'=>'2','c'=>'3','d'=>5);
@@ -65,12 +64,12 @@ class Arr extends Kohana_Arr {
         return $newArry;
     }
 
-    /*     * *******
+    /*********
      * 将数组写入固定的php文件内
-     * @$arr <array>数组
-     * @$config_file <string> 需要覆盖入的文件
+     * @param $arr array 数组
+     * @param $arr array 数组
+     * @return string 需要覆盖入的文件
      */
-
     public static function as_config_file($arr, $config_file) {
        $config_file=File::path_mkdirs($config_file);
        $config_file=str_replace("/", "\\", $config_file);
@@ -81,7 +80,22 @@ class Arr extends Kohana_Arr {
        fwrite($fp, $arr_str);
        fclose($fp);
     }
-
+    /********
+     * 从数组中找出没有声明的key
+     * @param $arr array
+     * @param $arrElementkeys array 需要检查的key集合
+     * @return array()   返回没有定义过的键的集合
+     */
+    public static function get_noset_key($arr,$arrElementkeys){
+        $no_set_keys=array();
+        $count=0;
+        foreach($arrElementkeys as $key){
+            if(!isset($arr[$key])){
+               $no_set_keys[$count++]=$key;
+            }
+        }
+        return $no_set_keys;
+    }
 }
 
 ?>

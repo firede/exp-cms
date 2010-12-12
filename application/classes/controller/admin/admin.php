@@ -50,7 +50,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
      */
 
     public function action_create_post() {
-        $adminDb = new Database_User();
+        $adminDb = new Database_Admin();
         $arr_element_names =
                 array('username', 'role');
 
@@ -67,14 +67,14 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
      * 通过id获取单个user信息
      */
 
-    public function action_getuser() {
-        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
-        $userDb = new Database_User();
-        $users = $userDb->get_user($id);
-        $users = Action::sucess_status($users);
+    public function action_getAdmin() {
+        $id = isset($_POST["id"]) ? $_POST["id"] : "";
+        $adminDb = new Database_Admin();
+        $admins = $adminDb->get_user($id);
+        $admins = Action::sucess_status($admins);
         $view = View::factory('smarty:');
-        $view->posts = $users;
-        $this->request->response = AppCache::app_cache("user_getuser", $view)->render();
+        $view->posts = $admins;
+        $this->request->response = AppCache::app_cache("admin_getAdmin", $view)->render();
     }
 
     /*     * ***
@@ -83,76 +83,19 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
 
     public function action_del_post() {
         $id = isset($_POST["id"]) ? $_POST["id"] : "";
-        $userDb = new Database_User();
-        $view_data = $userDb->delete($id);
+        $adminDb = new Database_Admin();
+        $view_data = $adminDb->delete($id);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
 
-    /*     * **
-     * 批量删除用户 多个用户用id=1,2,3表示
-     */
+  
 
-    public function action_m_del_post() {
-        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
-        $userDb = new Database_User();
-        $view_data = $userDb->delete($id);
-        $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
-        $this->template->_data = $view_data;
-    }
+ 
 
-    /*     * **
-     * 批量修改用户 多个用户用id=1,2,3表示
-     */
+   
 
-    public function action_update_post() {
-        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
-        $userDb = new Database_User();
-        $arr_element_names =
-                array('id', 'username', 'email', 'user_type', 'status',
-                    'avatar', 'reg_time', 'last_time', 'admin_id',);
-        $user = Arr::filter_Array($_GET, $arr_element_names);
-        $view_data = $userDb->modify($user);
-        $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
-        $this->template->_data = $view_data;
-    }
 
-    /*     * **
-     * 批量修改用户 多个用户用id=1,2,3表示
-     */
-
-    public function action_m_update_post() {
-        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
-        $userDb = new Database_User();
-        $arr_element_names =
-                array('id', 'username', 'email', 'user_type', 'status',
-                    'avatar', 'reg_time', 'last_time', 'admin_id',);
-        $user = Arr::filter_Array($_GET, $arr_element_names);
-        $view_data = $userDb->mulit_modify($user);
-        $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
-        $this->template->_data = $view_data;
-    }
-
-    /*     * **
-     * 清空指定的 用户头像
-     */
-
-    public function action_clear_avtar_post() {
-        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
-        $userDb = new Database_User();
-        $arr_element_names =
-                array('id',);
-        $user = Arr::filter_Array($_GET, $arr_element_names);
-        $conf = Kohana::config("applicationconfig");
-        $user["avatar"] = $conf["user"]["default_avatar"];
-        $view_data = $userDb->mulit_modify($user);
-        $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
-        $this->template->_data = $view_data;
-    }
 
 }

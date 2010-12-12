@@ -52,6 +52,10 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      * http://daxiniu.com/admin/user/create_post?username=dcc&password=dcc&email=dc2002007z@123.coml&user_type=1&status=0&avatar=&reg_time=&last_time=&admin_id=admin
      */
     public function action_create_post() {
+        $m_user=new  Model_User();
+        $m_user->post_validate($_GET);
+        echo Kohana::debug($m_user);
+        return;
         $userDb = new Database_User();
         $arr_element_names =
                 array('id', 'username', "password", 'email', 'user_type', 'status',

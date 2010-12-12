@@ -6,12 +6,12 @@
  * @author FanQie
  */
 class Database_Category {
-    /*     * ****
+
+    /**     * ***
      * 创建一个新的用户数据 于category表里
      * @$category <array> 用户对象的数据内容
      * @return message <string> 直接返回执行情况消息
      */
-
     public function create($category) {
         $save = DB::insert("category", array());
         $save->values($category);
@@ -19,14 +19,13 @@ class Database_Category {
         return $result ? "ok" : "error";
     }
 
-    /*     * **
+    /**     * *
      * 获取符合条件的数据 并返回tree 格式的数据结构数组
      * @$category <array>  对应category表列的筛选条件的多个参数
      * @$sort <array> 排序规则
      * @return <array> 符合条件的category表数据以及其他参数
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
-
     public function query_tree_array($category, $sort) {
 
         $categorys = $this->query_list($category, $sort);
@@ -41,10 +40,9 @@ class Database_Category {
             return "none";
     }
 
-    /*     * ******
+    /**     * *****
      * 根据数据父子关系 构造一个树形分级数组
      */
-
     private function as_tree_array($categorys) {
 
         return $this->build_child("-1", $categorys, array());
@@ -67,13 +65,12 @@ class Database_Category {
         return $parent_childs;
     }
 
-    /*     * **
+    /**     * *
      * 获取符合条件的数据 
      * @$category <array>  对应category表列的筛选条件的多个参数
      * @$sort <array> 排序规则
      * @return <array> 符合条件的category表数据以及其他参数
      */
-
     public function query_list($category, $sort, $page_Param=NULL) {
         if ($page_Param != NULL) {
             return $this->query_list_page($category, $sort, $page_Param);
@@ -104,24 +101,23 @@ class Database_Category {
         }
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
-      /*    $conf = Kohana::config("applicationconfig");
-        //加入一些业务值，特殊业务值的替换或者加入
-        for ($i = 0; $i < count($categorys); $i++) {
-            if ($categorys[$i]["parent_name"] == "" || $categorys[$i]["parent_name"] == NULL) {//如果没有设置图像则使用默认图像
-                $categorys[$i]["parent_name"] =$conf["site"]["category_root_name"];
-            }
-        }*/
-       
+        /*    $conf = Kohana::config("applicationconfig");
+          //加入一些业务值，特殊业务值的替换或者加入
+          for ($i = 0; $i < count($categorys); $i++) {
+          if ($categorys[$i]["parent_name"] == "" || $categorys[$i]["parent_name"] == NULL) {//如果没有设置图像则使用默认图像
+          $categorys[$i]["parent_name"] =$conf["site"]["category_root_name"];
+          }
+          } */
+
         return $categorys;
     }
 
-    /*     * **
+    /**     * *
      * 获取符合条件的数据 并进行分页
      * @$category <array>  对应category表列的筛选条件的多个参数
      * @$sort <array> 排序规则
      * @return <array> 符合条件的category表数据以及其他参数
      */
-
     public function query_list_page($category, $sort, $page_Param=NULL) {
         $query = DB::select(array('COUNT("id")', 'total_category'))->from('category');
         foreach ($category as $filedName => $filedvalue) {
@@ -177,13 +173,6 @@ class Database_Category {
         }
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
-           //加入一些业务值，特殊业务值的替换或者加入
-     /*  $conf = Kohana::config("applicationconfig");
-      for ($i = 0; $i < count($categorys); $i++) {
-            if ($categorys[$i]["parent_name"] == "" || $categorys[$i]["parent_name"] == NULL) {//如果没有设置图像则使用默认图像
-                $categorys[$i]["parent_name"] =$conf["site"]["category_root_name"];
-            }
-        }*/
 
         if ($count > 0)
             return array(
@@ -202,10 +191,9 @@ class Database_Category {
         return Kohana::config("category");
     }
 
-    /*     * **
+    /**     * *
      * 通过分类ID获取 所有包含的上层目录名称
      */
-
     public function crumb($id) {
 
         $categorys = Kohana::config("category");
@@ -223,10 +211,9 @@ class Database_Category {
         return $crumbs;
     }
 
-    /*     * *
+    /**     *
      * 使用递归算法 从分类集合中取出符合
      */
-
     private function build_crumbs($parent_id, $categorys, $arr) {
         $crumbs = array();
         $count = 0;
@@ -245,10 +232,9 @@ class Database_Category {
         return $crumbs;
     }
 
-    /*     * ********
+    /**     * *******
      * 删除分类 支持批量删除 批量删除 用 ","分隔
      */
-
     public function del($category) {
         try {
             if (isset($category["id"])) {
@@ -265,10 +251,9 @@ class Database_Category {
         }
     }
 
-    /*     * ***
+    /**     * **
      * 修改 一个或多个分类信息 批量删除 ID用“,”分隔
      */
-
     public function modify($category) {
         try {
             if (isset($category["id"])) {
@@ -287,11 +272,10 @@ class Database_Category {
         }
     }
 
-    /*     * ***
+    /**     * **
      * 添加一个新的 分类信息
      * @$category 分类信息封装对象 与 数据库category表字段完全对应
      */
-
     public function save($category) {
         try {
             $save = DB::insert("category", array("id", "name", "short_name", "parent_id", "sort"));
@@ -302,6 +286,21 @@ class Database_Category {
         } catch (exception $e) {
             return "error";
         }
+    }
+
+    /**     * ***
+     * 检测该分类名称是否已经存在
+     * @param $category array 分类信息
+     * @return bool 存在返回FALSE 不存在返回TRUE
+     */
+    public function check_exist($category) {
+        //设置查询数据的sql
+        $query = DB::select(array('COUNT("id")', 'total_name'))->from('category');
+        $query->where("name", "=", $category["name"]);
+        $categorys = $query->execute();
+        $categorys = $categorys->as_array();
+        $count = $categorys[0]["total_name"];
+        $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
     }
 
 }
