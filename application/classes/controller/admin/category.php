@@ -8,20 +8,35 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      */
 
     public function action_list() {
+        // 分页
+        $pagination = new Pagination(array(
+                    'current_page' => array('source' => 'query_string', 'key' => 'page'),
+                    'total_items' => 0,
+                    'items_per_page' => 20,
+                    'view' => 'pagination/admin',
+                    'auto_hide' => TRUE,
+                    'first_page_in_url' => FALSE,
+                ));
+        if (!isset($_GET['page'])) {
+            $_GET['page'] = 1;
+        }
+
+        $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $categoryDb = new Database_Category();
         //设置参数过滤器中需要保留下操作的数据
         $arr_element_names =
                 array('id', "name", "short_name", "parent_id", "sort");
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
+
         $category = Arr::filter_Array($_GET, $arr_element_names);
-        $categorys = $categoryDb->query_list($category, $sort);
+        $categorys = $categoryDb->query_list($category, $sort, $pageparam);
         $categorys = Action::sucess_status($categorys);
         $view = View::factory('json:');
         $view->content = $categorys;
-        $this->content=$view;
-        $this->template=$view;
+        $this->content = $view;
+        $this->template = $view;
 
-      //  $this->request->response = AppCache::app_cache("category_list", $view)->render();
+        //  $this->request->response = AppCache::app_cache("category_list", $view)->render();
     }
 
     /*     * *****

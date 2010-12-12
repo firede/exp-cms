@@ -2,6 +2,9 @@
 
 defined('SYSPATH') or die('No direct script access.');
 return array(
+    "site"=>array(
+        "category_root_name"=>"大犀牛"//分类的根名称
+            ),
     "cache" => array(
         "driver" => 'apc', //选择使用何种缓存组件
         "is_open" => TRUE, //是否开启缓存 TRUE开启|FALSE关闭

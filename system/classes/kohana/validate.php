@@ -646,7 +646,7 @@ class Kohana_Validate extends ArrayObject {
 	 * @return  $this
 	 */
 	public function rule($field, $rule, array $params = NULL)
-	{
+	{    
 		if ($field !== TRUE AND ! isset($this->_labels[$field]))
 		{
 			// Set the field label to the field name
@@ -658,7 +658,7 @@ class Kohana_Validate extends ArrayObject {
 			$match_field = $params[0];
 			$this->_labels[$match_field] = preg_replace('/[^\pL]+/u', ' ', $match_field);
 		}
-
+                
 		// Store the rule and params for this rule
 		$this->_rules[$field][$rule] = (array) $params;
 

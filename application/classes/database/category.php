@@ -74,9 +74,13 @@ class Database_Category {
      * @return <array> 符合条件的category表数据以及其他参数
      */
 
-    public function query_list($category, $sort) {
+    public function query_list($category, $sort, $page_Param=NULL) {
+        if ($page_Param != NULL) {
+            return $this->query_list_page($category, $sort, $page_Param);
+        }
         //设置查询数据的sql
-        $query = DB::select("category.*")->from('category');
+        $query = DB::select("a.*", array("b.name", "parent_name"))->from(array("category", "a"));
+        $query->join(array("category", "b"), "left")->on("b.id", "=", "a.parent_id");
         foreach ($category as $filedName => $filedvalue) {
             if (isset($filedvalue))
                 if ($filedvalue != null) {
@@ -92,6 +96,7 @@ class Database_Category {
                     }
                 }
         }
+
         if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
             $query->order_by($sort["order_by"], $sort["sort_type"]);
         } else {
@@ -99,7 +104,96 @@ class Database_Category {
         }
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
+          $conf = Kohana::config("applicationconfig");
+        //加入一些业务值，特殊业务值的替换或者加入
+        for ($i = 0; $i < count($categorys); $i++) {
+            if ($categorys[$i]["parent_name"] == "" || $categorys[$i]["parent_name"] == NULL) {//如果没有设置图像则使用默认图像
+                $categorys[$i]["parent_name"] =$conf["site"]["category_root_name"];
+            }
+        }
+       
         return $categorys;
+    }
+
+    /*     * **
+     * 获取符合条件的数据 并进行分页
+     * @$category <array>  对应category表列的筛选条件的多个参数
+     * @$sort <array> 排序规则
+     * @return <array> 符合条件的category表数据以及其他参数
+     */
+
+    public function query_list_page($category, $sort, $page_Param=NULL) {
+        $query = DB::select(array('COUNT("id")', 'total_category'))->from('category');
+        foreach ($category as $filedName => $filedvalue) {
+            if (isset($filedvalue))
+                if ($filedvalue != null) {
+                    if ($filedName == "parent_id") {
+                        $filed_values = explode(',', (string) $filedvalue);
+                        if (count($filed_values) > 0) {
+                            $query->where('user.' . $filedName, "in", $filed_values);
+                        } else {
+                            $query->where('user.' . $filedName, "=", $filedvalue);
+                        }
+                    } else {
+                        $query->where('user.' . $filedName, "like", "%" . $filedvalue . "%");
+                    }
+                }
+        }
+
+        $count_Result = $query->execute()->as_array();
+        $count = $count_Result[0]['total_category'];
+        //设置查询数据的sql
+        $query = DB::select("a.*", array("b.name", "parent_name"))->from(array("category", "a"));
+        $query->join(array("category", "b"), "left")->on("b.id", "=", "a.parent_id");
+        foreach ($category as $filedName => $filedvalue) {
+            if (isset($filedvalue))
+                if ($filedvalue != null) {
+                    if ($filedName == "parent_id") {
+                        $filed_values = explode(',', (string) $filedvalue);
+                        if (count($filed_values) > 0) {
+                            $query->where('user.' . $filedName, "in", $filed_values);
+                        } else {
+                            $query->where('user.' . $filedName, "=", $filedvalue);
+                        }
+                    } else {
+                        $query->where('user.' . $filedName, "like", "%" . $filedvalue . "%");
+                    }
+                }
+        }
+        //添加分页
+        if ($page_Param != NULL) {
+            if (!isset($page_Param["items_per_page"])) {
+                $page_Param["items_per_page"] = 20;
+            }
+            //获取当前数据起始位置
+            $current_item = $page_Param["items_per_page"] * ($page_Param["page"] - 1);
+            $total_page_count = (int) ceil($count / $page_Param["items_per_page"]);
+            $query->offset($current_item)->limit($current_item + $page_Param["items_per_page"]);
+        }
+        if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
+            $query->order_by($sort["order_by"], $sort["sort_type"]);
+        } else {
+            $query->order_by("sort", "ASC");
+        }
+        $categorys = $query->execute();
+        $categorys = $categorys->as_array();
+        $conf = Kohana::config("applicationconfig");
+        //加入一些业务值，特殊业务值的替换或者加入
+        for ($i = 0; $i < count($categorys); $i++) {
+            if ($categorys[$i]["parent_name"] == "" || $categorys[$i]["parent_name"] == NULL) {//如果没有设置图像则使用默认图像
+                $categorys[$i]["parent_name"] =$conf["site"]["category_root_name"];
+            }
+        }
+
+        if ($count > 0)
+            return array(
+                'total_items_count' => $count, //总记录数
+                'total_page_count' => $total_page_count,
+                'items_per_page' => $page_Param["items_per_page"], //每页显示数据条数
+                'result' => $categorys,
+            );
+        else
+            return "none";
     }
 
     public function set_config($category) {
