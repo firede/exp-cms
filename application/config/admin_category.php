@@ -20,7 +20,7 @@ return array(
 			'label'     => '分类名称',
 			'width'     => '340',
 			'template'  => 'link',
-			'prefix'    => array('admin/post/view/', '.html'),
+			'prefix'    => array('admin/post/list?category='),
 			'data'      => 'id,name',
 			'order_by'  => 'name',      // 配置此字段则本列启用排序
 		),
@@ -54,7 +54,7 @@ return array(
 		),
 		'del'       => array(
 			'title'     => '删除',
-			'action'    => 'admin/post/del',
+			'action'    => 'admin/category/del',
 		),
 	),
 	// 批量操作（批量操作允许的功能）
@@ -63,7 +63,7 @@ return array(
 		'inverse'   => array('title' => '反选'),
 		'del'       => array(
 			'title'     => '删除',
-			'action'    => 'admin/post/m_del',
+			'action'    => 'admin/category/m_del',
 		),
 	),
 );
