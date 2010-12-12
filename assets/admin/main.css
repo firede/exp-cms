@@ -350,6 +350,8 @@ a:hover {
 .icon-undo-rej,
 .icon-cate-del,
 .icon-cate-modify,
+.icon-user-del,
+.icon-user-modify,
 .icon-home,
 .icon-next,
 .icon-prev,
@@ -404,6 +406,12 @@ a:hover {
 }
 .icon-cate-modify {
 	background-position: -60px -20px;
+}
+.icon-user-del {
+	background-position: -40px -60px;
+}
+.icon-user-modify {
+	background-position: -60px -60px;
 }
 .icon-flag-1 {
 	background-position: -20px -80px;
