@@ -17,69 +17,50 @@ return array(
 			'data'      => 'id',
 		),
 		'title'		    => array(
-			'label'     => '标题',
+			'label'     => '分类名称',
 			'width'     => '340',
 			'template'  => 'link',
 			'prefix'    => array('admin/post/view/', '.html'),
-			'data'      => 'id,title',
-			'order_by'  => 'title',      // 配置此字段则本列启用排序
+			'data'      => 'id,name',
+			'order_by'  => 'name',      // 配置此字段则本列启用排序
 		),
 		'time'          => array(
-			'label'     => '更新日期',
+			'label'     => '短名称',
 			'width'     => '100',
-			'template'  => 'date',
-			'data'      => 'update_time,pub_time',
-			'order_by'  => 'update_time',
+			'template'  => 'text',
+			'data'      => 'short_name',
+			'order_by'  => 'short_name',
 		),
 		'author'        => array(
-			'label'     => '作者',
+			'label'     => '父级分类',
 			'width'     => '100',
 			'template'  => 'text',
-			'prefix'    => array('作者：'),
-			'data'      => 'user_name',
-			'order_by'  => 'user_name',
+			'data'      => 'parent_id',
+			'order_by'  => 'parent_id',
 		),
 		'category'      => array(
-			'label'     => '分类',
+			'label'     => '级别',
 			'width'     => '100',
 			'template'  => 'text',
-			'prefix'    => array('分类：'),
-			'data'      => 'cate_name',
-			'order_by'  => 'cate_name',
+			'data'      => 'sort',
+			'order_by'  => 'sort',
 		),
 	),
 	// 操作（行级操作允许的功能）
 	'operation'=> array(
-		'audit'     => array(
-			'title'     => '快速审核',
-			'action'    => 'admin/post/audit',
-		),
-		'move'      => array(
-			'title'     => '移动',
-			'action'    => 'admin/post/move',
+		'modify'    => array(
+			'title'     => '修改',
+			'action'    => 'admin/category/modify',
 		),
 		'del'       => array(
 			'title'     => '删除',
 			'action'    => 'admin/post/del',
-		),
-		'preview'   => array(
-			'title'     => '预览',
-			'action'    => 'admin/post/preview',
-			'size_x'	=> '600',
 		),
 	),
 	// 批量操作（批量操作允许的功能）
 	'muti_operation' => array(
 		'select'    => array('title' => '全选'),
 		'inverse'   => array('title' => '反选'),
-		'audit'     => array(
-			'title'     => '审核',
-			'action'    => 'admin/post/m_audit',
-		),
-		'move'      => array(
-			'title'     => '移动',
-			'action'    => 'admin/post/m_move',
-		),
 		'del'       => array(
 			'title'     => '删除',
 			'action'    => 'admin/post/m_del',

@@ -473,8 +473,7 @@ a:hover {
 	margin-top:7px;
 	margin-right:10px;
 	height: 22px;
-	padding-top: 3px;
-	width:80px;
+	padding: 3px 15px 0;
 	line-height: 21px;
 	background: #E9F3F7;
 	font-weight:700;
@@ -570,10 +569,25 @@ a:hover {
 	vertical-align: top;
 	text-align: left;
 	font-size: 14px;
-	background:#EEE;
 	width:110px;
+	padding: 5px;
 }
 .form-table td {
-	padding-left:20px;
+	padding:5px;
 	vertical-align: top;
+}
+.form-table .desc {
+	color:#999;
+	padding-left:15px;
+}
+.form-table .message {
+	color:red;
+}
+.form-table .input-text {
+	width:260px;
+	border: 1px solid #999;
+}
+.form-table textarea {
+	border: 1px solid #999;
+	margin:0;
 }

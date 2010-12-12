@@ -52,7 +52,9 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
 			),
 		);
 
-		$view = View::factory('smarty:admin/setting/system');
+		$view = View::factory('smarty:admin/setting/system', array(
+			'form' => $form,
+		));
 
 		$this->template = AppCache::app_cache("setting_system", $view);
 	}

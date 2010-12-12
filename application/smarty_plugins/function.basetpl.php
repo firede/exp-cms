@@ -41,7 +41,7 @@ function smarty_function_basetpl($params, &$smarty) {
 	$smarty->assign('_arg', $_arg);
 
 	// 根据$tpl变量找到对应的底层模板并返回
-	return $smarty->display('system/snippet/'.$tpl.'.tpl');
+	return $smarty->display('system/basetpl/'.$tpl.'.tpl');
 }
 
 ?>

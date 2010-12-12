@@ -27,16 +27,16 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $arr_element_names =
                 array('id', "name", "short_name", "parent_id", "sort");
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
-
         $category = Arr::filter_Array($_GET, $arr_element_names);
         $categorys = $categoryDb->query_list($category, $sort, $pageparam);
         $categorys = Action::sucess_status($categorys);
-        $view = View::factory('json:');
-        $view->content = $categorys;
-        $this->content = $view;
-        $this->template = $view;
+        $conf = Kohana::config('admin_category');
+        $view = View::factory('smarty:admin/category/list');
+        $view->view_data = $categorys;
+        $view->conf = $conf;
+        $this->template = AppCache::app_cache("category_list", $view);
 
-        //  $this->request->response = AppCache::app_cache("category_list", $view)->render();
+        //$this->request->response = AppCache::app_cache("category_list", $view)->render();
     }
 
     /*     * *****
