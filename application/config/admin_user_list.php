@@ -16,7 +16,7 @@ return array(
 		),
 		'username'		    => array(
 			'label'     => '用户名',
-			'width'     => '340',
+			'width'     => '180',
 			'template'  => 'link',
 			'prefix'    => array('admin/user/edit?id='),
 			'data'      => 'id,username',
@@ -31,7 +31,7 @@ return array(
 		),
 		'type'        => array(
 			'label'     => '用户类型',
-			'width'     => '130',
+			'width'     => '80',
 			'template'  => 'text',
 			'data'      => 'user_type',
 			'order_by'  => 'user_type',

@@ -30,7 +30,7 @@ return array(
 			'time'          => array(
 				'label'     => '更新日期',
 				'width'     => '100',
-				'template'  => 'date',
+				'template'  => 'date_post',
 				'data'      => 'update_time,pub_time',
 				'order_by'  => 'update_time',
 			),
@@ -124,7 +124,7 @@ return array(
 			'time'          => array(
 				'label'     => '更新日期',
 				'width'     => '75',
-				'template'  => 'date',
+				'template'  => 'date_post',
 				'data'      => 'update_time,pub_time',
 				'order_by'  => 'update_time',
 			),
@@ -217,7 +217,7 @@ return array(
 			'time'          => array(
 				'label'     => '更新日期',
 				'width'     => '75',
-				'template'  => 'date',
+				'template'  => 'date_post',
 				'data'      => 'update_time,pub_time',
 				'order_by'  => 'update_time',
 			),
@@ -298,7 +298,7 @@ return array(
 			'time'          => array(
 				'label'     => '更新日期',
 				'width'     => '90',
-				'template'  => 'date',
+				'template'  => 'date_post',
 				'data'      => 'update_time,pub_time',
 				'order_by'  => 'update_time',
 			),
@@ -355,7 +355,7 @@ return array(
 			'time'          => array(
 				'label'     => '更新日期',
 				'width'     => '75',
-				'template'  => 'date',
+				'template'  => 'date_post',
 				'data'      => 'update_time,pub_time',
 				'order_by'  => 'update_time',
 			),
