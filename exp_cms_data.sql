@@ -194,3 +194,15 @@ INSERT INTO `user` (`id`, `username`, `password`, `email`, `user_type`, `status`
 (29, '657', '435', '22@163.com', 1, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 07:02:28', '2010-11-14 07:02:52', '0'),
 (30, '66', '66', '66@dw.com', 0, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 11:23:24', '2010-11-14 11:23:48', '0'),
 (31, '123', '23432', '66@dw.com', 0, 1, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-17 03:04:09', '2010-11-17 03:04:33', '0');
+
+
+-----------
+-- 表结构
+--------
+CREATE TABLE IF NOT EXISTS `sys_config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `key_name` varchar(32) COLLATE utf8_bin NOT NULL,
+  `conf_value` varchar(1023) COLLATE utf8_bin NOT NULL,
+  `module` varchar(32) COLLATE utf8_bin NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=32 ;
