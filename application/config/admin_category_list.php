@@ -22,14 +22,14 @@ return array(
 			'data'      => 'id,name',
 			'order_by'  => 'name',
 		),
-		'time'          => array(
+		'short'          => array(
 			'label'     => '短名称',
 			'width'     => '130',
 			'template'  => 'text',
 			'data'      => 'short_name',
 			'order_by'  => 'short_name',
 		),
-		'author'        => array(
+		'parent'        => array(
 			'label'     => '父级分类',
 			'width'     => '130',
 			'template'  => 'link',
@@ -37,7 +37,7 @@ return array(
 			'data'      => 'parent_id,parent_name',
 			'order_by'  => 'parent_name',
 		),
-		'category'      => array(
+		'sort'      => array(
 			'label'     => '级别',
 			'width'     => '80',
 			'template'  => 'text',

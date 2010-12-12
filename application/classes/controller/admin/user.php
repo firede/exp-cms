@@ -36,12 +36,12 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $users["total_items_count"]);
         }
-        $view = View::factory('admin/user/list', array(
+        $view = View::factory('smarty:admin/user/list', array(
                     'pagination' => $pagination,
                     'view_data' => $users,
                 ));
 
-        $this->template->layout_main = AppCache::app_cache("user_list", $view);
+        $this->template = AppCache::app_cache("user_list", $view);
     }
 
     /*     * **
