@@ -6,7 +6,7 @@
 	<div class="breadcrumbs">
 		<span class="icon-position"></span>
 		<a href="<{$BASE_URL}>admin">后台首页</a> &raquo
-		<a href="<{$BASE_URL}>admin/category">分类</a> &raquo
+		<a href="<{$BASE_URL}>admin/attachment">附件</a> &raquo
 		<span>列表</span>
 	</div>
 </div>
