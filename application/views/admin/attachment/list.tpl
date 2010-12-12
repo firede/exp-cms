@@ -6,7 +6,7 @@
 	<div class="breadcrumbs">
 		<span class="icon-position"></span>
 		<a href="<{$BASE_URL}>admin">后台首页</a> &raquo
-		<a href="<{$BASE_URL}>admin/category">分类</a> &raquo
+		<a href="<{$BASE_URL}>admin/attachment">附件</a> &raquo
 		<span>列表</span>
 	</div>
 </div>
@@ -14,7 +14,8 @@
 <div class="clear"></div>
 
 <div class="status-bar clearfix radius_top">
-	<a class="status-tab status-tab-active" href="<{$BASE_URL}>admin/category/list">分类列表</a>
+	<a id="useType-0" class="status-tab" href="?use_type=0">文章</a>
+	<a id="useType-1" class="status-tab" href="?use_type=1">头像</a>
 	<span class="list-search right">
 		<span class="keyword radius_all">
 			<input type="text" name="keyword" />
@@ -42,6 +43,9 @@
 		"param": <{$URL_PARAMS}>,
 		"version": "<{$VERSION}>"
 	};
+	$(document).ready(function(){
+		$('#useType-' + dxn.util.param.get('use_type')).addClass('status-tab-active');
+	});
 </script>
 
 <script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/admin.js"></script>
