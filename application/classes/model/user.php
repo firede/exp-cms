@@ -72,7 +72,7 @@ class Model_User extends Model_Base {
             $op_data['admin_id']["message"] = $op_data['avatar']["label"] . "没有定义";
         }
         //将原有值保留到表单设置
-        $form["create"] = $this->set_form_value($op_data, $post);
+        $form["create"] = $this->set_form_value($op_data, $post,array("password","re_password"),array());
         if ($this->has_error($form)) {
             return array(
                 "success" => FALSE,

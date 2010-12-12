@@ -32,10 +32,10 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $categorys = Action::sucess_status($categorys);
         $conf = Kohana::config('admin_category_list');
         $view = View::factory('smarty:admin/category/list', array(
-			'view_data'  => $categorys,
-			'conf'       => $conf,
-			'pagination' => $pagination,
-		));
+                    'view_data' => $categorys,
+                    'conf' => $conf,
+                    'pagination' => $pagination,
+                ));
 
         $this->template = AppCache::app_cache("category_list", $view);
 
@@ -144,7 +144,15 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      * 新增
      */
 
-    public function action_save_post() {
+    public function action_create_post() {
+        $m_category = new Model_Category();
+        $validate_result = $m_category->post_validate($_POST);
+        if ($m_category != TRUE) {
+            $view = View::factory('smarty:');
+            $view->categorys = $validate_result["data"];
+            $this->request->response = AppCache::app_cache("category_create_error", $view)->render();
+            return;
+        }
         $arr_element_names = array('id', "name", "short_name", "parent_id", "sort");
         $category = Arr::filter_Array($_GET, $arr_element_names);
         $categoryDb = new Database_Category();
@@ -152,7 +160,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $view_data = Action::sucess_status($view_data);
         $this->template->_data = $view_data;
         $view = View::factory('smarty:');
-        $view->posts = $view_data;
+        $view->categorys = $view_data;
         $this->request->response = AppCache::app_cache("category_save", $view)->render();
     }
 

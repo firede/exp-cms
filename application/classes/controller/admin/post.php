@@ -51,9 +51,10 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
         $this->template = AppCache::app_cache("post_view", $view);
     }
-     /*     * *********
+
+    /*     * *********
      * 根据关键字查询相应的post表数据,并加载重绘至post列表页面
-      * 链接示意 admin/post/search?status=2&page=1&keyword=神说，要有光
+     * 链接示意 admin/post/search?status=2&page=1&keyword=神说，要有光
      */
 
     public function action_search() {
@@ -69,9 +70,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                 ));
         $postDb = new Database_Post();
         //设置参数过滤器中需要保留下操作的数据
-        $arr_element_names =array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
-                    'pre_content', 'content', 'user_id', 'status',
-                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag',"keyword");
+        $arr_element_names = array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
+            'pre_content', 'content', 'user_id', 'status',
+            'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag', "keyword");
         if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
@@ -81,7 +82,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
-        $post["keyword"]=isset($post["keyword"])?$post["keyword"]:"";
+        $post["keyword"] = isset($post["keyword"]) ? $post["keyword"] : "";
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $posts = $postDb->query_list_search($post, $pageparam, $sort);
         $posts["message"] = Action::sucess_status($posts["message"]);
@@ -119,6 +120,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      */
 
     public function action_create_post() {
+        $m_post = new Model_Post();
+        $validate_result=$m_post->post_validate($_POST);
+        if ($m_post != TRUE) {
+            $view = View::factory('smarty:');
+            $view->errors = $validate_result["data"];
+            $this->request->response = AppCache::app_cache("post_create_error", $view)->render();
+            return;
+        }
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time',

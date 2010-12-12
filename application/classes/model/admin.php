@@ -50,7 +50,7 @@ class Model_Admin extends Model_Base {
         }
 
         //将原有值保留到表单设置
-        $form["create"] = $this->set_form_value($form["create"], $post);
+        $form["create"] = $this->set_form_value($form["create"], $post,array("password","re_password"),array());
         if ($this->has_error($form)) {
             return array(
                 "success" => FALSE,

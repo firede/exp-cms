@@ -36,11 +36,11 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $users["total_items_count"]);
         }
-		$conf = Kohana::config('admin_user_list');
+
         $view = View::factory('smarty:admin/user/list', array(
                     'pagination' => $pagination,
                     'view_data' => $users,
-					'conf' => $conf,
+                    'conf' => $conf,
                 ));
 
         $this->template = AppCache::app_cache("user_list", $view);
@@ -51,22 +51,27 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      * 测试链接
      * http://daxiniu.com/admin/user/create_post?username=dcc&password=dcc&email=dc2002007z@123.coml&user_type=1&status=0&avatar=&reg_time=&last_time=&admin_id=admin
      */
+
     public function action_create_post() {
-        $m_user=new  Model_User();
-        $m_user->post_validate($_GET);
-        echo Kohana::debug($m_user);
-        return;
+        $m_user = new Model_User();
+        $validate_result=$m_user->post_validate($_GET);
+        if ($m_user != TRUE) {
+            $view = View::factory('smarty:');
+            $view->users = $validate_result["data"];
+            $this->request->response = AppCache::app_cache("user_create_error", $view)->render();
+            return;
+        }
         $userDb = new Database_User();
         $arr_element_names =
                 array('id', 'username', "password", 'email', 'user_type', 'status',
                     'avatar', 'reg_time', 'last_time', 'admin_id',);
-        
+
         $user = Arr::filter_Array($_GET, $arr_element_names);
         $view_data = $userDb->create($user);
         $view_data = Action::sucess_status($view_data);
-        echo Kohana::debug($view_data);
+
         $view = View::factory('smarty:');
-        $view->posts = $view_data;
+        $view->users = $view_data;
         $this->request->response = AppCache::app_cache("user_create", $view)->render();
     }
 
@@ -80,7 +85,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $users = $userDb->get_user($id);
         $users = Action::sucess_status($users);
         $view = View::factory('smarty:');
-        $view->posts = $users;
+        $view->users = $users;
         $this->request->response = AppCache::app_cache("user_getuser", $view)->render();
     }
 

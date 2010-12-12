@@ -50,16 +50,23 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
      */
 
     public function action_create_post() {
+        $m_admin = new Model_Admin();
+        $validate_result = $m_admin->post_validate($_GET);
+        if ($m_admin != TRUE) {
+            $view = View::factory('smarty:');
+            $view->admins = $validate_result["data"];
+            $this->request->response = AppCache::app_cache("admin_create_error", $view)->render();
+            return;
+        }
         $adminDb = new Database_Admin();
-        $arr_element_names =
-                array('username', 'role');
+        $arr_element_names = array('username', 'password', 'role');
 
         $admin = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $adminDb->create($admin);
         $view_data = Action::sucess_status($view_data);
 
         $view = View::factory('smarty:');
-        $view->posts = $view_data;
+        $view->admins = $view_data;
         $this->request->response = AppCache::app_cache("admin_create", $view)->render();
     }
 
@@ -73,7 +80,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $admins = $adminDb->get_user($id);
         $admins = Action::sucess_status($admins);
         $view = View::factory('smarty:');
-        $view->posts = $admins;
+        $view->admins = $admins;
         $this->request->response = AppCache::app_cache("admin_getAdmin", $view)->render();
     }
 
@@ -89,13 +96,5 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
-
-  
-
- 
-
-   
-
-
 
 }
