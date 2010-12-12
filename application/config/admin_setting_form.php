@@ -43,8 +43,11 @@ return array(
 			'name'      => 'siteRegOpen',
 			'desc'      => '是否开放注册',
 			'value'     => array(
-				'0' => '关闭',
-				'1' => '开放'
+				'select' => '1',
+				'data' => array(
+					'0' => '关闭',
+					'1' => '开放',
+				),
 			),
 			'message'  => '',
 		),
