@@ -30,10 +30,13 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $category = Arr::filter_Array($_GET, $arr_element_names);
         $categorys = $categoryDb->query_list($category, $sort, $pageparam);
         $categorys = Action::sucess_status($categorys);
-        $conf = Kohana::config('admin_category');
-        $view = View::factory('smarty:admin/category/list');
-        $view->view_data = $categorys;
-        $view->conf = $conf;
+        $conf = Kohana::config('admin_category_list');
+        $view = View::factory('smarty:admin/category/list', array(
+			'view_data'  => $categorys,
+			'conf'       => $conf,
+			'pagination' => $pagination,
+		));
+
         $this->template = AppCache::app_cache("category_list", $view);
 
         //$this->request->response = AppCache::app_cache("category_list", $view)->render();

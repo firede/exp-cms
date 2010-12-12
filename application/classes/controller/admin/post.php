@@ -41,7 +41,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         }
 
         $conf_status = 'status_' . $_GET['status'];
-        $conf = Kohana::config('admin_post')->$conf_status;
+        $conf = Kohana::config('admin_post_list')->$conf_status;
 
         $view = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,

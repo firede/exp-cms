@@ -34,9 +34,10 @@ return array(
 		'author'        => array(
 			'label'     => '父级分类',
 			'width'     => '100',
-			'template'  => 'text',
-			'data'      => 'parent_id',
-			'order_by'  => 'parent_id',
+			'template'  => 'link',
+			'prefix'    => array('admin/category/list?category='),
+			'data'      => 'parent_id,parent_name',
+			'order_by'  => 'parent_id,parent_name',
 		),
 		'category'      => array(
 			'label'     => '级别',
