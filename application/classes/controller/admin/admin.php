@@ -35,10 +35,11 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $admins["total_items_count"]);
         }
-        echo Kohana::debug($admins);
+		$conf = Kohana::config('admin_admin_list');
         $view = View::factory('smarty:admin/admin/list', array(
                     'pagination' => $pagination,
                     'view_data' => $admins,
+					'conf' => $conf,
                 ));
 
         $this->template = AppCache::app_cache("admin_list", $view);
