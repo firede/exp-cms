@@ -9,7 +9,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
 
     public function action_list() {
 
-        // 测试分页
+        // 分页
         $pagination = new Pagination(array(
                     'current_page' => array('source' => 'query_string', 'key' => 'page'),
                     'total_items' => 0,
@@ -45,16 +45,36 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
     }
 
     /*     * **
+     * 新增一个用户
+     * 测试链接
+     * http://daxiniu.com/admin/user/create_post?username=dcc&password=dcc&email=dc2002007z@123.coml&user_type=1&status=0&avatar=&reg_time=&last_time=&admin_id=admin
+     */
+    public function action_create_post() {
+        $userDb = new Database_User();
+        $arr_element_names =
+                array('id', 'username', "password", 'email', 'user_type', 'status',
+                    'avatar', 'reg_time', 'last_time', 'admin_id',);
+        
+        $user = Arr::filter_Array($_GET, $arr_element_names);
+        $view_data = $userDb->create($user);
+        $view_data = Action::sucess_status($view_data);
+        echo Kohana::debug($view_data);
+        $view = View::factory('smarty:');
+        $view->posts = $view_data;
+        $this->request->response = AppCache::app_cache("user_create", $view)->render();
+    }
+
+    /*     * **
      * 通过id获取单个user信息
      */
 
     public function action_getuser() {
-         $id = isset($_POST["id"]) ? $_POST["id"] :  $_GET["id"];
+        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
         $userDb = new Database_User();
         $users = $userDb->get_user($id);
         $users = Action::sucess_status($users);
         $view = View::factory('smarty:');
-        $view->posts = $posts;
+        $view->posts = $users;
         $this->request->response = AppCache::app_cache("user_getuser", $view)->render();
     }
 
@@ -63,9 +83,9 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      */
 
     public function action_del_post() {
-         $id = isset($_POST["id"]) ? $_POST["id"] : "";
+        $id = isset($_POST["id"]) ? $_POST["id"] : "";
         $userDb = new Database_User();
-       $view_data= $userDb->delete($id);
+        $view_data = $userDb->delete($id);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
@@ -76,9 +96,9 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      */
 
     public function action_m_del_post() {
-         $id = isset($_POST["id"]) ? $_POST["id"] :  $_GET["id"];
+        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
         $userDb = new Database_User();
-        $view_data=$userDb->delete($id);
+        $view_data = $userDb->delete($id);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
@@ -89,13 +109,13 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      */
 
     public function action_update_post() {
-       $id = isset($_POST["id"]) ? $_POST["id"] :  $_GET["id"];
+        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
         $userDb = new Database_User();
         $arr_element_names =
                 array('id', 'username', 'email', 'user_type', 'status',
                     'avatar', 'reg_time', 'last_time', 'admin_id',);
         $user = Arr::filter_Array($_GET, $arr_element_names);
-        $view_data=$userDb->modify($user);
+        $view_data = $userDb->modify($user);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
@@ -112,7 +132,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
                 array('id', 'username', 'email', 'user_type', 'status',
                     'avatar', 'reg_time', 'last_time', 'admin_id',);
         $user = Arr::filter_Array($_GET, $arr_element_names);
-        $view_data=$userDb->mulit_modify($user);
+        $view_data = $userDb->mulit_modify($user);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
@@ -130,7 +150,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $user = Arr::filter_Array($_GET, $arr_element_names);
         $conf = Kohana::config("applicationconfig");
         $user["avatar"] = $conf["user"]["default_avatar"];
-        $view_data=$userDb->mulit_modify($user);
+        $view_data = $userDb->mulit_modify($user);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;

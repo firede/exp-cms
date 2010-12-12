@@ -8,22 +8,35 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      */
 
     public function action_list() {
+        // 分页
+        $pagination = new Pagination(array(
+                    'current_page' => array('source' => 'query_string', 'key' => 'page'),
+                    'total_items' => 0,
+                    'items_per_page' => 20,
+                    'view' => 'pagination/admin',
+                    'auto_hide' => TRUE,
+                    'first_page_in_url' => FALSE,
+                ));
+        if (!isset($_GET['page'])) {
+            $_GET['page'] = 1;
+        }
+
+        $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $categoryDb = new Database_Category();
         //设置参数过滤器中需要保留下操作的数据
         $arr_element_names =
                 array('id', "name", "short_name", "parent_id", "sort");
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $category = Arr::filter_Array($_GET, $arr_element_names);
-        $categorys = $categoryDb->query_list($category, $sort);
-		$view_data = array('result' => $categorys);
-        $categorys = Action::sucess_status($view_data);
+        $categorys = $categoryDb->query_list($category, $sort, $pageparam);
+        $categorys = Action::sucess_status($categorys);
         $conf = Kohana::config('admin_category');
         $view = View::factory('smarty:admin/category/list');
-        $view->view_data = $view_data;
-		$view->conf = $conf;
-        $this->template=$view;
+        $view->view_data = $categorys;
+        $view->conf = $conf;
+        $this->template = AppCache::app_cache("category_list", $view);
 
-      //  $this->request->response = AppCache::app_cache("category_list", $view)->render();
+        //$this->request->response = AppCache::app_cache("category_list", $view)->render();
     }
 
     /*     * *****

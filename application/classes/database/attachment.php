@@ -68,8 +68,6 @@ class Database_Attachment {
         //加入一些业务值，特殊业务值的替换或者加入
         for ($i = 0; $i < count($attachments); $i++) {
             $attachments[$i]["use_type_name"] = Sysconfig_Business::attachment_Use_type($attachments[$i]["use_type"]);
-        
-
         }
 
         if ($count > 0)
@@ -82,6 +80,7 @@ class Database_Attachment {
         else
             return "none";
     }
+    
      /*******
      *修改一个或者多个 附件信息 多个id 请使用“,”分隔
      */

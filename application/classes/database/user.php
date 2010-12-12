@@ -17,8 +17,10 @@ class Database_User {
      */
 
     public function create($user) {
-        $save = DB::insert("user", array('id', 'username', "password", 'email', 'user_type', 'status',
-                        'avatar', 'reg_time', 'last_time', 'admin_id'));
+        $m_user=new  Model_User();
+        $m_user->Validate($_GET);
+        $save = DB::insert("user", array('username', "password", 'email', 'user_type', 'status',
+                    'avatar', 'reg_time', 'last_time', 'admin_id'));
         $save->values($user);
         $result = (bool) $save->execute();
         return $result ? "ok" : "error";
@@ -86,9 +88,13 @@ class Database_User {
         $query->offset($current_item)->limit($current_item + $page_Param["items_per_page"]);
         $users = $query->execute();
         $users = $users->as_array();
+        $conf = Kohana::config("applicationconfig");
+
         //加入一些业务值，特殊业务值的替换或者加入
         for ($i = 0; $i < count($users); $i++) {
-
+            if ($users[$i]["avatar"] == "" || $users[$i]["avatar"] == NULL) {//如果没有设置图像则使用默认图像
+                $users[$i]["avatar"] = $conf["user"]["default_avatar"];
+            }
             $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
             $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
             $users[$i]["password"] = "";
@@ -123,9 +129,13 @@ class Database_User {
         $users = $query->execute();
         $users = $users->as_array();
         $count = count($users);
+        $conf = Kohana::config("applicationconfig");
+
         //加入一些业务值，特殊业务值的替换或者加入
         for ($i = 0; $i < count($users); $i++) {
-
+            if ($users[$i]["avatar"] == "" || $users[$i]["avatar"] == NULL) {//如果没有设置图像则使用默认图像
+                $users[$i]["avatar"] = $conf["user"]["default_avatar"];
+            }
             $users[$i]["status_name"] = Sysconfig_Business::user_Status($users[$i]["status"]);
             $users[$i]["user_type_name"] = Sysconfig_Business::user_User_type($users[$i]["user_type"]);
             $users[$i]["password"] = "";
