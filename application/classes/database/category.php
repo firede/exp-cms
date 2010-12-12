@@ -104,13 +104,13 @@ class Database_Category {
         }
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
-          $conf = Kohana::config("applicationconfig");
+      /*    $conf = Kohana::config("applicationconfig");
         //加入一些业务值，特殊业务值的替换或者加入
         for ($i = 0; $i < count($categorys); $i++) {
             if ($categorys[$i]["parent_name"] == "" || $categorys[$i]["parent_name"] == NULL) {//如果没有设置图像则使用默认图像
                 $categorys[$i]["parent_name"] =$conf["site"]["category_root_name"];
             }
-        }
+        }*/
        
         return $categorys;
     }
@@ -177,13 +177,13 @@ class Database_Category {
         }
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
-        $conf = Kohana::config("applicationconfig");
-        //加入一些业务值，特殊业务值的替换或者加入
-        for ($i = 0; $i < count($categorys); $i++) {
+           //加入一些业务值，特殊业务值的替换或者加入
+     /*  $conf = Kohana::config("applicationconfig");
+      for ($i = 0; $i < count($categorys); $i++) {
             if ($categorys[$i]["parent_name"] == "" || $categorys[$i]["parent_name"] == NULL) {//如果没有设置图像则使用默认图像
                 $categorys[$i]["parent_name"] =$conf["site"]["category_root_name"];
             }
-        }
+        }*/
 
         if ($count > 0)
             return array(

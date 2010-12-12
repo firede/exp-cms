@@ -2,9 +2,16 @@
 
 defined('SYSPATH') or die('No direct script access.');
 return array(
-    "site"=>array(
-        "category_root_name"=>"大犀牛"//分类的根名称
-            ),
+    "site" => array(
+        "webname" => "大犀牛经验分享系统", //网站名称
+        "basehost" => "http://daxiniu.com", //站点根网址
+        "indexurl" => "http://daxiniu.com/exp", //网页主页链接
+        "default_style" => "", //模板默认风格
+        "powerby" => "这里可以是html",
+        "keywords" => "大犀牛，经验分享，游戏，插件", //站点默认关键字
+        "description" => "这里写描述", //站点描述
+        "beian" => "陕SDFE2134F",//备案号
+    ),
     "cache" => array(
         "driver" => 'apc', //选择使用何种缓存组件
         "is_open" => TRUE, //是否开启缓存 TRUE开启|FALSE关闭
@@ -12,7 +19,7 @@ return array(
     "up_img" => array(//上传图片设置
         "dir" => "C://", //图片上传的总路径
         "max_size" => 1048, //图片大小最大值 单位kb
-        "min_size" =>1,//图片大小最小值 单位kb
+        "min_size" => 1, //图片大小最小值 单位kb
         "max_width" => 1048, //图片宽度最大值 单位px
         "max_height" => 768, //图片高度最大值 单位px
         "type" => "jpg,jpeg,png,bmp,gif", //允许上传的图片类型，多个用“,”分隔
@@ -25,11 +32,11 @@ return array(
     "up_file" => array(//上传文件设置
         "dir" => "C://", //文件上传的总路径
         "max_size" => 2048, //文件大小最大值 单位kb
-        "min_size" =>1,//文件大小最小值 单位kb
+        "min_size" => 1, //文件大小最小值 单位kb
         "type" => "jpg,jpeg,png,bmp,gif,rar,txt,doc,pdf,xml,7zip,zip,", //允许上传的文件类型，多个用“,”分隔
     ),
-    "user"=>array(
-      "default_avatar" =>"",//默认用户头像路径
+    "user" => array(
+        "default_avatar" => "", //默认用户头像路径
     ),
 );
 ?>
