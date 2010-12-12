@@ -5,35 +5,7 @@
 	<div class="form-table-wrap">
 		<form action="<{$BASE_URL}>admin/setting/system_post" method="POST">
 			<table class="form-table">
-				<tr>
-					<th>站点标题</th>
-					<td><input type="text" /></td>
-				</tr>
-				<tr>
-					<th>站点地址</th>
-					<td>
-						<input type="text" />
-						<span style="color:#CCC;">这里是一些说明文字</span>
-						<div style="color:red;">请输入正确的URL</div>
-					</td>
-				</tr>
-				<tr>
-					<th>站点描述</th>
-					<td><textarea cols="40" rows="4"></textarea></td>
-				</tr>
-				<tr>
-					<th>关键词</th>
-					<td><input type="text" /></td>
-				</tr>
-				<tr>
-					<th>注册选项</th>
-					<td>
-						<select>
-							<option value="1">开放注册</option>
-							<option value="0">关闭注册</option>
-						</select>
-					</td>
-				</tr>
+				<{form data=$form}>
 			</table>
 			<div><input type="submit" value="提交" /></div>
 		</form>
