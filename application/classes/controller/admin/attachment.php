@@ -30,6 +30,9 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
         if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
+        if (!isset($_GET['use_type'])) {
+            $_GET['use_type'] = '0';
+        }
 
         $attachment = Arr::filter_Array($_GET, $arr_element_names);
         $page_Param = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
@@ -40,8 +43,9 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
         if (isset($attachments["total_items_count"])) {
             $pagination->__set('total_items', $attachments["total_items_count"]);
         }
-		$conf = Kohana::config('admin_attachment_list');
-        $view = View::factory('admin/attachment/list', array(
+        $conf_use_type = 'use_type_' . $_GET['use_type'];
+		$conf = Kohana::config('admin_attachment_list')->$conf_use_type;
+        $view = View::factory('smarty:admin/attachment/list', array(
                     'pagination' => $pagination,
                     'view_data' => $attachments,
 					'conf' => $conf,
