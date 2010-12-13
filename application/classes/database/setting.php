@@ -61,6 +61,30 @@ class Database_Setting {
         }
     }
 
+    /**     * **
+     * 修改一个站点配置
+     * @param $configs array 存储config的 键值与值的集合
+     * @param $module string 模块名称
+     * @return string 返回执行成功或者失败
+     */
+    public function update_configs($configs, $module="site") {
+        try {
+            DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
+            foreach ($site as $key_name => $conf_value) {
+
+                DB::update("sys_config")->set(array("conf_value" => $conf_value))
+                        ->where("key_name", "=", $key_name)
+                        ->and_where("module", "=", $module)
+                        ->execute();
+            }
+            DB::query(NULL, "COMMIT")->execute();
+            return "ok";
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
+            return "error";
+        }
+    }
+
 }
 
 ?>
