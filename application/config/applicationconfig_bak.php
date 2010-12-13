@@ -43,5 +43,9 @@ return array(
     "post"=>array(
         "title_repeat"=>TRUE,//文章标题是否可以重复  TRUE 可以重复|FALSE 不可以重复
     ),
+    "advanced"=>array(//高级选项
+        "throw_exception"=>NULL,//系统是输出异常信息 NULL 不输出|FILE 输出异常信息到文件 路径为应用根目录/exception.log|WEB 会直接通过视图反馈|THROW 直接抛出
+        
+    ),
 );
 ?>

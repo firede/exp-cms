@@ -9,8 +9,8 @@ class Database_Category {
 
     /**     * ***
      * 创建一个新的用户数据 于category表里
-     * @$category <array> 用户对象的数据内容
-     * @return message <string> 直接返回执行情况消息
+     * @param $category array 用户对象的数据内容
+     * @return string 直接返回执行情况消息
      */
     public function create($category) {
         $save = DB::insert("category", array());
@@ -21,10 +21,10 @@ class Database_Category {
 
     /**     * *
      * 获取符合条件的数据 并返回tree 格式的数据结构数组
-     * @$category <array>  对应category表列的筛选条件的多个参数
-     * @$sort <array> 排序规则
-     * @return <array> 符合条件的category表数据以及其他参数
-     * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
+     * @param $category array  对应category表列的筛选条件的多个参数
+     * @param $sort array 排序规则
+     * @return array/string 符合条件的category表数据以及其他参数
+     * 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
     public function query_tree_array($category, $sort) {
 
@@ -67,9 +67,9 @@ class Database_Category {
 
     /**     * *
      * 获取符合条件的数据 
-     * @$category <array>  对应category表列的筛选条件的多个参数
-     * @$sort <array> 排序规则
-     * @return <array> 符合条件的category表数据以及其他参数
+     * @param $category array  对应category表列的筛选条件的多个参数
+     * @param $sort array 排序规则
+     * @return array 符合条件的category表数据以及其他参数
      */
     public function query_list($category, $sort, $page_Param=NULL) {
         if ($page_Param != NULL) {
@@ -119,9 +119,9 @@ class Database_Category {
 
     /**     * *
      * 获取符合条件的数据 并进行分页
-     * @$category <array>  对应category表列的筛选条件的多个参数
-     * @$sort <array> 排序规则
-     * @return <array> 符合条件的category表数据以及其他参数
+     * @param $category array  对应category表列的筛选条件的多个参数
+     * @param $sort array 排序规则
+     * @return array 符合条件的category表数据以及其他参数
      */
     public function query_list_page($category, $sort, $page_Param=NULL) {
         $query = DB::select(array('COUNT("id")', 'total_category'))->from('category');
@@ -262,7 +262,7 @@ class Database_Category {
             $modify->execute();
             $this->set_config(array());
             return "ok";
-        } catch (Exception $e) {
+        } catch (ErrorException $e) {
             return "error";
         }
     }
@@ -283,7 +283,7 @@ class Database_Category {
             $modify->execute();
             $this->set_config(array());
             return "ok";
-        } catch (Exception $e) {
+        } catch (ErrorException $e) {
             return "error";
         }
     }
@@ -299,7 +299,7 @@ class Database_Category {
             $save->execute();
             $this->set_config(array());
             return "ok";
-        } catch (exception $e) {
+        } catch (ErrorException $e) {
             return "error";
         }
     }
@@ -317,6 +317,125 @@ class Database_Category {
         $categorys = $categorys->as_array();
         $count = $categorys[0]["total_name"];
         $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
+    }
+
+    /**     * ********
+     * 转移一到多个分类的所有子分类到指定分类下
+     * @param array/integer $id 需要转移的分类ID  多个分类ID使用“,”分隔
+     * @param integer 将子分类移动至指定的分类中
+     * @return string 返回执行结果
+     */
+    public function move_child($old_parent_id, $new_parent_id) {
+        try {
+            if (!isset($old_parent_id) || !isset($new_parent_id)) {
+                return "no_id";
+            }
+            $ids = explode(",", $old_parent_id);
+            $move = DB::update("category");
+            $move->set(array("parent_id" => $new_parent_id));
+            $move->where("parent_id", "in", $ids);
+            $move->execute();
+            return "ok";
+        } catch (ErrorException $e) {
+            throw new ErrorException($e->getMessage());
+            return "error";
+        }
+    }
+
+    /**     * ******
+     * 删除分类
+     * @param $move_relevance bool 是否删除与该分类相关的信息
+     * @param $new_parent_id  integer 把子分类转移至新的分类的子分类的id
+     * @param $move_child bool 设置是否将原有子分类转移至新的分类的子分类里
+     */
+    public function del($id, $move_relevance=FALSE, $new_child_parent=NULL, $move_child=FALSE) {
+        DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
+        try {
+            $del = DB::delete()->table("category");
+            $ids = explode(",", $id);
+            $del->where("id", "in", $ids);
+            $del->execute();
+            //删除与该分类相关的文章内容
+            if ($move_relevance) {
+                $del_post = DB::delete()->table("category");
+                $del_post->where("id", "in", $ids);
+                $del_post->execute();
+            }
+            //转移子分类到新的分类的子分类里
+            if ($move_child && $new_child_parent != NULL) {
+                $this->move_child($id, $new_child_parent);
+            }
+        } catch (ErrorException $e) {
+            DB::query(NULL, "ROLLBACK")->execute();
+            echo "cuo le";
+            $e->_errors();
+            return "error";
+        }
+    }
+
+    /**     *
+     * 删除清空指定分类的所有信息包括相关文章
+     * @param $category array 必须包含有 $category["id"]
+     * @param $include_oneself bool 同时删除并清空自己相关的数据 TRUE 包含|FALSE 不包含
+     * @return string
+     */
+    public function del_clear_child($category, $include_oneself=FALSE) {
+        DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
+        try {
+
+
+            $categorys = Kohana::config("category");
+            if (count($categorys) == 0) {
+                $this->set_config(array());
+            }
+            $category_child_lists = $this->build_child_list($category["id"], $categorys, array());
+            $clear_cate = DB::delete("category");
+            $clear_post = DB::delete("post");
+            $where_id = array();
+            $count = 0;
+            foreach ($category_child_lists as $key => $row) {
+                $where_id[$count++] = $row["id"];
+            }
+            if ($include_oneself) {
+                $where_id[$count++] = $category["id"];
+            }
+            $clear_cate->where("id", "in", $where_id);
+            $clear_post->where("cate_id", "in", $where_id);
+
+            $clear_cate->execute();
+            $clear_post->execute();
+            DB::query(NULL, "COMMIT")->execute();
+            return "ok";
+        } catch (ErrorException $e) {
+            DB::query(NULL, "ROLLBACK")->execute();
+            throw new ErrorException($e->getMessage());
+            return "error";
+        }
+    }
+
+    /**     *
+     * 使用递归算法 从分类集合中取出所有子分类的列表呈现形式
+     */
+    private function build_child_list($parent_id, $categorys, $arr=array()) {
+        $childs = array();
+        $childs_node = array();
+
+        foreach ($categorys as $category) {
+
+            if ($category["parent_id"] == $parent_id) {
+                $child = array();
+                $child = $category;
+                $child = $this->build_child_list($category["id"], $categorys, $arr);
+                $childs_node[$category["id"]]["id"] = $category["id"];
+                $childs_node[$category["id"]]["name"] = $category["name"];
+                $childs_node[$category["id"]]["short_name"] = $category["short_name"];
+                $childs_node[$category["id"]]["parent_id"] = $category["parent_id"];
+                $childs_node = array_merge($child, $childs_node);
+            } else {
+                continue;
+            }
+        }
+        return $childs_node;
     }
 
 }
