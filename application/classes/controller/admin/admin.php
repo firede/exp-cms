@@ -45,6 +45,18 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $this->template = AppCache::app_cache("admin_list", $view);
     }
 
+	/**
+	 * 新建管理员（展示视图）
+	 */
+	public function action_create() {
+		$form = Kohana::config('admin_admin_form');
+		$view = View::factory('smarty:admin/admin/create', array(
+			'form' => $form,
+		));
+		
+		$this->template = AppCache::app_cache('admin_create', $view);
+	}
+
     /*     * **
      * 新增一个用户
      * 测试链接
