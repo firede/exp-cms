@@ -196,6 +196,7 @@ class Database_Post {
             $result = (bool) $delete->execute();
             return 'ok';
         } catch (Exception $e) {
+            $e->_errors();
             return "error";
         } //返回值有误 需要进一步分析kohana数据库操作的反馈机制
     }
@@ -226,14 +227,17 @@ class Database_Post {
      */
 
     public function modify($post) {
-        if ($post == null || count($post) == 0 || $post['id'] == null) {
-            return 'no_id';
-        }
         try {
-            $id = $post['id'];
-            unset($post['id']);
+            if ($post['id'] == null) {
+                return 'no_id';
+            }
+
+            $id = $post["id"];
+            $post['xxxx'] = "xxxx";
+            // unset($post['id']);
             /* 根据需要从请求中取出需要的数据值 */
             $ids = explode(",", $id);
+          
             $modify = DB::update()->table('post')->set($post);
             // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
             //判断是否是批量操作
@@ -245,6 +249,9 @@ class Database_Post {
             $result = (bool) $modify->execute();
             return 'ok';
         } catch (Exception $e) {
+              echo "cuo le";
+            ErrorExceptionReport::_errors_report($e);
+            //ErrorException::_errors_report($e);
             return "error";
         }
     }
@@ -390,10 +397,11 @@ class Database_Post {
         }
     }
 
-    /***
+    /*     * *
      * 根据ID，撤销驳回，批量撤销驳回
      * @param $post （array(integer)）
      */
+
     public function undo_reject($post) {
         if ($post == null || count($post) == 0 || !isset($post['id'])) {
 

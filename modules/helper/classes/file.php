@@ -47,6 +47,26 @@ class File extends Kohana_File {
         return $path;
     }
 
+    /**     * ****
+     * 创建或者增加内容
+     * @param $file_path string 文件所处的全路径
+     * @param $content string 需要追加的内容
+     * @param $WRITER_TYPE 写入类型 请参照php核心 fopen参数$mode的说明
+     * @return 
+     */
+    public static function create_or_add($file_path, $content=NULL,$WRITER_TYPE="a+") {
+        if($content==NULL){//如果没有内容则不在尝试创建或写入文件
+            return;
+        }
+        $file_path = File::path_mkdirs($file_path);
+        $file_path = str_replace("/", "\\", $file_path);
+        $file_path = substr($file_path, 0, strlen($file_path) - 1);
+        $fp = fopen($file_path, $WRITER_TYPE);
+        $content = $content . " ;\n";
+        fwrite($fp, $content);
+        fclose($fp);
+    }
+
 }
 
 ?>

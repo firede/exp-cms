@@ -205,7 +205,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_del_post() {
 
-        $id = isset($_POST["id"]) ? $_POST["id"] : $_GET["id"];
+        $id = isset($_POST["id"]) ? $_POST["id"] :"";
         $postDb = new Database_Post();
         $view_data = $postDb->delete($id);
         $view_data = Action::sucess_status($view_data);
@@ -332,7 +332,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'cate_id');
-        $post = Arr::filter_Array($_POST, $arr_element_names);
+        $post = Arr::filter_Array($_GET, $arr_element_names);
+        echo Kohana::debug($post);
         $view_data = $postDb->modify($post);
 
         $view_data = Action::sucess_status($view_data);

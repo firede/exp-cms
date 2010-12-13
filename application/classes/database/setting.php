@@ -25,7 +25,6 @@ class Database_Setting {
                     $conf_list[$count++] = $conf_row;
                 }
             }
-
             $insert = DB::insert("sys_config", array("key_name", "conf_value", "module"));
             $clear = DB::delete()->table("sys_config");
             foreach ($conf_list as $list_row) {
@@ -40,20 +39,22 @@ class Database_Setting {
             return "error";
         }
     }
-    /******
+
+    /*     * ****
      * 将数据库中的配置 放入缓存中
      */
+
     public function db_to_cache() {
-        try{
-        $select=DB::select()->from("sys_config");
-        $conf_list=$select->execute();
-        $application=array();
-        foreach($conf_list as $key=>$val){
-           $application[$val["module"]][$val["key_name"]]=$val["conf_value"];
-        }
-        Arr::as_config_file($application, APPPATH."/config/applicationconfig.php");
-        return "ok";
-        }catch(Exception $e){
+        try {
+            $select = DB::select()->from("sys_config");
+            $conf_list = $select->execute();
+            $application = array();
+            foreach ($conf_list as $key => $val) {
+                $application[$val["module"]][$val["key_name"]] = $val["conf_value"];
+            }
+            Arr::as_config_file($application, APPPATH . "/config/applicationconfig.php");
+            return "ok";
+        } catch (Exception $e) {
             return "error";
         }
     }
