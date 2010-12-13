@@ -139,10 +139,11 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
     public function action_create_post() {
         $m_category = new Model_Category();
         $validate_result = $m_category->post_validate($_POST);
-        if ($m_category != TRUE) {
-            $view = View::factory('smarty:');
-            $view->categorys = $validate_result["data"];
-            $this->request->response = AppCache::app_cache("category_create_error", $view)->render();
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/category/create', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('category_create_post', $view);
             return;
         }
         $arr_element_names = array('id', "name", "short_name", "parent_id", "sort");

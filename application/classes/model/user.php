@@ -13,7 +13,7 @@ class Model_User extends Model_Base {
         $form = Kohana::config("admin_user_form");
         $noset_keys = Arr::get_noset_key($post, array('username', "password", "re_password", 'email', 'status', 'user_type',
                     'avatar', 'admin_id'));
-        $op_data=$form["create"];
+        $op_data = $form;
         $userDao = new Database_User ();
         //第一阶段 未定义错误
         //第二阶段 数据非空验证
@@ -35,14 +35,16 @@ class Model_User extends Model_Base {
             $op_data['password']["message"] = $op_data['password']["label"] . "没有定义";
         } elseif (!Validate::not_empty($post['password'])) {
             $op_data['password']["message"] = $op_data['password']["label"] . "不能为空";
-        } elseif (!Validate::range($post['password'], $op_data['password']['min_len'], $op_data['password']['max_len'])) {
+        } elseif (!Validate::range(strlen($post['password']), $op_data['password']['min_len'], $op_data['password']['max_len'])) {
             $op_data['password']["message"] = $op_data['password']["label"] .
                     "长度必须在" . $op_data['password']['min_len'] . "-" . $op_data['password']['max_len'] . "个字符之间";
         } elseif (!$post['password'] === $post['re_password']) {
             $op_data['re_password']["message"] =
                     $op_data['re_password']["label"] . "与" . $op_data['password']["label"] . "不一致请重新输入";
         }
-
+        if (!Validate::not_empty($post['re_password'])) {
+            $op_data['re_password']["message"] = $op_data['re_password']["label"] . "不能为空";
+        }
         //email 密码检测
         if (in_array('email', $noset_keys)) {
             $op_data['email']["message"] = $op_data['email']["label"] . "没有定义";
@@ -72,7 +74,7 @@ class Model_User extends Model_Base {
             $op_data['admin_id']["message"] = $op_data['avatar']["label"] . "没有定义";
         }
         //将原有值保留到表单设置
-        $form["create"] = $this->set_form_value($op_data, $post,array("password","re_password"),array());
+        $form = $this->set_form_value($op_data, $post, array("password", "re_password"), array());
         if ($this->has_error($form)) {
             return array(
                 "success" => FALSE,

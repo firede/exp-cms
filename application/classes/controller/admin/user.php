@@ -54,11 +54,12 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
 
     public function action_create_post() {
         $m_user = new Model_User();
-        $validate_result=$m_user->post_validate($_GET);
-        if ($m_user != TRUE) {
-            $view = View::factory('smarty:');
-            $view->users = $validate_result["data"];
-            $this->request->response = AppCache::app_cache("user_create_error", $view)->render();
+        $validate_result = $m_user->post_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/user/create', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('user_create_post', $view);
             return;
         }
         $userDb = new Database_User();

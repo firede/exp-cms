@@ -10,7 +10,7 @@ class Database_admin {
      */
 
     public function create($admin) {
-        $save = DB::insert("admin", array());
+        $save = DB::insert("admin", array("username","password","role"));
         $save->values($admin);
         $result = (bool) $save->execute();
         return $result ? "ok" : "error";
@@ -180,13 +180,15 @@ class Database_admin {
      * @return bool 存在返回FALSE 不存在返回TRUE
      */
     public function check_exist($admin) {
+   
         //设置查询数据的sql
         $query = DB::select(array('COUNT("id")', 'total_admin'))->from('admin');
         $query->where("username", "=", $admin["username"]);
         $admins = $query->execute();
         $admins = $admins->as_array();
         $count = $admins[0]["total_admin"];
-        $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
+      
+       return $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
     }
 
 }

@@ -35,27 +35,28 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $admins["total_items_count"]);
         }
-		$conf = Kohana::config('admin_admin_list');
+        $conf = Kohana::config('admin_admin_list');
         $view = View::factory('smarty:admin/admin/list', array(
                     'pagination' => $pagination,
                     'view_data' => $admins,
-					'conf' => $conf,
+                    'conf' => $conf,
                 ));
 
         $this->template = AppCache::app_cache("admin_list", $view);
     }
 
-	/**
-	 * 新建管理员（展示视图）
-	 */
-	public function action_create() {
-		$form = Kohana::config('admin_admin_form');
-		$view = View::factory('smarty:admin/admin/create', array(
-			'form' => $form,
-		));
-		
-		$this->template = AppCache::app_cache('admin_create', $view);
-	}
+    /**
+     * 新建管理员（展示视图）
+     */
+    public function action_create() {
+
+        $form = Kohana::config('admin_admin_form');
+        $view = View::factory('smarty:admin/admin/create', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache('admin_create', $view);
+    }
 
     /*     * **
      * 新增一个用户
@@ -64,11 +65,13 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
 
     public function action_create_post() {
         $m_admin = new Model_Admin();
-        $validate_result = $m_admin->post_validate($_GET);
-        if ($m_admin != TRUE) {
-            $view = View::factory('smarty:');
-            $view->admins = $validate_result["data"];
-            $this->request->response = AppCache::app_cache("admin_create_error", $view)->render();
+        $validate_result = $m_admin->post_validate($_POST);
+        if (isset($validate_result["success"])) {
+
+            $view = View::factory('smarty:admin/admin/create', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('admin_create', $view);
             return;
         }
         $adminDb = new Database_Admin();
@@ -77,7 +80,6 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $admin = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $adminDb->create($admin);
         $view_data = Action::sucess_status($view_data);
-
         $view = View::factory('smarty:');
         $view->admins = $view_data;
         $this->request->response = AppCache::app_cache("admin_create", $view)->render();

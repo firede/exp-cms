@@ -23,7 +23,7 @@ class Model_Category extends Model_Base {
             $op_data['name']["message"] = $op_data['name']["label"] . "没有定义";
         } elseif (!Validate::not_empty($post['name'])) {
             $op_data['name']["message"] = $op_data['name']["label"] . "不能为空";
-        } elseif (!Validate::range($post['name'], $op_data["name"]['min_len'], $op_data["name"]['max_len'])) {
+        } elseif (!Validate::range(strlen($post['name']), $op_data["name"]['min_len'], $op_data["name"]['max_len'])) {
             $op_data["name"]["message"] = $op_data['name']["label"] .
                     "长度必须在" . $op_data["name"]['min_len'] . "-" . $op_data["name"]['max_len'] . "个字符之间";
         } elseif (!($categoryDao->check_exist(array($post['name'])))) {
@@ -33,7 +33,7 @@ class Model_Category extends Model_Base {
         //short_name
         if (in_array('short_name', $noset_keys)) {
             $op_data['short_name']["message"] = $op_data['short_name']["label"] . "没有定义";
-        } elseif (!Validate::range($post['short_name'], $op_data['short_name']['min_len'], $op_data['short_name']['max_len'])) {
+        } elseif (!Validate::range(strlen($post['short_name']), $op_data['short_name']['min_len'], $op_data['short_name']['max_len'])) {
             $op_data['short_name']["message"] = $op_data['short_name']["label"] .
                     "长度必须在" . $op_data['short_name']['min_len'] . "-" . $op_data['short_name']['max_len'] . "个字符之间";
         }
@@ -49,7 +49,7 @@ class Model_Category extends Model_Base {
             $op_data['sort']["message"] = $op_data['sort']["label"] . "没有定义";
         } elseif (!Validate::numeric ($post['sort'])) {
             $op_data['sort']["message"] = $op_data['sort']["label"]."必须是数字" ;
-        } elseif (!Validate::range($post['sort'], $op_data['sort']['min_len'], $op_data['sort']['max_len'])) {
+        } elseif (!Validate::range(strlen($post['sort']), $op_data['sort']['min_len'], $op_data['sort']['max_len'])) {
             $op_data['sort']["message"] = $op_data['sort']["label"] .
                     "长度必须在" . $op_data['sort']['min_len'] . "-" . $op_data['sort']['max_len'] . "个字符之间";
         }

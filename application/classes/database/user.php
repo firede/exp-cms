@@ -278,7 +278,7 @@ class Database_User {
         $users = $query->execute();
         $users = $users->as_array();
         $count = $users[0]["total_user"];
-        $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
+        return $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
     }
 
     /*     * ****

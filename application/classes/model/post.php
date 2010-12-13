@@ -37,7 +37,7 @@ class Model_Post extends Model_Base {
             $op_data['content']["message"] = $op_data['content']["label"] . "没有定义";
         } elseif (!Validate::not_empty($post['content'])) {
             $op_data['content']["message"] = $op_data['content']["label"] . "不能为空";
-        } elseif (!Validate::range($post['content'], $op_data['content']['min_len'], $op_data['content']['max_len'])) {
+        } elseif (!Validate::range(strlen($post['content']), $op_data['content']['min_len'], $op_data['content']['max_len'])) {
             $op_data['content']["message"] = $op_data['content']["label"] .
                     "长度必须在" . $op_data['content']['min_len'] . "-" . $op_data['content']['max_len'] . "个字符之间";
         }
@@ -51,14 +51,14 @@ class Model_Post extends Model_Base {
         //reference
         if (in_array('reference', $noset_keys)) {
             $op_data['reference']["message"] = $op_data['reference']["label"] . "没有定义";
-        } elseif (!Validate::range($post['reference'], $op_data['reference']['min_len'], $op_data['reference']['max_len'])) {
+        } elseif (!Validate::range(strlen($post['reference']), $op_data['reference']['min_len'], $op_data['reference']['max_len'])) {
             $op_data['reference']["message"] = $op_data['reference']["label"] .
                     "长度必须在" . $op_data['reference']['min_len'] . "-" . $op_data['reference']['max_len'] . "个字符之间";
         }
         //source
         if (in_array('source', $noset_keys)) {
             $op_data['source']["message"] = $op_data['source']["label"] . "没有定义";
-        } elseif (!Validate::range($post['source'], $op_data['source']['min_len'], $op_data['source']['max_len'])) {
+        } elseif (!Validate::range(strlen($post['source']), $op_data['source']['min_len'], $op_data['source']['max_len'])) {
             $op_data['source']["message"] = $op_data['source']["label"] .
                     "长度必须在" . $op_data['source']['min_len'] . "-" . $op_data['source']['max_len'] . "个字符之间";
         }

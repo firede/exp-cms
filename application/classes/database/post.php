@@ -459,7 +459,7 @@ class Database_Post {
         $posts = $query->execute();
         $posts = $posts->as_array();
         $count = $posts[0]["total_post"];
-        $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回ok
+        return $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回ok
     }
 
 }

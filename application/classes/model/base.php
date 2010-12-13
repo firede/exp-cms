@@ -19,8 +19,10 @@ class Model_Base {
 
     public static function set_form_value($form, $post, $set_empty=array(), $set_continue=array()) {
         foreach ($form as $key => $value) {
+          
             //例外操作
             if (isset($post[$key])) {
+               
                 if (in_array($key, $set_empty)) {
                     $post[$key] = "";
                 } elseif (in_array($key, $set_continue)) {

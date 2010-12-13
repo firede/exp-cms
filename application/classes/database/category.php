@@ -250,7 +250,7 @@ class Database_Category {
 
     /**     * *******
      * 删除分类 支持批量删除 批量删除 用 ","分隔
-     */
+     
     public function del($category) {
         try {
             if (isset($category["id"])) {
@@ -265,7 +265,7 @@ class Database_Category {
         } catch (ErrorException $e) {
             return "error";
         }
-    }
+    }*/
 
     /**     * **
      * 修改 一个或多个分类信息 批量删除 ID用“,”分隔
@@ -316,7 +316,7 @@ class Database_Category {
         $categorys = $query->execute();
         $categorys = $categorys->as_array();
         $count = $categorys[0]["total_name"];
-        $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
+        return $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
     }
 
     /**     * ********
