@@ -56,7 +56,7 @@ class Database_Category {
                 $child = array();
                 $child = $category;
                 $child["child"] = $this->build_child($category["id"], $categorys, $parent_childs);
-                $childs[$category["id"]] = $child;
+                $childs[] = $child;
             } else {
                 continue;
             }
