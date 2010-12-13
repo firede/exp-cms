@@ -283,7 +283,8 @@ class Database_Category {
             $modify->execute();
             $this->set_config(array());
             return "ok";
-        } catch (ErrorException $e) {
+       } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -299,7 +300,8 @@ class Database_Category {
             $save->execute();
             $this->set_config(array());
             return "ok";
-        } catch (ErrorException $e) {
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -336,8 +338,8 @@ class Database_Category {
             $move->where("parent_id", "in", $ids);
             $move->execute();
             return "ok";
-        } catch (ErrorException $e) {
-            throw new ErrorException($e->getMessage());
+      } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -365,10 +367,9 @@ class Database_Category {
             if ($move_child && $new_child_parent != NULL) {
                 $this->move_child($id, $new_child_parent);
             }
-        } catch (ErrorException $e) {
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             DB::query(NULL, "ROLLBACK")->execute();
-            echo "cuo le";
-            $e->_errors();
             return "error";
         }
     }
@@ -406,9 +407,9 @@ class Database_Category {
             $clear_post->execute();
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
-        } catch (ErrorException $e) {
+     } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             DB::query(NULL, "ROLLBACK")->execute();
-            throw new ErrorException($e->getMessage());
             return "error";
         }
     }

@@ -154,7 +154,8 @@ class Database_Post {
             $save = DB::insert("post", $columns);
             $result = (bool) $save->values($post);
             return 'ok';
-        } catch (Exception $e) {
+       } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -196,6 +197,7 @@ class Database_Post {
             $result = (bool) $delete->execute();
             return 'ok';
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             $e->_errors();
             return "error";
         } //返回值有误 需要进一步分析kohana数据库操作的反馈机制
@@ -216,7 +218,8 @@ class Database_Post {
             $result = (bool) $delete->execute();
 
             return 'ok';
-        } catch (Exception $e) {
+       } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -233,8 +236,8 @@ class Database_Post {
             }
 
             $id = $post["id"];
-            $post['xxxx'] = "xxxx";
-            // unset($post['id']);
+        
+            unset($post['id']);
             /* 根据需要从请求中取出需要的数据值 */
             $ids = explode(",", $id);
           
@@ -249,9 +252,7 @@ class Database_Post {
             $result = (bool) $modify->execute();
             return 'ok';
         } catch (Exception $e) {
-              echo "cuo le";
             ErrorExceptionReport::_errors_report($e);
-            //ErrorException::_errors_report($e);
             return "error";
         }
     }
@@ -308,6 +309,7 @@ class Database_Post {
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
         }
@@ -341,7 +343,8 @@ class Database_Post {
             }
             $modify->execute();
             return "ok";
-        } catch (Exception $e) {
+       } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -391,7 +394,8 @@ class Database_Post {
 
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
-        } catch (Exception $E) {
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
         }
@@ -441,7 +445,8 @@ class Database_Post {
 
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
-        } catch (Exception $e) {
+       } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
         }

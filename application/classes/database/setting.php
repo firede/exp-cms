@@ -35,6 +35,7 @@ class Database_Setting {
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
         }
@@ -55,6 +56,7 @@ class Database_Setting {
             Arr::as_config_file($application, APPPATH . "/config/applicationconfig.php");
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }

@@ -8,9 +8,10 @@ defined('SYSPATH') or die('No direct script access.');
  * @author attachment
  */
 class Database_Attachment {
-    /*******
-     *新增一个新的 附件信息
+    /*     * *****
+     * 新增一个新的 附件信息
      */
+
     public function insert($attachement) {
         try {
             $insert = DB::insert("attachment", array("url", "uuid", "file_size", "use_type", "status", "file_type"));
@@ -43,7 +44,7 @@ class Database_Attachment {
         $count = $count_Result[0]['total_attachment'];
 
         //设置查询数据的sql
-        $query = DB::select("attachment.*", array("post.title", "post_name"),array("user.username", "user_name"))->from('attachment');
+        $query = DB::select("attachment.*", array("post.title", "post_name"), array("user.username", "user_name"))->from('attachment');
         $query->join("post", "left")->on("attachment.uuid", "=", "post.uuid");
         $query->join("user", "left")->on("attachment.user_id", "=", "user.id");
 
@@ -80,50 +81,57 @@ class Database_Attachment {
         else
             return "none";
     }
-    
-     /*******
-     *修改一个或者多个 附件信息 多个id 请使用“,”分隔
+
+    /*     * *****
+     * 修改一个或者多个 附件信息 多个id 请使用“,”分隔
      */
+
     public function modify($attachement) {
         try {
-            if(!isset($attachment["id"])){
+            if (!isset($attachment["id"])) {
                 return "no_id";
             }
-            $id=$attachment["id"];
+            $id = $attachment["id"];
             unset($attachment["id"]);
             $modify = DB::update()->table("attachment")->set($attachment);
-            $ids=explode(",", $id);
+            $ids = explode(",", $id);
             $modify->where("id", "in", $ids);
             $modify->execute();
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
-     /*******
-     *删除一个或者多个 附件信息多个id 请使用“,”分隔
+
+    /*     * *****
+     * 删除一个或者多个 附件信息多个id 请使用“,”分隔
      */
+
     public function del($attachment) {
         try {
-            if(!isset($attachment["id"])){
+            if (!isset($attachment["id"])) {
                 return "no_id";
             }
-            $id=$attachment["id"];
+            $id = $attachment["id"];
             $delete = DB::delete()->table("attachment");
-            $ids=explode(",", $id);
+            $ids = explode(",", $id);
             $delete->where("id", "in", $ids);
             $delete->execute();
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
-    /****
+
+    /*     * **
      * 获取无用的 垃圾文件数据
      * return <array>
      */
-    public function  get_rubbish(){
-        $rebbish_sql=DB::select();
+
+    public function get_rubbish() {
+        $rebbish_sql = DB::select();
     }
 
 }

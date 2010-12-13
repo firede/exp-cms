@@ -163,6 +163,7 @@ class Database_User {
             $result = (bool) $delete->execute();
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -186,6 +187,7 @@ class Database_User {
             $result = (bool) $delete->execute();
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -210,6 +212,7 @@ class Database_User {
             $result = (bool) $modify->execute();
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -237,6 +240,7 @@ class Database_User {
             $modify->execute();
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
@@ -262,6 +266,7 @@ class Database_User {
             $result = (bool) $modify->execute();
             return "ok";
         } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
             return "error";
         }
     }
