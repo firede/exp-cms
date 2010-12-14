@@ -42,7 +42,9 @@ class Sysconfig_Business {
     public static function user_Status($status) {
         $status_box = array(
             '0' => '正常',
-            '1' => '锁定',
+            '1' => '锁定',//限制登录和发布
+            '2' => '屏蔽',//不限制登录和发布 但其发布的所有文章 用户不能阅读 管理员可以查看
+            '3' => '锁定并屏蔽',//既不能登录发布 文章页不予以显示
         );
         return $status_box[$status];
     }
