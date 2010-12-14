@@ -333,7 +333,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'cate_id');
-        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $post = Arr::filter_Array($_POST, $arr_element_names);
         echo Kohana::debug($post);
         $view_data = $postDb->modify($post);
 
@@ -524,7 +524,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template = AppCache::app_cache("post_preview", $view);
     }
 
-    public function action_info() {
+   /* public function action_info() {
         ob_start();
         phpinfo(INFO_MODULES); //只查看 模块信息的列表
         $phpinfo = array('phpinfo' => array());
@@ -538,8 +538,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
             }
         }
 
-//       echo Kohana::debug(phpinfo_array());
-    }
+    }*/
 
 }
 

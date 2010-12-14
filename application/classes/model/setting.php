@@ -1,5 +1,5 @@
 <?php
-
+defined('SYSPATH') or die('No direct script access.');
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -17,7 +17,7 @@ class Model_Setting extends Model_Base {
      * @param $site array
      * @return array/bool 验证通过返回TRUE 反之输出 携带错误的表单信息
      */
-    public function site_vilidate($site) {
+    public function site_validate($site) {
         $form = Kohana::config("admin_setting_form");
         $noset_keys = Arr::get_noset_key($post, array('webname', "basehost", "indexurl", 'default_style', 'powerby', 'keywords', 'description', 'beian'));
         $op_data = $form["site"];
@@ -109,7 +109,7 @@ class Model_Setting extends Model_Base {
      * @param $cache array
      * @return array/bool 验证通过返回TRUE 反之输出 携带错误的表单信息
      */
-    public function cache_vilidate($cache) {
+    public function cache_validate($cache) {
         $form = Kohana::config("admin_setting_form");
         $noset_keys = Arr::get_noset_key($post, array('driver', "is_open",));
         $op_data = $form["cache"];
@@ -150,7 +150,7 @@ class Model_Setting extends Model_Base {
      * @param $user array
      * @return array/bool 验证通过返回TRUE 反之输出 携带错误的表单信息
      */
-    public function user_vilidate($user) {
+    public function user_validate($user) {
          $form = Kohana::config("admin_setting_form");
         $noset_keys = Arr::get_noset_key($post, array("reg_open", "default_avatar"));
         $op_data = $form["user"];
@@ -191,10 +191,10 @@ class Model_Setting extends Model_Base {
      * @param $up_file array
      * @return array/bool 验证通过返回TRUE 反之输出 携带错误的表单信息
      */
-    public function file_vilidate($up_file) {
+    public function up_file_validate($up_file) {
         $form = Kohana::config("admin_setting_form");
         $noset_keys = Arr::get_noset_key($post, array("dir", "max_size", "min_size", "type"));
-        $op_data = $form["file"];
+        $op_data = $form["up_file"];
         //第一阶段 未定义错误
         //第二阶段 数据非空验证
         //第三阶段 数据有效格式验证
@@ -242,7 +242,7 @@ class Model_Setting extends Model_Base {
             $op_data['type']["message"] = $op_data['type']["label"] . "不能为空";
         }
         //将原有值保留到表单设置
-        $form["file"] = $this->set_form_value($op_data, $post);
+        $form["up_file"] = $this->set_form_value($op_data, $post);
         if (!$this->has_error($form)) {
 
             return array(
@@ -258,7 +258,7 @@ class Model_Setting extends Model_Base {
      * @param $up_img array
      * @return array/bool 验证通过返回TRUE 反之输出 携带错误的表单信息
      */
-    public function up_img_vilidate($up_img) {
+    public function up_img_validate($up_img) {
         $form = Kohana::config("admin_setting_form");
         $noset_keys = Arr::get_noset_key($post, array("dir", "max_size", "min_size", "max_width", "max_height", "type", "watermark_path", "watermark_position", "watermark_opacity", "watermark_status", "watermark_border_space",));
         $op_data = $form["up_img"];
@@ -398,7 +398,7 @@ class Model_Setting extends Model_Base {
      * @param $post array
      * @return array/bool 验证通过返回TRUE 反之输出 携带错误的表单信息
      */
-    public function post_vilidate($post) {
+    public function post_validate($post) {
         $form = Kohana::config("admin_setting_form");
         $noset_keys = Arr::get_noset_key($post, array('title_repeat'));
         $op_data = $form["post"];
@@ -432,7 +432,7 @@ class Model_Setting extends Model_Base {
      * @param $advanced array
      * @return array/bool 验证通过返回TRUE 反之输出 携带错误的表单信息
      */
-    public function advanced_vilidate($advanced) {
+    public function advanced_validate($advanced) {
         $form = Kohana::config("admin_setting_form");
         $noset_keys = Arr::get_noset_key($post, array('webname', "basehost", "indexurl", 'default_style', 'powerby', 'keywords', 'description', 'beian'));
         $op_data = $form["advanced"];

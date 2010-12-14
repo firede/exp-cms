@@ -83,7 +83,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      */
     public function action_del_post() {
         $arr_element_names = array('id');
-        $category = Arr::filter_Array($_GET, $arr_element_names);
+        $category = Arr::filter_Array($_POST, $arr_element_names);
         $categoryDb = new Database_Category();
         $view_data = $categoryDb->del($category);
         $view_data = Action::sucess_status($view_data);
@@ -96,7 +96,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      */
     public function action_m_del_post() {
         $arr_element_names = array('id');
-        $category = Arr::filter_Array($_GET, $arr_element_names);
+        $category = Arr::filter_Array($_POST, $arr_element_names);
         $categoryDb = new Database_Category();
         $view_data = $categoryDb->del($category);
         $view_data = Action::sucess_status($view_data);
@@ -113,8 +113,17 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      * 修改分类
      */
     public function action_update_post() {
+        $m_category = new Model_Category();
+        $validate_result = $m_category->post_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/category/update', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('category_create_post', $view);
+            return;
+        }
         $arr_element_names = array('id', "name", "short_name", "parent_id", "sort");
-        $category = Arr::filter_Array($_GET, $arr_element_names);
+        $category = Arr::filter_Array($_POST, $arr_element_names);
         $categoryDb = new Database_Category();
         $view_data = $categoryDb->modify($category);
         $view_data = Action::sucess_status($view_data);
@@ -126,7 +135,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      */
     public function action_m_update_post() {
         $arr_element_names = array('id', "name", "short_name", "parent_id", "sort");
-        $category = Arr::filter_Array($_GET, $arr_element_names);
+        $category = Arr::filter_Array($_POST, $arr_element_names);
         $categoryDb = new Database_Category();
         $view_data = $categoryDb->modify($category);
         $view_data = Action::sucess_status($view_data);
@@ -147,7 +156,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
             return;
         }
         $arr_element_names = array('id', "name", "short_name", "parent_id", "sort");
-        $category = Arr::filter_Array($_GET, $arr_element_names);
+        $category = Arr::filter_Array($_POST, $arr_element_names);
         $categoryDb = new Database_Category();
         $view_data = $categoryDb->modify($category);
         $view_data = Action::sucess_status($view_data);
@@ -162,7 +171,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      */
     public function action_clear_child_post() {
         $arr_element_names = array('id');
-        $category = Arr::filter_Array($_GET, $arr_element_names);
+        $category = Arr::filter_Array($_POST, $arr_element_names);
         $categoryDb = new Database_Category();
         $view_data = $categoryDb->del_clear_child($category);
         $view_data = Action::sucess_status($view_data);
@@ -174,7 +183,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      */
     public function action_del_clear_child_post() {
         $arr_element_names = array('id');
-        $category = Arr::filter_Array($_GET, $arr_element_names);
+        $category = Arr::filter_Array($_POST, $arr_element_names);
         $categoryDb = new Database_Category();
         $view_data = $categoryDb->del_clear_child($category, TRUE);
         $view_data = Action::sucess_status($view_data);
