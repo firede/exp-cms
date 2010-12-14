@@ -205,10 +205,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      */
 
     public function action_del_post() {
-
-        $id = isset($_POST["id"]) ? $_POST["id"] :"";
         $postDb = new Database_Post();
-        $view_data = $postDb->delete($id);
+        $view_data = $postDb->del_flag($_POST);
         $view_data = Action::sucess_status($view_data);
 
         $this->template = View::factory('json:');
@@ -223,11 +221,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     public function action_m_del_post() {
         $postDb = new Database_Post();
         $arr_element_names =
-                array('id', 'uuid', 'title', 'cate_id', 'pub_time',
-                    'pre_content', 'content', 'user_id', 'status',
-                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
+                array('id');
         $post = Arr::filter_Array($_POST, $arr_element_names);
-        $view_data = $postDb->multi_delete($post);
+        $view_data = $postDb->del_flag($post);
 
         $view_data = Action::sucess_status($view_data);
 

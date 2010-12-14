@@ -154,7 +154,7 @@ class Database_Post {
             $save = DB::insert("post", $columns);
             $result = (bool) $save->values($post);
             return 'ok';
-       } catch (Exception $e) {
+        } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
             return "error";
         }
@@ -218,7 +218,27 @@ class Database_Post {
             $result = (bool) $delete->execute();
 
             return 'ok';
-       } catch (Exception $e) {
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
+            return "error";
+        }
+    }
+
+    /*     * ***
+     * 根据一个或者多个ID，post表数据标记为已删除
+     * @param $post （array）
+     */
+
+    public function del_flag($post) {
+        if ($post["id"] == null || $post["id"] == "") {
+            return "no_id";
+        }
+        try {
+            $ids = explode(",", $post["id"]);
+            $del_flag = DB::update("post")->set(array("is_del"=>"1"))->where('id', 'in', $ids);
+            $result = (bool) $del_flag->execute();
+            return 'ok';
+        } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
             return "error";
         }
@@ -236,11 +256,11 @@ class Database_Post {
             }
 
             $id = $post["id"];
-        
+
             unset($post['id']);
             /* 根据需要从请求中取出需要的数据值 */
             $ids = explode(",", $id);
-          
+
             $modify = DB::update()->table('post')->set($post);
             // $modify->set(array('swap' => 'Filed:content', 'content' => "Filed:pre_content", 'pre_content' => "Filed:swap"));
             //判断是否是批量操作
@@ -343,7 +363,7 @@ class Database_Post {
             }
             $modify->execute();
             return "ok";
-       } catch (Exception $e) {
+        } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
             return "error";
         }
@@ -445,7 +465,7 @@ class Database_Post {
 
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
-       } catch (Exception $e) {
+        } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
