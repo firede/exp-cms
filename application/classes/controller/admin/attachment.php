@@ -83,7 +83,7 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
      * 清理垃圾无用附件
      */
 
-    public function clear_file() {
+    public function clear_discard_file() {
         
     }
 

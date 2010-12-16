@@ -125,13 +125,18 @@ class Database_Attachment {
         }
     }
 
-    /*     * **
+    /**     *
      * 获取无用的 垃圾文件数据
-     * return <array>
+     * @return array
      */
-
     public function get_rubbish() {
-        $rebbish_sql = DB::select();
+        $post_sql = DB::select("uuid")->from("post");
+        $user_sql = DB::select("id")->from("user");
+        $post_rebbish_sql = DB::select()->from("attachment");
+        $post_rebbish_sql->where("uuid", "not in", $post_sql->execute())->and_where("use_type", "=", "0");
+        $user_rebbish_sql = DB::select()->from("attachment");
+        $user_rebbish_sql->where("user_id", "not in", $user_sql->execute())->and_where("use_type", "=", "1");
+        return $rebbish = array_merge($post_rebbish_sql->execute(), $user_rebbish_sql->execute());
     }
 
 }
