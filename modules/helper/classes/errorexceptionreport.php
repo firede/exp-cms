@@ -28,7 +28,7 @@ class ErrorExceptionReport {
             if ($application["advanced"]["throw_exception"] == "FILE") {
                 File::create_or_add(APPPATH . "/log/" . date("Y/m/d") . "/exception_report.log", $message);
             } elseif ($application["advanced"]["throw_exception"] == "WEB") {
-                echo $message;
+                echo nl2br($message);
             } elseif ($application["advanced"]["throw_exception"] == "THROW") {
                 throw $e;
             }

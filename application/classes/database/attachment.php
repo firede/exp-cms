@@ -139,6 +139,21 @@ class Database_Attachment {
         return $rebbish = array_merge($post_rebbish_sql->execute(), $user_rebbish_sql->execute());
     }
 
+    public function clear_rubbish() {
+        try {
+            DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
+            $rubbish = $this->get_rubbish();
+            $m_attachment = new Model_Attachment();
+            if ($m_attachment->clear_rebbish($rubbish) = TRUE) {
+                return "ok";
+            }
+        } catch (Exception $e) {
+            DB::query(NULL, "ROLLBACK")->execute();
+            ErrorExceptionReport::_errors_report($e);
+            return "error";
+        }
+    }
+
 }
 
 ?>

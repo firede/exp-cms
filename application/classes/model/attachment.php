@@ -1,4 +1,5 @@
 <?php
+
 defined('SYSPATH') or die('No direct script access.');
 /*
  * 附件管理
@@ -45,14 +46,22 @@ class Model_Attachment extends Model_Base {
       return TRUE;
       }
      */
-    /*****
+    /*     * ***
      * 清理垃圾附件
      */
-    public function clear_rebbish() {
-        $attachment_db=new Database_Attachment();
-        $rebbish_data=$attachment_db->get_rubbish();
-        foreach($rebbish_data as $file){
-            $file[]
+    public function clear_rebbish($rubbish) {
+        try {
+            foreach ($rubbish as $file) {
+                $path = APPPATH . "/" . $file["path"];
+                $path = str_replace("\\", "/", $path);
+                if (file_exists($path)) {
+                    unlink($path);
+                }
+            }
+            return TRUE;
+        } catch (Exception $e) {
+            throw $e;
+            return FALSE;
         }
     }
 

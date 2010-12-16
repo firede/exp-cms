@@ -182,33 +182,11 @@ class Database_Post {
     }
 
     /*     * ***
-     * 根据ID删除post表数据
-     * @param $id integer 
-     */
-
-    public function delete($id) {
-
-        if ($id == null || $id == "") {
-            return "no_id";
-        }
-        try {
-            $delete = DB::delete()->table('post')->where('id', '=', $id);
-
-            $result = (bool) $delete->execute();
-            return 'ok';
-        } catch (Exception $e) {
-            ErrorExceptionReport::_errors_report($e);
-            $e->_errors();
-            return "error";
-        } //返回值有误 需要进一步分析kohana数据库操作的反馈机制
-    }
-
-    /*     * ***
-     * 根据多个ID，批量删除post表数据
+     * 根据一个或多个ID，批量删除post表数据 多个$post["id"]用","分隔多个id
      * @param $ids （array(integer)）
      */
 
-    public function multi_delete($post) {
+    public function delete($post) {
         if ($post["id"] == null || $post["id"] == "") {
             return "no_id";
         }
@@ -235,7 +213,8 @@ class Database_Post {
         }
         try {
             $ids = explode(",", $post["id"]);
-            $del_flag = DB::update("post")->set(array("is_del"=>"1"))->where('id', 'in', $ids);
+            unset($post["id"]);
+            $del_flag = DB::update("post")->set($post)->where('id', 'in', $ids);
             $result = (bool) $del_flag->execute();
             return 'ok';
         } catch (Exception $e) {
@@ -485,6 +464,39 @@ class Database_Post {
         $posts = $posts->as_array();
         $count = $posts[0]["total_post"];
         return $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回ok
+    }
+
+    /**     * **
+     * 清空回收站中所有数据
+     * @return string success
+     */
+    public function clear() {
+
+        try {
+
+            $delete = DB::delete()->table('post')->where('is_del', '=', "1");
+            $delete->execute();
+            return 'ok';
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
+            return "error";
+        }
+    }
+     /**     * **
+     * 还原回收站中所有数据
+     * @return string success
+     */
+    public function restore_all() {
+
+        try {
+
+            $restore = DB::update("post")->set(array("is_del"=>"0"))->where('is_del', '=', "1");
+            $restore->execute();
+            return 'ok';
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
+            return "error";
+        }
     }
 
 }

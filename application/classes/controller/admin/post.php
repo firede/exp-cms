@@ -34,6 +34,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
+        $post["is_del"] = "0";
         $posts = $postDb->query_list($post, $pageparam, $sort);
         $posts["message"] = Action::sucess_status($posts["message"]);
         if (isset($posts["total_items_count"]) && isset($posts["total_page_count"])) {
@@ -83,6 +84,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
         $post["keyword"] = isset($post["keyword"]) ? $post["keyword"] : "";
+        $post["is_del"] = "0";
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $posts = $postDb->query_list_search($post, $pageparam, $sort);
         $posts["message"] = Action::sucess_status($posts["message"]);
@@ -121,8 +123,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_create_post() {
         $m_post = new Model_Post();
-        $validate_result=$m_post->post_validate($_POST);
-       if (isset($validate_result["success"])) {
+        $validate_result = $m_post->post_validate($_POST);
+        if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/post/create', array(
                         'form' => $validate_result["data"],
                     ));
@@ -200,13 +202,17 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     }
 
     /*     * ***
-     * 根据ID删除post表数据
+     * 根据ID标记删除post表数据
      * @param $id integer
      */
 
     public function action_del_post() {
         $postDb = new Database_Post();
-        $view_data = $postDb->del_flag($_POST);
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_POST, $arr_element_names);
+        $post["is_del"] = "0";
+        $view_data = $postDb->delete($post);
         $view_data = Action::sucess_status($view_data);
 
         $this->template = View::factory('json:');
@@ -214,7 +220,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     }
 
     /*     * ***
-     * 根据多个ID，批量删除post表数据
+     * 根据多个ID，批量标记删除删除post表数据
      * @param $ids （array(integer)）
      */
 
@@ -223,8 +229,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $arr_element_names =
                 array('id');
         $post = Arr::filter_Array($_POST, $arr_element_names);
+        $post["is_del"] = "0";
         $view_data = $postDb->del_flag($post);
-
         $view_data = Action::sucess_status($view_data);
 
         $this->template = View::factory('json:');
@@ -520,22 +526,21 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template = AppCache::app_cache("post_preview", $view);
     }
 
-   /* public function action_info() {
-        ob_start();
-        phpinfo(INFO_MODULES); //只查看 模块信息的列表
-        $phpinfo = array('phpinfo' => array());
-        if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER)) {
+    /* public function action_info() {
+      ob_start();
+      phpinfo(INFO_MODULES); //只查看 模块信息的列表
+      $phpinfo = array('phpinfo' => array());
+      if (preg_match_all('#(?:<h2>(?:<a name=".*?">)?(.*?)(?:</a>)?</h2>)|(?:<tr(?: class=".*?")?><t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>(?:<t[hd](?: class=".*?")?>(.*?)\s*</t[hd]>)?)?</tr>)#s', ob_get_clean(), $matches, PREG_SET_ORDER)) {
 
-            foreach ($matches as $match) {
+      foreach ($matches as $match) {
 
-                if (isset($match[2]) && $match[2] == "APC Support") {
-                    echo $match[2] . ":" . $match[3];
-                }
-            }
-        }
+      if (isset($match[2]) && $match[2] == "APC Support") {
+      echo $match[2] . ":" . $match[3];
+      }
+      }
+      }
 
-    }*/
-
+      } */
 }
 
 ?>
