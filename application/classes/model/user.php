@@ -84,6 +84,7 @@ class Model_User extends Model_Base {
         return TRUE;
     }
 
+
 }
 
 ?>

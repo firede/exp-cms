@@ -138,7 +138,7 @@ class Database_Attachment {
         $user_rebbish_sql->where("user_id", "not in", $user_sql->execute())->and_where("use_type", "=", "1");
         return $rebbish = array_merge($post_rebbish_sql->execute(), $user_rebbish_sql->execute());
     }
-
+    //清理垃圾数据和文件
     public function clear_rubbish() {
         try {
             DB::query(NULL, "BEGIN WORK")->execute(); //开启事务

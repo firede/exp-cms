@@ -36,7 +36,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $users["total_items_count"]);
         }
-		$conf = Kohana::config('admin_user_list');
+        $conf = Kohana::config('admin_user_list');
 
         $view = View::factory('smarty:admin/user/list', array(
                     'pagination' => $pagination,
@@ -109,7 +109,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      */
 
     public function action_m_del_post() {
-        $id = isset($_POST["id"]) ? $_POST["id"] :"";
+        $id = isset($_POST["id"]) ? $_POST["id"] : "";
         $userDb = new Database_User();
         $view_data = $userDb->delete($id);
         $view_data = Action::sucess_status($view_data);
@@ -147,7 +147,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      */
 
     public function action_m_update_post() {
-        $id = isset($_POST["id"]) ? $_POST["id"] :"";
+        $id = isset($_POST["id"]) ? $_POST["id"] : "";
         $userDb = new Database_User();
         $arr_element_names =
                 array('id', 'username', 'email', 'user_type', 'status',
@@ -175,6 +175,48 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
+    }
+
+    /**     * *****
+     * 上传头像
+     */
+    public function action_up_avatar() {
+        $view_data = array();
+        $file = $_FILES["file"];
+        $m_upload = new Model_Upload();
+        $conf = Kohana::config("applicationconfig");
+        $conf = $conf["user"]["up_avatar"];
+        $success = $m_upload->_up_img($file, $conf);
+        $attachement = array();
+        if ($success["success"]) {
+            try {
+                $attachment_db = new Database_Attachment();
+                $attachement["file_type"] = $success["type"];
+                $attachement["file_size"] = $success["size"];
+                $attachement["url"] = $success["relative_url"];
+                $attachement["use_type"] = "1";
+                $attachement["user_id"] = Session::instance()->get("admin_name");
+                $view_data = $attachment_db->insert($attachement);
+                $view_data = Action::sucess_status($view_data);
+                //这里 返回成功信息
+                $this->template = View::factory('json:');
+                $this->template->_data = $view_data;
+            } catch (Exception $e) {
+                //如果插入记录失败则直接删掉已经上传的文件 几率几乎为0
+                if (isset($attachement["url"])) {
+                    if (file_exists($success["relative_url"])) {
+                        unlink(APPPATH . $attachement["url"]);
+                    }
+                }
+                ErrorExceptionReport::_errors_report($e);
+            }
+        } else {
+            //上传失败
+            $view_data["success"] = "error";
+            $view_data = Action::sucess_status($view_data);
+            $this->template = View::factory('json:');
+            $this->template->_data = $view_data;
+        }
     }
 
 }

@@ -79,7 +79,7 @@ class Sysconfig_Business {
     public static function attachment_Use_type($use_type) {
         $use_type_box = array(
             '0' => '文章',
-            '1' => '图像',
+            '1' => '头像',
         );
         return $use_type_box[$use_type];
     }
