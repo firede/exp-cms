@@ -10,7 +10,7 @@ defined('SYSPATH') or die('No direct script access.');
  *
  * @author FanQie
  */
-class recyclePost extends Controller_Admin_BaseAdmin {
+class Controller_Admin_ecyclePost extends Controller_Admin_BaseAdmin {
 
     /**     * ***
      * 回收站列表
