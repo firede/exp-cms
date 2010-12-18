@@ -25,7 +25,7 @@ class File extends Kohana_File {
             }
         }
         $exists_flag = array();
-        echo kohana::debug($file_boxs);
+      
         $count = 0;
         for ($i = count($file_boxs) - 1; $i >= 0; $i--) {
             if (!file_exists($file_boxs[$i])) {

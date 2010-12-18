@@ -72,7 +72,7 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
     public function action_update_post() {
         $attachemenDb = new Database_Attachment();
         $arr_element_names = array("url", "uuid", "file_size", "use_type", "status", "file_type");
-        $attachement = Arr::filter_Array($_GET, $arr_element_names);
+        $attachement = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $attachemenDb->modify($attachement);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
@@ -83,8 +83,12 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
      * 清理垃圾无用附件
      */
 
-    public function clear_file() {
-        
+    public function action_clear_file() {
+        $attachemenDb = new Database_Attachment();
+        $view_data=$attachemenDb->clear_rubbish();
+        $view_data = Action::sucess_status($view_data);
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
 }

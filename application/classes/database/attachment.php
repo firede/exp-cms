@@ -125,13 +125,33 @@ class Database_Attachment {
         }
     }
 
-    /*     * **
+    /**     *
      * 获取无用的 垃圾文件数据
-     * return <array>
+     * @return array
      */
-
     public function get_rubbish() {
-        $rebbish_sql = DB::select();
+        $post_sql = DB::select("uuid")->from("post");
+        $user_sql = DB::select("id")->from("user");
+        $post_rebbish_sql = DB::select()->from("attachment");
+        $post_rebbish_sql->where("uuid", "not in", $post_sql->execute())->and_where("use_type", "=", "0");
+        $user_rebbish_sql = DB::select()->from("attachment");
+        $user_rebbish_sql->where("user_id", "not in", $user_sql->execute())->and_where("use_type", "=", "1");
+        return $rebbish = array_merge($post_rebbish_sql->execute(), $user_rebbish_sql->execute());
+    }
+    //清理垃圾数据和文件
+    public function clear_rubbish() {
+        try {
+            DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
+            $rubbish = $this->get_rubbish();
+            $m_attachment = new Model_Attachment();
+            if ($m_attachment->clear_rebbish($rubbish) = TRUE) {
+                return "ok";
+            }
+        } catch (Exception $e) {
+            DB::query(NULL, "ROLLBACK")->execute();
+            ErrorExceptionReport::_errors_report($e);
+            return "error";
+        }
     }
 
 }

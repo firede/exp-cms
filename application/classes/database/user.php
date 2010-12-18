@@ -154,15 +154,21 @@ class Database_User {
 
     public function delete($id) {
         try {
+            DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
             if (!isset($id)) {
                 return "no_id";
             }
             //设置删除数据的sql
             $delete = DB::delete()->table('user');
             $delete->where("id", "=", $id);
-            $result = (bool) $delete->execute();
+            $delete->execute();
+            //同时删除与之相关的文章
+            $delete_post = DB::delete()->table('post');
+            $delete->where('user_id', '=', $id);
+            $delete->execute();
             return "ok";
-        } catch (Exception $e) {
+          } catch (Exception $e) {
+            DB::query(NULL, "ROLLBACK")->execute();
             ErrorExceptionReport::_errors_report($e);
             return "error";
         }
@@ -176,6 +182,7 @@ class Database_User {
 
     public function mulit_delete($id) {
         try {
+            DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
             if (!isset($id)) {
                 return "no_id";
             }
@@ -184,9 +191,15 @@ class Database_User {
             //设置删除数据的sql
             $delete = DB::delete()->table('user');
             $delete->where('id', 'in', $ids);
-            $result = (bool) $delete->execute();
+            $delete->execute();
+            //同时删除与之相关的文章
+            $delete_post = DB::delete()->table('post');
+            $delete->where('user_id', 'in', $ids);
+            $delete->execute();
+            DB::query(NULL, "COMMIT")->execute();
             return "ok";
         } catch (Exception $e) {
+            DB::query(NULL, "ROLLBACK")->execute();
             ErrorExceptionReport::_errors_report($e);
             return "error";
         }

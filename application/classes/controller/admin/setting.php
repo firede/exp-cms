@@ -31,6 +31,7 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
     public function action_mulit_delete() {
         
     }
+
     /**     * **
      * 将缓存中的数据放入数据库里
      * @return string ok|error
@@ -41,13 +42,168 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $set_Db->cache_to_db();
     }
 
-    /** ****
+    /**     * ***
      * 将数据库中的配置 放入缓存中
      */
     public function action_db_to_cache() {
 
         $set_Db = new Database_Setting();
         $set_Db->db_to_cache();
+    }
+
+    /**     * *
+     * 更新网站配置
+     */
+    public function action_site_post() {
+        $m_setting = new Model_Setting();
+        $validate_result = $m_setting->site_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/setting/site', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('setting_site_post', $view);
+            return;
+        }
+        $setting_db = new Database_Setting();
+        $arr_element_names =
+                array('webname', "basehost", "indexurl", 'default_style', 'powerby', 'keywords', 'description', 'beian');
+        $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $setting_db->update_configs($setting);
+        $view_data = Action::sucess_status($view_data);
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+
+    /**     * *
+     * 更新缓存配置
+     */
+    public function action_cache_post() {
+        $m_setting = new Model_Setting();
+        $validate_result = $m_setting->cache_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/setting/cache', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('setting_cache_post', $view);
+            return;
+        }
+        $setting_db = new Database_Setting();
+        $arr_element_names = array('driver', "is_open",);
+        $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $setting_db->update_configs($setting, "cache");
+        $view_data = Action::sucess_status($view_data);
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+
+    /**     * *
+     * 更新上传图片配置
+     */
+    public function action_up_img_post() {
+        $m_setting = new Model_Setting();
+        $validate_result = $m_setting->up_img_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/setting/up_img', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('setting_up_img_post', $view);
+            return;
+        }
+        $setting_db = new Database_Setting();
+        $arr_element_names = array("dir", "max_size", "min_size", "max_width", "max_height", "type", "watermark_path", "watermark_position", "watermark_opacity", "watermark_status", "watermark_border_space",);
+        $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $setting_db->update_configs($setting, "up_img");
+        $view_data = Action::sucess_status($view_data);
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+
+    /**     * *
+     * 更新上传文件配置
+     */
+    public function action_up_file_post() {
+        $m_setting = new Model_Setting();
+        $validate_result = $m_setting->up_file_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/setting/up_file', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('setting_up_file_post', $view);
+            return;
+        }
+        $setting_db = new Database_Setting();
+        $arr_element_names = array("dir", "max_size", "min_size", "type");
+        $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $setting_db->update_configs($setting, "up_file");
+        $view_data = Action::sucess_status($view_data);
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+
+    /**     * *
+     * 更新用户相关配置
+     */
+    public function action_user_post() {
+        $m_setting = new Model_Setting();
+        $validate_result = $m_setting->user_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/setting/up_file', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('setting_user_post', $view);
+            return;
+        }
+        $setting_db = new Database_Setting();
+        $arr_element_names = array("reg_open", "default_avatar");
+        $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $setting_db->update_configs($setting, "user");
+        $view_data = Action::sucess_status($view_data);
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+
+    /**     * *
+     * 更新文章相关配置
+     */
+    public function action_post_post() {
+        $m_setting = new Model_Setting();
+        $validate_result = $m_setting->post_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/setting/post', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('setting_post_post', $view);
+            return;
+        }
+        $setting_db = new Database_Setting();
+        $arr_element_names = array('title_repeat');
+        $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $setting_db->update_configs($setting, "post");
+        $view_data = Action::sucess_status($view_data);
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+
+    /**     * *
+     * 更新高级选项相关配置
+     */
+    public function action_advanced_post() {
+        $m_setting = new Model_Setting();
+        $validate_result = $m_setting->advanced_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/setting/advanced', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('setting_advanced_post', $view);
+            return;
+        }
+        $setting_db = new Database_Setting();
+        $arr_element_names = array('throw_exception');
+        $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $setting_db->update_configs($setting, "advanced");
+        $view_data = Action::sucess_status($view_data);
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
     }
 
 }

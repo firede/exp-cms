@@ -111,6 +111,7 @@ CREATE TABLE IF NOT EXISTS `post` (
   `source` varchar(128) COLLATE utf8_bin DEFAULT NULL,
   `operation_desc` varchar(256) COLLATE utf8_bin DEFAULT NULL,
   `flag` varchar(32) COLLATE utf8_bin DEFAULT '0,',
+  `is_del` int(2) COLLATE utf8_bin DEFAULT 0,
   `swap` text COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=37 ;
