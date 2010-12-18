@@ -46,8 +46,6 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
      * 获得树形结构的数组
      */
     public function action_tree() {
-
-
         $categoryDb = new Database_Category();
         //设置参数过滤器中需要保留下操作的数据
         $arr_element_names =
@@ -57,7 +55,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $categorys = $categoryDb->query_tree_array($category, $sort);
         $categorys = Action::sucess_status($categorys);
         $this->template = View::factory('json:');
-        $this->template->_data = $view_data;
+        $this->template->_data = $categorys;
     }
 
     /**     *

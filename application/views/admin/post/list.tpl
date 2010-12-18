@@ -13,9 +13,9 @@
 </div>
 
 <div class="grid_3 omega">
-	<div class="exlink">
+	<div class="exlink ch-cate-btn">
 		<span class="icon-category"></span>
-		<a href="<{$BASE_URL}>category">切换分类</a>
+		切换分类
 	</div>
 </div>
 
