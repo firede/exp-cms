@@ -1,7 +1,7 @@
 <{include file="admin/base/header.tpl"}>
 <{include file="admin/base/aside.tpl"}>
 <div class="grid_21">
-<{debug}>
+
 <div class="grid_18 alpha">
 	<div class="breadcrumbs">
 		<span class="icon-position"></span>

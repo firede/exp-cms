@@ -108,15 +108,25 @@ a:hover {
 
 .exlink {
 	position: relative;
-	margin: 5px 0 10px;
-	padding-left: 20px;
+	margin: 2px 0 7px;
+	padding: 3px 5px 3px 25px;
 	float: right;
+	color: #009;
+	cursor: pointer;
 	_zoom:1;
 }
 .exlink .icon-category {
 	position: absolute;
-	left: 0;
-	top: 1px;
+	left: 5px;
+	top: 4px;
+}
+.exlink-active {
+	background: #008EE8 url('img/bgs.png') 0 0 repeat-x;
+	color:yellow;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	-moz-border-radius-topleft: 3px;
+	-moz-border-radius-topright: 3px;
 }
 
 /* operation table */
@@ -532,19 +542,19 @@ a:hover {
 }
 
 /* operation subpage style */
-.operation-subview strong {
+.subview strong {
 	color: orangered;
 	padding: 0 3px;
 }
-.operation-subview .form {
+.subview .form {
 	padding:5px;
 	background:#FFE;
 }
-.operation-subview .desc {
+.subview .desc {
 	padding:5px;
 }
-.operation-subview .submit,
-.operation-subview .cancel {
+.subview .submit,
+.subview .cancel {
 	display: inline;
 	float: left;
 	height: 25px;
@@ -554,24 +564,20 @@ a:hover {
 	margin: 15px 5px 5px;
 }
 
-.operation-subview .submit {
+.subview .submit {
 	font-weight: 700;
 	background: #008EE8;
 	color:#FFF;
 }
-.operation-subview .cancel {
+.subview .cancel {
 	background: #E9F3F7;
 }
 
-.operation-subview .msg-success {
+.subview .msg-success {
 	color: green;
 }
-.operation-subview .msg-error {
+.subview .msg-error {
 	color: red;
-}
-/* preview subview */
-.subview-preview {
-	
 }
 
 /* form table */

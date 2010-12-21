@@ -1,4 +1,4 @@
-<div class="operation-subview">
+<div id="subviewFlag" class="subview">
 	<div class="desc">你想将这条经验<strong>标记</strong>为：</div>
 	<div class="form">
 		<label><input type="checkbox" name="flag" value="1" />精华</label>
@@ -13,7 +13,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	var container	= $('.operation-subview'),
+	var container	= $('#subviewFlag'),
 		submit		= container.find('.submit'),
 		cancel		= container.find('.cancel'),
 		target		= dxn.subView.curTarget.get(),

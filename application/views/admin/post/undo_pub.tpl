@@ -1,4 +1,4 @@
-<div class="operation-subview">
+<div id="subviewUndoPub" class="subview">
 	<div class="desc">你确定要<strong>撤销发布</strong>么？</div>
 	<div class="clearfix">
 		<span class="submit radius_all">确定</span>
@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	var container	= $('.operation-subview'),
+	var container	= $('#subviewUndoPub'),
 		submit		= container.find('.submit'),
 		cancel		= container.find('.cancel'),
 		target		= dxn.subView.curTarget.get(),
