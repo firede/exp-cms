@@ -57,6 +57,18 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $this->template = AppCache::app_cache('user_create', $view);
 	}
 
+	public function action_modify() {
+		$form = Kohana::config('admin_user_form');
+		$view = View::factory('smarty:admin/user/modify', array(
+			'form' => $form,
+		));
+
+		$this->template = AppCache::app_cache('user_modify', $view);
+	}
+
+	public function action_modify_post() {
+
+	}
 
 	/*     * **
      * 新增一个用户

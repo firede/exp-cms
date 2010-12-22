@@ -1,8 +1,5 @@
 <?php
-//user_type//手动操作 类型：select * 目前版本系统默认0  *
-//status//手动操作 默认为0 类型：select *
-//avatar//手动上传 上传完毕显示缩略图  类型：file *
-//admin_id//手动输入 *
+
 /**
  * 表单配置
  */
