@@ -64,8 +64,8 @@ class Model_Upload {
             $path = str_replace("\\", "/", $upload_path);
 
             $upload_path = File::path_mkdirs($upload_path);
-            $url = str_replace("/", "\\", $upload_path . "\\" . $img_name);
-            $relative_url = str_replace("/", "\\", ("\\" . $son_path . "\\" . $img_name));
+            $url = str_replace("\\", "/", $upload_path . "/" . $img_name);
+            $relative_url = str_replace("\\", "/", ("/" . $son_path . "/" . $img_name));
             Upload::save($file, $img_name, $upload_path, "0644"); //上传
             $img_File = Image::factory($url);
             $img_File->resize($conf["max_width"], $conf["max_height"], Image::AUTO);
@@ -133,14 +133,14 @@ class Model_Upload {
             $file_name = str_replace("-", "", Text::uuid());
             $file_name = $file_name . "." . $name[1]; //新的文件名
             $son_path = date("Y/m/d");
-            $relative_url = str_replace("/", "\\", ("\\" . $son_path . "\\" . $file_name));
+            $relative_url = str_replace("\\", "/", ("/" . $son_path . "/" . $file_name));
             $upload_path = APPPATH . $conf["path"] . $son_path;
             /**             *
              * 判断文件夹是否存在不存在则创建
              */
             $path = str_replace("\\", "/", $upload_path);
             $upload_path = File::path_mkdirs($upload_path);
-            $url = str_replace("/", "\\", ($upload_path . "" . $file_name));
+            $url = str_replace("\\", "/", ($upload_path . "" . $file_name));
             Upload::save($file, $file_name, $upload_path, "0644"); //上传
             $result = array(
                 "suess" => "ok",

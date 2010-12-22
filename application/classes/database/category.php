@@ -367,6 +367,8 @@ class Database_Category {
             if ($move_child && $new_child_parent != NULL) {
                 $this->move_child($id, $new_child_parent);
             }
+             DB::query(NULL, "COMMIT")->execute();
+            return "ok";
         } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
             DB::query(NULL, "ROLLBACK")->execute();

@@ -3,11 +3,11 @@
 defined('SYSPATH') or die('No direct script access.');
 
 /**
- * Description of user
+ * Description of setup
  *
  * @author Fanqie
  */
-class Model_User extends Model_Base {
+class Model_Setup extends Model_Base {
 
     public function post_validate($post, $type=NULL) {
         $form = Kohana::config("admin_user_form");
@@ -84,6 +84,63 @@ class Model_User extends Model_Base {
         return TRUE;
     }
 
+    /**     * **
+     * 判断服务可以已经拥有的缓存组件
+     * 'memcache'
+      'memcachetag'
+      'apc'
+      'sqlite'
+      'eaccelerator'
+      'xcache'
+      'file'
+     */
+    public function check_cache_component() {
+        $cache_arr = array();
+        $count = 0;
+        $select_stauts=FALSE;
+        if (extension_loaded('memcache')) {//1
+            $cache_arr[$count] = 'memcache';
+            $cache_arr[$count]["seclet"]=TRUE;
+            $select_stauts=TRUE;
+            $count++;
+        }
+        if (extension_loaded('apc')) {//2
+            $cache_arr[$count] = 'apc';
+            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
+            $select_stauts=TRUE;
+            $count++;
+        }
+        if (extension_loaded('eaccelerator')) {//3
+            $cache_arr[$count] = 'eaccelerator';
+            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
+            $select_stauts=TRUE;
+            $count++;
+        }
+        if (extension_loaded('memcachetag')) {//5
+            $cache_arr[$count] = 'memcachetag';
+            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
+            $select_stauts=TRUE;
+            $count++;
+        }
+        if (extension_loaded('xcache')) {//4
+            $cache_arr[$count] = 'xcache';
+            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
+            $select_stauts=TRUE;
+            $count++;
+        }
+        if (extension_loaded('sqlite3')||extension_loaded('sqlite')) {//6
+            $cache_arr[$count] = 'sqlite';
+            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
+            $select_stauts=TRUE;
+            $count++;
+        }
+        if (extension_loaded('file')) {//7
+            $cache_arr[$count] = 'file';
+            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
+            $select_stauts=TRUE;
+            $count++;
+        }
+    }
 
 }
 
