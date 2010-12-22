@@ -20,12 +20,12 @@ class File extends Kohana_File {
             if ($file_box == "/") {
                 continue;
             } else {
-                $path = $path . $file_box . "\\";
+                $path = $path . $file_box . "/";
                 $file_boxs[$key] = substr($path, 0, strlen($path) - 1);
             }
         }
         $exists_flag = array();
-      
+
         $count = 0;
         for ($i = count($file_boxs) - 1; $i >= 0; $i--) {
             if (!file_exists($file_boxs[$i])) {
@@ -41,6 +41,9 @@ class File extends Kohana_File {
                 $fp = fopen($exists_flag[$i], "a+");
                 fclose($fp);
             } else {
+                if (empty($exists_flag[$i])) {//路径为空做了处理
+                    continue;
+                }
                 mkdir($exists_flag[$i]);
             }
         }
@@ -54,12 +57,12 @@ class File extends Kohana_File {
      * @param $WRITER_TYPE 写入类型 请参照php核心 fopen参数$mode的说明
      * @return 
      */
-    public static function create_or_add($file_path, $content=NULL,$WRITER_TYPE="a+") {
-        if($content==NULL){//如果没有内容则不在尝试创建或写入文件
+    public static function create_or_add($file_path, $content=NULL, $WRITER_TYPE="a+") {
+        if ($content == NULL) {//如果没有内容则不在尝试创建或写入文件
             return;
         }
         $file_path = File::path_mkdirs($file_path);
-        $file_path = str_replace("/", "\\", $file_path);
+        $file_path = str_replace("\\", "/", $file_path);
         $file_path = substr($file_path, 0, strlen($file_path) - 1);
         $fp = fopen($file_path, $WRITER_TYPE);
         $content = $content . " ;\n";

@@ -146,6 +146,7 @@ class Database_Post {
      */
 
     public function insert($post) {
+        
         $columns =
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
                     'pre_content', 'content', 'user_id', 'status',
