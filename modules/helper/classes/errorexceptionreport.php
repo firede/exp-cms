@@ -35,7 +35,8 @@ class ErrorExceptionReport {
                 throw $e;
             }
            
-        } if($get_message){//程序中获取错误信息HTML
+        }
+        if($get_message){//程序中获取错误信息HTML
               
                 return nl2br($message);
             }

@@ -10,45 +10,46 @@ class Action {
      * @$posts 
      */
 
-    public static function sucess_status($view_data) {
-        if ($view_data == "none") {
+    public static function sucess_status($view_data,$performance="") {
+        if ($view_data === "none") {
+            echo Kohana::debug($view_data);
             $view_data = array(
                 'success' => FALSE,
-                'message' => '没有任何此类数据！',
+                'message' => $performance.'没有任何此类数据！',
                 'result' => '',
             );
-        } else if ($view_data == "no_id") {
+        } else if ($view_data === "no_id") {
             $view_data = array(
                 'success' => FALSE,
-                'message' => '没有指定的数据！',
+                'message' => $performance.'没有指定的数据！',
                 'result' => '',
             );
-        } else if ($view_data == "error") {
+        } else if ($view_data === "error"||$view_data===FALSE) {
             $view_data = array(
                 'success' => FALSE,
-                'message' => '操作失败！',
+                'message' => $performance.'操作失败！',
                 'result' => '',
             );
-        } else if ($view_data == "exist") {
+        } else if ($view_data === "exist") {
             $view_data = array(
                 'success' => FALSE,
-                'message' => '已经存在',
+                'message' => $performance.'已经存在',
                 'result' => '',
             );
-        }else if($view_data == "data_equal"){
+        }else if($view_data === "data_equal"){
              $view_data = array(
                 'success' => TRUE,
-                'message' => '操作成功，但数据没有变动',
+                'message' => $performance.'操作成功，但数据没有变动',
                 'result' => '',
             );
         } else {
             if (is_array($view_data)) {
                 $view_data['success'] = TRUE;
-                $view_data['message'] = '操作成功';
+                $view_data['message'] = $performance.'操作成功';
             } else {
                 $view_data = array(
                     'success' => TRUE,
-                    'message' => '操作成功',
+                    'message' => $performance.'操作成功',
                     'result' => '',
                 );
             }

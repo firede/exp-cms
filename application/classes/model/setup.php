@@ -9,73 +9,106 @@ defined('SYSPATH') or die('No direct script access.');
  */
 class Model_Setup extends Model_Base {
 
-    public function post_validate($post, $type=NULL) {
-        $form = Kohana::config("admin_user_form");
-        $noset_keys = Arr::get_noset_key($post, array('username', "password", "re_password", 'email', 'status', 'user_type',
+    public function _db_post_validate($post, $type=NULL) {
+        $form = Kohana::config("setup_form");
+        $noset_keys = Arr::get_noset_key($post, array('db_type', "host_name", "db_name", 'user', 'pwd', 'table_prefix',
                     'avatar', 'admin_id'));
-        $op_data = $form;
-        $userDao = new Database_User ();
+        $op_data = $form['set_db'];
+        $setup_db = new Database_Setup();
         //第一阶段 未定义错误
         //第二阶段 数据非空验证
         //第三阶段 数据有效格式验证
         //第四阶段 数据有效性验证
-        //用户名检测
-        if (in_array('username', $noset_keys)) {
-            $op_data['username']["message"] = $op_data['username']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['username'])) {
-            $op_data['username']["message"] = $op_data['username']["label"] . "不能为空";
-        } elseif (!Validate::range($post['username'], $op_data["username"]['min_len'], $op_data["username"]['max_len'])) {
-            $op_data['username']["message"] = $op_data['username']["label"] .
-                    "长度必须在" . $op_data["username"]['min_len'] . "-" . $op_data["username"]['max_len'] . "个字符之间";
-        } elseif (!($userDao->check_exist(array($post['username'])))) {
-            $op_data['username']["message"] = "该" . $op_data['username']["label"] . "已经存在，请重新输入";
+        //db_type 
+        if (in_array('db_type', $noset_keys)) {
+            $op_data['db_type']["message"] = $op_data['db_type']["label"] . "没有定义";
         }
-        //password 密码检测
-        if (in_array('password', $noset_keys)) {
-            $op_data['password']["message"] = $op_data['password']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['password'])) {
-            $op_data['password']["message"] = $op_data['password']["label"] . "不能为空";
-        } elseif (!Validate::range(strlen($post['password']), $op_data['password']['min_len'], $op_data['password']['max_len'])) {
-            $op_data['password']["message"] = $op_data['password']["label"] .
-                    "长度必须在" . $op_data['password']['min_len'] . "-" . $op_data['password']['max_len'] . "个字符之间";
-        } elseif (!$post['password'] === $post['re_password']) {
-            $op_data['re_password']["message"] =
-                    $op_data['re_password']["label"] . "与" . $op_data['password']["label"] . "不一致请重新输入";
+        //host_name
+        if (in_array('host_name', $noset_keys)) {
+            $op_data['host_name']["message"] = $op_data['host_name']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($post['host_name'])) {
+            $op_data['host_name']["message"] = $op_data['host_name']["label"] . "不能为空";
+        } elseif (!(Validate::ip($post['host_name']) || Validate::url($post['host_name']))) {
+            $op_data['host_name']["message"] = $op_data['host_name']["label"] . "格式无效";
         }
-        if (!Validate::not_empty($post['re_password'])) {
-            $op_data['re_password']["message"] = $op_data['re_password']["label"] . "不能为空";
+
+        //user
+        if (in_array('user', $noset_keys)) {
+            $op_data['user']["message"] = $op_data['user']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($post['user'])) {
+            $op_data['user']["message"] = $op_data['user']["label"] . "不能为空";
+        } elseif (!Validate::range(strlen($post['user']), $op_data["user"]['min_len'], $op_data["user"]['max_len'])) {
+            $op_data['user']["message"] = $op_data['user']["label"] .
+                    "长度必须在" . $op_data["user"]['min_len'] . "-" . $op_data["user"]['max_len'] . "个字符之间";
         }
-        //email 密码检测
-        if (in_array('email', $noset_keys)) {
-            $op_data['email']["message"] = $op_data['email']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['email'])) {
-            $op_data['email']["message"] = $op_data['email']["label"] . "不能为空";
-        } elseif (!Validate::email($post['email'])) {
-            $op_data['email']["message"] = $op_data['email']["label"] . "不是有效的E-mail格式";
+        //pwd 
+        if (in_array('pwd', $noset_keys)) {
+            $op_data['pwd']["message"] = $op_data['pwd']["label"] . "没有定义";
+        } elseif (!Validate::range(strlen($post['pwd']), $op_data['pwd']['min_len'], $op_data['pwd']['max_len'])) {
+            $op_data['pwd']["message"] = $op_data['pwd']["label"] .
+                    "长度必须在" . $op_data['pwd']['min_len'] . "-" . $op_data['pwd']['max_len'] . "个字符之间";
+        } elseif (!$setup_db->check_connection($post)) {
+            $op_data['user']["message"] =
+                    $op_data['user']["label"] . "不存在或" . $op_data['pwd']["label"] . "不正确";
         }
-        //status 密码检测
-        if (in_array('status', $noset_keys)) {
-            $op_data['status']["message"] = $op_data['status']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['status'])) {
-            $op_data['status']["message"] = $op_data['status']["label"] . "不能为空";
+        //db_name
+        if (in_array('db_name', $noset_keys)) {
+            $op_data['db_name']["message"] = $op_data['db_name']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($post['db_name'])) {
+            $op_data['db_name']["message"] = $op_data['db_name']["label"] . "不能为空";
+        } elseif (!Validate::range(strlen($post['db_name']), $op_data['db_name']['min_len'], $op_data['db_name']['max_len'])) {
+            $op_data['db_name']["message"] = $op_data['db_name']["label"] .
+                    "长度必须在" . $op_data['db_name']['min_len'] . "-" . $op_data['db_name']['max_len'] . "个字符之间";
         }
-        //user_type 密码检测
-        if (in_array('user_type', $noset_keys)) {
-            $op_data['user_type']["message"] = $op_data['user_type']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['user_type'])) {
-            $op_data['user_type']["message"] = $op_data['user_type']["label"] . "不能为空";
+
+        //table_prefix
+        if (in_array('table_prefix', $noset_keys)) {
+            $op_data['table_prefix']["message"] = $op_data['table_prefix']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($post['table_prefix'])) {
+            $op_data['table_prefix']["message"] = $op_data['table_prefix']["label"] . "不能为空";
+        } elseif (!Validate::range(strlen($post['table_prefix']), $op_data['table_prefix']['min_len'], $op_data['table_prefix']['max_len'])) {
+            $op_data['table_prefix']["message"] = $op_data['table_prefix']["label"] .
+                    "长度必须在" . $op_data['table_prefix']['min_len'] . "-" . $op_data['table_prefix']['max_len'] . "个字符之间";
         }
-        //status 密码检测
-        if (in_array('avatar', $noset_keys)) {
-            $op_data['avatar']["message"] = $op_data['avatar']["label"] . "没有定义";
-        }
-        //admin_id 密码检测
-        if (in_array('admin_id', $noset_keys)) {
-            $op_data['admin_id']["message"] = $op_data['avatar']["label"] . "没有定义";
-        }
+
         //将原有值保留到表单设置
-        $form = $this->set_form_value($op_data, $post, array("password", "re_password"), array());
-        if ($this->has_error($form)) {
+        $form['set_db'] = $this->set_form_value($op_data, $post, array("pwd"), array());
+
+        if (!$this->has_error($form['set_db'])) {
+
+            return array(
+                "success" => FALSE,
+                "data" => $form,
+            );
+        }
+        return TRUE;
+    }
+
+    public function _cache_post_validate($post, $type=NULL) {
+
+        $form = Kohana::config("setup_form");
+        $form = $this->check_cache_component($form);
+        $noset_keys = Arr::get_noset_key($post, array('driver', "is_open"));
+        $op_data = $form['set_cache'];
+        $setup_db = new Database_Setup();
+        //第一阶段 未定义错误
+        //第二阶段 数据非空验证
+        //第三阶段 数据有效格式验证
+        //第四阶段 数据有效性验证
+        //cache_type
+        if (in_array('driver', $noset_keys)) {
+            $op_data['driver']["message"] = $op_data['driver']["label"] . "没有定义";
+        }
+        //default_expire
+        if (in_array('is_open', $noset_keys)) {
+            $op_data['is_open']["message"] = $op_data['is_open']["label"] . "没有定义";
+        }
+
+        //将原有值保留到表单设置
+        $form['set_cache'] = $this->set_form_value($op_data, $post);
+
+        if (!$this->has_error($form['set_cache'])) {
+
             return array(
                 "success" => FALSE,
                 "data" => $form,
@@ -94,51 +127,71 @@ class Model_Setup extends Model_Base {
       'xcache'
       'file'
      */
-    public function check_cache_component() {
-        $cache_arr = array();
-        $count = 0;
-        $select_stauts=FALSE;
+    public function check_cache_component($form) {
+
+        $cache_arr = $form['set_cache']['driver'];
+        $select_stauts = FALSE;
         if (extension_loaded('memcache')) {//1
-            $cache_arr[$count] = 'memcache';
-            $cache_arr[$count]["seclet"]=TRUE;
-            $select_stauts=TRUE;
-            $count++;
+            $cache_arr['value']['data']['memcache'] = 'memcache';
+            $cache_arr['value']["select"] = 'memcache';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用memcache";
+            $select_stauts = TRUE;
         }
         if (extension_loaded('apc')) {//2
-            $cache_arr[$count] = 'apc';
-            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
-            $select_stauts=TRUE;
-            $count++;
+            $cache_arr['value']['data']['apc'] = 'apc';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'apc';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用apc";
+            $select_stauts = TRUE;
         }
         if (extension_loaded('eaccelerator')) {//3
-            $cache_arr[$count] = 'eaccelerator';
-            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
-            $select_stauts=TRUE;
-            $count++;
+            $cache_arr['value']['data']['eaccelerator'] = 'eaccelerator';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'eaccelerator';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用eaccelerator";
+            $select_stauts = TRUE;
         }
         if (extension_loaded('memcachetag')) {//5
-            $cache_arr[$count] = 'memcachetag';
-            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
-            $select_stauts=TRUE;
-            $count++;
+            $cache_arr['value']['data']['memcachetag'] = 'memcachetag';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'memcachetag';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用memcachetag";
+            $select_stauts = TRUE;
         }
         if (extension_loaded('xcache')) {//4
-            $cache_arr[$count] = 'xcache';
-            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
-            $select_stauts=TRUE;
-            $count++;
+            $cache_arr['value']['data']['xcache'] = 'xcache';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'xcache';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用xcache";
+            $select_stauts = TRUE;
         }
-        if (extension_loaded('sqlite3')||extension_loaded('sqlite')) {//6
-            $cache_arr[$count] = 'sqlite';
-            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
-            $select_stauts=TRUE;
-            $count++;
+        if (extension_loaded('sqlite3') || extension_loaded('sqlite')) {//6
+            $cache_arr['value']['data']['sqlite'] = 'sqlite';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'sqlite';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用sqlite";
+            $select_stauts = TRUE;
         }
-        if (extension_loaded('file')) {//7
-            $cache_arr[$count] = 'file';
-            $cache_arr[$count]["seclet"]=$select_staut?FALSE:TRUE;
-            $select_stauts=TRUE;
-            $count++;
+        // if (extension_loaded('file')) {//7
+        $cache_arr['value']['data']['file'] = 'file';
+        $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'file';
+        $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用file";
+        $select_stauts = TRUE;
+        $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "找不到相应的缓存组件系统将禁用缓存";
+        $form['set_cache']['is_open']['value']['seclet'] = 0;
+        $form['set_cache']['driver'] = $cache_arr;
+        return $form;
+    }
+    /** ***
+     *  设置缓存和缓存类型
+     * @param <array> $cache_conf_post
+     * @return <bool>
+     */
+    public function set_cache($cache_conf_post) {
+        try {
+            $conf = Kohana::config('applicationconfig');
+            $conf['cache']['driver'] = $cache_conf_post['driver'];
+            $conf['cache']['is_open'] = (bool) $cache_conf_post['is_open'];
+            arr::as_config_file($conf, APPPATH . '/config/applicationconfig.php');
+            return TRUE;
+        } catch (Exception $e) {
+            echo ErrorExceptionReport::_errors_report($e,TRUE);
+            return FALSE;
         }
     }
 

@@ -8,21 +8,21 @@ defined('SYSPATH') or die('No direct script access.');
  * @author Administrator
  */
 class Model_Base {
-    /*     * ****
+
+    /**     * ***
      * 将$post中的值放入 $form中 并返回
      * @param $form array
      * @param $post array
      * @param $is_empty array 设置传空值的项
      * @param $set_continue array 设置跳过不设置值的项
-     * return array
+     * @return array
      */
-
     public static function set_form_value($form, $post, $set_empty=array(), $set_continue=array()) {
         foreach ($form as $key => $value) {
-          
+
             //例外操作
             if (isset($post[$key])) {
-               
+
                 if (in_array($key, $set_empty)) {
                     $post[$key] = "";
                 } elseif (in_array($key, $set_continue)) {
@@ -49,7 +49,6 @@ class Model_Base {
         foreach ($form as $key => $value) {
             if (Validate::not_empty($form[$key]["message"])) {
                 return FALSE;
-                break;
             }
         }
         return TRUE;

@@ -12,48 +12,62 @@ class Database_Setup {
      */
     public function set_db_conf($db_conf_post) {
 
-
         try {
+            $db_confs = Kohana::config("database");
+            $db_conf = $db_confs["default"];
 
-            $db_conf = Kohana::config("database");
-            $db_conf = $db_conf["default"];
             $db_conf["type"] = $db_conf_post["db_type"];
-            $db_conf["connection"]["hostname"] = $db_conf_post["host_name"];
-            $db_conf["connection"]["database"] = $db_conf_post["db_name"];
+            $db_conf["connection"]["hostname"] = trim($db_conf_post["host_name"]);
+            $db_conf["connection"]["database"] = trim($db_conf_post["db_name"]);
             $db_conf["connection"]["username"] = $db_conf_post["user"];
             $db_conf["connection"]["password"] = $db_conf_post["pwd"];
             $db_conf["table_prefix"] = $db_conf_post["table_prefix"];
-            //echo Kohana::debug($db_conf);
-            $config_file = APPPATH . '../module/database/config/database';
-            Arr::as_config_file($db_conf, $config_file);
-            if ($this->create_db($db_conf_post)) {
+
+            $config_file = APPPATH;
+            $config_file = substr($config_file, 0, strlen($config_file) - 12) . 'modules/database/config/database.php';
+
+            $db_confs["default"] = $db_conf;
+
+            Arr::as_config_file($db_confs, $config_file);
+
+            if ($this->exe_sql($db_conf_post, '_setup.sql')) {
+                if ($db_conf_post["add_test_data"] == 0) {
+                    //add _data;
+                    $this->exe_sql($db_conf_post, '_test_data.sql');
+                }
+                  
                 return 'ok';
             } else {
                 return 'error';
             }
         } catch (Exception $e) {
-            ErrorExceptionReport::_errors_report($e);
+            echo ErrorExceptionReport::_errors_report($e, TRUE);
             return 'error';
         }
     }
 
-    public function create_db($db_conf_post) {
+    public function exe_sql($db_conf_post, $sql_file) {
         try {
-            $mysql_db->query("BEGIN WORK");
             $mysql_db = new mysqli($db_conf_post["host_name"], $db_conf_post["user"], $db_conf_post["pwd"]);
-            $filename = APPPATH . 'data/' . $db_conf_post["db_type"] . '_setup.sql';
+            //$mysql_db->set_charset("utf8");
+// $mysql_db->autocommit(false);
+            $filename = APPPATH . 'data/' . $db_conf_post["db_type"] . $sql_file;
             $filename = str_replace("\\", "/", $filename);
-            //fopen($filename, $mode);
+            $mysql_db->query("set names utf8");
             $sql_text = file_get_contents($filename);
             $sql_text = str_replace("{db_name}", $db_conf_post["db_name"], $sql_text);
             $sql_text = str_replace("{table_prefix}", $db_conf_post["table_prefix"], $sql_text);
-            File::create_or_add($filename, $sql_text, 'w+');
-            $mysql_db->query("source " . $filename);
-            $mysql_db->query("COMMIT");
+            $sql_texts = explode(";", $sql_text);
+
+            foreach ($sql_texts as $key => $sql) {
+                $mysql_db->query($sql);
+            }
+
+//  $mysql_db->commit();
             return TRUE;
         } catch (Exception $e) {
-            $mysql_db->query("ROLLBACK");
-            ErrorExceptionReport::_errors_report($e);
+//   $mysql_db->rollback();
+            ErrorExceptionReport::_errors_report($e,TRUE);
             echo $message = "错误信息=>" . date("Y-m-d H:i:s") . ":" . $e->getMessage() . "\n";
             return FALSE;
         }
@@ -66,7 +80,7 @@ class Database_Setup {
         try {
             if ($db_conf_post["db_type"] == "mysql") {
                 $mysql_db = new mysqli($db_conf_post["host_name"], $db_conf_post["user"], $db_conf_post["pwd"]);
-                //$mysql_db = new mysqli("localhost", "daxiniu", "1234562");
+
 
                 if (mysqli_connect_errno ()) {
                     return FALSE;
@@ -78,12 +92,13 @@ class Database_Setup {
                 File::path_mkdirs($filename);
                 echo $filename;
                 $sqlite_db = new SQLite3($filename, SQLITE3_OPEN_CREATE, $db_conf_post["pwd"]);
+
                 $sqlite_db->close();
             }
             return TRUE;
         } catch (Exception $e) {
-            ErrorExceptionReport::_errors_report($e);
-            echo $message = "错误信息=>" . date("Y-m-d H:i:s") . ":" . $e->getMessage() . "\n";
+//  echo $message = "错误信息=>" . date("Y-m-d H:i:s") . ":" . $e->getMessage() . "\n";
+            echo ErrorExceptionReport::_errors_report($e, TRUE);
             return FALSE;
         }
     }
@@ -92,22 +107,24 @@ class Database_Setup {
      * 检测当前服务器支持的数据库
      * @return <type>
      */
-    public function check_db_component() {
-        $db_conf = array();
-        $count = 0;
+    public function check_db_component($form) {
+        $db_type = $form['set_db']['db_type'];
+
         $select_stauts = FALSE;
         if (extension_loaded("mysql")) {
-            $db_conf[$count] = "mysql";
-            $db_conf[$count]["seclet"] = TRUE;
+            $db_type['value']['data']["mysql"] = "mysql";
+            $db_type['value']["select"] = "mysql";
+            $db_type["desc"] = "系统推荐您使用mysql";
             $select_stauts = TRUE;
-            $count++;
         }
         if (extension_loaded("sqlite3")) {
-            $db_conf[$count] = "sqlite3";
-            $db_conf[$count]["seclet"] = $select_staut ? FALSE : TRUE;
-            $count++;
+            $db_type['value']['data']["sqlite3"] = "sqlite3";
+            $db_type['value']["select"] = $select_stauts ? $db_type['value']["select"] : "sqlite3";
+            $db_type["desc"] = $select_stauts ? $db_type["desc"] : "系统推荐您使用sqlite3";
         }
-        return $db_conf;
+        $form['set_db']['db_type'] = $db_type;
+
+        return $form;
     }
 
 }
