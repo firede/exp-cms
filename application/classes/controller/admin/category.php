@@ -73,7 +73,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $id = isset($_GET["id"]) ? $_GET["id"] : "";
         $categoryDb = new Database_Category();
         $categorys = $categoryDb->crumb($id);
-        echo Kohana::debug($categorys);
+    
     }
 
     /**     *

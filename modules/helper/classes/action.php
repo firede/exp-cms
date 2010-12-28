@@ -12,7 +12,6 @@ class Action {
 
     public static function sucess_status($view_data,$performance="") {
         if ($view_data === "none") {
-            echo Kohana::debug($view_data);
             $view_data = array(
                 'success' => FALSE,
                 'message' => $performance.'没有任何此类数据！',
