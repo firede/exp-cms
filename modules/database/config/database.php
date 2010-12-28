@@ -4,8 +4,8 @@ return array
 (
 	'default' => array
 	(
-		//'type'       => 'mysql',
-            'type'       => 'sqlite',
+		'type'       => 'mysql',
+        //    'type'       => 'sqlite',
 		'connection' => array(
 			/**
 			 * The following options are available for MySQL:
