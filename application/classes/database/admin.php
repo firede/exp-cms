@@ -10,7 +10,8 @@ class Database_admin {
      */
 
     public function create($admin) {
-        $save = DB::insert("admin", array("username","password","role"));
+        $admin["password"] = md5($admin["password"]);
+        $save = DB::insert("admin", array("username", "password", "role"));
         $save->values($admin);
         $result = (bool) $save->execute();
         return $result ? "ok" : "error";
@@ -84,6 +85,9 @@ class Database_admin {
         if ($id == null || $id = "") {
             return 'no_id';
         }
+        if (isset($admin["password"])) {
+            $admin["password"] = md5($admin["password"]);
+        }
         //设置查询数据的sql
         $query = DB::select('id', 'username', "password", "role")->from('admin');
         $query->where("id", "=", $id);
@@ -114,7 +118,7 @@ class Database_admin {
         if ($admin["username"] == null || $admin["username"] == "") {
             return 'no_id';
         }
-
+        $admin["password"] = md5($admin["password"]);
         //设置查询数据的sql
         $query = DB::select('id', 'username', "password", "role")->from('admin');
         $query->where('username', "=", $admin["username"])->where('password', "=", $admin["password"]);
@@ -161,6 +165,9 @@ class Database_admin {
         if ($admin == null || count($admin) == 0 || $admin['id'] == null) {
             return 'no_id';
         }
+         if (isset($admin["password"])) {
+            $admin["password"] = md5($admin["password"]);
+        }
         /* 根据需要从请求中取出需要的数据值 */
         $ids = explode(",", $admin['id']);
         $modify = DB::update()->table('admin')->set($admin);
@@ -180,15 +187,15 @@ class Database_admin {
      * @return bool 存在返回FALSE 不存在返回TRUE
      */
     public function check_exist($admin) {
-   
+        
         //设置查询数据的sql
         $query = DB::select(array('COUNT("id")', 'total_admin'))->from('admin');
         $query->where("username", "=", $admin["username"]);
         $admins = $query->execute();
         $admins = $admins->as_array();
         $count = $admins[0]["total_admin"];
-      
-       return $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
+
+        return $count > 0 ? FALSE : TRUE; //存在的话返回FALSE 不存在返回True
     }
 
 }

@@ -17,6 +17,7 @@ class Database_User {
      */
 
     public function create($user) {
+        $user["password"] = md5($user["password"]);
 
         $save = DB::insert("user", array('username', "password", 'email', 'user_type', 'status',
                     'avatar', 'reg_time', 'last_time', 'admin_id'));
@@ -167,7 +168,7 @@ class Database_User {
             $delete->where('user_id', '=', $id);
             $delete->execute();
             return "ok";
-          } catch (Exception $e) {
+        } catch (Exception $e) {
             DB::query(NULL, "ROLLBACK")->execute();
             ErrorExceptionReport::_errors_report($e);
             return "error";
@@ -185,6 +186,9 @@ class Database_User {
             DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
             if (!isset($id)) {
                 return "no_id";
+            }
+            if (isset($user["password"])) {
+                $user["password"] = md5($user["password"]);
             }
             /* 根据需要从请求中取出需要的数据值 */
             $ids = explode(",", $post['id']);
@@ -216,6 +220,9 @@ class Database_User {
             if (!isset($user["id"])) {
                 return "no_id";
             }
+            if (isset($user["password"])) {
+                $user["password"] = md5($user["password"]);
+            }
             $id = $user["id"];
             unset($user["id"]);
             //设置删除数据的sql
@@ -241,6 +248,9 @@ class Database_User {
         try {
             if (!isset($user["id"])) {
                 return "no_id";
+            }
+            if (isset($user["password"])) {
+                $user["password"] = md5($user["password"]);
             }
             $ids = $user["id"];
             unset($user["id"]);
@@ -306,13 +316,14 @@ class Database_User {
      */
 
     public function check_login($user) {
-        if (!isset($id)) {
-            return "no_id";
+        if (isset($user["password"])) {
+            $user["password"] = md5($user["password"]);
         }
         //设置查询数据的sql
         $query = DB::select('id', 'username', "password", 'email', 'user_type', 'status',
                         'avatar', 'reg_time', 'last_time', 'admin_id')->from('user');
-        $query->where("id", "=", $id);
+        $query->where("username", "=", $user["username"]);
+        $query->where("password", "=", $user["password"]);
         $users = $query->execute();
         $users = $users->as_array();
         $count = count($users);
