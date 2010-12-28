@@ -48,7 +48,29 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $this->template = AppCache::app_cache("user_list", $view);
     }
 
-    /*     * **
+	public function action_create() {
+		$form = Kohana::config('admin_user_form');
+        $view = View::factory('smarty:admin/user/create', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache('user_create', $view);
+	}
+
+	public function action_modify() {
+		$form = Kohana::config('admin_user_form');
+		$view = View::factory('smarty:admin/user/modify', array(
+			'form' => $form,
+		));
+
+		$this->template = AppCache::app_cache('user_modify', $view);
+	}
+
+	public function action_modify_post() {
+
+	}
+
+	/*     * **
      * 新增一个用户
      * 测试链接
      * http://daxiniu.com/admin/user/create_post?username=dcc&password=dcc&email=dc2002007z@123.coml&user_type=1&status=0&avatar=&reg_time=&last_time=&admin_id=admin

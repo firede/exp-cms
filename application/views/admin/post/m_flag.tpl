@@ -1,4 +1,4 @@
-<div class="operation-subview">
+<div id="subviewMFlag" class="subview">
 	<div class="desc">请选择您想要进行批量操作的<strong>标记</strong>种类：</div>
 	<div class="form">
 		<label><input type="checkbox" name="flag" value="1" />精华</label>
@@ -14,7 +14,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	var container	= $('.operation-subview'),
+	var container	= $('#subviewMFlag'),
 		cancel		= container.find('.cancel'),
 		btnFlag		= container.find('.js-btn-flag'),
 		btnUnFlag	= container.find('.js-btn-unflag'),

@@ -1,4 +1,4 @@
-<div class="operation-subview">
+<div id="subviewAudit" class="subview">
 	<div class="desc"><strong>审核</strong>批注：</div>
 	<div class="form">
 		<textarea name="operation_desc" cols="26" rows="2"></textarea>
@@ -12,7 +12,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	var container	= $('.operation-subview'),
+	var container	= $('#subviewAudit'),
 		btnPub		= container.find('.js-btn-pub'),
 		btnRej		= container.find('.js-btn-rej'),
 		cancel		= container.find('.cancel'),

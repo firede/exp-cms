@@ -1,10 +1,10 @@
-<div class="subview-preview">
+<div id="subviewPreview" class="subview">
 	<h2 class="title"></h2>
 	<div class="content"></div>
 </div>
 <script type="text/javascript">
 $(document).ready(function () {
-	var container	= $('.subview-preview'),
+	var container	= $('#subviewPreview'),
 		target		= dxn.subView.curTarget.get(),
 		id			= dxn.subView.curParam.get(),
 		baseUrl		= dxn.util.base;

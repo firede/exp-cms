@@ -257,11 +257,19 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->request->response = AppCache::app_cache("post_update_post", $view)->render();
     }
 
+	/**
+     * 切换分类子视图
+     */
+    public function action_change_category() {
+        $view = View::factory('smarty:admin/post/change_category');
+        $this->template = AppCache::app_cache("post_change_category", $view);
+    }
+
     /**
      * 标记功能子视图
      */
     public function action_flag() {
-        View::factory('smarty:admin/post/flag');
+        $view = View::factory('smarty:admin/post/flag');
         $this->template = AppCache::app_cache("post_flag", $view);
     }
 

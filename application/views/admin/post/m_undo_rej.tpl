@@ -1,4 +1,4 @@
-<div class="operation-subview">
+<div id="subviewMUndoRej" class="subview">
 	<div class="desc">你确定要将这些经验<strong>撤销驳回</strong>么？</div>
 	<div class="clearfix">
 		<span class="submit radius_all">确定</span>
@@ -8,7 +8,7 @@
 
 <script type="text/javascript">
 $(document).ready(function () {
-	var container	= $('.operation-subview'),
+	var container	= $('#subviewMUndoRej'),
 		submit		= container.find('.submit'),
 		cancel		= container.find('.cancel'),
 		target		= dxn.subView.curTarget.get(),

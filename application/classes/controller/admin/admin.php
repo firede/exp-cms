@@ -58,7 +58,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $this->template = AppCache::app_cache('admin_create', $view);
     }
 
-    /*     * **
+	/*     * **
      * 新增一个用户
      * 测试链接
      */
@@ -84,8 +84,28 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $view->admins = $view_data;
         $this->request->response = AppCache::app_cache("admin_create", $view)->render();
     }
+	
+	/**
+	 * 修改管理员（展示视图）
+	 */
+	public function action_modify() {
+		$form = Kohana::config('admin_admin_form');
+		$view = View::factory('smarty:admin/admin/modify', array(
+			'form' => $form,
+		));
 
-    /*     * **
+		$this->template = AppCache::app_cache('admin_modify', $view);
+	}
+
+	/**
+	 * 修改管理员（POST）
+	 */
+	public function action_modify_post() {
+	 echo Kohana::debug($_POST);
+	}
+
+
+	/*     * **
      * 通过id获取单个user信息
      */
 
