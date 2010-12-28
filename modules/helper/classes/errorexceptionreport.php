@@ -28,14 +28,15 @@ class ErrorExceptionReport {
         $application = Kohana::config("applicationconfig");
         if (!$application["advanced"]["throw_exception"] == NULL) {
             if ($application["advanced"]["throw_exception"] == "FILE") {
-                File::create_or_add(APPPATH . "/log/" . date("Y/m/d") . "/exception_report.log", $message);
+                File::create_or_add(APPPATH . "/logs/" . date("Y/m/d") . "/exception_report.log", $message);
             } elseif ($application["advanced"]["throw_exception"] == "WEB") {
                 echo nl2br($message);
             } elseif ($application["advanced"]["throw_exception"] == "THROW") {
                 throw $e;
             }
            
-        } if($get_message){//程序中获取错误信息HTML
+        }
+        if($get_message){//程序中获取错误信息HTML
               
                 return nl2br($message);
             }

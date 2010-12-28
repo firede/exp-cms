@@ -44,6 +44,7 @@ class File extends Kohana_File {
                 if (empty($exists_flag[$i])) {//路径为空做了处理
                     continue;
                 }
+                
                 mkdir($exists_flag[$i]);
             }
         }

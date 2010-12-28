@@ -65,7 +65,7 @@ class Model_Post extends Model_Base {
 
         //将原有值保留到表单设置
         $form["create"] = $this->set_form_value($op_data, $post);
-        if ($this->has_error($form)) {
+        if (!$this->has_error($form)) {
             return array(
                 "success" => FALSE,
                 "data" => $form,

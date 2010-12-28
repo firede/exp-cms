@@ -75,7 +75,7 @@ class Model_User extends Model_Base {
         }
         //将原有值保留到表单设置
         $form = $this->set_form_value($op_data, $post, array("password", "re_password"), array());
-        if ($this->has_error($form)) {
+        if (!$this->has_error($form)) {
             return array(
                 "success" => FALSE,
                 "data" => $form,

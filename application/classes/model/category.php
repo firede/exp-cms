@@ -56,7 +56,7 @@ class Model_Category extends Model_Base {
 
         //将原有值保留到表单设置
         $form["create"] = $this->set_form_value($form["create"], $post);
-        if ($this->has_error($form)) {
+        if (!$this->has_error($form)) {
             return array(
                 "success" => FALSE,
                 "data" => $form,
