@@ -114,7 +114,15 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $this->request->response = AppCache::app_cache("user_getuser", $view)->render();
     }
 
-    /*     * ***
+	/**
+	 * 删除用户(GET)
+	 */
+	public function action_del() {
+        $view = View::factory('smarty:admin/user/del');
+        $this->template = AppCache::app_cache("user_del", $view);
+	}
+
+	/*     * ***
      * 通过id删除 指定用户
      */
 

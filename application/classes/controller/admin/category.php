@@ -76,6 +76,14 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
     
     }
 
+	/**
+	 * 删除分类(GET)
+	 */
+	public function action_del() {
+        $view = View::factory('smarty:admin/category/del');
+        $this->template = AppCache::app_cache("category_del", $view);
+	}
+
     /**     *
      * 删除单个分类
      */
