@@ -58,7 +58,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $this->template = AppCache::app_cache('admin_create', $view);
     }
 
-	/*     * **
+    /*     * **
      * 新增一个用户
      * 测试链接
      */
@@ -84,28 +84,49 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $view->admins = $view_data;
         $this->request->response = AppCache::app_cache("admin_create", $view)->render();
     }
-	
-	/**
-	 * 修改管理员（展示视图）
-	 */
-	public function action_modify() {
-		$form = Kohana::config('admin_admin_form');
-		$view = View::factory('smarty:admin/admin/modify', array(
-			'form' => $form,
-		));
 
-		$this->template = AppCache::app_cache('admin_modify', $view);
-	}
+    /**
+     * 修改管理员（展示视图）
+     */
+    public function action_modify($id) {
+       
+        $form = Kohana::config('admin_admin_form');
+        $adminDb = new Database_Admin();
+        $data_arr = $adminDb->get_admin(array("id"=>$id));
+        $form = Action::build_form_data($form, $data_arr);
+        $view = View::factory('smarty:admin/admin/modify', array(
+                    'form' => $form,
+                ));
 
-	/**
-	 * 修改管理员（POST）
-	 */
-	public function action_modify_post() {
-	 echo Kohana::debug($_POST);
-	}
+        $this->template = AppCache::app_cache('admin_modify', $view);
+    }
 
+    /**
+     * 修改管理员（POST）
+     */
+    public function action_modify_post() {
+        $m_admin = new Model_Admin();
+        $validate_result = $m_admin->post_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/admin/modify', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('admin_modify', $view);
+            return;
+        }
+        $adminDb = new Database_Admin();
+        $arr_element_names = array('id','username', 'password', 'role');
 
-	/*     * **
+        $admin = Arr::filter_Array($_POST, $arr_element_names);
+        $view_data = $adminDb->modify($admin);
+        $view_data = Action::sucess_status($view_data);
+        
+        $view = View::factory('smarty:');
+        $view->admins = $view_data;
+        $this->request->response = AppCache::app_cache("admin_modify_post", $view)->render();
+    }
+
+    /*     * **
      * 通过id获取单个user信息
      */
 
@@ -119,13 +140,13 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $this->request->response = AppCache::app_cache("admin_getAdmin", $view)->render();
     }
 
-	/**
-	 * 删除管理员(GET)
-	 */
-	public function action_del() {
+    /**
+     * 删除管理员(GET)
+     */
+    public function action_del() {
         $view = View::factory('smarty:admin/admin/del');
         $this->template = AppCache::app_cache("admin_del", $view);
-	}
+    }
 
     /*     * ***
      * 通过id删除 指定用户

@@ -30,7 +30,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
 
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $user = Arr::filter_Array($_GET, $arr_element_names);
-  
+
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $users = $userDb->query_list($user, $pageparam, $sort);
         $users = Action::sucess_status($users);
@@ -48,29 +48,52 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $this->template = AppCache::app_cache("user_list", $view);
     }
 
-	public function action_create() {
-		$form = Kohana::config('admin_user_form');
+    public function action_create() {
+        $form = Kohana::config('admin_user_form');
         $view = View::factory('smarty:admin/user/create', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache('user_create', $view);
-	}
+    }
 
-	public function action_modify() {
-		$form = Kohana::config('admin_user_form');
-		$view = View::factory('smarty:admin/user/modify', array(
-			'form' => $form,
-		));
+    public function action_modify($id) {
+        $form = Kohana::config('admin_user_form');
+        $userDb = new Database_User();
+        $data_arr = $userDb->get_user($id);
+        $form = Action::build_form_data($form, $data_arr);
+        $view = View::factory('smarty:admin/user/modify', array(
+                    'form' => $form,
+                ));
 
-		$this->template = AppCache::app_cache('user_modify', $view);
-	}
+        $this->template = AppCache::app_cache('user_modify', $view);
+    }
 
-	public function action_modify_post() {
+    public function action_modify_post() {
+             $m_user = new Model_User();
+        $validate_result = $m_user->post_validate($_POST);
+        if (isset($validate_result["success"])) {
+            $view = View::factory('smarty:admin/user/modify', array(
+                        'form' => $validate_result["data"],
+                    ));
+            $this->template = AppCache::app_cache('user_modify', $view);
+            return;
+        }
+        $userDb = new Database_User();
+        $arr_element_names =
+                array('id', 'username', "password", 'email', 'user_type', 'status',
+                    'avatar', 'reg_time', 'last_time', 'admin_id',);
 
-	}
+        $user = Arr::filter_Array($_GET, $arr_element_names);
+        $view_data = $userDb->modify($user);
+        $view_data = Action::sucess_status($view_data);
 
-	/*     * **
+        $view = View::factory('smarty:');
+        $view->users = $view_data;
+        $this->request->response = AppCache::app_cache("user_modify_post", $view)->render();
+    }
+
+    /*     * **
      * 新增一个用户
      * 测试链接
      * http://daxiniu.com/admin/user/create_post?username=dcc&password=dcc&email=dc2002007z@123.coml&user_type=1&status=0&avatar=&reg_time=&last_time=&admin_id=admin
@@ -114,15 +137,15 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $this->request->response = AppCache::app_cache("user_getuser", $view)->render();
     }
 
-	/**
-	 * 删除用户(GET)
-	 */
-	public function action_del() {
+    /**
+     * 删除用户(GET)
+     */
+    public function action_del() {
         $view = View::factory('smarty:admin/user/del');
         $this->template = AppCache::app_cache("user_del", $view);
-	}
+    }
 
-	/*     * ***
+    /*     * ***
      * 通过id删除 指定用户
      */
 
@@ -140,7 +163,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      */
 
     public function action_m_del_post() {
-   
+
         $userDb = new Database_User();
         $view_data = $userDb->delete($_POST["id"]);
         $view_data = Action::sucess_status($view_data);
