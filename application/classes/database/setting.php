@@ -84,13 +84,28 @@ class Database_Setting {
             return "error";
         }
     }
-    /** **
+
+    /**     * *
      * 获取模块配置
      * @param <string> $module
      * @return <array>
      */
-    public function  get_configs($module="site"){
-        
+    public function get_configs($module="site") {
+        try {
+            $select = DB::select()->from("sys_config");
+            $select->where("module", "=", $module);
+            $conf_list = $select->execute();
+            $application = array();
+            foreach ($conf_list as $key => $val) {
+                $application[$val["module"]][$val["key_name"]] = $val["conf_value"];
+            }
+            return array(
+                "result" => $application
+            );
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
+            return "error";
+        }
     }
 
 }

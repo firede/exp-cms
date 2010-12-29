@@ -41,22 +41,23 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $set_Db->db_to_cache();
     }
 
-	/**
-	 * 更新网站配置(GET)
-	 */
-	public function action_site() {
+    /**
+     * 更新网站配置(GET)
+     */
+    public function action_site() {
         $form = Kohana::config('admin_setting_form.site');
         $setting_db = new Database_Setting();
-        //$setting_db->
+        $data_arr = $setting_db->get_configs();
+        $form = Action::build_form_data($form, $data_arr["result"]['site']);
         $view = View::factory('smarty:admin/setting/site', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache("setting_site", $view);
-	}
+    }
 
     /**     * *
-     * 更新网站配置
+     * 更新网站配置是
      */
     public function action_site_post() {
         $m_setting = new Model_Setting();
@@ -78,20 +79,22 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 更新缓存配置(GET)
-	 */
-	public function action_cache() {
+    /**
+     * 更新缓存配置(GET)
+     */
+    public function action_cache() {
         $form = Kohana::config('admin_setting_form.cache');
-
+        $setting_db = new Database_Setting();
+        $data_arr = $setting_db->get_configs('cache');
+        $form = Action::build_form_data($form, $data_arr["result"]['cache']);
         $view = View::factory('smarty:admin/setting/cache', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache("setting_cache", $view);
-	}
+    }
 
-	/**     * *
+    /**     * *
      * 更新缓存配置
      */
     public function action_cache_post() {
@@ -113,18 +116,20 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 上传图片配置(GET)
-	 */
-	public function action_up_img() {
+    /**
+     * 上传图片配置(GET)
+     */
+    public function action_up_img() {
         $form = Kohana::config('admin_setting_form.up_img');
-
+        $setting_db = new Database_Setting();
+        $data_arr = $setting_db->get_configs('up_img');
+        $form = Action::build_form_data($form, $data_arr["result"]['up_img']);
         $view = View::factory('smarty:admin/setting/up_img', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache("setting_up_img", $view);
-	}
+    }
 
     /**     * *
      * 更新上传图片配置
@@ -148,18 +153,20 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 上传文件配置(GET)
-	 */
-	public function action_up_file() {
+    /**
+     * 上传文件配置(GET)
+     */
+    public function action_up_file() {
         $form = Kohana::config('admin_setting_form.up_file');
-
+        $setting_db = new Database_Setting();
+        $data_arr = $setting_db->get_configs('up_file');
+        $form = Action::build_form_data($form, $data_arr["result"]['up_file']);
         $view = View::factory('smarty:admin/setting/up_file', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache("setting_up_file", $view);
-	}
+    }
 
     /**     * *
      * 更新上传文件配置
@@ -183,18 +190,20 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 用户配置(GET)
-	 */
-	public function action_user() {
+    /**
+     * 用户配置(GET)
+     */
+    public function action_user() {
         $form = Kohana::config('admin_setting_form.user');
-
+        $setting_db = new Database_Setting();
+        $data_arr = $setting_db->get_configs('user');
+        $form = Action::build_form_data($form, $data_arr["result"]['user']);
         $view = View::factory('smarty:admin/setting/user', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache("setting_user", $view);
-	}
+    }
 
     /**     * *
      * 更新用户相关配置
@@ -218,18 +227,20 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 文章配置(GET)
-	 */
-	public function action_post() {
+    /**
+     * 文章配置(GET)
+     */
+    public function action_post() {
         $form = Kohana::config('admin_setting_form.post');
-
+        $setting_db = new Database_Setting();
+        $data_arr = $setting_db->get_configs('post');
+        $form = Action::build_form_data($form, $data_arr["result"]['post']);
         $view = View::factory('smarty:admin/setting/post', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache("setting_post", $view);
-	}
+    }
 
     /**     * *
      * 更新文章相关配置
@@ -253,18 +264,20 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 高级选项配置(GET)
-	 */
-	public function action_advanced() {
+    /**
+     * 高级选项配置(GET)
+     */
+    public function action_advanced() {
         $form = Kohana::config('admin_setting_form.advanced');
-
+        $setting_db = new Database_Setting();
+        $data_arr = $setting_db->get_configs('advanced');
+        $form = Action::build_form_data($form, $data_arr["result"]['advanced']);
         $view = View::factory('smarty:admin/setting/advanced', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache("setting_advanced", $view);
-	}
+    }
 
     /**     * *
      * 更新高级选项相关配置

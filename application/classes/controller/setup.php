@@ -170,7 +170,7 @@ class Controller_setup extends Controller_Base {
 
     public function set_status($status) {
         $app_conf = Kohana::config("applicationconfig");
-        $app_conf["app"]["setup"]["status"] = $status;
+        $app_conf["app"]["setup.status"] = $status;
         Arr::as_config_file($app_conf, APPPATH . "/config/applicationconfig.php");
     }
 
