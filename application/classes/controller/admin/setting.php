@@ -147,6 +147,19 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
+	/**
+	 * 上传文件配置(GET)
+	 */
+	public function action_up_file() {
+        $form = Kohana::config('admin_setting_form.up_file');
+
+        $view = View::factory('smarty:admin/setting/up_file', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache("setting_up_file", $view);
+	}
+
     /**     * *
      * 更新上传文件配置
      */
@@ -168,6 +181,19 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
+
+	/**
+	 * 用户配置(GET)
+	 */
+	public function action_user() {
+        $form = Kohana::config('admin_setting_form.user');
+
+        $view = View::factory('smarty:admin/setting/user', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache("setting_user", $view);
+	}
 
     /**     * *
      * 更新用户相关配置

@@ -587,14 +587,17 @@ a:hover {
 .form-table {
 	width:100%;
 	background:#F5FAFC;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
 }
 .form-table th {
 	vertical-align: top;
 	text-align: left;
 	font-size: 12px;
+	font-weight: 400;
 	width:110px;
 	padding: 5px;
-	color:#333;
+	color:#4D6171;
 }
 .form-table td {
 	padding:5px;
@@ -637,7 +640,17 @@ a:hover {
 .setting-menu li {
 	list-style: none;
 	margin: 0;
-	padding:0 6px;
+	padding:3px 6px;
 	float:left;
 	display: inline;
+}
+
+.setting-menu .selected {
+	background: #FFF;
+}
+
+.setting-menu .selected a {
+	color:#000;
+	font-weight: 700;
+	text-decoration: none;
 }

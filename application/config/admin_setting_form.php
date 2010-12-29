@@ -16,11 +16,13 @@ return array(
             'label' => '网站根地址',
             'type' => 'text',
             'name' => 'basehost',
+			'value' => '/',
         ),
         'indexurl' => array(
             'label' => '首页地址',
             'type' => 'text',
             'name' => 'indexurl',
+			'value' => '/',
         ),
 		'default_style' => array(
 			'label' => '默认风格',
@@ -88,6 +90,7 @@ return array(
 			),
 		),
 	),
+	// 图片上传设置
 	'up_img' => array(
 		'path' => array(
 			'label' => '保存路径',
@@ -128,7 +131,7 @@ return array(
 			'label' => '允许的图片类型',
 			'name' => 'type',
 			'type' => 'text',
-			'desc' => '用逗号分割允许的后缀，如：jpg,gif,png',
+			'desc' => '多个后缀用逗号分隔，如：jpg,gif,png',
 			'value' => 'jpg,jpeg,png,gif,bmp',
 		),
 		'watermark_status' => array(
@@ -171,5 +174,37 @@ return array(
 			'value' => '10',
 		),
 	),
+	// 文件上传设置
+	'up_file' => array(
+		'path' => array(
+			'label' => '保存路径',
+			'type' => 'text',
+			'name' => 'path',
+			'desc' => '相对于程序目录的路径',
+			'value' => '/upload/file',
+		),
+		'max_size' => array(
+			'label' => '文件大小最大值',
+			'name' => 'max_size',
+			'type' => 'text',
+			'desc' => '单位KB',
+			'value' => '2048',
+		),
+		'min_size' => array(
+			'label' => '文件大小最小值',
+			'name' => 'min_size',
+			'type' => 'text',
+			'desc' => '单位KB',
+			'value' => '0',
+		),
+		'type' => array(
+			'label' => '允许的文件类型',
+			'name' => 'type',
+			'type' => 'text',
+			'desc' => '多个后缀用逗号分隔，如：doc,pdf,zip,rar',
+			'value' => 'doc,pdf,zip,rar,7z,ppt,csv',
+		),
+	),
+	
 );
 ?>

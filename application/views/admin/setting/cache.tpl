@@ -3,9 +3,9 @@
 <div class="grid_21">
 	<ul class="setting-menu clearfix radius_all">
 		<li><a href="<{$BASE_URL}>admin/setting/site">网站设置</a></li>
-		<li><a href="<{$BASE_URL}>admin/setting/cache">缓存设置</a></li>
+		<li class="selected"><a href="<{$BASE_URL}>admin/setting/cache">缓存设置</a></li>
 		<li><a href="<{$BASE_URL}>admin/setting/up_img">图片上传设置</a></li>
-		<li><a href="<{$BASE_URL}>admin/setting/file_img">文件上传设置</a></li>
+		<li><a href="<{$BASE_URL}>admin/setting/up_file">文件上传设置</a></li>
 		<li><a href="<{$BASE_URL}>admin/setting/user">用户设置</a></li>
 		<li><a href="<{$BASE_URL}>admin/setting/post">经验设置</a></li>
 		<li><a href="<{$BASE_URL}>admin/setting/advanced">高级选项设置</a></li>
