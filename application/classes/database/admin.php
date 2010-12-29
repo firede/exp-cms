@@ -89,30 +89,37 @@ class Database_admin {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function get_admin($id) {
-        if ($id == null || $id = "") {
-            return 'no_id';
-        }
-        if (isset($admin["password"])) {
-            $admin["password"] = md5($admin["password"]);
-        }
-        //设置查询数据的sql
-        $query = DB::select('id', 'username', "password", "role")->from('admin');
-        $query->where("id", "=", $id);
-        $admins = $query->execute();
-        $admins = $users->as_array();
-        $count = count($users);
-        //加入一些业务值，特殊业务值的替换或者加入
-        for ($i = 0; $i < count($admins); $i++) {
+    public function get_admin($admin) {
+        try {
+            if ($admin["id"] == null || $admin["id"] == "") {
+                return 'no_id';
+            }
+            if (isset($admin["password"])) {
+                $admin["password"] = md5($admin["password"]);
+            }
+          
+            //设置查询数据的sql
+            $query = DB::select('id', 'username', "password", "role")->from('admin');
+            $query->where("id", "=", $admin["id"]);
+            $admins = $query->execute();
+            $admins = $admins->as_array();
+             
+            $count = count($admins);
+            //加入一些业务值，特殊业务值的替换或者加入
+            for ($i = 0; $i < count($admins); $i++) {
 
-            $admins[$i]["role_name"] = Sysconfig_Business::admin_Role($users[$i]["role"]);
-            $admins[$i]["password"] = "";
+                $admins[$i]["role_name"] = Sysconfig_Business::admin_Role($admins[$i]["role"]);
+                $admins[$i]["password"] = "";
+            }
+            // echo Kohana::debug($count);
+            if ($count > 0)
+                return $data = array('result' => $admins,);
+            else
+                return 'none';
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
+            return "error";
         }
-        // echo Kohana::debug($count);
-        if ($count > 0)
-            return $data = array('result' => $users,);
-        else
-            return 'none';
     }
 
     /**     *
