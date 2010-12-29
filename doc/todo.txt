@@ -1,0 +1,9 @@
+[缺失功能]
+
+* 修改用户、管理员等信息时，回填已存在的值
+
+[待修复问题]
+
+* 删除管理员提示success:false（admin/admin/del_post）
+* 删除用户提示success:false（admin/user/del_post）
+* 删除分类提示success:false（admin/category/del_post）
