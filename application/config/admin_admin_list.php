@@ -18,7 +18,7 @@ return array(
 			'label'     => '管理员用户名',
 			'width'     => '450',
 			'template'  => 'link',
-			'prefix'    => array('admin/user/modify/'),
+			'prefix'    => array('admin/admin/modify/'),
 			'data'      => 'id,username',
 			'order_by'  => 'username',
 		),
