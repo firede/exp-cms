@@ -7,7 +7,7 @@
 		<li><a href="<{$BASE_URL}>admin/setting/up_img">图片上传设置</a></li>
 		<li><a href="<{$BASE_URL}>admin/setting/up_file">文件上传设置</a></li>
 		<li class="selected"><a href="<{$BASE_URL}>admin/setting/user">用户设置</a></li>
-		<li><a href="<{$BASE_URL}>admin/setting/post">经验设置</a></li>
+		<li><a href="<{$BASE_URL}>admin/setting/post">文章设置</a></li>
 		<li><a href="<{$BASE_URL}>admin/setting/advanced">高级选项设置</a></li>
 	</ul>
 	<h2 class="form-title">用户设置</h2>

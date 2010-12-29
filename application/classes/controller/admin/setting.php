@@ -218,6 +218,19 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
+	/**
+	 * 文章配置(GET)
+	 */
+	public function action_post() {
+        $form = Kohana::config('admin_setting_form.post');
+
+        $view = View::factory('smarty:admin/setting/post', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache("setting_post", $view);
+	}
+
     /**     * *
      * 更新文章相关配置
      */
@@ -239,6 +252,19 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
+
+	/**
+	 * 高级选项配置(GET)
+	 */
+	public function action_advanced() {
+        $form = Kohana::config('admin_setting_form.advanced');
+
+        $view = View::factory('smarty:admin/setting/advanced', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache("setting_advanced", $view);
+	}
 
     /**     * *
      * 更新高级选项相关配置
