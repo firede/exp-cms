@@ -84,6 +84,14 @@ class Database_Setting {
             return "error";
         }
     }
+    /** **
+     * 获取模块配置
+     * @param <string> $module
+     * @return <array>
+     */
+    public function  get_configs($module="site"){
+        
+    }
 
 }
 

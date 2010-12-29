@@ -46,7 +46,8 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
 	 */
 	public function action_site() {
         $form = Kohana::config('admin_setting_form.site');
-
+        $setting_db = new Database_Setting();
+        //$setting_db->
         $view = View::factory('smarty:admin/setting/site', array(
                     'form' => $form,
                 ));
