@@ -1,17 +1,27 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8" />
-	<link rel="stylesheet" href="<{$BASE_URL}>assets/common/960gs.css" />
-	<title>登录</title>
-</head>
-<body>
-	<div class="container_24">
+<{include file="admin/base/header.tpl"}>
+<{include file="admin/base/aside.tpl"}>
+<div class="grid_21">
+	<h2>用户登录</h2>
+	<div class="form-table-wrap">
 		<form action="<{$BASE_URL}>admin/auth/login_post" method="POST">
-			<div>用户名：<input type="text" name="username" /></div>
-			<div>密　码：<input type="password" name="password" /></div>
+			<table class="form-table">
+				<{form data=$form}>
+			</table>
 			<div><input type="submit" value="登录" /></div>
 		</form>
 	</div>
-</body>
-</html>
+</div>
+
+<script type="text/javascript">
+	<{* 页面环境变量&配置 *}>
+	var dxn = window.dxn || {};
+	dxn.PAGEENV = {
+		"base": "<{$BASE_URL|escape:javascript}>",
+		"param": <{$URL_PARAMS}>,
+		"version": "<{$VERSION}>"
+	};
+</script>
+
+<script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/admin.js"></script>
+
+<{include file="admin/base/footer.tpl"}>

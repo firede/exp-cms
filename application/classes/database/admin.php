@@ -107,7 +107,7 @@ class Database_admin {
             return 'none';
     }
 
-    /*     * *
+    /** *
      * 管理员登录检测
      * @$id <int> 用户id
      * @return <array> 用户信息
@@ -123,7 +123,6 @@ class Database_admin {
         $query = DB::select('id', 'username', "password", "role")->from('admin');
         $query->where('username', "=", $admin["username"])->where('password', "=", $admin["password"]);
         $admins = $query->execute();
-
         $admins = $admins->as_array();
         $count = count($admins);
         //加入一些业务值，特殊业务值的替换或者加入
@@ -136,7 +135,7 @@ class Database_admin {
         if ($count > 0)
             return $data = array('result' => $admins,);
         else
-            return 'none';
+            return FALSE;
     }
 
     /*     * ***
