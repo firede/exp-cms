@@ -4,9 +4,9 @@
  * 表单配置
  */
 return array(
-    // 系统设置
-    'system' => array(
-        'siteTitle' => array(
+    // 网站设置
+    'site' => array(
+        'webname' => array(
             'label' => '站点标题',
             'type' => 'text', // text,password,textarea,option,checkbox
             'name' => 'siteTitle', // 表单的name，提交时用的字段
@@ -14,7 +14,7 @@ return array(
             'value' => '', // 表单的默认值/回填值
             'message' => '', // 表单反馈的错误信息
         ),
-        'siteUrl' => array(
+        'basehost' => array(
             'label' => '站点地址',
             'type' => 'text',
             'name' => 'siteUrl',

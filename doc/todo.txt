@@ -7,3 +7,4 @@
 * 删除管理员提示success:false（admin/admin/del_post）
 * 删除用户提示success:false（admin/user/del_post）
 * 删除分类提示success:false（admin/category/del_post）
+* 管理员列表不能排序

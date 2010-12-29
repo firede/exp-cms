@@ -4,16 +4,6 @@ defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
 
-    public function action_system() {
-        $form = Kohana::config('admin_setting_form.system');
-
-        $view = View::factory('smarty:admin/setting/system', array(
-                    'form' => $form,
-                ));
-
-        $this->template = AppCache::app_cache("setting_system", $view);
-    }
-
     public function action_query_list() {
         
     }
@@ -50,6 +40,19 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $set_Db = new Database_Setting();
         $set_Db->db_to_cache();
     }
+
+	/**
+	 * 更新网站配置(GET)
+	 */
+	public function action_site() {
+        $form = Kohana::config('admin_setting_form.site');
+
+        $view = View::factory('smarty:admin/setting/site', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache("setting_site", $view);
+	}
 
     /**     * *
      * 更新网站配置
