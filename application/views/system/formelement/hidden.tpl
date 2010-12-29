@@ -1,0 +1,1 @@
+<input type="hidden" value="<{$_formel.value|default}>" name="<{$_formel.name|default}>" style="display:none;">
