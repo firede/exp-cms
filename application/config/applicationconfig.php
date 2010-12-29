@@ -54,7 +54,7 @@
          "title_repeat" => TRUE,
     ),
      "advanced" =>array(
-         "throw_exception" => "NULL",
+         "throw_exception" => "THROW",
     ),
      "app" =>array(
          "setup" => array(

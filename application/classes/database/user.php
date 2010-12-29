@@ -160,13 +160,15 @@ class Database_User {
                 return "no_id";
             }
             //设置删除数据的sql
-            $delete = DB::delete()->table('user');
+            $delete = DB::delete('user');
             $delete->where("id", "=", $id);
             $delete->execute();
+
             //同时删除与之相关的文章
-            $delete_post = DB::delete()->table('post');
-            $delete->where('user_id', '=', $id);
-            $delete->execute();
+            $delete_post = DB::delete('post');
+            $delete_post->where('user_id', '=', $id);
+            $delete_post->execute();
+            DB::query(NULL, "COMMIT")->execute();
             return "ok";
         } catch (Exception $e) {
             DB::query(NULL, "ROLLBACK")->execute();
@@ -198,8 +200,8 @@ class Database_User {
             $delete->execute();
             //同时删除与之相关的文章
             $delete_post = DB::delete()->table('post');
-            $delete->where('user_id', 'in', $ids);
-            $delete->execute();
+            $delete_post->where('user_id', 'in', $ids);
+            $delete_post->execute();
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
         } catch (Exception $e) {

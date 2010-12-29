@@ -58,3 +58,13 @@ INSERT INTO `{table_prefix}user` (`id`, `username`, `password`, `email`, `user_t
 (29, '657', '435', '22@163.com', 1, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 07:02:28', '2010-11-14 07:02:52', '0'),
 (30, '66', '66', '66@dw.com', 0, 0, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-14 11:23:24', '2010-11-14 11:23:48', '0'),
 (31, '123', '23432', '66@dw.com', 0, 1, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-17 03:04:09', '2010-11-17 03:04:33', '0');
+
+INSERT INTO `{table_prefix}category` (`id`, `name`, `short_name`, `parent_id`, `sort`) VALUES
+(1, '少林足球', 'shaolinzuqiu', -1, 0),
+(2, '游戏', 'games', -1, 0),
+(3, '电影', 'movie', -1, 0),
+(4, '魔兽世界', 'wow', 2, 50),
+(5, '魔兽争霸', 'war3', 2, 51),
+(6, '植物大战僵尸', 'pvz', 2, 0),
+(7, '巫妖王之怒', 'dk', 4, 0),
+(8, '燃烧的远征', 'fire', 4, 0)

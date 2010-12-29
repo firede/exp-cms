@@ -140,9 +140,9 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
      */
 
     public function action_m_del_post() {
-        $id = isset($_POST["id"]) ? $_POST["id"] : "";
+   
         $userDb = new Database_User();
-        $view_data = $userDb->delete($id);
+        $view_data = $userDb->delete($_POST["id"]);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
