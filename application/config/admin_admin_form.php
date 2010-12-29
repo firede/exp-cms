@@ -5,11 +5,6 @@
  */
 return array(
 	'default' => array(
-		'id' => array(
-			'label' => 'ID',
-			'type' => 'hidden',
-			'name' => 'id',
-		),
 		'username' => array(
 			'label' => '管理员用户名',
 			'type' => 'text',
@@ -46,8 +41,8 @@ return array(
 			'value' => array(
 				"select" => "0",
 				"data" => array(
-					'0' => '超级管理员',
-					'1' => '版主',
+					'0' => '编辑',
+					'1' => '超级管理员',
 				),
 			),
 			'message' => '',
