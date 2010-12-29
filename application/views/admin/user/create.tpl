@@ -1,7 +1,7 @@
 <{include file="admin/base/header.tpl"}>
 <{include file="admin/base/aside.tpl"}>
 <div class="grid_21">
-	<h2>新建用户</h2>
+	<h2 class="form-title">新建用户</h2>
 	<div class="form-table-wrap">
 		<form action="<{$BASE_URL}>admin/user/create_post" method="POST">
 			<table class="form-table">

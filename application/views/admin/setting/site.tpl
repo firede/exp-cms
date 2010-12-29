@@ -1,9 +1,18 @@
 <{include file="admin/base/header.tpl"}>
 <{include file="admin/base/aside.tpl"}>
 <div class="grid_21">
-	<h2>系统设置</h2>
+	<ul class="setting-menu clearfix radius_all">
+		<li><a href="<{$BASE_URL}>admin/setting/site">网站设置</a></li>
+		<li><a href="<{$BASE_URL}>admin/setting/cache">缓存设置</a></li>
+		<li><a href="<{$BASE_URL}>admin/setting/up_img">图片上传设置</a></li>
+		<li><a href="<{$BASE_URL}>admin/setting/file_img">文件上传设置</a></li>
+		<li><a href="<{$BASE_URL}>admin/setting/user">用户设置</a></li>
+		<li><a href="<{$BASE_URL}>admin/setting/post">经验设置</a></li>
+		<li><a href="<{$BASE_URL}>admin/setting/advanced">高级选项设置</a></li>
+	</ul>
+	<h2 class="form-title">网站设置</h2>
 	<div class="form-table-wrap">
-		<form action="<{$BASE_URL}>admin/setting/system_post" method="POST">
+		<form action="<{$BASE_URL}>admin/setting/site_post" method="POST">
 			<table class="form-table">
 				<{form data=$form}>
 			</table>

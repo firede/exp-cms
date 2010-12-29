@@ -1,7 +1,7 @@
 <{include file="admin/base/header.tpl"}>
 <{include file="admin/base/aside.tpl"}>
 <div class="grid_21">
-	<h2>修改用户</h2>
+	<h2 class="form-title">修改用户</h2>
 	<div class="form-table-wrap">
 		<form action="<{$BASE_URL}>admin/user/modify_post" method="POST">
 			<table class="form-table">

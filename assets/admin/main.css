@@ -586,21 +586,24 @@ a:hover {
 }
 .form-table {
 	width:100%;
+	background:#F5FAFC;
 }
 .form-table th {
 	vertical-align: top;
 	text-align: left;
-	font-size: 14px;
+	font-size: 12px;
 	width:110px;
 	padding: 5px;
+	color:#333;
 }
 .form-table td {
 	padding:5px;
 	vertical-align: top;
+	background:#FFF;
 }
 .form-table .desc {
 	color:#999;
-	padding-left:15px;
+	padding-left:12px;
 }
 .form-table .message {
 	color:red;
@@ -612,4 +615,29 @@ a:hover {
 .form-table textarea {
 	border: 1px solid #999;
 	margin:0;
+}
+
+/* form title */
+.form-title {
+	font-size:20px;
+	font-weight:700;
+	font-style:italic;
+	color:#0073B3;
+	padding:0;
+	margin:0 0 10px 0;
+}
+
+/* setting menu */
+.setting-menu {
+	border:1px solid #ACCAE4;
+	padding:5px;
+	background:#F5FAFC;
+	margin:0 0 10px 0;
+}
+.setting-menu li {
+	list-style: none;
+	margin: 0;
+	padding:0 6px;
+	float:left;
+	display: inline;
 }
