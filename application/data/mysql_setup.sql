@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `{table_prefix}attachment` (
   `uuid` varchar(32) COLLATE utf8_bin NOT NULL,
   `file_size` int(11) NOT NULL DEFAULT '0',
   `use_type` int(3) DEFAULT '0',
-  `status` int(3) DEFAULT '0',
+  `user_id` int(11) DEFAULT '0',
   `file_type` varchar(32) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=0 ;
