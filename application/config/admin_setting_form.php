@@ -60,5 +60,33 @@ return array(
 			'desc' => '没有则不填',
 		),
     ),
+	// 缓存设置
+	'cache' => array(
+		'is_open' => array(
+			'label' => '是否启用缓存',
+			'name' => 'is_open',
+			'type' => 'select',
+			'value' => array(
+				'select' => '0',
+				'data' => array(
+					'0' => '关闭',
+					'1' => '启用',
+				),
+			),
+		),
+		'driver' => array(
+			'label' => '缓存组件',
+			'name' => 'driver',
+			'type' => 'select',
+			'value' => array(
+				'select' => 'apc',
+				'data' => array(
+					'apc' => 'APC',
+					'sqlite' => 'sqlite',
+					'file' => '文件',
+				),
+			),
+		),
+	),
 );
 ?>

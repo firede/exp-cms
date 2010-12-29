@@ -77,7 +77,20 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-    /**     * *
+	/**
+	 * 更新缓存配置(GET)
+	 */
+	public function action_cache() {
+        $form = Kohana::config('admin_setting_form.cache');
+
+        $view = View::factory('smarty:admin/setting/cache', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache("setting_cache", $view);
+	}
+
+	/**     * *
      * 更新缓存配置
      */
     public function action_cache_post() {
