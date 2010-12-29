@@ -10,11 +10,17 @@ class Database_admin {
      */
 
     public function create($admin) {
-        $admin["password"] = md5($admin["password"]);
-        $save = DB::insert("admin", array("username", "password", "role"));
-        $save->values($admin);
-        $result = (bool) $save->execute();
-        return $result ? "ok" : "error";
+
+        try {
+            $admin["password"] = md5($admin["password"]);
+            $save = DB::insert("admin", array("username", "password", "role"));
+            $save->values($admin);
+            $save->execute();
+            return 'ok';
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
+            return 'error';
+        }
     }
 
     /*     * **
@@ -25,7 +31,7 @@ class Database_admin {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($admin, $page_Param) {
+    public function query_list($admin, $page_Param, $sort) {
         $query = DB::select(array('COUNT("id")', 'total_admin'))->from('admin');
         foreach ($admin as $filedName => $filedvalue) {
             if (isset($filedvalue))
@@ -46,7 +52,9 @@ class Database_admin {
                     $query->where('admin.' . $filedName, "like", "%" . $filedvalue . "%");
                 }
         }
-
+        if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
+            $query->order_by($sort["order_by"], $sort["sort_type"]);
+        }
         if (!isset($page_Param["items_per_page"])) {
             $page_Param["items_per_page"] = 20;
         }
