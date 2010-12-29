@@ -8,17 +8,17 @@ return array(
 	'primary' => 'id',
 	// 显示字段（列表表格所显示的列）
 	'column' => array(
-		'select'	    => array(
-			'label'     => '选择',
+		'id' => array(
+			'label'     => 'ID',
 			'width'     => '30',
-			'template'  => 'checkbox',
+			'template'  => 'text',
 			'data'      => 'id',
 		),
 		'username'		    => array(
 			'label'     => '用户名',
 			'width'     => '180',
 			'template'  => 'link',
-			'prefix'    => array('admin/user/edit?id='),
+			'prefix'    => array('admin/user/modify?id='),
 			'data'      => 'id,username',
 			'order_by'  => 'username',
 		),
@@ -62,20 +62,11 @@ return array(
 	'operation'=> array(
 		'user-modify'    => array(
 			'title'     => '修改',
-			'action'    => 'admin/user/modify',
+			'action'    => 'admin/user/edit',
 		),
 		'user-del'       => array(
 			'title'     => '删除',
 			'action'    => 'admin/user/del',
-		),
-	),
-	// 批量操作（批量操作允许的功能）
-	'muti_operation' => array(
-		'select'    => array('title' => '全选'),
-		'inverse'   => array('title' => '反选'),
-		'user-del'       => array(
-			'title'     => '删除',
-			'action'    => 'admin/user/m_del',
 		),
 	),
 );

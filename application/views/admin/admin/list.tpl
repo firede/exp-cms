@@ -14,7 +14,7 @@
 <div class="clear"></div>
 
 <div class="status-bar clearfix radius_top">
-	<a class="status-tab status-tab-active" href="<{$BASE_URL}>admin/user/admin">管理员列表</a>
+	<a class="status-tab status-tab-active" href="<{$BASE_URL}>admin/admin/list">管理员列表</a>
 	<span class="list-search right">
 		<span class="keyword radius_all">
 			<input type="text" name="keyword" />

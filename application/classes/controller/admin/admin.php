@@ -119,6 +119,11 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $this->request->response = AppCache::app_cache("admin_getAdmin", $view)->render();
     }
 
+	public function action_del() {
+        $view = View::factory('smarty:admin/admin/del');
+        $this->template = AppCache::app_cache("admin_del", $view);
+	}
+
     /*     * ***
      * 通过id删除 指定用户
      */

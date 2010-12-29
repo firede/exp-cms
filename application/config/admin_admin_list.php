@@ -8,24 +8,25 @@ return array(
 	'primary' => 'id',
 	// 显示字段（列表表格所显示的列）
 	'column' => array(
-		'select'	    => array(
-			'label'     => '选择',
+		'id' => array(
+			'label'     => 'ID',
 			'width'     => '30',
-			'template'  => 'checkbox',
+			'template'  => 'text',
 			'data'      => 'id',
 		),
 		'username'		    => array(
 			'label'     => '管理员用户名',
 			'width'     => '450',
 			'template'  => 'link',
-			'prefix'    => array('admin/user/edit?id='),
+			'prefix'    => array('admin/user/modify/'),
 			'data'      => 'id,username',
 			'order_by'  => 'username',
 		),
 		'role' => array(
 			'label'     => '管理员级别',
-			'width'     => '180',
+			'width'     => '200',
 			'template'  => 'link',
+			'prefix'    => array('admin/admin/list?role='),
 			'data'      => 'role,role_name',
 			'order_by'  => 'role_name',
 		),
@@ -34,20 +35,11 @@ return array(
 	'operation'=> array(
 		'user-modify'    => array(
 			'title'     => '修改',
-			'action'    => 'admin/user/modify',
+			'action'    => 'admin/admin/edit',
 		),
 		'user-del'       => array(
 			'title'     => '删除',
-			'action'    => 'admin/user/del',
-		),
-	),
-	// 批量操作（批量操作允许的功能）
-	'muti_operation' => array(
-		'select'    => array('title' => '全选'),
-		'inverse'   => array('title' => '反选'),
-		'user-del'       => array(
-			'title'     => '删除',
-			'action'    => 'admin/user/m_del',
+			'action'    => 'admin/admin/del',
 		),
 	),
 );
