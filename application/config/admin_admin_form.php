@@ -54,8 +54,10 @@ return array(
 		),
 	),
 	'function_config' => array(
-		'modify' => array(
-			'password', 're_password', 'role',
+		'default' => array(
+			'modify' => array(
+				'password', 're_password', 'role',
+			),
 		),
 	),
 );
