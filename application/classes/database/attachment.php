@@ -144,7 +144,7 @@ class Database_Attachment {
             DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
             $rubbish = $this->get_rubbish();
             $m_attachment = new Model_Attachment();
-            if ($m_attachment->clear_rebbish($rubbish) = TRUE) {
+            if ($m_attachment->clear_rebbish($rubbish) == TRUE) {
                 return "ok";
             }
         } catch (Exception $e) {

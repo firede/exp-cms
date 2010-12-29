@@ -107,13 +107,12 @@ class Database_admin {
             return 'none';
     }
 
-    /** *
+    /**     *
      * 管理员登录检测
      * @$id <int> 用户id
      * @return <array> 用户信息
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
-
     public function check_login($admin) {
         if ($admin["username"] == null || $admin["username"] == "") {
             return 'no_id';
@@ -145,14 +144,20 @@ class Database_admin {
      */
 
     public function delete($id) {
-        if ($id == null || $id = "") {
-            return 'no_id';
+        try {
+            if ($id == null || $id == "") {
+                return 'no_id';
+            }
+            //设置删除数据的sql
+            $delete = DB::delete('admin');
+            $delete->where("id", "=", $id);
+            $delete->execute();
+            return 'ok';
+        } catch (Exception $e) {
+            echo ErrorExceptionReport::_errors_report($e, TRUE);
+            return 'error';
         }
-        //设置删除数据的sql
-        $delete = DB::delete()->table('admin');
-        $delete->where("id", "=", $id);
-        $result = (bool) $delete->execute();
-        return $result ? "ok" : "error";
+        //  return $result ? "ok" : "error";
     }
 
     /*     * ***
@@ -164,7 +169,7 @@ class Database_admin {
         if ($admin == null || count($admin) == 0 || $admin['id'] == null) {
             return 'no_id';
         }
-         if (isset($admin["password"])) {
+        if (isset($admin["password"])) {
             $admin["password"] = md5($admin["password"]);
         }
         /* 根据需要从请求中取出需要的数据值 */
@@ -186,7 +191,7 @@ class Database_admin {
      * @return bool 存在返回FALSE 不存在返回TRUE
      */
     public function check_exist($admin) {
-        
+
         //设置查询数据的sql
         $query = DB::select(array('COUNT("id")', 'total_admin'))->from('admin');
         $query->where("username", "=", $admin["username"]);

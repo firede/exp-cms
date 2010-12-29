@@ -1,15 +1,12 @@
 <?php
-
 /* * *
  * 控制器中action的工具包
  */
-
 class Action {
-    /*     * **
+    /** **
      * 根据数据状态返回相应的数据集合
      * @$posts 
      */
-
     public static function sucess_status($view_data,$performance="") {
         if ($view_data === "none") {
             $view_data = array(
@@ -55,7 +52,6 @@ class Action {
         }
         return $view_data;
     }
-
 }
 
 ?>

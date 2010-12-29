@@ -350,11 +350,11 @@ class Database_Category {
      * @param $new_parent_id  integer 把子分类转移至新的分类的子分类的id
      * @param $move_child bool 设置是否将原有子分类转移至新的分类的子分类里
      */
-    public function del($id, $move_relevance=FALSE, $new_child_parent=NULL, $move_child=FALSE) {
+    public function del($category, $move_relevance=FALSE, $new_child_parent=NULL, $move_child=FALSE) {
         DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
         try {
             $del = DB::delete()->table("category");
-            $ids = explode(",", $id);
+            $ids = explode(",", $category["id"]);
             $del->where("id", "in", $ids);
             $del->execute();
             //删除与该分类相关的文章内容
@@ -365,7 +365,7 @@ class Database_Category {
             }
             //转移子分类到新的分类的子分类里
             if ($move_child && $new_child_parent != NULL) {
-                $this->move_child($id, $new_child_parent);
+                $this->move_child($category["id"], $new_child_parent);
             }
              DB::query(NULL, "COMMIT")->execute();
             return "ok";

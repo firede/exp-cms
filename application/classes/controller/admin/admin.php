@@ -132,9 +132,8 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
      */
 
     public function action_del_post() {
-        $id = isset($_POST["id"]) ? $_POST["id"] : "";
         $adminDb = new Database_Admin();
-        $view_data = $adminDb->delete($id);
+        $view_data = $adminDb->delete($_POST["id"]);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
