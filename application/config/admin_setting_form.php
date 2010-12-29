@@ -88,5 +88,88 @@ return array(
 			),
 		),
 	),
+	'up_img' => array(
+		'path' => array(
+			'label' => '保存路径',
+			'name' => 'path',
+			'type' => 'text',
+			'desc' => '相对于程序目录的路径',
+			'value' => '/upload/img',
+		),
+		'max_size' => array(
+			'label' => '图片大小最大值',
+			'name' => 'max_size',
+			'type' => 'text',
+			'desc' => '单位KB',
+			'value' => '1024',
+		),
+		'min_size' => array(
+			'label' => '图片大小最小值',
+			'name' => 'min_size',
+			'type' => 'text',
+			'desc' => '单位KB',
+			'value' => '0',
+		),
+		'max_width' => array(
+			'label' => '图片宽度最大值',
+			'name' => 'max_width',
+			'type' => 'text',
+			'desc' => '单位PX',
+			'value' => '0',
+		),
+		'max_height' => array(
+			'label' => '图片高度最大值',
+			'name' => 'max_height',
+			'type' => 'text',
+			'desc' => '单位PX',
+			'value' => '0',
+		),
+		'type' => array(
+			'label' => '允许的图片类型',
+			'name' => 'type',
+			'type' => 'text',
+			'desc' => '用逗号分割允许的后缀，如：jpg,gif,png',
+			'value' => 'jpg,jpeg,png,gif,bmp',
+		),
+		'watermark_status' => array(
+			'label' => '水印启用状态',
+			'name' => 'watermark_status',
+			'type' => 'select',
+			'value' => array(
+				'select' => '0',
+				'data' => array(
+					'0' => '关闭',
+					'1' => '开启',
+				),
+			),
+		),
+		'watermark_path' => array(
+			'label' => '水印图片路径',
+			'name' => 'watermark_path',
+			'type' => 'text',
+			'value' => 'http://daxiniu.cms/assets/admin/img/logo.png',
+		),
+		'watermark_position' => array(
+			'label' => '水印位置',
+			'name' => 'watermark_position',
+			'type' => 'text',
+			'desc' => '图片水印位置 1上左 |2上中|3上右|4中左 |5中中|6中右|7下左 |8下中|9下右',
+			'value' => '9',
+		),
+		'watermark_opacity' => array(
+			'label' => '水印透明度',
+			'name' => 'watermark_opacity',
+			'type' => 'text',
+			'desc' => '图片水印透明度',
+			'value' => '70',
+		),
+		'watermark_border_space' => array(
+			'label' => '水印边距',
+			'name' => 'watermark_border_space',
+			'type' => 'text',
+			'desc' => '水印与边框距离 单位：PX',
+			'value' => '10',
+		),
+	),
 );
 ?>

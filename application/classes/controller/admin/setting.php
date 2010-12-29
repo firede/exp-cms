@@ -112,6 +112,19 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
+	/**
+	 * 上传图片配置(GET)
+	 */
+	public function action_up_img() {
+        $form = Kohana::config('admin_setting_form.up_img');
+
+        $view = View::factory('smarty:admin/setting/up_img', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache("setting_up_img", $view);
+	}
+
     /**     * *
      * 更新上传图片配置
      */

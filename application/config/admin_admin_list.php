@@ -28,7 +28,7 @@ return array(
 			'template'  => 'link',
 			'prefix'    => array('admin/admin/list?role='),
 			'data'      => 'role,role_name',
-			'order_by'  => 'role_name',
+			'order_by'  => 'role',
 		),
 	),
 	// 操作（行级操作允许的功能）
