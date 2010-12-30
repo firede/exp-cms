@@ -16,7 +16,7 @@ class Controller_Admin_BaseAdmin extends Controller_Base {
     }
 
     public function after() {
-        if (Session::instance()->get('admin_data') == NULL) {
+        if (Session::instance()->get('admin_data') != NULL) {
             $this->template->ADMIN_DATA = Session::instance()->get('admin_data');
         }
         return parent::after();
