@@ -117,7 +117,8 @@ a:hover {
 	_zoom:1;
 }
 .exlink .icon-category,
-.exlink .icon-user-add {
+.exlink .icon-user-add,
+.exlink .icon-cate-add {
 	position: absolute;
 	left: 5px;
 	top: 4px;
@@ -360,6 +361,7 @@ a:hover {
 .icon-preview-ol,
 .icon-undo-pub,
 .icon-undo-rej,
+.icon-cate-add,
 .icon-cate-del,
 .icon-cate-modify,
 .icon-user-add,
@@ -413,6 +415,9 @@ a:hover {
 }
 .icon-preview-ol {
 	background-position: -160px 0;
+}
+.icon-cate-add {
+	background-position: -100px -20px;
 }
 .icon-cate-del {
 	background-position: -40px -20px;

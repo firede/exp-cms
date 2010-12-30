@@ -10,6 +10,12 @@
 		<span>列表</span>
 	</div>
 </div>
+<div class="grid_3 omega">
+	<a href="<{$BASE_URL}>admin/category/create" class="exlink">
+		<span class="icon-cate-add"></span>
+		创建分类
+	</a>
+</div>
 
 <div class="clear"></div>
 

@@ -5,6 +5,7 @@
 		<{foreach from=$_formel.value.data item=_formel_item key=_formel_key}>
 			<{if $_formel_key == $_formel.value.select}>
 				<span><{$_formel_item|escape:'html'}></span>
+				<input type="hidden" value="<{$_formel_key|default}>" name="<{$_formel.name|default}>">
 			<{/if}>
 		<{/foreach}>
 	<{else}>

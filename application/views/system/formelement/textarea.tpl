@@ -3,6 +3,7 @@
 <td>
 	<{$_formel.readonly|default}>
 		<span><{$_formel.value|default|escape:'html'}></span>
+		<input type="hidden" value="<{$_formel.value|default}>" name="<{$_formel.name|default}>">
 	<{else}>
 		<textarea cols="40" rows="4" name="<{$_formel.name}>"><{$_formel.value|default}></textarea>
 	<{/if}>
