@@ -6,7 +6,7 @@
 	<div class="breadcrumbs">
 		<span class="icon-position"></span>
 		<a href="<{$BASE_URL}>admin">后台首页</a> &raquo
-		<a href="<{$BASE_URL}>admin/post">经验</a> &raquo
+		<a href="<{$BASE_URL}>admin/post">文章</a> &raquo
 		<a href="<{$BASE_URL}>admin/post?cate_id=12">魔兽世界</a> &raquo
 		<span>列表</span>
 	</div>

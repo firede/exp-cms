@@ -1,5 +1,5 @@
 <div id="subviewMUndoPub" class="subview">
-	<div class="desc">你确定要将这些经验<strong>撤销发布</strong>么？</div>
+	<div class="desc">你确定要将这些文章<strong>撤销发布</strong>么？</div>
 	<div class="clearfix">
 		<span class="submit radius_all">确定</span>
 		<span class="cancel radius_all">取消</span>
@@ -16,7 +16,7 @@ $(document).ready(function () {
 		baseUrl		= dxn.util.base;
 
 	if (id === '') {
-		container.html('<div>请先钩选需要<strong>撤销发布</strong>的经验再进行操作。</div>');
+		container.html('<div>请先钩选需要<strong>撤销发布</strong>的文章再进行操作。</div>');
 	}
 
 	submit.click(function () {

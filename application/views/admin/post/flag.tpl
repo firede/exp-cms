@@ -1,5 +1,5 @@
 <div id="subviewFlag" class="subview">
-	<div class="desc">你想将这条经验<strong>标记</strong>为：</div>
+	<div class="desc">你想将这条文章<strong>标记</strong>为：</div>
 	<div class="form">
 		<label><input type="checkbox" name="flag" value="1" />精华</label>
 		<label><input type="checkbox" name="flag" value="2" />置顶</label>

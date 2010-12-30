@@ -1,5 +1,5 @@
 <div id="subviewDel" class="subview">
-	<div class="desc">你确定要<strong>删除</strong>这条经验么？</div>
+	<div class="desc">你确定要<strong>删除</strong>这条文章么？</div>
 	<div class="clearfix">
 		<span class="submit radius_all">确定</span>
 		<span class="cancel radius_all">取消</span>

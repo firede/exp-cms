@@ -24,7 +24,7 @@ $(document).ready(function () {
 		baseUrl		= dxn.util.base;
 
 	if (id === '') {
-		container.html('<div>请先钩选需要更改<strong>标记</strong>的经验再进行操作。</div>');
+		container.html('<div>请先钩选需要更改<strong>标记</strong>的文章再进行操作。</div>');
 	}
 	
 	// 初始化checkbox的默认值

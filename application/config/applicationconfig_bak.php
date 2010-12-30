@@ -3,12 +3,12 @@
 defined('SYSPATH') or die('No direct script access.');
 return array(
     "site" => array(
-        "webname" => "大犀牛经验分享系统", //网站名称
+        "webname" => "大犀牛内容分享系统", //网站名称
         "basehost" => "http://daxiniu.com", //站点根网址
         "indexurl" => "http://daxiniu.com/exp", //网页主页链接
         "default_style" => "", //模板默认风格
         "powerby" => "这里可以是html", //版权信息
-        "keywords" => "大犀牛，经验分享，游戏，插件", //站点默认关键字
+        "keywords" => "大犀牛，内容分享，游戏，插件", //站点默认关键字
         "description" => "这里写描述", //站点描述
         "beian" => "陕SDFE2134F", //备案号
     ),

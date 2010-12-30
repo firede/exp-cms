@@ -3,12 +3,12 @@
 defined('SYSPATH') or die('No direct script access.');
 return array(
     "site" => array(
-        "webname" => "大犀牛经验分享系统",
+        "webname" => "大犀牛内容分享系统",
         "basehost" => "http://daxiniu.com",
         "indexurl" => "http://daxiniu.com/exp",
         "default_style" => "",
         "powerby" => "这里可以是html",
-        "keywords" => "大犀牛，经验分享，游戏，插件",
+        "keywords" => "大犀牛，内容分享，游戏，插件",
         "description" => "这里写描述",
         "beian" => "陕SDFE2134F",
     ),

@@ -1,6 +1,6 @@
 <div class="grid_3 sidebar">
 	<ul class="mainmenu radius_all">
-		<li><a href="<{$BASE_URL}>admin/post">经验</a></li>
+		<li><a href="<{$BASE_URL}>admin/post">文章</a></li>
 		<li><a href="<{$BASE_URL}>admin/category">分类</a></li>
 		<li><a href="<{$BASE_URL}>admin/attachment">附件</a></li>
 		<li><a href="<{$BASE_URL}>admin/user">用户</a></li>
@@ -18,7 +18,7 @@
 	</div>
 	<div class="sidebox radius_all">
 		<h5>关于</h5>
-		<div class="content">大犀牛经验<br>版本：1.0<br><a href="http://daxiniu.com" target="_blank">DAXINIU.COM</a></div>
+		<div class="content">大犀牛内容分享<br>版本：1.0<br><a href="http://daxiniu.com" target="_blank">DAXINIU.COM</a></div>
 	</div>
 </div>
 
