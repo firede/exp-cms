@@ -51,10 +51,25 @@ a:hover {
 }
 .mainmenu li {
 	margin-bottom: 1px;
+	position: relative;
+	zoom:1;
+}
+.mainmenu .exbtn {
+	display:block;
+	position:absolute;
+	right:5px;
+	top:5px;
+	width:16px;
+	height:16px;
+	background-image: url('img/icons.png');
+	_background-image: url('img/icons-ie6.png');
+	background-repeat: no-repeat;
+	background-position: -120px -60px;
+	cursor: pointer;
+}
+.mainmenu li .title {
 	font-size: 14px;
 	font-weight: 700;
-}
-.mainmenu li a {
 	border-radius: 3px;
 	-moz-border-radius: 3px;
 	background: #008EE8 url('img/bgs.png') 0 0 repeat-x;
@@ -65,10 +80,18 @@ a:hover {
 	text-decoration: none;
 	color: #FFF;
 }
-.mainmenu li a:hover {
+
+.mainmenu li .title:hover,
+.mainmenu li .title-hover {
 	background: #FE8B01 url('img/bgs.png') 0 -30px repeat-x;
 	color:yellow;
 }
+.mainmenu .sublist {
+	padding:5px;
+	margin:0;
+	display: none;
+}
+
 .sidebox {
 	border: 2px solid #ACCAE4;
 	margin-bottom: 10px;
@@ -624,11 +647,13 @@ a:hover {
 }
 .form-table .input-text {
 	width:260px;
+	font-size:12px;
 	border: 1px solid #999;
 }
 .form-table textarea {
-	border: 1px solid #999;
 	margin:0;
+	font-size:12px;
+	border: 1px solid #999;
 }
 
 /* form title */
