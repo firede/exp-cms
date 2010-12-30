@@ -35,7 +35,7 @@ class Controller_Admin_Auth extends Controller_Base {
             $this->template = AppCache::app_cache('adminauth_login', $view);
             return;
         } else {
-            Session::instance()->set('admin_data', $validate_result);
+            Session::instance()->set('admin_data', $validate_result["result"][0]);
             $this->request->redirect("admin/post/list");
         }
     }
