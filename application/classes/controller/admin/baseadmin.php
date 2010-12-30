@@ -10,8 +10,9 @@ class Controller_Admin_BaseAdmin extends Controller_Base {
     public function before() {
 
         parent::before();
+  
         if (Session::instance()->get('admin_data') == NULL) {
-            $this->request->redirect("admin/auth/login");
+            $this->request->redirect("admin/auth/login?page_path=". $_SERVER['HTTP_REFERER']);
         }
     }
 

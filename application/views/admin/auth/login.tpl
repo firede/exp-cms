@@ -3,7 +3,7 @@
 <div class="grid_21">
 	<h2 class="form-title">用户登录</h2>
 	<div class="form-table-wrap">
-		<form action="<{$BASE_URL}>admin/auth/login_post" method="POST">
+		<form action="<{$BASE_URL}>admin/auth/login_post?page_path=<{$page_path|default}>" method="POST">
 			<table class="form-table">
 				<{form data=$form}>
 			</table>
