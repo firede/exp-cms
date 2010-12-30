@@ -57,7 +57,7 @@ return array(
         "throw_exception" => "THROW",
     ),
     "app" => array(
-        "setup.status" => 2,
+        "setup.status" => 4,
         "setup.steps_page" => "set_db,set_cache,set_admin,finish,TRUE",
     ),
 );

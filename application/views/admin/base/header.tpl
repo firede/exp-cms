@@ -17,9 +17,15 @@
 	<div id="header">
 		<div id="logo"><h1>大犀牛体验版CMS</h1></div>
 		<div id="links">
-			你好，火德
-			- <a href="<{$BASE_URL}>admin">后台首页</a>
-			- <a href="<{$BASE_URL}>">前台首页</a>
-			- <a href="<{$BASE_URL}>admin/logout">注销</a>
+			<{if $ADMIN_DATA.username|default}>
+				你好，<{$ADMIN_DATA.username}> -
+				<a href="<{$BASE_URL}>admin">后台首页</a> -
+			<{/if}>
+			<a href="<{$BASE_URL}>">前台首页</a> -
+			<{if $ADMIN_DATA.username|default}>
+				<a href="<{$BASE_URL}>admin/auth/login_out">注销</a>
+			<{else}>
+				<a href="<{$BASE_URL}>admin/auth/login">登录</a>
+			<{/if}>
 		</div>
 	</div>
