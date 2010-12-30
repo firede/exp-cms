@@ -42,7 +42,7 @@ class Controller_Welcome extends Controller_Base {
         $app_conf = Kohana::config("applicationconfig");
         $status = $app_conf["app"]["setup.status"];
         $steps=explode(",", $app_conf["app"]["setup.steps_page"]);
-        if ($steps[$status] !== TRUE) {
+        if ($steps[$status] != TRUE) {
             $page = 'setup/' . $steps[$status];
             $this->request->redirect($page);
             return TRUE;

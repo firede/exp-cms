@@ -29,14 +29,18 @@ class Controller_Admin_Auth extends Controller_Base {
         $validate_result = $m_admin->auth_validate($_POST);
         if (isset($validate_result["success"])) {
 
-            $view = View::factory('smarty:admin/auth/login', array(
+            $view = View::factory('smarty:admin/auth/login?page_path=' . $_GET["page_path"], array(
                         'form' => $validate_result["data"],
                     ));
             $this->template = AppCache::app_cache('adminauth_login', $view);
             return;
         } else {
             Session::instance()->set('admin_data', $validate_result["result"][0]);
-            $this->request->redirect("admin/post/list");
+            if ($_GET["page_path"] == "") {
+                $this->request->redirect("admin/post/list");
+            } else {
+                $this->request->redirect($_GET["page_path"]);
+            }
         }
     }
 
@@ -46,6 +50,7 @@ class Controller_Admin_Auth extends Controller_Base {
 
     public function action_login_out() {
         Session::instance()->delete('admin_data');
+        $this->request->redirect('');
     }
 
 }
