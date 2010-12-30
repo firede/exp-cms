@@ -63,8 +63,8 @@ class Action {
      * @return <type>
      */
     public static function build_form_data($form, $data_arr) {
-        if (isset($data_arr["result"][0])) {
-            $data_arr = $data_arr["result"][0];
+       // if (isset($data_arr["result"][0])) {
+           // $data_arr = $data_arr["result"][0];
             foreach ($form as $name => $filed) {
                 if (isset($data_arr[$name])) {
                     if ($filed['type'] == "text") {
@@ -74,7 +74,7 @@ class Action {
                     }
                 }
             }
-        }
+       // }
         return $form;
     }
 

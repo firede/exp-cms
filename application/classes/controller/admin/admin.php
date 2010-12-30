@@ -93,7 +93,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $form = Kohana::config('admin_admin_form.default');
         $adminDb = new Database_Admin();
         $data_arr = $adminDb->get_admin(array("id"=>$id));
-        $form = Action::build_form_data($form, $data_arr);
+        $form = Action::build_form_data($form, $data_arr["result"][0]);
         $view = View::factory('smarty:admin/admin/modify', array(
                     'form' => $form,
                 ));

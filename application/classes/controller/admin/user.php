@@ -61,7 +61,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $form = Kohana::config('admin_user_form');
         $userDb = new Database_User();
         $data_arr = $userDb->get_user($id);
-        $form = Action::build_form_data($form, $data_arr);
+        $form = Action::build_form_data($form, $data_arr["result"][0]);
         $view = View::factory('smarty:admin/user/modify', array(
                     'form' => $form,
                 ));
