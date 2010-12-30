@@ -47,8 +47,10 @@ class Model_Base {
 
     public static function has_error($form) {
         foreach ($form as $key => $value) {
-            if (Validate::not_empty($form[$key]["message"])) {
-                return FALSE;
+            if (isset($form[$key]["message"])) {
+                if (Validate::not_empty($form[$key]["message"])) {
+                    return FALSE;
+                }
             }
         }
         return TRUE;
