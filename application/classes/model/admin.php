@@ -9,19 +9,19 @@ defined('SYSPATH') or die('No direct script access.');
  */
 class Model_Admin extends Model_Base {
 
-    public function post_validate($post, $form, $function_config, $type=NULL) {
+    public function post_validate($post, $form, $legal_fileds, $type=NULL) {
         $noset_keys = Arr::get_noset_key($post, array('username', "password", "re_password", 'role'));
         $op_data = $form;
-        if (isset($function_config["display"])) {
-            $_fileds = explode(",", trim($function_config["display"]));
-        }
+      
+
+       
         $adminDao = new Database_admin();
         //第一阶段 未定义错误
         //第二阶段 数据非空验证
         //第三阶段 数据有效格式验证
         //第四阶段 数据有效性验证
         //username
-        if (in_array("username", $_fileds)) {
+        if (in_array("username", $legal_fileds)) {
             if (in_array('username', $noset_keys)) {
                 $op_data['username']["message"] = $op_data['username']["label"] . "没有定义";
             } elseif (!Validate::not_empty($post['username'])) {
@@ -35,7 +35,7 @@ class Model_Admin extends Model_Base {
             }
         }
         //password
-        if (in_array("password", $_fileds)) {
+        if (in_array("password", $legal_fileds)) {
             if (in_array('password', $noset_keys)) {
                 $op_data['password']["message"] = $op_data['password']["label"] . "没有定义";
             } elseif (!Validate::not_empty($post['password'])) {
@@ -44,14 +44,14 @@ class Model_Admin extends Model_Base {
                 $op_data['password']["message"] = $op_data['password']["label"] .
                         "长度必须在" . $op_data['password']['min_len'] . "-" . $op_data['password']['max_len'] . "个字符之间";
             } else {
-                if (in_array("re_password", $_fileds)) {
+                if (in_array("re_password", $legal_fileds)) {
                     if (!($post['password'] === $post['re_password'])) {
                         $op_data['re_password']["message"] =
                                 $op_data['re_password']["label"] . "与" . $op_data['password']["label"] . "不一致请重新输入";
                     }
                 }
             }
-            if (in_array("re_password", $_fileds)) {
+            if (in_array("re_password", $legal_fileds)) {
                 if (!Validate::not_empty($post['re_password'])) {
                     $op_data['re_password']["message"] = $op_data['re_password']["label"] . "不能为空";
                 }
@@ -59,7 +59,7 @@ class Model_Admin extends Model_Base {
         }
 
         //role
-        if (in_array("role", $_fileds)) {
+        if (in_array("role", $legal_fileds)) {
             if (in_array('role', $noset_keys)) {
                 $op_data['role']["message"] = $op_data['role']["label"] . "没有定义";
             } elseif (!Validate::not_empty($post['role'])) {

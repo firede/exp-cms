@@ -90,8 +90,8 @@ class Action {
         return $new_form;
     }
 
-    public static final $LEGAL_FORM_TYPE_READ = "r";
-    public static final $LEGAL_FORM_TYPE_WRITER = "W";
+    public static  $LEGAL_FORM_TYPE_READ = "r";
+    public static  $LEGAL_FORM_TYPE_WRITER = "W";
 
     /**
      * 根据配置和数据库操作类型返回合法字段名集合
@@ -103,24 +103,24 @@ class Action {
     public static function legal_fileds($function_config, $type, $filter_fileds=NULL) {
         $readonly_fileds = array();
         $display_fileds = array();
-        if (isset($function_config["dispaly"])) {
-            $display_fileds = explode(",", trim($function_config["dispaly"]));
+        if (isset($function_config["display"])) {
+            $display_fileds = explode(",", trim($function_config["display"]));
             if (isset($function_config["readonly"])) {
                 $readonly_fileds = explode(",", trim($function_config["readonly"]));
             }
         }
-        elseif ($type == Action::$LEGAL_FORM_TYPE_WRITER) {
-            foreach ($readonly_fileds as $key => $value) {
-                if (isset($display_fileds[$value])) {
-                    unset($display_fileds[$value]);
+       if ($type == Action::$LEGAL_FORM_TYPE_WRITER) {
+            foreach ($display_fileds as $key => $value) {
+                if (in_array($value,$readonly_fileds)) {
+                    unset($display_fileds[$key]);
                 }
             }
-        }
+        } 
         if ($filter_fileds != NULL) {
-            foreach ($filter_fileds as $filterkey ) {
-                   if(isset ($display_fileds[$filterkey])){
-                       unset ($display_fileds[$filterkey]);
-                   }
+            foreach ($display_fileds as $key=>$value ) {
+                   if (in_array($value,$filter_fileds)) {
+                    unset($display_fileds[$key]);
+                }
             }
         }
         return $display_fileds;

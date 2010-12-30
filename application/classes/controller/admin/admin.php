@@ -71,7 +71,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $form = Kohana::config('admin_admin_form.default');
         $function_config = Kohana::config('admin_admin_form.function_config.default.create');
         $form = Action::form_decorate($form, $function_config);
-        $validate_result = $m_admin->post_validate($_POST, $form,$function_config);
+        $validate_result = $m_admin->post_validate($_POST, $form, $function_config);
         if (isset($validate_result["success"])) {
 
             $view = View::factory('smarty:admin/admin/create', array(
@@ -81,7 +81,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
             return;
         }
         $adminDb = new Database_Admin();
-         $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER,array("re_password"));
+        $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
 
         $admin = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $adminDb->create($admin);
@@ -117,9 +117,11 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
 
         $form = Kohana::config('admin_admin_form.default');
         $function_config = Kohana::config('admin_admin_form.function_config.default.modify');
+        $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
 
-        $validate_result = $m_admin->post_validate($_POST, $form ,$function_config);
+        $validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
+       
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/admin/modify', array(
                         'form' => $validate_result["data"],
@@ -127,10 +129,13 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
             $this->template = AppCache::app_cache('admin_modify', $view);
             return;
         }
+
         $adminDb = new Database_Admin();
-        $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER,array("re_password"));
+
+        $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
 
         $admin = Arr::filter_Array($_POST, $arr_element_names);
+       
         $view_data = $adminDb->modify($admin);
         $view_data = Action::sucess_status($view_data);
 

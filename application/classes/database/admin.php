@@ -123,7 +123,6 @@ class Database_admin {
                 $admins[$i]["role_name"] = Sysconfig_Business::admin_Role($admins[$i]["role"]);
                 $admins[$i]["password"] = "";
             }
-            // echo Kohana::debug($count);
             if ($count > 0)
                 return $data = array('result' => $admins,);
             else
