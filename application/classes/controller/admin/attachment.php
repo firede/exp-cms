@@ -25,7 +25,7 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
                     'auto_hide' => TRUE,
                     'first_page_in_url' => FALSE,
                 ));
-        $arr_element_names = array("url", "uuid", "file_size", "use_type", "status", "file_type");
+        $arr_element_names = array("url", "uuid", "file_size", "user_id", "use_type", "file_type");
         $attachmenDb = new Database_Attachment();
         if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
@@ -37,18 +37,19 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
         $attachment = Arr::filter_Array($_GET, $arr_element_names);
         $page_Param = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
-        $attachments = $attachmenDb->query_list($attachment, $page_Param, $sort);
+        $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+        $attachments = $attachmenDb->query_list($attachment, $page_Param, $sort, $keyword);
 
         $attachments = Action::sucess_status($attachments);
         if (isset($attachments["total_items_count"])) {
             $pagination->__set('total_items', $attachments["total_items_count"]);
         }
         $conf_use_type = 'use_type_' . $_GET['use_type'];
-		$conf = Kohana::config('admin_attachment_list')->$conf_use_type;
+        $conf = Kohana::config('admin_attachment_list')->$conf_use_type;
         $view = View::factory('smarty:admin/attachment/list', array(
                     'pagination' => $pagination,
                     'view_data' => $attachments,
-					'conf' => $conf,
+                    'conf' => $conf,
                 ));
         $this->template = AppCache::app_cache("attachement_list", $view);
     }
@@ -85,7 +86,7 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
 
     public function action_clear_file() {
         $attachemenDb = new Database_Attachment();
-        $view_data=$attachemenDb->clear_rubbish();
+        $view_data = $attachemenDb->clear_rubbish();
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;

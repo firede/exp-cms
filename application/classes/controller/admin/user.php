@@ -30,9 +30,9 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
 
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $user = Arr::filter_Array($_GET, $arr_element_names);
-
+        $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
-        $users = $userDb->query_list($user, $pageparam, $sort);
+        $users = $userDb->query_list($user, $pageparam, $sort,$keyword);
         $users = Action::sucess_status($users);
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $users["total_items_count"]);

@@ -34,8 +34,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
+        $post["keyword"] = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
         $post["is_del"] = "0";
-        $posts = $postDb->query_list($post, $pageparam, $sort);
+        $posts = $postDb->query_list_search($post, $pageparam, $sort);
         $posts["message"] = Action::sucess_status($posts["message"]);
         if (isset($posts["total_items_count"]) && isset($posts["total_page_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
@@ -257,7 +258,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->request->response = AppCache::app_cache("post_update_post", $view)->render();
     }
 
-	/**
+    /**
      * 切换分类子视图
      */
     public function action_change_category() {

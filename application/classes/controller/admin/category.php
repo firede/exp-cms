@@ -28,7 +28,9 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
                 array('id', "name", "short_name", "parent_id", "sort");
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $category = Arr::filter_Array($_GET, $arr_element_names);
-        $categorys = $categoryDb->query_list($category, $sort, $pageparam);
+        $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+       
+        $categorys = $categoryDb->query_list($category, $sort, $pageparam,$keyword);
         $categorys = Action::sucess_status($categorys);
         $conf = Kohana::config('admin_category_list');
         $view = View::factory('smarty:admin/category/list', array(
