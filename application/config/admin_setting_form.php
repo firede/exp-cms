@@ -30,10 +30,10 @@ return array(
 			'name' => 'default_style',
 			'desc' => '为空时使用系统默认模板',
 		),
-		'powerby' => array(
+		'copyright' => array(
 			'label' => '版权声明',
 			'type' => 'text',
-			'name' => 'powerby',
+			'name' => 'copyright',
 		),
         'keywords' => array(
             'label' => '关键词',

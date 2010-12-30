@@ -5,6 +5,10 @@
  */
 return array(
 	'default' => array(
+		'id' => array(
+			'type' => 'hidden',
+			'name' => 'id',
+		),
 		'username' => array(
 			'label' => '管理员用户名',
 			'type' => 'text',
