@@ -47,7 +47,7 @@ class Sysconfig_Business {
      * @return 返回用户类型描述
      */
     public static function admin_Role($role) {
-        $role_box = aSysconfig_Business::get_config("admin_Role");
+        $role_box = Sysconfig_Business::get_config("admin_Role");
         return $role_box[$role];
     }
     /****
