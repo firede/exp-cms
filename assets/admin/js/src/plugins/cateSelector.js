@@ -50,7 +50,7 @@ var methods = {
 var tpls = {
 	layoutWrap: '<div class="clearfix" style="border:1px solid blue;">{0}</div>',
 	layoutList: '<div class="{0}" level="{1}" style="border:1px solid red;float:left;width:100px;padding:5px;"></div>',
-	layoutItem: '<div style="line-height:20px;height:20px;margin:1px 0;">{0}</div>'
+	layoutItem: '<div class="{1}" level="{2}" parent="{3}" style="line-height:20px;height:20px;margin:1px 0;">{0}</div>'
 };
 
 /**
@@ -108,8 +108,8 @@ function initMainEvent(container) {
 
 function createItem(container, level) {
 	container.each(function() {
-		var data		= settings.data,
-			wrap		= $(this),
+		var wrap		= $(this),
+			data		= settings.data.result,
 			levelMap	= {
 				'0': wrap.find('.' + prefix.list + '[level=0]'),
 				'1': wrap.find('.' + prefix.list + '[level=1]'),
@@ -117,16 +117,35 @@ function createItem(container, level) {
 			};
 
 		levelMap[level].html('haha');
+
+		getChildData(data, '4', function(datas) {
+			console.log(datas);
+		});
 	});
 }
 
-function getData (args) {
-	var argsDef = {
-		level : '0',
-		parent : '-1'
-	},
-	data = settings.data;
-	
+/**
+ * 递归获取子分类数据
+ *
+ * @param {Object} dsObj 数据对象
+ * @param {string} curId 想获取的分类ID
+ * @param {Function} callback 回掉函数，第一个参数是返回的数据对象
+ */
+function getChildData (dsObj, curId, callback) {
+	var key;
+
+	if (curId === '-1') {
+		callback(dsObj);
+		return;
+	}
+
+	for(key in dsObj) {
+		if (key === curId) {
+			callback(dsObj[key]['child']);
+		} else if (dsObj[key]['child'] != []) {
+			getChildData(dsObj[key]['child'], curId, callback);
+		}
+	}
 }
 
 /**
@@ -146,3 +165,94 @@ $.fn.cateSelector = function (method) {
 };
 
 }(jQuery));
+
+/*
+var treeExample = {
+	"result":{
+		"1":{
+			"id":"1",
+			"name":"\u5c11\u6797\u8db3\u7403",
+			"short_name":"shaolinzuqiu",
+			"parent_id":"-1",
+			"sort":"0",
+			"parent_name":null,
+			"has_child":false,
+			"child":[]
+		},
+		"2":{
+			"id":"2",
+			"name":"\u6e38\u620f",
+			"short_name":"games",
+			"parent_id":"-1",
+			"sort":"0",
+			"parent_name":null,
+			"has_child":true,
+			"child":{
+				"6":{
+					"id":"6",
+					"name":"\u690d\u7269\u5927\u6218\u50f5\u5c38",
+					"short_name":"pvz",
+					"parent_id":"2",
+					"sort":"0",
+					"parent_name":"\u6e38\u620f",
+					"has_child":false,
+					"child":[]
+				},
+				"4":{
+					"id":"4",
+					"name":"\u9b54\u517d\u4e16\u754c",
+					"short_name":"wow",
+					"parent_id":"2",
+					"sort":"50",
+					"parent_name":"\u6e38\u620f",
+					"has_child":true,
+					"child":{
+						"7":{
+							"id":"7",
+							"name":"\u5deb\u5996\u738b\u4e4b\u6012",
+							"short_name":"dk",
+							"parent_id":"4",
+							"sort":"0",
+							"parent_name":"\u9b54\u517d\u4e16\u754c",
+							"has_child":false,
+							"child":[]
+						},
+						"8":{
+							"id":"8",
+							"name":"\u71c3\u70e7\u7684\u8fdc\u5f81",
+							"short_name":"fire",
+							"parent_id":"4",
+							"sort":"0",
+							"parent_name":"\u9b54\u517d\u4e16\u754c",
+							"has_child":false,
+							"child":[]
+						}
+					}
+				},
+		"5":{
+			"id":"5",
+			"name":"\u9b54\u517d\u4e89\u9738",
+			"short_name":"war3",
+			"parent_id":"2",
+			"sort":"51",
+			"parent_name":"\u6e38\u620f",
+			"has_child":false,
+			"child":[]
+		}
+	}
+},
+"3":{
+	"id":"3",
+	"name":"\u7535\u5f71",
+	"short_name":"movie",
+	"parent_id":"-1",
+	"sort":"0",
+	"parent_name":null,
+	"has_child":false,
+	"child":[]
+}
+},
+"success":true,
+"message":"\u64cd\u4f5c\u6210\u529f"
+}
+*/
