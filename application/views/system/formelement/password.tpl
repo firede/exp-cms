@@ -1,3 +1,5 @@
+<{if $_formel.readonly|default}>
+<{else}>
 <tr>
 <th><{$_formel.label|default}></th>
 <td>
@@ -6,3 +8,4 @@
 	<{if $_formel.message|default}><div class="message"><{$_formel.message}></div><{/if}>
 </td>
 </tr>
+<{/if}>

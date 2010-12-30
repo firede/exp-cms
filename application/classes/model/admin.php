@@ -9,7 +9,11 @@ defined('SYSPATH') or die('No direct script access.');
  */
 class Model_Admin extends Model_Base {
 
+<<<<<<< HEAD
     public function post_validate($post, $type=NULL,$function_config=NULL) {
+=======
+    public function post_validate($post, $type=NULL) {
+>>>>>>> 2cce9c89030f4e7604cf3948a09d12bc0cc628f4
         $form = Kohana::config("admin_admin_form.default");
         $noset_keys = Arr::get_noset_key($post, array('username', "password", "re_password", 'role'));
         $op_data = $form;

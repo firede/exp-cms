@@ -50,7 +50,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
      */
     public function action_create() {
 
-        $form = Kohana::config('admin_admin_form');
+        $form = Kohana::config('admin_admin_form.default');
         $view = View::factory('smarty:admin/admin/create', array(
                     'form' => $form,
                 ));
@@ -90,7 +90,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
      */
     public function action_modify($id) {
        
-        $form = Kohana::config('admin_admin_form');
+        $form = Kohana::config('admin_admin_form.default');
         $adminDb = new Database_Admin();
         $data_arr = $adminDb->get_admin(array("id"=>$id));
         $form = Action::build_form_data($form, $data_arr["result"][0]);

@@ -1,8 +1,6 @@
 <div id="subviewChangeCategory" class="subview">
 	<div class="desc">请选择要切换的分类：</div>
 	<div class="form js-cate-selector"></div>
-	<div class="form js-cate-selector"></div>
-	<div class="form js-cate-selector2"></div>
 	<div class="clearfix">
 		<span class="submit radius_all">确定</span>
 		<span class="cancel radius_all">取消</span>
@@ -15,17 +13,12 @@ $(document).ready(function () {
 		submit		= container.find('.submit'),
 		cancel		= container.find('.cancel'),
 		selector	= container.find('.js-cate-selector'),
-		selector2	= container.find('.js-cate-selector2'),
 		target		= dxn.subView.curTarget.get(),
 		baseUrl		= dxn.util.base,
 		treeData;
 
 	selector.cateSelector({
 		url: dxn.util.base + 'admin/category/tree'
-	});
-
-	selector2.cateSelector({
-		url: dxn.util.base + 'admin/category/tree/test'
 	});
 
 	submit.click(function () {
