@@ -5,7 +5,7 @@ return array
 	'default' => array
 	(
 		'type'       => 'mysql',
-        //    'type'       => 'sqlite',
+       
 		'connection' => array(
 			/**
 			 * The following options are available for MySQL:
@@ -19,12 +19,12 @@ return array
 			 * Ports and sockets may be appended to the hostname.
 			 */
 			'hostname'   => 'localhost',
-			'database'   => 'daxiniu',
+			'database'   => 'test',
 			'username'   => 'daxiniu',
 			'password'   => '123456',
 			'persistent' => FALSE,
 		),
-		'table_prefix' => '',//在此部分可以修改表的前缀
+		'table_prefix' => 'dxn_',//在此部分可以修改表的前缀
 		'charset'      => 'utf8',
 		'caching'      => FALSE,
 		'profiling'    => TRUE,

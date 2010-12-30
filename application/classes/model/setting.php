@@ -19,7 +19,7 @@ class Model_Setting extends Model_Base {
      */
     public function site_validate($site) {
         $form = Kohana::config("admin_setting_form");
-        $noset_keys = Arr::get_noset_key($post, array('webname', "basehost", "indexurl", 'default_style', 'powerby', 'keywords', 'description', 'beian'));
+        $noset_keys = Arr::get_noset_key($site, array('webname', "basehost", "indexurl", 'default_style', 'powerby', 'keywords', 'description', 'beian'));
         $op_data = $form["site"];
         //第一阶段 未定义错误
         //第二阶段 数据非空验证
@@ -28,21 +28,21 @@ class Model_Setting extends Model_Base {
         //webname
         if (in_array('webname', $noset_keys)) {
             $op_data['webname']["message"] = $op_data['webname']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['webname'])) {
+        } elseif (!Validate::not_empty($site['webname'])) {
             $op_data['webname']["message"] = $op_data['webname']["label"] . "不能为空";
-        } elseif (!Validate::range(strlen($post['webname']), $op_data["webname"]['min_len'], $op_data["webname"]['max_len'])) {
+        } elseif (!Validate::range(strlen($site['webname']), $op_data["webname"]['min_len'], $op_data["webname"]['max_len'])) {
             $op_data["webname"]["message"] = $op_data['webname']["label"] .
                     "长度必须在" . $op_data["webname"]['min_len'] . "-" . $op_data["webname"]['max_len'] . "个字符之间";
         }
         //basehost
         if (in_array('basehost', $noset_keys)) {
             $op_data['basehost']["message"] = $op_data['basehost']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['basehost'])) {
+        } elseif (!Validate::not_empty($site['basehost'])) {
             $op_data['basehost']["message"] = $op_data['basehost']["label"] . "不能为空";
-        } elseif (!Validate::range(strlen($post['basehost']), $op_data["basehost"]['min_len'], $op_data["basehost"]['max_len'])) {
+        } elseif (!Validate::range(strlen($site['basehost']), $op_data["basehost"]['min_len'], $op_data["basehost"]['max_len'])) {
             $op_data["basehost"]["message"] = $op_data['basehost']["label"] .
                     "长度必须在" . $op_data["basehost"]['min_len'] . "-" . $op_data["basehost"]['max_len'] . "个字符之间";
-        } elseif (Validate::url($post['basehost'])) {
+        } elseif (Validate::url($site['basehost'])) {
 
             $op_data['basehost']["message"] = $op_data['basehost']["label"] . " 必须为合法地址";
         }
@@ -50,25 +50,25 @@ class Model_Setting extends Model_Base {
         //default_style
         if (in_array('default_style', $noset_keys)) {
             $op_data['default_style']["message"] = $op_data['default_style']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['default_style'])) {
+        } elseif (!Validate::not_empty($site['default_style'])) {
             $op_data['default_style']["message"] = $op_data['default_style']["label"] . "不能为空";
         }
 
         //powerby
         if (in_array('powerby', $noset_keys)) {
             $op_data['password']["message"] = $op_data['powerby']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['powerby'])) {
+        } elseif (!Validate::not_empty($site['powerby'])) {
             $op_data['powerby']["message"] = $op_data['powerby']["label"] . "不能为空";
-        } elseif (!Validate::range(strlen($post['powerby']), $op_data['powerby']['min_len'], $op_data['powerby']['max_len'])) {
+        } elseif (!Validate::range(strlen($site['powerby']), $op_data['powerby']['min_len'], $op_data['powerby']['max_len'])) {
             $op_data['powerby']["message"] = $op_data['powerby']["label"] .
                     "长度必须在" . $op_data['powerby']['min_len'] . "-" . $op_data['powerby']['max_len'] . "个字符之间";
         }
         //keywords
         if (in_array('keywords', $noset_keys)) {
             $op_data['keywords']["message"] = $op_data['keywords']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['keywords'])) {
+        } elseif (!Validate::not_empty($site['keywords'])) {
             $op_data['keywords']["message"] = $op_data['keywords']["label"] . "不能为空";
-        } elseif (!Validate::range(strlen($post['keywords']), $op_data['keywords']['min_len'], $op_data['keywords']['max_len'])) {
+        } elseif (!Validate::range(strlen($site['keywords']), $op_data['keywords']['min_len'], $op_data['keywords']['max_len'])) {
             $op_data['keywords']["message"] = $op_data['keywords']["label"] .
                     "长度必须在" . $op_data['keywords']['min_len'] . "-" . $op_data['keywords']['max_len'] . "个字符之间";
         }
@@ -76,24 +76,24 @@ class Model_Setting extends Model_Base {
         //description
         if (in_array('description', $noset_keys)) {
             $op_data['description']["message"] = $op_data['description']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['description'])) {
+        } elseif (!Validate::not_empty($site['description'])) {
             $op_data['description']["message"] = $op_data['description']["label"] . "不能为空";
-        } elseif (!Validate::range(strlen($post['description']), $op_data['description']['min_len'], $op_data['description']['max_len'])) {
+        } elseif (!Validate::range(strlen($site['description']), $op_data['description']['min_len'], $op_data['description']['max_len'])) {
             $op_data['description']["message"] = $op_data['description']["label"] .
                     "长度必须在" . $op_data['description']['min_len'] . "-" . $op_data['description']['max_len'] . "个字符之间";
         }
         //beian
         if (in_array('beian', $noset_keys)) {
             $op_data['beian']["message"] = $op_data['beian']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['beian'])) {
+        } elseif (!Validate::not_empty($site['beian'])) {
             $op_data['beian']["message"] = $op_data['beian']["label"] . "不能为空";
-        } elseif (!Validate::range(strlen($post['beian']), $op_data['beian']['min_len'], $op_data['beian']['max_len'])) {
+        } elseif (!Validate::range(strlen($site['beian']), $op_data['beian']['min_len'], $op_data['beian']['max_len'])) {
             $op_data['beian']["message"] = $op_data['beian']["label"] .
                     "长度必须在" . $op_data['beian']['min_len'] . "-" . $op_data['beian']['max_len'] . "个字符之间";
         }
 
         //将原有值保留到表单设置
-        $form["site"] = $this->set_form_value($op_data, $post);
+        $form["site"] = $this->set_form_value($op_data, $site);
         if (!$this->has_error($form)) {
 
             return array(

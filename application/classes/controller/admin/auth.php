@@ -35,7 +35,7 @@ class Controller_Admin_Auth extends Controller_Base {
             $this->template = AppCache::app_cache('adminauth_login', $view);
             return;
         } else {
-            Session::instance()->set('admin_name', $validate_result);
+            Session::instance()->set('admin_data', $validate_result);
             $this->request->redirect("admin/post/list");
         }
     }
@@ -45,7 +45,7 @@ class Controller_Admin_Auth extends Controller_Base {
      */
 
     public function action_login_out() {
-        Session::instance()->delete('admin_name');
+        Session::instance()->delete('admin_data');
     }
 
 }
