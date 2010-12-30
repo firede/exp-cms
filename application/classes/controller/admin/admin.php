@@ -30,7 +30,8 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $admin = Arr::filter_Array($_GET, $arr_element_names);
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
-        $admins = $adminDb->query_list($admin, $pageparam, $sort);
+        $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+        $admins = $adminDb->query_list($admin, $pageparam, $sort,$keyword);
         $admins = Action::sucess_status($admins);
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $admins["total_items_count"]);

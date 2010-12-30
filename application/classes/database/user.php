@@ -34,8 +34,9 @@ class Database_User {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($user, $page_Param, $sort) {
-        $query = DB::select(array('COUNT("id")', 'total_user'))->from('user');
+    public function query_list($user, $page_Param, $sort, $keyword="") {
+        $query = DB::select(array('COUNT("user.id")', 'total_user'))->from('user');
+        $query->join("admin", "left")->on("user.admin_id", "=", "admin.id");
         foreach ($user as $filedName => $filedvalue) {
             if (isset($filedvalue))
                 if ($filedvalue != null) {
@@ -51,7 +52,13 @@ class Database_User {
                     }
                 }
         }
-
+        if (!empty($keyword)) {
+            $query->and_where_open();
+            $query->or_where('admin.username', "like", "%" . $keyword . "%");
+            $query->or_where('user.username', "like", "%" . $keyword . "%");
+            $query->or_where('user.email', "like", "%" . $keyword . "%");
+            $query->and_where_close();
+        }
         $count_Result = $query->execute()->as_array();
         $count = $count_Result[0]['total_user'];
 
@@ -75,6 +82,13 @@ class Database_User {
                         $query->where('user.' . $filedName, "like", "%" . $filedvalue . "%");
                     }
                 }
+        }
+         if (!empty($keyword)) {
+            $query->and_where_open();
+            $query->or_where('admin.username', "like", "%" . $keyword . "%");
+            $query->or_where('user.username', "like", "%" . $keyword . "%");
+            $query->or_where('user.email', "like", "%" . $keyword . "%");
+            $query->and_where_close();
         }
         if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
             $query->order_by($sort["order_by"], $sort["sort_type"]);

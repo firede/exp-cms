@@ -31,13 +31,18 @@ class Database_admin {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($admin, $page_Param, $sort) {
+    public function query_list($admin, $page_Param, $sort,$keyword="") {
         $query = DB::select(array('COUNT("id")', 'total_admin'))->from('admin');
         foreach ($admin as $filedName => $filedvalue) {
             if (isset($filedvalue))
                 if ($filedvalue != null) {
                     $query->where('admin.' . $filedName, "like", "%" . $filedvalue . "%");
                 }
+        }
+        if (!empty($keyword)) {
+            $query->and_where_open();
+            $query->where('username', "like", "%" . $keyword . "%");
+            $query->and_where_close();
         }
         $count_Result = $query->execute()->as_array();
         $count = $count_Result[0]['total_admin'];
@@ -51,6 +56,13 @@ class Database_admin {
                 if ($filedvalue != null) {
                     $query->where('admin.' . $filedName, "like", "%" . $filedvalue . "%");
                 }
+        }
+        if (!empty($keyword)) {
+            $query->and_where_open();
+            $query->where('username', "like", "%" . $keyword . "%");
+            //$query->or_where("user.username", "like", "%" . $post["keyword"] . "%");
+            //$query->or_where("category.name", "like", "%" . $post["keyword"] . "%");
+            $query->and_where_close();
         }
         if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
             $query->order_by($sort["order_by"], $sort["sort_type"]);
@@ -97,13 +109,13 @@ class Database_admin {
             if (isset($admin["password"])) {
                 $admin["password"] = md5($admin["password"]);
             }
-          
+
             //设置查询数据的sql
             $query = DB::select('id', 'username', "password", "role")->from('admin');
             $query->where("id", "=", $admin["id"]);
             $admins = $query->execute();
             $admins = $admins->as_array();
-             
+
             $count = count($admins);
             //加入一些业务值，特殊业务值的替换或者加入
             for ($i = 0; $i < count($admins); $i++) {

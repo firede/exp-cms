@@ -31,15 +31,24 @@ class Database_Attachment {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($attachment, $page_Param, $sort) {
-        $query = DB::select(array('COUNT("id")', 'total_attachment'))->from('attachment');
+    public function query_list($attachment, $page_Param, $sort, $keyword="") {
+        $query = DB::select(array('COUNT("attachment.id")', 'total_attachment'))->from('attachment');
+        $query->join("post", "left")->on("attachment.uuid", "=", "post.uuid");
+        $query->join("user", "left")->on("attachment.user_id", "=", "user.id");
         foreach ($attachment as $filedName => $filedvalue) {
             if (isset($filedvalue))
                 if ($filedvalue != null) {
                     $query->where('attachment.' . $filedName, "like", "%" . $filedvalue . "%");
                 }
         }
-
+        if (!empty($keyword)) {
+            $query->and_where_open();
+            $query->or_where('user.username', "like", "%" . $keyword . "%");
+            $query->or_where('post.title', "like", "%" . $keyword . "%");
+            $query->or_where('attachment.file_type', "like", "%" . $keyword . "%");
+            $query->or_where('attachment.url', "like", "%" . $keyword . "%");
+            $query->and_where_close();
+        }
         $count_Result = $query->execute()->as_array();
         $count = $count_Result[0]['total_attachment'];
 
@@ -53,6 +62,14 @@ class Database_Attachment {
                 if ($filedvalue != null) {
                     $query->where('attachment.' . $filedName, "like", "%" . $filedvalue . "%");
                 }
+        }
+        if (!empty($keyword)) {
+            $query->and_where_open();
+            $query->or_where('user.username', "like", "%" . $keyword . "%");
+            $query->or_where('post.title', "like", "%" . $keyword . "%");
+            $query->or_where('attachment.file_type', "like", "%" . $keyword . "%");
+            $query->or_where('attachment.url', "like", "%" . $keyword . "%");
+            $query->and_where_close();
         }
         if (isset($sort["order_by"]) && isset($sort["sort_type"])) {
             $query->order_by($sort["order_by"], $sort["sort_type"]);
@@ -138,6 +155,7 @@ class Database_Attachment {
         $user_rebbish_sql->where("user_id", "not in", $user_sql->execute())->and_where("use_type", "=", "1");
         return $rebbish = array_merge($post_rebbish_sql->execute(), $user_rebbish_sql->execute());
     }
+
     //清理垃圾数据和文件
     public function clear_rubbish() {
         try {

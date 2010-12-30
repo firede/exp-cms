@@ -71,9 +71,9 @@ class Database_Category {
      * @param $sort array 排序规则
      * @return array 符合条件的category表数据以及其他参数
      */
-    public function query_list($category, $sort, $page_Param=NULL) {
+    public function query_list($category, $sort, $page_Param=NULL,$keyword="") {
         if ($page_Param != NULL) {
-            return $this->query_list_page($category, $sort, $page_Param);
+            return $this->query_list_page($category, $sort, $page_Param,$keyword);
         }
         //设置查询数据的sql
         $query = DB::select("a.*", array("b.name", "parent_name"))->from(array("category", "a"));
@@ -84,12 +84,12 @@ class Database_Category {
                     if ($filedName == "parent_id") {
                         $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
-                            $query->where('user.' . $filedName, "in", $filed_values);
+                            $query->where('a.' . $filedName, "in", $filed_values);
                         } else {
-                            $query->where('user.' . $filedName, "=", $filedvalue);
+                            $query->where('a.' . $filedName, "=", $filedvalue);
                         }
                     } else {
-                        $query->where('user.' . $filedName, "like", "%" . $filedvalue . "%");
+                        $query->where('a.' . $filedName, "like", "%" . $filedvalue . "%");
                     }
                 }
         }
@@ -123,24 +123,31 @@ class Database_Category {
      * @param $sort array 排序规则
      * @return array 符合条件的category表数据以及其他参数
      */
-    public function query_list_page($category, $sort, $page_Param=NULL) {
-        $query = DB::select(array('COUNT("id")', 'total_category'))->from('category');
+    public function query_list_page($category, $sort, $page_Param=NULL, $keyword="") {
+        $query = DB::select(array('COUNT("a.id")', 'total_category'))->from(array("category", "a"));
+        $query->join(array("category", "b"), "left")->on("b.id", "=", "a.parent_id");
         foreach ($category as $filedName => $filedvalue) {
             if (isset($filedvalue))
                 if ($filedvalue != null) {
                     if ($filedName == "parent_id") {
                         $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
-                            $query->where('user.' . $filedName, "in", $filed_values);
+                            $query->where('a.' . $filedName, "in", $filed_values);
                         } else {
-                            $query->where('user.' . $filedName, "=", $filedvalue);
+                            $query->where('a.' . $filedName, "=", $filedvalue);
                         }
                     } else {
-                        $query->where('user.' . $filedName, "like", "%" . $filedvalue . "%");
+                        $query->where('a.' . $filedName, "like", "%" . $filedvalue . "%");
                     }
                 }
         }
-
+        if (!empty($keyword)) {
+            $query->and_where_open();
+            $query->or_where('a.short_name', "like", "%" . $keyword . "%");
+            $query->or_where('a.name', "like", "%" . $keyword . "%");
+            $query->or_where('b.name', "like", "%" . $keyword . "%");
+            $query->and_where_close();
+        }
         $count_Result = $query->execute()->as_array();
         $count = $count_Result[0]['total_category'];
         //设置查询数据的sql
@@ -152,14 +159,21 @@ class Database_Category {
                     if ($filedName == "parent_id") {
                         $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
-                            $query->where('user.' . $filedName, "in", $filed_values);
+                            $query->where('a.' . $filedName, "in", $filed_values);
                         } else {
-                            $query->where('user.' . $filedName, "=", $filedvalue);
+                            $query->where('a.' . $filedName, "=", $filedvalue);
                         }
                     } else {
-                        $query->where('user.' . $filedName, "like", "%" . $filedvalue . "%");
+                        $query->where('a.' . $filedName, "like", "%" . $filedvalue . "%");
                     }
                 }
+        }
+        if (!empty($keyword)) {
+            $query->and_where_open();
+            $query->or_where('a.short_name', "like", "%" . $keyword . "%");
+            $query->or_where('a.name', "like", "%" . $keyword . "%");
+            $query->or_where('b.name', "like", "%" . $keyword . "%");
+            $query->and_where_close();
         }
         //添加分页
         if ($page_Param != NULL) {
@@ -250,22 +264,22 @@ class Database_Category {
 
     /**     * *******
      * 删除分类 支持批量删除 批量删除 用 ","分隔
-     
-    public function del($category) {
-        try {
-            if (isset($category["id"])) {
-                return "no_id";
-            }
-            $id = $category["id"];
-            $delete = DB::delete()->table("category");
-            $modify->where("id", "in", $ids);
-            $modify->execute();
-            $this->set_config(array());
-            return "ok";
-        } catch (ErrorException $e) {
-            return "error";
-        }
-    }*/
+
+      public function del($category) {
+      try {
+      if (isset($category["id"])) {
+      return "no_id";
+      }
+      $id = $category["id"];
+      $delete = DB::delete()->table("category");
+      $modify->where("id", "in", $ids);
+      $modify->execute();
+      $this->set_config(array());
+      return "ok";
+      } catch (ErrorException $e) {
+      return "error";
+      }
+      } */
 
     /**     * **
      * 修改 一个或多个分类信息 批量删除 ID用“,”分隔
@@ -283,7 +297,7 @@ class Database_Category {
             $modify->execute();
             $this->set_config(array());
             return "ok";
-       } catch (Exception $e) {
+        } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
             return "error";
         }
@@ -338,7 +352,7 @@ class Database_Category {
             $move->where("parent_id", "in", $ids);
             $move->execute();
             return "ok";
-      } catch (Exception $e) {
+        } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
             return "error";
         }
@@ -367,7 +381,7 @@ class Database_Category {
             if ($move_child && $new_child_parent != NULL) {
                 $this->move_child($category["id"], $new_child_parent);
             }
-             DB::query(NULL, "COMMIT")->execute();
+            DB::query(NULL, "COMMIT")->execute();
             return "ok";
         } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
@@ -409,7 +423,7 @@ class Database_Category {
             $clear_post->execute();
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
-     } catch (Exception $e) {
+        } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
             DB::query(NULL, "ROLLBACK")->execute();
             return "error";
