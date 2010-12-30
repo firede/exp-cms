@@ -50,7 +50,7 @@ var methods = {
 var tpls = {
 	layoutWrap: '<div class="clearfix" style="border:1px solid blue;">{0}</div>',
 	layoutList: '<div class="{0}" level="{1}" style="border:1px solid red;float:left;width:100px;padding:5px;"></div>',
-	layoutItem: '<div class="{1}" level="{2}" parent="{3}" style="line-height:20px;height:20px;margin:1px 0;">{0}</div>'
+	layoutItem: '<div class="{1}" level="{2}" item="{3}" style="line-height:20px;height:20px;margin:1px 0;">{0}</div>'
 };
 
 /**
@@ -62,7 +62,7 @@ function initMainHtml(container) {
 
 		if (data.success === true) {
 			createLayout(container);
-			createItem(container, '0');
+			createItem(container, '0', '-1');
 		}
 	});
 }
@@ -99,14 +99,14 @@ function initMainEvent(container) {
 				item = $(tar).closest('[item]', this);
 
 			if (item.length > 0) {
-				alert(item.attr('item'));
+				createItem(container, item.attr('level'), item.attr('item'));
 			}
 		});
 	});
 }
 
 
-function createItem(container, level) {
+function createItem(container, level, curId) {
 	container.each(function() {
 		var wrap		= $(this),
 			data		= settings.data.result,
@@ -116,11 +116,25 @@ function createItem(container, level) {
 				'2': wrap.find('.' + prefix.list + '[level=2]')
 			};
 
-		levelMap[level].html('haha');
+		if (parseInt(level, 10) > 2) {
+			return;
+		}
+		
+		getChildData(data, curId, function(dataList) {
+			var key, listArr = [];
 
-		getChildData(data, '4', function(datas) {
-			console.log(datas);
+			for (key in dataList) {
+				listArr.push(dxn.util.format(
+					tpls.layoutItem,
+					dataList[key]['name'],
+					prefix.item,
+					(parseInt(level, 10) + 1).toString(),
+					dataList[key]['id']
+				));
+			}
+			levelMap[level].html(listArr.join(''));
 		});
+
 	});
 }
 
@@ -142,7 +156,7 @@ function getChildData (dsObj, curId, callback) {
 	for(key in dsObj) {
 		if (key === curId) {
 			callback(dsObj[key]['child']);
-		} else if (dsObj[key]['child'] != []) {
+		} else if (dsObj[key]['has_child'] === true) {
 			getChildData(dsObj[key]['child'], curId, callback);
 		}
 	}
