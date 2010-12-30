@@ -62,13 +62,13 @@ class Action {
      * @param <array> $function_config
      * @return <array>
      */
-    public static function form_decorate($form, $function_config, $form_name='default', $function_name="modify") {
+    public static function form_decorate($form, $function_config) {
         $new_form = array();
-        if (isset($function_config[$form_name][$function_name])) {
+        if (isset($function_config)) {
             //处理需要推送字段
-            if (isset($function_config[$form_name][$function_name]["display"])) {
-                $filed_names = $function_config[$form_name][$function_name]["display"];
-                $filed_names = explode(",", $filed_names);
+            if (isset($function_config["display"])) {
+                $filed_names = $function_config["display"];
+                $filed_names = explode(",", trim($filed_names));
                 foreach ($filed_names as $key => $value) {
                     if (isset($form[$value])) {
                         $new_form[$value] = $form[$value];
@@ -76,18 +76,54 @@ class Action {
                 }
             }
             //处理需要设置只读字段
-            if (isset($function_config[$form_name][$function_name]["readonly"])) {
-                $readonly_names = $function_config[$form_name][$function_name]["readonly"];
-                $readonly_names = explode(",", $readonly_names);
+            if (isset($function_config["readonly"])) {
+                $readonly_names = $function_config["readonly"];
+                $readonly_names = explode(",", trim($readonly_names));
                 foreach ($readonly_names as $key => $value) {
                     if (isset($new_form[$value])) {
                         $new_form[$value]["readonly"] = TRUE;
                     }
                 }
-            }   
+            }
         }
-        echo Kohana::debug($new_form);
+
         return $new_form;
+    }
+
+    public static final $LEGAL_FORM_TYPE_READ = "r";
+    public static final $LEGAL_FORM_TYPE_WRITER = "W";
+
+    /**
+     * 根据配置和数据库操作类型返回合法字段名集合
+     * @param <array> $function_config
+     * @param <string> $type $LEGAL_FORM_TYPE_READ|$LEGAL_FORM_TYPE_WRITER
+     * @param <array> $filter_fileds 特殊情况下过滤掉不需要的字段
+     * @return <type>
+     */
+    public static function legal_fileds($function_config, $type, $filter_fileds=NULL) {
+        $readonly_fileds = array();
+        $display_fileds = array();
+        if (isset($function_config["dispaly"])) {
+            $display_fileds = explode(",", trim($function_config["dispaly"]));
+            if (isset($function_config["readonly"])) {
+                $readonly_fileds = explode(",", trim($function_config["readonly"]));
+            }
+        }
+        elseif ($type == Action::$LEGAL_FORM_TYPE_WRITER) {
+            foreach ($readonly_fileds as $key => $value) {
+                if (isset($display_fileds[$value])) {
+                    unset($display_fileds[$value]);
+                }
+            }
+        }
+        if ($filter_fileds != NULL) {
+            foreach ($filter_fileds as $filterkey ) {
+                   if(isset ($display_fileds[$filterkey])){
+                       unset ($display_fileds[$filterkey]);
+                   }
+            }
+        }
+        return $display_fileds;
     }
 
     /**     * *
