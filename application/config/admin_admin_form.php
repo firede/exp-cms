@@ -54,8 +54,13 @@ return array(
 	),
 	'function_config' => array(
 		'default' => array(
+			'create' => array(
+				'display' => 'username,password,re_password,role',
+				'readonly'=> '',
+			),
 			'modify' => array(
-				'password', 're_password', 'role',
+				'display' => 'id,username,password,re_password,role',
+				'readonly'=> 'username',
 			),
 		),
 	),
