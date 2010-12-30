@@ -10,13 +10,7 @@ class Sysconfig_Business {
      */
 
     public static function post_status($status_id) {
-        $status_box = array(
-            '0' => '创建待审核',
-            '1' => '已发布',
-            '2' => '修改待审核',
-            '3' => '驳回待修改',
-            '5' => '草稿',
-        );
+        $status_box =Sysconfig_Business::get_config("post_status");
           return $status_box[$status_id];
     }
     /****
@@ -26,12 +20,7 @@ class Sysconfig_Business {
      */
     public static function post_flag($flag_ids) {
         $flag_ids = explode(",", $flag_ids);
-        $flags = array(
-            '1' => '精华',
-            '2' => '置顶',
-            '3' => '推荐',
-        );
-       
+        $flags =Sysconfig_Business::get_config("post_flag");
         return Arr::filter_Array($flags, $flag_ids);
     }
      /****
@@ -40,12 +29,7 @@ class Sysconfig_Business {
      * @return 返回用户状态描述
      */
     public static function user_Status($status) {
-        $status_box = array(
-            '0' => '正常',
-            '1' => '锁定',//限制登录和发布
-            '2' => '屏蔽',//不限制登录和发布 但其发布的所有文章 用户不能阅读 管理员可以查看
-            '3' => '锁定并屏蔽',//既不能登录发布 文章页不予以显示
-        );
+        $status_box = Sysconfig_Business::get_config("user_Status");
         return $status_box[$status];
     }
     /****
@@ -54,9 +38,7 @@ class Sysconfig_Business {
      * @return 返回用户类型描述
      */
     public static function user_User_type($user_type) {
-        $user_type_box = array(
-            '0' => '普通',
-        );
+        $user_type_box = Sysconfig_Business::get_config("user_User_type");
         return $user_type_box[$user_type];
     }
      /****
@@ -65,10 +47,7 @@ class Sysconfig_Business {
      * @return 返回用户类型描述
      */
     public static function admin_Role($role) {
-        $role_box = array(
-            '0' => '编辑',
-            '1' => '超级管理员',
-        );
+        $role_box = aSysconfig_Business::get_config("admin_Role");
         return $role_box[$role];
     }
     /****
@@ -77,11 +56,17 @@ class Sysconfig_Business {
      * @return 返回附件类型描述
      */
     public static function attachment_Use_type($use_type) {
-        $use_type_box = array(
-            '0' => '文章',
-            '1' => '头像',
-        );
+        
+        $use_type_box = Sysconfig_Business::get_config("attachment_Use_type");
         return $use_type_box[$use_type];
+    }
+    /**
+     *根据需要的业务配置对象名取出相对有的对象
+     * @param <type> $function_name
+     */
+    public static function  get_config($function_name){
+        $business=Kohana::config("business_config");
+        return isset($business[$function_name])?$business[$function_name]:array();
     }
 
 }

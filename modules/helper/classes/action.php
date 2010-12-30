@@ -56,6 +56,40 @@ class Action {
         return $view_data;
     }
 
+    /**
+     * 根据form的不同功能配置 生成装饰新的表单
+     * @param <array> $form
+     * @param <array> $function_config
+     * @return <array>
+     */
+    public static function form_decorate($form, $function_config, $form_name='default', $function_name="modify") {
+        $new_form = array();
+        if (isset($function_config[$form_name][$function_name])) {
+            //处理需要推送字段
+            if (isset($function_config[$form_name][$function_name]["display"])) {
+                $filed_names = $function_config[$form_name][$function_name]["display"];
+                $filed_names = explode(",", $filed_names);
+                foreach ($filed_names as $key => $value) {
+                    if (isset($form[$value])) {
+                        $new_form[$value] = $form[$value];
+                    }
+                }
+            }
+            //处理需要设置只读字段
+            if (isset($function_config[$form_name][$function_name]["readonly"])) {
+                $readonly_names = $function_config[$form_name][$function_name]["readonly"];
+                $readonly_names = explode(",", $readonly_names);
+                foreach ($readonly_names as $key => $value) {
+                    if (isset($new_form[$value])) {
+                        $new_form[$value]["readonly"] = TRUE;
+                    }
+                }
+            }   
+        }
+        echo Kohana::debug($new_form);
+        return $new_form;
+    }
+
     /**     * *
      * 将已有的值回填给form中
      * @param <type> $form
@@ -63,18 +97,15 @@ class Action {
      * @return <type>
      */
     public static function build_form_data($form, $data_arr) {
-       // if (isset($data_arr["result"][0])) {
-           // $data_arr = $data_arr["result"][0];
-            foreach ($form as $name => $filed) {
-                if (isset($data_arr[$name])) {
-                    if ($filed['type'] == "text") {
-                        $form[$name]["value"] = $data_arr[$name];
-                    } elseif ($filed['type'] == "select") {
-                        $form[$name]["value"]["select"] = $data_arr[$name];
-                    }
+        foreach ($form as $name => $filed) {
+            if (isset($data_arr[$name])) {
+                if ($filed['type'] == "select") {
+                    $form[$name]["value"]["select"] = $data_arr[$name];
+                } else {
+                    $form[$name]["value"] = $data_arr[$name];
                 }
             }
-       // }
+        }
         return $form;
     }
 
