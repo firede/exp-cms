@@ -8,7 +8,7 @@
 	<script type="text/javascript" src="<{$BASE_URL}>assets/admin/js/vendor/jquery.qtip.js"></script>
 	<title><{if $title|default}>
 		<{$title}> - 
-	<{/if}>大犀牛体验版CMS</title>
+	<{/if}>大犀牛内容分享系统</title>
 </head>
 
 <body>
