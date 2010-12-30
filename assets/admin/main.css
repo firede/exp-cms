@@ -113,9 +113,11 @@ a:hover {
 	float: right;
 	color: #009;
 	cursor: pointer;
+	text-decoration: none;
 	_zoom:1;
 }
-.exlink .icon-category {
+.exlink .icon-category,
+.exlink .icon-user-add {
 	position: absolute;
 	left: 5px;
 	top: 4px;
@@ -360,6 +362,7 @@ a:hover {
 .icon-undo-rej,
 .icon-cate-del,
 .icon-cate-modify,
+.icon-user-add,
 .icon-user-del,
 .icon-user-modify,
 .icon-home,
@@ -416,6 +419,9 @@ a:hover {
 }
 .icon-cate-modify {
 	background-position: -60px -20px;
+}
+.icon-user-add {
+	background-position: -20px -60px;
 }
 .icon-user-del {
 	background-position: -40px -60px;
