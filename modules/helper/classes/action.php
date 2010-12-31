@@ -90,8 +90,8 @@ class Action {
         return $new_form;
     }
 
-    public static  $LEGAL_FORM_TYPE_READ = "r";
-    public static  $LEGAL_FORM_TYPE_WRITER = "W";
+    public static $LEGAL_FORM_TYPE_READ = "r";
+    public static $LEGAL_FORM_TYPE_WRITER = "W";
 
     /**
      * 根据配置和数据库操作类型返回合法字段名集合
@@ -109,16 +109,16 @@ class Action {
                 $readonly_fileds = explode(",", trim($function_config["readonly"]));
             }
         }
-       if ($type == Action::$LEGAL_FORM_TYPE_WRITER) {
+        if ($type == Action::$LEGAL_FORM_TYPE_WRITER) {
             foreach ($display_fileds as $key => $value) {
-                if (in_array($value,$readonly_fileds)) {
+                if (in_array($value, $readonly_fileds)) {
                     unset($display_fileds[$key]);
                 }
             }
-        } 
+        }
         if ($filter_fileds != NULL) {
-            foreach ($display_fileds as $key=>$value ) {
-                   if (in_array($value,$filter_fileds)) {
+            foreach ($display_fileds as $key => $value) {
+                if (in_array($value, $filter_fileds)) {
                     unset($display_fileds[$key]);
                 }
             }
@@ -144,6 +144,7 @@ class Action {
         }
         return $form;
     }
+   
 
 }
 

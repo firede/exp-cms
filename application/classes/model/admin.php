@@ -8,13 +8,17 @@ defined('SYSPATH') or die('No direct script access.');
  * @author Fanqie
  */
 class Model_Admin extends Model_Base {
-
+    /**
+     *
+     * @param <type> $post
+     * @param <type> $form
+     * @param <type> $legal_fileds
+     * @param <type> $type
+     * @return <type> 
+     */
     public function post_validate($post, $form, $legal_fileds, $type=NULL) {
-        $noset_keys = Arr::get_noset_key($post, array('username', "password", "re_password", 'role'));
+        $noset_keys = Arr::get_noset_key($post, $legal_fileds);
         $op_data = $form;
-      
-
-       
         $adminDao = new Database_admin();
         //第一阶段 未定义错误
         //第二阶段 数据非空验证

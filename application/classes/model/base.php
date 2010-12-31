@@ -55,7 +55,25 @@ class Model_Base {
         }
         return TRUE;
     }
-
+     /**
+     * 检测字符串是否符合范围
+     * @param <string> $str
+     * @param <int> $min
+     * @param <int> $max
+     * @return <bool>
+     */
+    public static function validate_length_range($str, $min, $max) {
+        $len = strlen($str);
+        if (Validate::not_empty($min) && !Validate::not_empty($max)) {
+             return $len <$max;
+        } elseif (Validate::not_empty($max) && !Validate::not_empty($min)) {
+            return $len > $min;
+        } elseif (Validate::not_empty($max) && Validate::not_empty($min)) {
+            return Validate::range($len, $min, $max);
+        } else {
+            return TRUE;
+        }
+    }
 }
 
 ?>

@@ -14,11 +14,12 @@ class Controller_Admin_Auth extends Controller_Base {
      */
     public function action_login() {
         $form = Kohana::config('adminauth_login_form');
-        $page_path=$_GET["page_path"];
-        $view = View::factory('smarty:admin/auth/login', array(
-                    'form' => $form,
-                    'page_path'=>$page_path,
-                ));
+        $data["form"]=$form;
+        if (isset($_GET["page_path"])) {
+             $data["page_path"]=$_GET["page_path"];
+        }
+
+        $view = View::factory('smarty:admin/auth/login',$data);
         $this->template = AppCache::app_cache('adminauth_login', $view);
     }
 

@@ -70,8 +70,9 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $m_admin = new Model_Admin();
         $form = Kohana::config('admin_admin_form.default');
         $function_config = Kohana::config('admin_admin_form.function_config.default.create');
+        $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
-        $validate_result = $m_admin->post_validate($_POST, $form, $function_config);
+        $validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
         if (isset($validate_result["success"])) {
 
             $view = View::factory('smarty:admin/admin/create', array(
@@ -119,7 +120,6 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $function_config = Kohana::config('admin_admin_form.function_config.default.modify');
         $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
-
         $validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
        
         if (isset($validate_result["success"])) {
@@ -129,7 +129,6 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
             $this->template = AppCache::app_cache('admin_modify', $view);
             return;
         }
-
         $adminDb = new Database_Admin();
 
         $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
