@@ -2,6 +2,7 @@
 body {
 	color: #000;
 	font-size: 12px;
+	overflow-y: scroll;
 }
 .container_24 {
 	padding: 15px 0;
