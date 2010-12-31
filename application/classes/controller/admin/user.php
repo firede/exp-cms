@@ -90,6 +90,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
 
         $user = Arr::filter_Array($_GET, $arr_element_names);
+        $user["last_time"] = date("Y-m-d H:i:s");
         $view_data = $userDb->modify($user);
         $view_data = Action::sucess_status($view_data);
 
@@ -107,9 +108,11 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
     public function action_create_post() {
         $m_user = new Model_User();
         $form = Kohana::config('admin_user_form.default');
+
         $function_config = Kohana::config('admin_user_form.function_config.default.create');
         $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
+
         $validate_result = $m_user->post_validate($_POST, $form, $legal_fileds);
 
         if (isset($validate_result["success"])) {
@@ -119,10 +122,14 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
             $this->template = AppCache::app_cache('user_create_post', $view);
             return;
         }
+        $_POST["avatar"] = isset($_POST["avatar"]) ? $_POST["avatar"] : "";
         $userDb = new Database_User();
         $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
+        $user = Arr::filter_Array($_POST, $arr_element_names);
 
-        $user = Arr::filter_Array($_GET, $arr_element_names);
+        $user["reg_time"] = date("Y-m-d H:i:s");
+        $user["last_time"] = date("Y-m-d H:i:s");
+
         $view_data = $userDb->create($user);
         $view_data = Action::sucess_status($view_data);
 

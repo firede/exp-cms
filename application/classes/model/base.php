@@ -17,7 +17,7 @@ class Model_Base {
      * @param $set_continue array 设置跳过不设置值的项
      * @return array
      */
-    public static function set_form_value($form, $post, $set_empty=array(), $set_continue=array()) {
+    public  function set_form_value($form, $post, $set_empty=array(), $set_continue=array()) {
         foreach ($form as $key => $value) {
 
             //例外操作
@@ -45,7 +45,7 @@ class Model_Base {
      * @return bool 有错误信息则返回FALSE 没有则返回TRUE
      */
 
-    public static function has_error($form) {
+    public  function has_error($form) {
         foreach ($form as $key => $value) {
             if (isset($form[$key]["message"])) {
                 if (Validate::not_empty($form[$key]["message"])) {
@@ -58,18 +58,17 @@ class Model_Base {
      /**
      * 检测字符串是否符合范围
      * @param <string> $str
-     * @param <int> $min
-     * @param <int> $max
+     * @param <array> $obj_desc
      * @return <bool>
      */
-    public static function validate_length_range($str, $min, $max) {
+    public  function validate_length_range($str, $obj_desc) {
         $len = strlen($str);
-        if (Validate::not_empty($min) && !Validate::not_empty($max)) {
-             return $len <$max;
-        } elseif (Validate::not_empty($max) && !Validate::not_empty($min)) {
-            return $len > $min;
-        } elseif (Validate::not_empty($max) && Validate::not_empty($min)) {
-            return Validate::range($len, $min, $max);
+        if (Validate::not_empty($obj_desc['max_len']) && !Validate::not_empty($obj_desc['min_len'])) {
+             return $len <$obj_desc['max_len'];
+        } elseif (Validate::not_empty($obj_desc['min_len']) && !Validate::not_empty($obj_desc['max_len'])) {
+            return $len > $obj_desc['min_len'];
+        } elseif (Validate::not_empty($obj_desc['min_len']) && Validate::not_empty($obj_desc['max_len'])) {
+            return Validate::range($len, $obj_desc['min_len'], $obj_desc['max_len']);
         } else {
             return TRUE;
         }

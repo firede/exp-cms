@@ -10,26 +10,30 @@ defined('SYSPATH') or die('No direct script access.');
 class Model_User extends Model_Base {
 
     public function post_validate($post, $form, $legal_fileds, $type=NULL) {
-        $form = Kohana::config("admin_user_form");
+       
+     
         $noset_keys = Arr::get_noset_key($post, $legal_fileds);
         $op_data = $form;
+        
         $userDao = new Database_User ();
         //第一阶段 未定义错误
         //第二阶段 数据非空验证
         //第三阶段 数据有效格式验证
         //第四阶段 数据有效性验证
         //用户名检测
+
         if (in_array("username", $legal_fileds)) {
             if (in_array('username', $noset_keys)) {
                 $op_data['username']["message"] = $op_data['username']["label"] . "没有定义";
             } elseif (!Validate::not_empty($post['username'])) {
                 $op_data['username']["message"] = $op_data['username']["label"] . "不能为空";
-            } elseif (!Validate::range($post['username'], $op_data["username"]['min_len'], $op_data["username"]['max_len'])) {
+            } elseif (!$this->validate_length_range($post['username'], $op_data["username"], $op_data["username"])) {
                 $op_data['username']["message"] = $op_data['username']["label"] .
                         "长度必须在" . $op_data["username"]['min_len'] . "-" . $op_data["username"]['max_len'] . "个字符之间";
-            } elseif (!($userDao->check_exist(array($post['username'])))) {
+            } elseif (!($userDao->check_exist($post))) {
                 $op_data['username']["message"] = "该" . $op_data['username']["label"] . "已经存在，请重新输入";
             }
+        //   $this->validate_length_range($str, $min, $max)
         }
         //password 密码检测
         if (in_array("password", $legal_fileds)) {
@@ -37,7 +41,7 @@ class Model_User extends Model_Base {
                 $op_data['password']["message"] = $op_data['password']["label"] . "没有定义";
             } elseif (!Validate::not_empty($post['password'])) {
                 $op_data['password']["message"] = $op_data['password']["label"] . "不能为空";
-            } elseif (!Validate::range(strlen($post['password']), $op_data['password']['min_len'], $op_data['password']['max_len'])) {
+            } elseif (! $this->validate_length_range($post['password'], $op_data['password']['min_len'], $op_data['password']['max_len'])) {
                 $op_data['password']["message"] = $op_data['password']["label"] .
                         "长度必须在" . $op_data['password']['min_len'] . "-" . $op_data['password']['max_len'] . "个字符之间";
             } else {

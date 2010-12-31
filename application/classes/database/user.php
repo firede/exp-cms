@@ -18,9 +18,11 @@ class Database_User {
 
     public function create($user) {
         $user["password"] = md5($user["password"]);
-
-        $save = DB::insert("user", array('username', "password", 'email', 'user_type', 'status',
-                    'avatar', 'reg_time', 'last_time', 'admin_id'));
+        $columns=array();
+        foreach ($user as $key=>$value) {
+            $columns[$key]=$key;
+        }
+        $save = DB::insert("user", $column);
         $save->values($user);
         $result = (bool) $save->execute();
         return $result ? "ok" : "error";

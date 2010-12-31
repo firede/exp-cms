@@ -12,8 +12,12 @@ class Database_admin {
     public function create($admin) {
 
         try {
+            $columns = array();
+            foreach ($admin as $key => $value) {
+                $columns[$key] = $key;
+            }
             $admin["password"] = md5($admin["password"]);
-            $save = DB::insert("admin", array("username", "password", "role"));
+            $save = DB::insert("admin", $columns);
             $save->values($admin);
             $save->execute();
             return 'ok';
@@ -31,7 +35,7 @@ class Database_admin {
      * @return message <string> 有错误的情况下会直接返回消息 正常执行的状态下会封装在return array里返回
      */
 
-    public function query_list($admin, $page_Param, $sort,$keyword="") {
+    public function query_list($admin, $page_Param, $sort, $keyword="") {
         $query = DB::select(array('COUNT("id")', 'total_admin'))->from('admin');
         foreach ($admin as $filedName => $filedvalue) {
             if (isset($filedvalue))
