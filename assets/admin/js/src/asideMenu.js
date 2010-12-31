@@ -28,7 +28,6 @@ dxn.asideMenu = (function ($) {
 				var status = openStatusArr[i];
 				openStatusArr[i] = (status === '0') ? '1' : '0';
 				$.cookie(cookieName, openStatusArr.join(''));
-				console.log(openStatusArr);
 			}
 		};
 
