@@ -24,9 +24,12 @@ dxn.asideMenu = (function ($) {
 
 				openStatusArr = str.split('');
 			},
-			modify: function (i) {
-				var status = openStatusArr[i];
-				openStatusArr[i] = (status === '0') ? '1' : '0';
+			modify: function (i, flag) {
+				if (flag) {
+					openStatusArr[i] = flag;
+				} else {
+					openStatusArr[i] = (openStatusArr[i] === '0') ? '1' : '0';
+				}
 				$.cookie(cookieName, openStatusArr.join(''));
 			}
 		};
@@ -56,7 +59,10 @@ dxn.asideMenu = (function ($) {
 		el.click(function () {
 			list.slideToggle('fast');
 			openStatus.modify(i);
-			return false;
+		});
+
+		title.click(function() {
+			openStatus.modify(i, '1');
 		});
 	});
 

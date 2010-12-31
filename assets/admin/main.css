@@ -642,6 +642,7 @@ a:hover {
 	padding:5px;
 	vertical-align: top;
 	background:#FFF;
+	border:1px solid #FFF;
 }
 .form-table .desc {
 	color:#999;
