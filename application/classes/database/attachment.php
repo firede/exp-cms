@@ -14,7 +14,11 @@ class Database_Attachment {
 
     public function insert($attachement) {
         try {
-            $insert = DB::insert("attachment", array("url", "uuid", "file_size", "use_type", "status", "file_type"));
+            $columns = array();
+            foreach ($attachement as $key => $value) {
+                $columns[$key] = $key;
+            }
+            $insert = DB::insert("attachment",$columns);
             $insert->values($attachment);
             $insert->execute();
             return "ok";

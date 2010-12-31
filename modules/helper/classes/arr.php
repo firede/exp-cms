@@ -3,7 +3,8 @@
 defined('SYSPATH') or die('No direct script access.');
 
 class Arr extends Kohana_Arr {
-    /** ***********************
+
+    /**     * **********************
      * 过滤数组
      * 从$arr（array）中剔除$arrElement（array）中指定的元素之外的下标值返回
      * 如 $arr=array('a'=>'1','b'=>'2','c'=>'3','d'=>5);
@@ -18,18 +19,15 @@ class Arr extends Kohana_Arr {
             return $arr;
         }
 
-        for ($i = 0; $i < count($arrElementkeys); $i++) {
-            if (!isset($arr[$arrElementkeys[$i]])) {
-                
-            } else {
-                $newArry[$arrElementkeys[$i]] = $arr[$arrElementkeys[$i]];
-            }
+        foreach ($arrElementkeys as $key => $value) {
+               if (isset($arr[$value])) {
+                    $newArry[$value] = $arr[$value];
+                }
         }
-
         return $newArry;
     }
 
-    /*************************
+    /*     * ***********************
      * 移除数组中的指定值
      * 从$arr（array）中剔除$arrElement（array）中指定的相等值返回
      * 如 $arr=array('a'=>'1','b'=>'2','c'=>'3','d'=>5);
@@ -50,52 +48,56 @@ class Arr extends Kohana_Arr {
                 for ($f = 0; $f < count($arr); $f++) {
                     if (isset($arr[$f])) {
                         if ($arr[$f] == $arrElementkeys[$i]) {
-                          $arr[$f]=NULL;
+                            $arr[$f] = NULL;
                         }
                     }
                 }
-            }  
+            }
         }
-        foreach ($arr as $key=>$value){
-            if($value!=NULL){
-                $newArry[$key]=$value;
+        foreach ($arr as $key => $value) {
+            if ($value != NULL) {
+                $newArry[$key] = $value;
             }
         }
         return $newArry;
     }
 
-    /*********
+    /*     * *******
      * 将数组写入固定的php文件内
      * @param $arr array 数组
      * @param $arr array 数组
      * @return string 需要覆盖入的文件
      */
+
     public static function as_config_file($arr, $config_file) {
-       $config_file=File::path_mkdirs($config_file);
-       $config_file=str_replace("\\", "/", $config_file);
-       $config_file=substr($config_file, 0,strlen($config_file)-1);
-       $fp=fopen($config_file, "w+");
-       $arr_str=StrongKohana::my_dump($arr);
-       $arr_str="<?php defined('SYSPATH') or die('No direct script access.'); \n return array ".$arr_str." ;\n?>";
-       fwrite($fp, $arr_str);
-       fclose($fp);
+        $config_file = File::path_mkdirs($config_file);
+        $config_file = str_replace("\\", "/", $config_file);
+        $config_file = substr($config_file, 0, strlen($config_file) - 1);
+        $fp = fopen($config_file, "w+");
+        $arr_str = StrongKohana::my_dump($arr);
+        $arr_str = "<?php defined('SYSPATH') or die('No direct script access.'); \n return array " . $arr_str . " ;\n?>";
+        fwrite($fp, $arr_str);
+        fclose($fp);
     }
-    /********
+
+    /*     * ******
      * 从数组中找出没有声明的key
      * @param $arr array
      * @param $arrElementkeys array 需要检查的key集合
      * @return array()   返回没有定义过的键的集合
      */
-    public static function get_noset_key($arr,$arrElementkeys){
-        $no_set_keys=array();
-        $count=0;
-        foreach($arrElementkeys as $key){
-            if(!isset($arr[$key])){
-               $no_set_keys[$count++]=$key;
+
+    public static function get_noset_key($arr, $arrElementkeys) {
+        $no_set_keys = array();
+        $count = 0;
+        foreach ($arrElementkeys as $key) {
+            if (!isset($arr[$key])) {
+                $no_set_keys[$count++] = $key;
             }
         }
         return $no_set_keys;
     }
+
 }
 
 ?>

@@ -32,7 +32,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $user = Arr::filter_Array($_GET, $arr_element_names);
         $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
-        $users = $userDb->query_list($user, $pageparam, $sort,$keyword);
+        $users = $userDb->query_list($user, $pageparam, $sort, $keyword);
         $users = Action::sucess_status($users);
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $users["total_items_count"]);
@@ -49,7 +49,10 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
     }
 
     public function action_create() {
-        $form = Kohana::config('admin_user_form');
+        $form = Kohana::config('admin_user_form.default');
+        $function_config = Kohana::config('admin_user_form.function_config.default.create');
+        $form = Action::form_decorate($form, $function_config);
+
         $view = View::factory('smarty:admin/user/create', array(
                     'form' => $form,
                 ));
@@ -58,7 +61,7 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
     }
 
     public function action_modify($id) {
-        $form = Kohana::config('admin_user_form');
+        $form = Kohana::config('admin_user_form.default');
         $userDb = new Database_User();
         $data_arr = $userDb->get_user($id);
         $form = Action::build_form_data($form, $data_arr["result"][0]);
@@ -70,8 +73,12 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
     }
 
     public function action_modify_post() {
-             $m_user = new Model_User();
-        $validate_result = $m_user->post_validate($_POST);
+        $m_user = new Model_User();
+        $form = Kohana::config('admin_user_form.default');
+        $function_config = Kohana::config('admin_user_form.function_config.default.modify');
+        $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
+        $form = Action::form_decorate($form, $function_config);
+        $validate_result = $m_user->post_validate($_POST, $form, $legal_fileds);
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/user/modify', array(
                         'form' => $validate_result["data"],
@@ -80,11 +87,10 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
             return;
         }
         $userDb = new Database_User();
-        $arr_element_names =
-                array('id', 'username', "password", 'email', 'user_type', 'status',
-                    'avatar', 'reg_time', 'last_time', 'admin_id',);
+        $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
 
         $user = Arr::filter_Array($_GET, $arr_element_names);
+        $user["last_time"] = date("Y-m-d H:i:s");
         $view_data = $userDb->modify($user);
         $view_data = Action::sucess_status($view_data);
 
@@ -101,7 +107,14 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
 
     public function action_create_post() {
         $m_user = new Model_User();
-        $validate_result = $m_user->post_validate($_POST);
+        $form = Kohana::config('admin_user_form.default');
+
+        $function_config = Kohana::config('admin_user_form.function_config.default.create');
+        $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
+        $form = Action::form_decorate($form, $function_config);
+
+        $validate_result = $m_user->post_validate($_POST, $form, $legal_fileds);
+
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/user/create', array(
                         'form' => $validate_result["data"],
@@ -109,12 +122,14 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
             $this->template = AppCache::app_cache('user_create_post', $view);
             return;
         }
+        $_POST["avatar"] = isset($_POST["avatar"]) ? $_POST["avatar"] : "";
         $userDb = new Database_User();
-        $arr_element_names =
-                array('id', 'username', "password", 'email', 'user_type', 'status',
-                    'avatar', 'reg_time', 'last_time', 'admin_id',);
+        $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
+        $user = Arr::filter_Array($_POST, $arr_element_names);
 
-        $user = Arr::filter_Array($_GET, $arr_element_names);
+        $user["reg_time"] = date("Y-m-d H:i:s");
+        $user["last_time"] = date("Y-m-d H:i:s");
+
         $view_data = $userDb->create($user);
         $view_data = Action::sucess_status($view_data);
 

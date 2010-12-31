@@ -31,7 +31,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $admin = Arr::filter_Array($_GET, $arr_element_names);
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
-        $admins = $adminDb->query_list($admin, $pageparam, $sort,$keyword);
+        $admins = $adminDb->query_list($admin, $pageparam, $sort, $keyword);
         $admins = Action::sucess_status($admins);
         if (isset($posts["total_items_count"])) {
             $pagination->__set('total_items', $admins["total_items_count"]);
@@ -52,6 +52,8 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
     public function action_create() {
 
         $form = Kohana::config('admin_admin_form.default');
+        $function_config = Kohana::config('admin_admin_form.function_config.default.create');
+        $form = Action::form_decorate($form, $function_config);
         $view = View::factory('smarty:admin/admin/create', array(
                     'form' => $form,
                 ));
@@ -66,7 +68,11 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
 
     public function action_create_post() {
         $m_admin = new Model_Admin();
-        $validate_result = $m_admin->post_validate($_POST);
+        $form = Kohana::config('admin_admin_form.default');
+        $function_config = Kohana::config('admin_admin_form.function_config.default.create');
+        $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
+        $form = Action::form_decorate($form, $function_config);
+        $validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
         if (isset($validate_result["success"])) {
 
             $view = View::factory('smarty:admin/admin/create', array(
@@ -76,7 +82,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
             return;
         }
         $adminDb = new Database_Admin();
-        $arr_element_names = array('username', 'password', 'role');
+        $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
 
         $admin = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $adminDb->create($admin);
@@ -90,10 +96,12 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
      * 修改管理员（展示视图）
      */
     public function action_modify($id) {
-       
+
         $form = Kohana::config('admin_admin_form.default');
+        $function_config = Kohana::config('admin_admin_form.function_config.default.modify');
+        $form = Action::form_decorate($form, $function_config);
         $adminDb = new Database_Admin();
-        $data_arr = $adminDb->get_admin(array("id"=>$id));
+        $data_arr = $adminDb->get_admin(array("id" => $id));
         $form = Action::build_form_data($form, $data_arr["result"][0]);
         $view = View::factory('smarty:admin/admin/modify', array(
                     'form' => $form,
@@ -107,7 +115,13 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
      */
     public function action_modify_post() {
         $m_admin = new Model_Admin();
-        $validate_result = $m_admin->post_validate($_POST);
+
+        $form = Kohana::config('admin_admin_form.default');
+        $function_config = Kohana::config('admin_admin_form.function_config.default.modify');
+        $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
+        $form = Action::form_decorate($form, $function_config);
+        $validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
+       
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/admin/modify', array(
                         'form' => $validate_result["data"],
@@ -116,12 +130,14 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
             return;
         }
         $adminDb = new Database_Admin();
-        $arr_element_names = array('id','username', 'password', 'role');
+
+        $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
 
         $admin = Arr::filter_Array($_POST, $arr_element_names);
+       
         $view_data = $adminDb->modify($admin);
         $view_data = Action::sucess_status($view_data);
-        
+
         $view = View::factory('smarty:');
         $view->admins = $view_data;
         $this->request->response = AppCache::app_cache("admin_modify_post", $view)->render();

@@ -13,10 +13,20 @@ class Database_Category {
      * @return string 直接返回执行情况消息
      */
     public function create($category) {
-        $save = DB::insert("category", array());
+        try{
+        $columns = array();
+        foreach ($category as $key => $value) {
+            $columns[$key] = $key;
+        }
+        $save = DB::insert("category", $columns);
         $save->values($category);
         $result = (bool) $save->execute();
-        return $result ? "ok" : "error";
+        return TRUE;
+        }catch(Exception $e){
+            ErrorExceptionReport::_errors_report($e);
+            return FALSE;
+        }
+        
     }
 
     /**     * *
@@ -71,9 +81,9 @@ class Database_Category {
      * @param $sort array 排序规则
      * @return array 符合条件的category表数据以及其他参数
      */
-    public function query_list($category, $sort, $page_Param=NULL,$keyword="") {
+    public function query_list($category, $sort, $page_Param=NULL, $keyword="") {
         if ($page_Param != NULL) {
-            return $this->query_list_page($category, $sort, $page_Param,$keyword);
+            return $this->query_list_page($category, $sort, $page_Param, $keyword);
         }
         //设置查询数据的sql
         $query = DB::select("a.*", array("b.name", "parent_name"))->from(array("category", "a"));

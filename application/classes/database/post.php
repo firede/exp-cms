@@ -146,11 +146,14 @@ class Database_Post {
      */
 
     public function insert($post) {
-        
-        $columns =
+        $columns = array();
+            foreach ($post as $key => $value) {
+                $columns[$key] = $key;
+            }
+      /*  $columns =
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
                     'pre_content', 'content', 'user_id', 'status',
-                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
+                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');*/
         try {
             $save = DB::insert("post", $columns);
             $result = (bool) $save->values($post);
