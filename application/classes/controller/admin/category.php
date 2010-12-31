@@ -150,7 +150,19 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
     }
 
-    /**     *
+	/**
+	 * 新增分类(GET)
+	 */
+	public function action_create() {
+		$form = Kohana::config('admin_category_form.default');
+        $view = View::factory('smarty:admin/category/create', array(
+                    'form' => $form,
+                ));
+
+        $this->template = AppCache::app_cache('category_create', $view);
+	}
+
+	/**     *
      * 新增
      */
     public function action_create_post() {
