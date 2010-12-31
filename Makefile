@@ -9,12 +9,13 @@ ADMINJS_SRC_DIR = ${ADMINJS_DIR}/src
 
 ADMINJS_FILES = ${ADMINJS_SRC_DIR}/dxn.js\
                 ${ADMINJS_SRC_DIR}/util.js\
+                ${ADMINJS_SRC_DIR}/plugins/cookie.js\
+				${ADMINJS_SRC_DIR}/plugins/cateSelector.js\
 				${ADMINJS_SRC_DIR}/asideMenu.js\
                 ${ADMINJS_SRC_DIR}/subView.js\
                 ${ADMINJS_SRC_DIR}/dataTable.js\
                 ${ADMINJS_SRC_DIR}/mutiOperation.js\
                 ${ADMINJS_SRC_DIR}/tableSearch.js\
-				${ADMINJS_SRC_DIR}/plugins/cateSelector.js\
 				${ADMINJS_SRC_DIR}/cateAdmin.js
 
 ADMINJS_OUTPUT = ${ADMINJS_DIR}/admin.js
