@@ -29,8 +29,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $category = Arr::filter_Array($_GET, $arr_element_names);
         $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
-       
-        $categorys = $categoryDb->query_list($category, $sort, $pageparam,$keyword);
+        $categorys = $categoryDb->query_list($category, $sort, $pageparam, $keyword);
         $categorys = Action::sucess_status($categorys);
         $conf = Kohana::config('admin_category_list');
         $view = View::factory('smarty:admin/category/list', array(
@@ -75,16 +74,15 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $id = isset($_GET["id"]) ? $_GET["id"] : "";
         $categoryDb = new Database_Category();
         $categorys = $categoryDb->crumb($id);
-    
     }
 
-	/**
-	 * 删除分类(GET)
-	 */
-	public function action_del() {
+    /**
+     * 删除分类(GET)
+     */
+    public function action_del() {
         $view = View::factory('smarty:admin/category/del');
         $this->template = AppCache::app_cache("category_del", $view);
-	}
+    }
 
     /**     *
      * 删除单个分类
@@ -116,13 +114,33 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
           $this->request->response = AppCache::app_cache("category_user_m_del", $view)->render();
          * */
     }
+/**
+     * 新增分类(GET)
+     */
+    public function action_modify($id) {
+        $form = Kohana::config('admin_category_form.default');
+        $function_config = Kohana::config('admin_category_form.function_config.default.modify');
+        $form = Action::form_decorate($form, $function_config);
+        $categoryDb = new Database_Category();
+        $data_arr = $categoryDb->get_category($id);
+        $form = Action::build_form_data($form, $data_arr["result"][0]);
+        $view = View::factory('smarty:admin/category/modify', array(
+                    'form' => $form,
+                ));
 
+        $this->template = AppCache::app_cache('category_modify', $view);
+    }
     /**     * ****
      * 修改分类
      */
-    public function action_update_post() {
+    public function action_modify_post() {
         $m_category = new Model_Category();
-        $validate_result = $m_category->post_validate($_POST);
+        $form = Kohana::config('admin_category_form.default');
+        $function_config = Kohana::config('admin_category_form.function_config.default.modify');
+        $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
+        $form = Action::form_decorate($form, $function_config);
+        $validate_result = $m_category->post_validate($_POST, $form, $legal_fileds);
+      
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/category/update', array(
                         'form' => $validate_result["data"],
@@ -130,12 +148,18 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
             $this->template = AppCache::app_cache('category_create_post', $view);
             return;
         }
-        $arr_element_names = array('id', "name", "short_name", "parent_id", "sort");
+    //    $userDb = new Database_User();
+        $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
+
+        $m_category = new Model_Category();
+
         $category = Arr::filter_Array($_POST, $arr_element_names);
+      
         $categoryDb = new Database_Category();
         $view_data = $categoryDb->modify($category);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
+        $this->template->content=$view_data;
     }
 
     /**     * ***
@@ -150,24 +174,32 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
     }
 
-	/**
-	 * 新增分类(GET)
-	 */
-	public function action_create() {
-		$form = Kohana::config('admin_category_form.default');
+    /**
+     * 新增分类(GET)
+     */
+    public function action_create() {
+        $form = Kohana::config('admin_category_form.default');
+        $function_config = Kohana::config('admin_category_form.function_config.default.create');
+        $form = Action::form_decorate($form, $function_config);
+
         $view = View::factory('smarty:admin/category/create', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache('category_create', $view);
-	}
+    }
 
-	/**     *
+    /**     *
      * 新增
      */
     public function action_create_post() {
         $m_category = new Model_Category();
-        $validate_result = $m_category->post_validate($_POST);
+        $form = Kohana::config('admin_category_form.default');
+        $function_config = Kohana::config('admin_category_form.function_config.default.create');
+        $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
+        $form = Action::form_decorate($form, $function_config);
+
+        $validate_result = $m_category->post_validate($_POST, $form, $legal_fileds);
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/category/create', array(
                         'form' => $validate_result["data"],
@@ -175,10 +207,10 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
             $this->template = AppCache::app_cache('category_create_post', $view);
             return;
         }
-        $arr_element_names = array('id', "name", "short_name", "parent_id", "sort");
+        $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
         $category = Arr::filter_Array($_POST, $arr_element_names);
         $categoryDb = new Database_Category();
-        $view_data = $categoryDb->modify($category);
+        $view_data = $categoryDb->create($category);
         $view_data = Action::sucess_status($view_data);
         $this->template->_data = $view_data;
         $view = View::factory('smarty:');

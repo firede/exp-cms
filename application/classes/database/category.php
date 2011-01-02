@@ -28,7 +28,23 @@ class Database_Category {
         }
         
     }
-
+ public function get_category($id) {
+        if (!isset($id)) {
+            return "no_id";
+        }
+        //设置查询数据的sql
+        $query = DB::select()->from('category');
+        $query->where("id", "=", $id); 
+        $categorys = $query->execute();
+        $categorys= $categorys->as_array();
+        $count = count($categorys);
+        
+         
+        if ($count > 0)
+            return $data = array('result' => $categorys);
+        else
+            return 'none';
+    }
     /**     * *
      * 获取符合条件的数据 并返回tree 格式的数据结构数组
      * @param $category array  对应category表列的筛选条件的多个参数
@@ -295,13 +311,13 @@ class Database_Category {
      * 修改 一个或多个分类信息 批量删除 ID用“,”分隔
      */
     public function modify($category) {
-        try {
-            if (isset($category["id"])) {
+        try { 
+            if (!isset($category["id"])) {
                 return "no_id";
             }
             $id = $category["id"];
             unset($category["id"]);
-            $ids = explode(",", $category["id"]);
+            $ids = explode(",",$id );
             $modify = DB::update()->table("category")->set($category);
             $modify->where("id", "in", $ids);
             $modify->execute();

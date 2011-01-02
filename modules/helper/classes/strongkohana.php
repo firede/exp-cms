@@ -127,7 +127,7 @@ class StrongKohana  extends Kohana_Core{
 				// Depth too great
 				$output[] = "(\n$space$s...\n$space)";
 			}
-
+             
 			return 'array'.implode("\n", $output);
 		}
 		elseif (is_object($var))
