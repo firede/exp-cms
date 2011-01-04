@@ -23,28 +23,35 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $arr_element_names =
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
                     'pre_content', 'content', 'user_id', 'status',
-                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');
+                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag', 'is_del');
         if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
-        if (!isset($_GET['status'])) {
-            $_GET['status'] = '0';
-        }
+
 
         $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
         $post = Arr::filter_Array($_GET, $arr_element_names);
         $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
         $post["keyword"] = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
-        $post["is_del"] = "0";
+        if (isset($post["is_del"])&&$post["is_del"] == 1) {
+
+                $conf = Kohana::config('admin_post_list.recycle');
+        }else{
+            $post["is_del"] = "0";
+            if (!isset($_GET['status'])) {
+                $_GET['status'] = '0';
+            }
+            $conf_status = 'status_' . $_GET['status'];
+            $conf = Kohana::config('admin_post_list')->$conf_status;
+        }
         $posts = $postDb->query_list_search($post, $pageparam, $sort);
         $posts["message"] = Action::sucess_status($posts["message"]);
         if (isset($posts["total_items_count"]) && isset($posts["total_page_count"])) {
             $pagination->__set('total_items', $posts["total_items_count"]);
         }
 
-        $conf_status = 'status_' . $_GET['status'];
-        $conf = Kohana::config('admin_post_list')->$conf_status;
 
+        echo Kohana::debug($posts);
         $view = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
@@ -384,7 +391,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     }
 
     /**     * *
-     *还原所有回收站文章
+     * 还原所有回收站文章
      */
     public function action_restore_all() {
         $postDb = new Database_Post();
@@ -396,7 +403,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     }
 
     /**     * *
-     *回收站－>批量还原文章
+     * 回收站－>批量还原文章
      */
     public function action_m_restore() {
         $postDb = new Database_Post();
@@ -410,8 +417,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
+
     /**     * *
-     *回收站－>还原文章
+     * 回收站－>还原文章
      */
     public function action_restore() {
         $postDb = new Database_Post();
@@ -425,7 +433,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
- /**     * *
+
+    /**     * *
      * 回收站－>清空
      */
     public function action_recycle_clear() {
@@ -440,7 +449,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
-     /**     * *
+
+    /**     * *
      * 回收站－>删除文章
      */
     public function action_recycle_del() {
@@ -455,7 +465,8 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
- /**     * *
+
+    /**     * *
      * 回收站－>批量删除文章
      */
     public function action_recycle_m_del() {
