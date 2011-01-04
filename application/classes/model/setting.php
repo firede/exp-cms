@@ -152,7 +152,7 @@ class Model_Setting extends Model_Base {
      */
     public function user_validate($user) {
          $form = Kohana::config("admin_setting_form");
-        $noset_keys = Arr::get_noset_key($post, array("reg_open", "default_avatar"));
+        $noset_keys = Arr::get_noset_key($user, array("reg_open", "default_avatar",'up_avatar.path','up_avatar.max_size','up_avatar.min_size','up_avatar.max_width','up_avatar.max_height','up_avatar.type','up_avatar.watermark_path','up_avatar.watermark_position','up_avatar.watermark_opacity','up_avatar.watermark_status','up_avatar.watermark_border_space'));
         $op_data = $form["user"];
         //第一阶段 未定义错误
         //第二阶段 数据非空验证
@@ -161,21 +161,133 @@ class Model_Setting extends Model_Base {
         //webname
         if (in_array('reg_open', $noset_keys)) {
             $op_data['reg_open']["message"] = $op_data['reg_open']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($post['reg_open'])) {
+        } elseif (!Validate::not_empty($user['reg_open'])) {
             $op_data['reg_open']["message"] = $op_data['reg_open']["label"] . "不能为空";
         }  
         //default_avatar
         if (in_array('default_avatar', $noset_keys)) {
             $op_data['default_avatar']["message"] = $op_data['default_avatar']["label"] . "没有定义";
-        }elseif (!$this->validate_length_range ($post['default_avatar'], $op_data["default_avatar"])) {
+        }elseif (!$this->validate_length_range ($user['default_avatar'], $op_data["default_avatar"])) {
             $op_data["default_avatar"]["message"] = $op_data['default_avatar']["label"] .
-                    "长度必须在不能超过"  . $op_data["default_avatar"]['max_len'] . "个字符";
-        } elseif (!(Validate::regex($post['default_avatar'], "(^\\.|^/|^[a-zA-Z])?:?/.+(/$)?") || Validate::url($post['default_avatar']))) {
+                    "长度不能超过"  . $op_data["default_avatar"]['max_len'] . "个字符";
+         } elseif (!(Validate::regex($user['default_avatar'], "/^([\/] [\w-]+)*$/")||Validate::regex($user['default_avatar'], " /^[a-zA-Z];[\\/]((?! )(?![^\\/]*\s+[\\/])[\w -]+[\\/])*(?! )(?![^.]+\s+\.)[\w -]+$/") || Validate::url($user['default_avatar']))) {
             $op_data['default_avatar']["message"] = $op_data['default_avatar']["label"] . "为非法格式";
         }
-        
+         if (in_array('up_avatar.path', $noset_keys)) {
+            $op_data['up_avatar.path']["message"] = $op_data['up_avatar.path']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['up_avatar.path'])) {
+            $op_data['up_avatar.path']["message"] = $op_data['up_avatar.path']["label"] . "不能为空";
+        } elseif (!$this->validate_length_range ($user['up_avatar.path'], $op_data["up_avatar.path"])) {
+            $op_data["up_avatar.path"]["message"] = $op_data['up_avatar.path']["label"] .
+                    "长度必须在" . $op_data["up_avatar.path"]['min_len'] . "-" . $op_data["up_avatar.path"]['max_len'] . "个字符之间";
+        } elseif (!(Validate::regex($user['up_avatar.path'], "/^([\/] [\w-]+)*$/")||Validate::regex($user['up_avatar.path'], " /^[a-zA-Z];[\\/]((?! )(?![^\\/]*\s+[\\/])[\w -]+[\\/])*(?! )(?![^.]+\s+\.)[\w -]+$/") || Validate::url($user['up_avatar.path']))) {
+            $op_data['up_avatar.path']["message"] = $op_data['up_avatar.path']["label"] . "为非法格式";
+        }
+        //max_size
+        if (in_array('up_avatar.max_size', $noset_keys)) {
+            $op_data['up_avatar.max_size']["message"] = $op_data['up_avatar.max_size']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['max_size'])) {
+            $op_data['up_avatar.max_size']["message"] = $op_data['up_avatar.max_size']["label"] . "不能为空";
+        } elseif (!is_integer($user['max_size'])) {
+            $op_data['up_avatar.max_size']["message"] = $op_data['up_avatar.max_size']["label"] . " 必须为整数";
+        } elseif (!Validate::range($user['max_size'], $op_data["up_avatar.max_size"]['min_len'], $op_data["up_avatar.max_size"]['max_len'])) {
+            $op_data["up_avatar.max_size"]["message"] = $op_data['up_avatar.max_size']["label"] .
+                    "大小必须在" . $op_data["max_size"]['min_len'] . "-" . $op_data["max_size"]['max_len'] . "之间";
+        }
+
+        //min_size
+        if (in_array('up_avatar.min_size', $noset_keys)) {
+            $op_data['up_avatar.min_size']["message"] = $op_data['up_avatar.min_size']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['min_size'])) {
+            $op_data['up_avatar.min_size']["message"] = $op_data['up_avatar.min_size']["label"] . "不能为空";
+        } elseif (!is_integer($user['up_avatar.min_size'])) {
+            $op_data['up_avatar.min_size']["message"] = $op_data['up_avatar.min_size']["label"] . " 必须为整数";
+        } elseif (!Validate::range($user['min_size'], $op_data["up_avatar.min_size"]['min_len'], $op_data["up_avatar.min_size"]['max_len'])) {
+            $op_data["up_avatar.min_size"]["message"] = $op_data['up_avatar.min_size']["label"] .
+                    "大小必须在" . $op_data["up_avatar.min_size"]['min_len'] . "-" . $op_data["up_avatar.min_size"]['max_len'] . "之间";
+        }
+        //max_width
+        if (in_array('up_avatar.max_width', $noset_keys)) {
+            $op_data['up_avatar.max_width']["message"] = $op_data['up_avatar.max_width']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['up_avatar.max_width'])) {
+            $op_data['up_avatar.max_width']["message"] = $op_data['up_avatar.max_width']["label"] . "不能为空";
+        } elseif (!is_integer($user['max_width'])) {
+            $op_data['up_avatar.max_width']["message"] = $op_data['up_avatar.max_width']["label"] . " 必须为整数";
+        } elseif (!Validate::range($user['up_avatar.max_width'], $op_data["up_avatar.max_size"]['min_len'], $op_data["up_avatar.max_width"]['max_len'])) {
+            $op_data["up_avatar.max_width"]["message"] = $op_data['up_avatar.max_width']["label"] .
+                    "大小必须在" . $op_data["max_width"]['min_len'] . "-" . $op_data["max_width"]['max_len'] . "之间";
+        }
+        //max_height
+        if (in_array('up_avatar.max_height', $noset_keys)) {
+            $op_data['up_avatar.max_height']["message"] = $op_data['up_avatar.max_height']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['up_avatar.up_avatar.max_height'])) {
+            $op_data['up_avatar.max_height']["message"] = $op_data['up_avatar.max_height']["label"] . "不能为空";
+        } elseif (!is_integer($user['up_avatar.max_height'])) {
+            $op_data['up_avatar.max_height']["message"] = $op_data['up_avatar.max_height']["label"] . " 必须为整数";
+        } elseif (!Validate::range($user['max_height'], $op_data["up_avatar.max_height"]['min_len'], $op_data["up_avatar.max_height"]['max_len'])) {
+            $op_data["up_avatar.max_height"]["message"] = $op_data['up_avatar.max_height']["label"] .
+                    "大小必须在" . $op_data["up_avatar.max_height"]['min_len'] . "-" . $op_data["up_avatar.max_height"]['max_len'] . "个字符之间";
+        }
+        //type
+        if (in_array('up_avatar.type', $noset_keys)) {
+            $op_data['up_avatar.type']["message"] = $op_data['up_avatar.type']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['type'])) {
+            $op_data['up_avatar.type']["message"] = $op_data['up_avatar.type']["label"] . "不能为空";
+        }
+        //watermark_path 直接上传的返回的路径 由隐藏域获得
+        if (in_array('up_avatar.watermark_path', $noset_keys)) {
+            $op_data['up_avatar.watermark_path']["message"] = $op_data['up_avatar.watermark_path']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['path'])) {
+            $op_data['up_avatar.watermark_path']["message"] = $op_data['up_avatar.watermark_path']["label"] . "不能为空";
+        } elseif (!$this->validate_length_range ($user['up_avatar.watermark_path'], $op_data["up_avatar.watermark_path"])) {
+            $op_data["up_avatar.watermark_path"]["message"] = $op_data['up_avatar.watermark_path']["label"] .
+                    "长度必须在" . $op_data["up_avatar.watermark_path"]['min_len'] . "-" . $op_data["up_avatar.watermark_path"]['max_len'] . "个字符之间";
+        } elseif (!(Validate::regex($user['up_avatar.watermark_path'], "/^([\/] [\w-]+)*$/")||Validate::regex($user['up_avatar.watermark_path'], " /^[a-zA-Z];[\\/]((?! )(?![^\\/]*\s+[\\/])[\w -]+[\\/])*(?! )(?![^.]+\s+\.)[\w -]+$/") || Validate::url($user['up_avatar.watermark_path']))) {
+            $op_data['up_avatar.watermark_path']["message"] = $op_data['up_avatar.watermark_path']["label"] . "为非法格式";
+        }
+
+        //watermark_position
+        if (in_array('up_avatar.watermark_position', $noset_keys)) {
+            $op_data['up_avatar.watermark_position']["message"] = $op_data['up_avatar.watermark_position']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['up_avatar.watermark_position'])) {
+            $op_data['up_avatar.watermark_position']["message"] = $op_data['up_avatar.watermark_position']["label"] . "不能为空";
+        } elseif (!is_integer($user['up_avatar.watermark_position'])) {
+            $op_data['up_avatar.watermark_position']["message"] = $op_data['up_avatar.watermark_position']["label"] . "必须为整数";
+        } elseif (!Validate::range($user['up_avatar.watermark_position'], $op_data['up_avatar.watermark_position']['min_len'], $op_data['up_avatar.watermark_position']['max_len'])) {
+            $op_data['up_avatar.watermark_position']["message"] = $op_data['up_avatar.watermark_position']["label"] .
+                    "大小必须在" . $op_data['up_avatar.watermark_position']['min_len'] . "-" . $op_data['up_avatar.watermark_position']['max_len'] . "之间";
+        }
+
+        //watermark_opacity
+        if (in_array('up_avatar.watermark_opacity', $noset_keys)) {
+            $op_data['up_avatar.watermark_opacity']["message"] = $op_data['up_avatar.watermark_opacity']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['up_avatar.watermark_opacity'])) {
+            $op_data['up_avatar.watermark_opacity']["message"] = $op_data['up_avatar.watermark_opacity']["label"] . "不能为空";
+        } elseif (!is_integer($user['up_avatar.watermark_opacity'])) {
+            $op_data['up_avatar.watermark_opacity']["message"] = $op_data['up_avatar.watermark_opacity']["label"] . "必须为整数";
+        } elseif (!Validate::range($user['up_avatar.watermark_opacity'], $op_data['up_avatar.watermark_opacity']['min_len'], $op_data['up_avatar.watermark_opacity']['max_len'])) {
+            $op_data['up_avatar.watermark_opacity']["message"] = $op_data['up_avatar.watermark_opacity']["label"] .
+                    "大小必须在" . $op_data['up_avatar.watermark_opacity']['min_len'] . "-" . $op_data['up_avatar.watermark_opacity']['max_len'] . "之间";
+        }
+        //watermark_status
+        if (in_array('up_avatar.watermark_status', $noset_keys)) {
+            $op_data['up_avatar.watermark_status']["message"] = $op_data['up_avatar.watermark_status']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['watermark_opacity'])) {
+            $op_data['up_avatar.watermark_status']["message"] = $op_data['up_avatar.watermark_status']["label"] . "不能为空";
+        }
+        //watermark_border_space
+        if (in_array('up_avatar.watermark_border_space', $noset_keys)) {
+            $op_data['up_avatar.watermark_border_space']["message"] = $op_data['up_avatar.watermark_border_space']["label"] . "没有定义";
+        } elseif (!Validate::not_empty($user['watermark_border_space'])) {
+            $op_data['up_avatar.watermark_border_space']["message"] = $op_data['up_avatar.watermark_border_space']["label"] . "不能为空";
+        } elseif (!is_integer($user['watermark_border_space'])) {
+            $op_data['up_avatar.watermark_border_space']["message"] = $op_data['up_avatar.watermark_border_space']["label"] . "必须为整数";
+        } elseif (!Validate::range($user['watermark_border_space'], $op_data['up_avatar.watermark_border_space']['min_len'], $op_data['up_avatar.watermark_border_space']['max_len'])) {
+            $op_data['up_avatar.watermark_border_space']["message"] = $op_data['up_avatar.watermark_border_space']["label"] .
+                    "大小必须在" . $op_data['up_avatar.watermark_opacity']['min_len'] . "-" . $op_data['up_avatar.watermark_border_space']['max_len'] . "之间";
+        }
         //将原有值保留到表单设置
-        $form["user"] = $this->set_form_value($op_data, $post);
+        $form["user"] = $this->set_form_value($op_data, $user);
         if (!$this->has_error($form)) {
 
             return array(

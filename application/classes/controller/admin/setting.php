@@ -221,6 +221,7 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting_db = new Database_Setting();
         $arr_element_names = array("reg_open", "default_avatar",'up_avatar.path','up_avatar.max_size','up_avatar.min_size','up_avatar.max_width','up_avatar.max_height','up_avatar.type','up_avatar.watermark_path','up_avatar.watermark_position','up_avatar.watermark_opacity','up_avatar.watermark_status','up_avatar.watermark_border_space');
         $setting = Arr::filter_Array($_POST, $arr_element_names);
+        echo Kohana::debug($_POST);
         $view_data = $setting_db->update_configs($setting, "user");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
@@ -228,6 +229,7 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
     }
 
     /**
+
      * 文章配置(GET)
      */
     public function action_post() {
