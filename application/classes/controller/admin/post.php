@@ -392,7 +392,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     /**     * *
      * 还原所有回收站文章
      */
-    public function action_restore_all() {
+    public function action_restore_all_post() {
         $postDb = new Database_Post();
         $view_data = $postDb->restore_all();
         $view_data = Action::sucess_status($view_data);
@@ -404,7 +404,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     /**     * *
      * 回收站－>批量还原文章
      */
-    public function action_m_restore() {
+    public function action_m_restore_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
@@ -420,7 +420,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     /**     * *
      * 回收站－>还原文章
      */
-    public function action_restore() {
+    public function action_restore_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
@@ -436,13 +436,13 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     /**     * *
      * 回收站－>清空
      */
-    public function action_recycle_clear() {
+    public function action_recycle_empty_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
-        $view_data = $postDb->clear();
+        $view_data = $postDb->_empty();
         $view_data = Action::sucess_status($view_data);
 
         $this->template = View::factory('json:');
@@ -452,7 +452,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     /**     * *
      * 回收站－>删除文章
      */
-    public function action_recycle_del() {
+    public function action_recycle_del_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
@@ -468,7 +468,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     /**     * *
      * 回收站－>批量删除文章
      */
-    public function action_recycle_m_del() {
+    public function action_recycle_m_del_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');

@@ -474,7 +474,7 @@ class Database_Post {
      * 清空回收站中所有数据
      * @return string success
      */
-    public function clear() {
+    public function _empty() {
 
         try {
 
