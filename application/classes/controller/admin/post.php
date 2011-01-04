@@ -27,10 +27,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         if (!isset($_GET['page'])) {
             $_GET['page'] = 1;
         }
-
-        if (isset($post["is_del"]) && $post["is_del"] == 1) {
-
+        $conf = "";
+        if (isset($_GET["is_del"])&&$_GET["is_del"] =="1") {
+            
+            if (isset($_GET['status'])) {
+                unset($_GET['status']);
+            }
             $conf = Kohana::config('admin_post_list.recycle');
+             
         } else {
             $post["is_del"] = "0";
             if (!isset($_GET['status'])) {
@@ -56,7 +60,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                     'view_data' => $posts,
                     'conf' => $conf,
                 ));
-
+           
         $this->template = AppCache::app_cache("post_view", $view);
     }
 

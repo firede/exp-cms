@@ -219,6 +219,7 @@ class Database_Post {
             $ids = explode(",", $post["id"]);
             unset($post["id"]);
             $del_flag = DB::update("post")->set($post)->where('id', 'in', $ids);
+            echo Kohana::debug($del_flag);
             $del_flag->execute();
             return 'ok';
         } catch (Exception $e) {
