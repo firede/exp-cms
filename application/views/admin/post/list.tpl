@@ -27,6 +27,7 @@
 	<a id="status-1" class="status-tab" href="?status=1">已发布</a>
 	<a id="status-5" class="status-tab" href="?status=5">草稿</a>
 	<a id="status-3" class="status-tab" href="?status=3">驳回</a>
+	<a id="status-del" class="status-tab" href="?is_del=1">回收站</a>
 	<span class="list-search right">
 		<span class="keyword radius_all">
 			<input type="text" name="keyword" />
@@ -55,8 +56,14 @@
 		"version": "<{$VERSION}>"
 	};
 	
-	$(document).ready(function(){
-		$('#status-' + dxn.util.param.get('status')).addClass('status-tab-active');
+	$(document).ready(function () {
+		var isDel = dxn.util.param.get('is_del');
+
+		if (isDel === '1') {
+			$('#status-del').addClass('status-tab-active');
+		} else {
+			$('#status-' + dxn.util.param.get('status')).addClass('status-tab-active');
+		}
 	});
 </script>
 
