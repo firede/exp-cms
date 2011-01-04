@@ -158,11 +158,6 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
         $this->template = View::factory('json:');
         $this->template->_data = $posts;
-
-//        echo Kohana::debug($posts);
-//        $view = View::factory('smarty:');
-//        $view->posts = $posts;
-//        $this->request->response = $view->render();
     }
 
     /*     * *********
@@ -382,6 +377,94 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $post['operation_id'] = 'admin'; //临时用户
         $view_data = $postDb->trial($post);
+        $view_data = Action::sucess_status($view_data);
+
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+
+    /**     * *
+     *还原所有回收站文章
+     */
+    public function action_restore_all() {
+        $postDb = new Database_Post();
+        $view_data = $postDb->restore_all();
+        $view_data = Action::sucess_status($view_data);
+
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+
+    /**     * *
+     *回收站－>批量还原文章
+     */
+    public function action_m_restore() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_POST, $arr_element_names);
+        $post['operation_id'] = 'admin'; //临时用户
+        $view_data = $postDb->restore($post);
+        $view_data = Action::sucess_status($view_data);
+
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+    /**     * *
+     *回收站－>还原文章
+     */
+    public function action_restore() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_POST, $arr_element_names);
+        $post['operation_id'] = 'admin'; //临时用户
+        $view_data = $postDb->restore($post);
+        $view_data = Action::sucess_status($view_data);
+
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+ /**     * *
+     * 回收站－>清空
+     */
+    public function action_recycle_clear() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_POST, $arr_element_names);
+        $post['operation_id'] = 'admin'; //临时用户
+        $view_data = $postDb->clear();
+        $view_data = Action::sucess_status($view_data);
+
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+     /**     * *
+     * 回收站－>删除文章
+     */
+    public function action_recycle_del() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_POST, $arr_element_names);
+        $post['operation_id'] = 'admin'; //临时用户
+        $view_data = $postDb->delete($post);
+        $view_data = Action::sucess_status($view_data);
+
+        $this->template = View::factory('json:');
+        $this->template->_data = $view_data;
+    }
+ /**     * *
+     * 回收站－>批量删除文章
+     */
+    public function action_recycle_m_del() {
+        $postDb = new Database_Post();
+        $arr_element_names =
+                array('id');
+        $post = Arr::filter_Array($_POST, $arr_element_names);
+        $post['operation_id'] = 'admin'; //临时用户
+        $view_data = $postDb->delete($post);
         $view_data = Action::sucess_status($view_data);
 
         $this->template = View::factory('json:');

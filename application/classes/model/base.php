@@ -63,11 +63,12 @@ class Model_Base {
      */
     public  function validate_length_range($str, $obj_desc) {
         $len = strlen($str);
-        if (Validate::not_empty($obj_desc['max_len']) && !Validate::not_empty($obj_desc['min_len'])) {
+
+        if (isset($obj_desc['max_len']) && !isset($obj_desc['min_len'])) {
              return $len <$obj_desc['max_len'];
-        } elseif (Validate::not_empty($obj_desc['min_len']) && !Validate::not_empty($obj_desc['max_len'])) {
+        } elseif (isset($obj_desc['min_len']) && !isset($obj_desc['max_len'])) {
             return $len > $obj_desc['min_len'];
-        } elseif (Validate::not_empty($obj_desc['min_len']) && Validate::not_empty($obj_desc['max_len'])) {
+        } elseif (isset($obj_desc['min_len']) && isset($obj_desc['max_len'])) {
             return Validate::range($len, $obj_desc['min_len'], $obj_desc['max_len']);
         } else {
             return TRUE;
