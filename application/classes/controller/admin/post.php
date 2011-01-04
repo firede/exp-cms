@@ -393,6 +393,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
+	/**
+	 * 批量还原文章(GET)
+	 */
+	public function action_restore_all() {
+        $view = View::factory('smarty:admin/post/restore_all');
+        $this->template = AppCache::app_cache("post_restore_all", $view);
+	}
+
     /**     * *
      * 还原所有回收站文章
      */
@@ -405,7 +413,15 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-    /**     * *
+	/**
+	 * 批量还原文章(GET)
+	 */
+	public function action_m_restore() {
+        $view = View::factory('smarty:admin/post/m_restore');
+        $this->template = AppCache::app_cache("post_m_restore", $view);
+	}
+
+	/**     * *
      * 回收站－>批量还原文章
      */
     public function action_m_restore_post() {
@@ -420,6 +436,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
+
+	/**
+	 * 还原文章(GET)
+	 */
+	public function action_restore() {
+        $view = View::factory('smarty:admin/post/restore');
+        $this->template = AppCache::app_cache("post_restore", $view);
+	}
 
     /**     * *
      * 回收站－>还原文章
@@ -437,6 +461,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
+	/**
+	 * 清空回收站
+	 */
+	public function action_recycle_empty() {
+        $view = View::factory('smarty:admin/post/recycle_empty');
+        $this->template = AppCache::app_cache("post_recycle_empty", $view);
+	}
+	
     /**     * *
      * 回收站－>清空
      */
@@ -453,6 +485,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
+	/**
+	 * 删除文章(GET)
+	 */
+	public function action_recycle_del() {
+        $view = View::factory('smarty:admin/post/recycle_del');
+        $this->template = AppCache::app_cache("post_recycle_del", $view);
+	}
+
     /**     * *
      * 回收站－>删除文章
      */
@@ -468,6 +508,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template = View::factory('json:');
         $this->template->_data = $view_data;
     }
+
+	/**
+	 * 批量删除文章(GET)
+	 */
+	public function action_m_recycle_del() {
+        $view = View::factory('smarty:admin/post/m_recycle_del');
+        $this->template = AppCache::app_cache("post_m_recycle_del", $view);
+	}
 
     /**     * *
      * 回收站－>批量删除文章

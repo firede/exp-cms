@@ -469,8 +469,12 @@ return array(
 				'title'     => '删除',
 				'action'    => 'admin/post/m_recycle_del',
 			),
+			'restore-all' => array(
+				'title'     => '全部还原',
+				'action'    => 'admin/post/restore_all',
+			),
 			'recycle-empty' => array(
-				'title'     => '清空',
+				'title'     => '全部清空',
 				'action'    => 'admin/post/recycle_empty',
 			),
 		),
