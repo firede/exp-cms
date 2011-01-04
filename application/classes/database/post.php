@@ -147,13 +147,13 @@ class Database_Post {
 
     public function insert($post) {
         $columns = array();
-            foreach ($post as $key => $value) {
-                $columns[$key] = $key;
-            }
-      /*  $columns =
-                array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
-                    'pre_content', 'content', 'user_id', 'status',
-                    'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag');*/
+        foreach ($post as $key => $value) {
+            $columns[$key] = $key;
+        }
+        /*  $columns =
+          array('id', 'uuid', 'title', 'cate_id', 'pub_time', 'update_time',
+          'pre_content', 'content', 'user_id', 'status',
+          'read_count', 'operation_id', 'reference', 'source', 'operation_desc', 'flag'); */
         try {
             $save = DB::insert("post", $columns);
             $result = (bool) $save->values($post);
@@ -197,7 +197,7 @@ class Database_Post {
         try {
             $ids = explode(",", $post["id"]);
             $delete = DB::delete()->table('post')->where('id', 'in', $ids);
-            $result = (bool) $delete->execute();
+            $delete->execute();
 
             return 'ok';
         } catch (Exception $e) {
@@ -486,7 +486,8 @@ class Database_Post {
             return "error";
         }
     }
-     /**     * **
+
+    /**     * **
      * 还原回收站中所有数据
      * @return string success
      */
@@ -494,7 +495,29 @@ class Database_Post {
 
         try {
 
-            $restore = DB::update("post")->set(array("is_del"=>"0"))->where('is_del', '=', "1");
+            $restore = DB::update("post")->set(array("is_del" => "0"))->where('is_del', '=', "1");
+            $restore->execute();
+            return 'ok';
+        } catch (Exception $e) {
+            ErrorExceptionReport::_errors_report($e);
+            return "error";
+        }
+    }
+
+    /**     * **
+     * 还原回收站中所有数据
+     * @return string success
+     */
+    public function restore($post) {
+
+        try {
+            $id = $post['id'];
+            unset($post['id']);
+            /* 根据需要从请求中取出需要的数据值 */
+            $ids = explode(",", $id);
+
+            $restore = DB::update("post")->set(array("is_del" => "0"))->where('is_del', '=', "1");
+            $restore->where("id", "in", $ids);
             $restore->execute();
             return 'ok';
         } catch (Exception $e) {
