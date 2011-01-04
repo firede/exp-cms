@@ -45,7 +45,7 @@ class Database_Post {
             if (isset($filedvalue)) {
 
                 if ($filedvalue != null) {
-                    if ($filedName == "status" || $filedName == "flag") {
+                      if ($filedName == "status" || $filedName == "flag"||$filedName == "is_del") {
                         $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
                             $query->and_where('post.' . $filedName, "in", $filed_values);
@@ -71,7 +71,7 @@ class Database_Post {
         //设置查询数据的sql
         $query = DB::select('post.id', 'uuid', 'title', 'cate_id', array("category.name", "cate_name"), 'pub_time', 'update_time',
                         'pre_content', 'content', 'user_id', array("user.username", "user_name"), 'post.status',
-                        'read_count', 'operation_id', array("admin.username", "operation_name"), 'reference', 'source', 'operation_desc', 'flag')->from('post');
+                        'read_count', 'operation_id', array("admin.username", "operation_name"), 'reference', 'source', 'operation_desc', 'flag','is_del')->from('post');
         $query->join("admin", "left")->on("post.operation_id", "=", "admin.id");
         $query->join("user", 'left')->on("post.user_id", "=", "user.id");
         $query->join("category", 'left')->on("post.cate_id", "=", "category.id");
@@ -81,7 +81,7 @@ class Database_Post {
             if (isset($filedvalue)) {
 
                 if ($filedvalue != null) {
-                    if ($filedName == "status" || $filedName == "flag") {
+                    if ($filedName == "status" || $filedName == "flag"||$filedName == "is_del") {
                         $filed_values = explode(',', (string) $filedvalue);
                         if (count($filed_values) > 0) {
                             $query->and_where('post.' . $filedName, "in", $filed_values);
@@ -474,7 +474,7 @@ class Database_Post {
      * 清空回收站中所有数据
      * @return string success
      */
-    public function clear() {
+    public function _empty() {
 
         try {
 
