@@ -198,7 +198,9 @@ class Database_Post {
             $ids = explode(",", $post["id"]);
             $delete = DB::delete()->table('post')->where('id', 'in', $ids);
             $delete->execute();
-
+           /* $get_file_path=DB::select()->from("attachment")->where('id', 'in', $ids);
+            $file_paths=$get_file_path->execute();
+            echo Kohana::debug($file_paths);*/
             return 'ok';
         } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
@@ -219,7 +221,7 @@ class Database_Post {
             $ids = explode(",", $post["id"]);
             unset($post["id"]);
             $del_flag = DB::update("post")->set($post)->where('id', 'in', $ids);
-            echo Kohana::debug($del_flag);
+           
             $del_flag->execute();
             return 'ok';
         } catch (Exception $e) {
