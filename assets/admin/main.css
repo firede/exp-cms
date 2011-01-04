@@ -2,6 +2,7 @@
 body {
 	color: #000;
 	font-size: 12px;
+	overflow-y: scroll;
 }
 .container_24 {
 	padding: 15px 0;
@@ -641,6 +642,7 @@ a:hover {
 	padding:5px;
 	vertical-align: top;
 	background:#FFF;
+	border:1px solid #FFF;
 }
 .form-table .desc {
 	color:#999;
