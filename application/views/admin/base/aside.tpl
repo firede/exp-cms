@@ -1,6 +1,13 @@
 <div class="grid_3 sidebar">
 	<ul class="mainmenu radius_all">
-		<li><a class="title" href="<{$BASE_URL}>admin/post">文章</a></li>
+		<li>
+			<a class="title" href="<{$BASE_URL}>admin/post">文章</a>
+			<span class="exbtn"></span>
+			<ul class="sublist">
+				<li><a href="<{$BASE_URL}>admin/post/list">文章列表</a></li>
+				<li><a href="<{$BASE_URL}>admin/post/recycle">回收站</a></li>
+			</ul>
+		</li>
 		<li>
 			<a class="title" href="<{$BASE_URL}>admin/category">分类</a>
 			<span class="exbtn"></span>

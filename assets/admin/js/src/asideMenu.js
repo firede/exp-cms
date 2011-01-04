@@ -16,7 +16,7 @@ dxn.asideMenu = (function ($) {
 				}
 				
 				if (str === '') {
-					for (i; i<btnLen; i++) {
+					for (i; i < btnLen; i++) {
 						str += '0';
 					}
 					$.cookie(cookieName, str);
@@ -61,7 +61,7 @@ dxn.asideMenu = (function ($) {
 			openStatus.modify(i);
 		});
 
-		title.click(function() {
+		title.click(function () {
 			openStatus.modify(i, '1');
 		});
 	});
