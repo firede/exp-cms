@@ -51,7 +51,6 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         }
 
 
-        echo Kohana::debug($posts);
         $view = View::factory('smarty:admin/post/list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
@@ -347,7 +346,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $arr_element_names =
                 array('id', 'cate_id');
         $post = Arr::filter_Array($_POST, $arr_element_names);
-        echo Kohana::debug($post);
+      
         $view_data = $postDb->modify($post);
 
         $view_data = Action::sucess_status($view_data);
