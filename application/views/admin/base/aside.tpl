@@ -5,7 +5,7 @@
 			<span class="exbtn"></span>
 			<ul class="sublist">
 				<li><a href="<{$BASE_URL}>admin/post/list">文章列表</a></li>
-				<li><a href="<{$BASE_URL}>admin/post/recycle">回收站</a></li>
+				<li><a href="<{$BASE_URL}>admin/post/list?is_del=1">回收站</a></li>
 			</ul>
 		</li>
 		<li>

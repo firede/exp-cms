@@ -452,7 +452,7 @@ return array(
 				'title'     => '还原',
 				'action'    => 'admin/post/restore',
 			),
-			'recycle_del'       => array(
+			'recycle-del'       => array(
 				'title'     => '删除',
 				'action'    => 'admin/post/recycle_del',
 			),
@@ -465,12 +465,16 @@ return array(
 				'title'     => '还原',
 				'action'    => 'admin/post/m_restore',
 			),
-			'recycle_del'       => array(
+			'recycle-del'       => array(
 				'title'     => '删除',
 				'action'    => 'admin/post/m_recycle_del',
 			),
-			'recycle_empty' => array(
-				'title'     => '清空',
+			'restore-all' => array(
+				'title'     => '全部还原',
+				'action'    => 'admin/post/restore_all',
+			),
+			'recycle-empty' => array(
+				'title'     => '全部清空',
 				'action'    => 'admin/post/recycle_empty',
 			),
 		),

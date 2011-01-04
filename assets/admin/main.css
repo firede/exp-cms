@@ -394,6 +394,10 @@ a:hover {
 .icon-user-add,
 .icon-user-del,
 .icon-user-modify,
+.icon-restore,
+.icon-restore-all,
+.icon-recycle-del,
+.icon-recycle-empty,
 .icon-home,
 .icon-next,
 .icon-prev,
@@ -460,6 +464,18 @@ a:hover {
 }
 .icon-user-modify {
 	background-position: -60px -60px;
+}
+.icon-restore {
+	background-position: -120px -60px;
+}
+.icon-restore-all {
+	background-position: -160px -40px;
+}
+.icon-recycle-del {
+	background-position: -140px -60px;
+}
+.icon-recycle-empty {
+	background-position: -160px -60px;
 }
 .icon-flag-1 {
 	background-position: -20px -80px;
@@ -562,6 +578,7 @@ a:hover {
 #status-1 { color:#090; }
 #status-5 { color:#C90; }
 #status-3 { color:#666; }
+#status-del { color:#666; }
 
 /* qtip style hack */
 .qtip-blue .qtip-button {
@@ -590,6 +607,11 @@ a:hover {
 }
 .subview .desc {
 	padding:5px;
+}
+.subview .warn {
+	padding:0 5px 5px;
+	color:orange;
+	font-style:italic;
 }
 .subview .submit,
 .subview .cancel {
