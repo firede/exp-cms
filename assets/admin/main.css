@@ -394,6 +394,9 @@ a:hover {
 .icon-user-add,
 .icon-user-del,
 .icon-user-modify,
+.icon-restore,
+.icon-recycle-del,
+.icon-recycle-empty,
 .icon-home,
 .icon-next,
 .icon-prev,
@@ -460,6 +463,15 @@ a:hover {
 }
 .icon-user-modify {
 	background-position: -60px -60px;
+}
+.icon-restore {
+	background-position: -120px -60px;
+}
+.icon-recycle-del {
+	background-position: -140px -60px;
+}
+.icon-recycle-empty {
+	background-position: -160px -60px;
 }
 .icon-flag-1 {
 	background-position: -20px -80px;
