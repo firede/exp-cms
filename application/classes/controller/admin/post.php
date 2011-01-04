@@ -36,7 +36,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
             $conf = Kohana::config('admin_post_list.recycle');
              
         } else {
-            $post["is_del"] = "0";
+            $_GET["is_del"] = "0";
             if (!isset($_GET['status'])) {
                 $_GET['status'] = '0';
             }
@@ -218,6 +218,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                 array('id');
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $post["is_del"] = "1";
+        echo Kohana::debug($post);
         $view_data = $postDb->del_flag($post);
         $view_data = Action::sucess_status($view_data);
 
@@ -297,8 +298,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $arr_element_names =
                 array('id', 'flag');
         $post = Arr::filter_Array($_POST, $arr_element_names);
+      
         $view_data = $postDb->modify($post);
-
+        
         $view_data = Action::sucess_status($view_data);
 
         $this->template = View::factory('json:');
