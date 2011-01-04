@@ -69,14 +69,16 @@ class Database_Setting {
      */
     public function update_configs($configs, $module="site") {
         try {
+            echo Kohana::debug($configs);
             DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
-            foreach ($site as $key_name => $conf_value) {
+            foreach ($configs as $key_name => $conf_value) {
 
                 DB::update("sys_config")->set(array("conf_value" => $conf_value))
                         ->where("key_name", "=", $key_name)
                         ->and_where("module", "=", $module)
                         ->execute();
             }
+
             DB::query(NULL, "COMMIT")->execute();
             return "ok";
         } catch (Exception $e) {

@@ -7,7 +7,7 @@ return array(
         "basehost" => "http://daxiniu.com",
         "indexurl" => "http://daxiniu.com/exp",
         "default_style" => "",
-        "powerby" => "这里可以是html",
+        "copyright" => "这里可以是html",
         "keywords" => "大犀牛，内容分享，游戏，插件",
         "description" => "这里写描述",
         "beian" => "陕SDFE2134F",
