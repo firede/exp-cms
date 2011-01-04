@@ -28,15 +28,10 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
             $_GET['page'] = 1;
         }
 
+        if (isset($post["is_del"]) && $post["is_del"] == 1) {
 
-        $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
-        $post = Arr::filter_Array($_GET, $arr_element_names);
-        $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
-        $post["keyword"] = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
-        if (isset($post["is_del"])&&$post["is_del"] == 1) {
-
-                $conf = Kohana::config('admin_post_list.recycle');
-        }else{
+            $conf = Kohana::config('admin_post_list.recycle');
+        } else {
             $post["is_del"] = "0";
             if (!isset($_GET['status'])) {
                 $_GET['status'] = '0';
@@ -44,6 +39,11 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
             $conf_status = 'status_' . $_GET['status'];
             $conf = Kohana::config('admin_post_list')->$conf_status;
         }
+        $pageparam = array("page" => $_GET['page'], "items_per_page" => $pagination->__get("items_per_page"));
+        $post = Arr::filter_Array($_GET, $arr_element_names);
+        $sort = Arr::filter_Array($_GET, array("order_by", "sort_type"));
+        $post["keyword"] = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+
         $posts = $postDb->query_list_search($post, $pageparam, $sort);
         $posts["message"] = Action::sucess_status($posts["message"]);
         if (isset($posts["total_items_count"]) && isset($posts["total_page_count"])) {
@@ -346,7 +346,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $arr_element_names =
                 array('id', 'cate_id');
         $post = Arr::filter_Array($_POST, $arr_element_names);
-      
+
         $view_data = $postDb->modify($post);
 
         $view_data = Action::sucess_status($view_data);
