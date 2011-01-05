@@ -9,7 +9,7 @@ class Controller_Base extends Controller {
 
     public $template = 'template';
     public $xss_green_light = array(); //xxs 放行的参数 如果你需要放行可以 修改这个参数的值 然后使用parent::before()继承执行即可
-
+    public $_enable_themes=FALSE;
     public function before() {
         $_GET = $this->filter_XSS($_GET); //xss过滤
         $_POST = $this->filter_XSS($_POST); //xss过滤

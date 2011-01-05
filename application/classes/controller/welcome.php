@@ -2,11 +2,11 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Controller_Welcome extends Controller_Base {
+class Controller_Welcome extends Controller_BaseUser {
 
     // 测试Smarty模板
     public function action_index() {
-
+     
         if ($this->app_setup()) {
 
             return;
@@ -14,7 +14,7 @@ class Controller_Welcome extends Controller_Base {
         $conf = 'id,title';
         $conf_arr = explode(',', $conf);
 
-        $this->template = View::factory('smarty:welcome/index');
+        $this->template = View::factory('smarty:welcome/index',NULL, $this->_enable_themes);
         $this->template->conf = $conf;
         $this->template->prefix = array('admin/post/view/', '.html');
         $this->template->data = array(

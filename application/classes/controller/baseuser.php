@@ -6,7 +6,9 @@ defined('SYSPATH') or die('No direct script access.');
  */
 
 class Controller_BaseUser extends Controller_Base {
+
     public function before() {
+        $this->_enable_themes = TRUE;
         parent::before();
     }
 
