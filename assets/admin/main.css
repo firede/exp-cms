@@ -26,6 +26,7 @@ a:hover {
 	zoom:1;
 }
 #logo {
+	display: block;
 	width: 270px;
 	height: 56px;
 	background: url('img/logo.png') no-repeat;
