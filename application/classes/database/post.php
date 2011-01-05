@@ -197,14 +197,30 @@ class Database_Post {
         try {
             $ids = explode(",", $post["id"]);
             $delete = DB::delete()->table('post')->where('id', 'in', $ids);
-            $delete->execute(); 
-           /* $get_file_path=DB::select()->from("attachment")->where('id', 'in', $ids);
-            $file_paths=$get_file_path->execute();
-            echo Kohana::debug($file_paths);*/
+            $delete->execute();
+            $this->get_del_attachment($ids);
             return 'ok';
         } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);
             return "error";
+        }
+    }
+
+    public function get_del_attachment($ids) {
+        try {
+            $get_file_uuid = DB::select("uuid")->from("post")->where('id', 'in', $ids);
+            $get_file_url = DB::select("url")->from("attachment")->where("uuid", "in", $get_file_uuid);
+            $urls = $get_file_url->execute()->as_array();
+            foreach ($urls as $value) {
+                  
+                $value["url"] = APPPATH . "" . $value["url"];
+                $value["url"] = str_replace("\\", "/", $value["url"]);
+                if (file_exists($value["url"])) {
+                    unlink($value["url"]); 
+                } 
+            }
+        } catch (Exception $e) {
+            throw $e;
         }
     }
 
