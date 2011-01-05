@@ -12,11 +12,13 @@ class Controller_Admin_BaseAdmin extends Controller_Base {
         parent::before();
 
         if (Session::instance()->get('admin_data') == NULL) {
-          $referer=$_SERVER['REQUEST_URI']."/";
+            $referer = $_SERVER['REQUEST_URI'] . "/";
             if (isset($_GET["page_path"])) {
-               $this->request->redirect("/admin/auth/login?page_path=".$_GET["page_path"]);
-            }else{
-               $this->request->redirect("/admin/auth/login?page_path=" .$referer);
+                $this->request->redirect("/admin/auth/login?page_path=" . $_GET["page_path"]);
+            } else {
+                if (!empty($referer)) {
+                    $this->request->redirect("/admin/auth/login?page_path=" . $referer);
+                }
             }
         }
     }
