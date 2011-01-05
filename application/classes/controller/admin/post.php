@@ -521,7 +521,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     /**     * *
      * 回收站－>批量删除文章
      */
-    public function action_recycle_m_del_post() {
+    public function action_m_recycle_del_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');
