@@ -2,7 +2,7 @@
 DaXiNiu Content Share System
 ==========
 
-### 注意 NOTICE
+## 注意 NOTICE
 
 这是一个早期版本，请不要尝试它。
 
