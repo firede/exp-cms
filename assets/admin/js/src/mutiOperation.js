@@ -60,10 +60,13 @@ dxn.mutiOperation = (function ($) {
 					dxn.subView.curParam.set(
 						dxn.dataTable.option.getSelectedString()
 					);
-					
-					var count = dxn.dataTable.option.getSelectedCount(),
-						tpl = '批量{0}：选中<strong>{1}</strong>条数据';
-					this.updateTitle(dxn.util.format(tpl, elTitle, count));
+					if (el.attr('single')) {
+						this.updateTitle(elTitle);
+					} else {
+						var count = dxn.dataTable.option.getSelectedCount(),
+							tpl = '批量{0}：选中<strong>{1}</strong>条数据';
+						this.updateTitle(dxn.util.format(tpl, elTitle, count));
+					}
 					this.loadContent(
 						dxn.util.base + el.attr('action'),
 						{ 'v': dxn.util.version }

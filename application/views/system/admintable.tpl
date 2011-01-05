@@ -2,7 +2,7 @@
 <{if $_admintable_conf.muti_operation|default}>
 <div class="operation-bar clearfix">
 	<{foreach from=$_admintable_conf.muti_operation item=_admintable_item key=_admintable_key}>
-	<span class="operation-btn js-mutiopt-<{$_admintable_key}>" action="<{$_admintable_item.action|default}>" title="<{$_admintable_item.title}>"><span class="icon-<{$_admintable_key}>"></span><{$_admintable_item.title}></span>
+	<span class="operation-btn js-mutiopt-<{$_admintable_key}>" action="<{$_admintable_item.action|default}>" <{if $_admintable_item.single|default}>single="1" <{/if}>title="<{$_admintable_item.title}>"><span class="icon-<{$_admintable_key}>"></span><{$_admintable_item.title}></span>
 	<{/foreach}>
 </div>
 <{/if}>

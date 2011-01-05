@@ -472,10 +472,12 @@ return array(
 			'restore-all' => array(
 				'title'     => '全部还原',
 				'action'    => 'admin/post/restore_all',
+				'single'	=> TRUE,
 			),
 			'recycle-empty' => array(
 				'title'     => '全部清空',
 				'action'    => 'admin/post/recycle_empty',
+				'single'	=> TRUE,
 			),
 		),
 	),

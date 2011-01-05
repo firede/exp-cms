@@ -218,7 +218,6 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                 array('id');
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $post["is_del"] = "1";
-        echo Kohana::debug($post);
         $view_data = $postDb->del_flag($post);
         $view_data = Action::sucess_status($view_data);
 
@@ -522,7 +521,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
     /**     * *
      * 回收站－>批量删除文章
      */
-    public function action_recycle_m_del_post() {
+    public function action_m_recycle_del_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id');

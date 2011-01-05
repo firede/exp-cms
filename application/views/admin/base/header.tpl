@@ -15,7 +15,7 @@
 
 <div class="container_24 clearfix">
 	<div id="header">
-		<div id="logo"><h1>大犀牛体验版CMS</h1></div>
+		<a id="logo" href="<{$BASE_URL}>admin"><h1>大犀牛内容分享系统</h1></a>
 		<div id="links">
 			<{if $ADMIN_DATA.username|default}>
 				你好，<{$ADMIN_DATA.username}> -

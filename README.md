@@ -1,4 +1,5 @@
-体验版内容管理系统
+大犀牛内容分享系统
+DaXiNiu Content Share System
 ==========
 
 ### 注意 NOTICE
