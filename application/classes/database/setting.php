@@ -50,7 +50,18 @@ class Database_Setting {
             $select = DB::select()->from("sys_config");
             $conf_list = $select->execute();
             $application = array();
-            foreach ($conf_list as $key => $val) {
+
+            $filter_bools=Kohana::config("applicationconfig.filter_bool");
+          
+            foreach ($conf_list as $key => $val) {  
+                if (isset ($filter_bools[$val["module"]])){//处理值为布尔类型的
+                    $bool_vars=explode(",", $filter_bools[$val["module"]]);
+                  
+                    if(in_array($val["key_name"], $bool_vars)){
+                         $val["conf_value"]=(bool) $val["conf_value"];
+                         
+                    }
+                }
                 $application[$val["module"]][$val["key_name"]] = $val["conf_value"];
             }
             Arr::as_config_file($application, APPPATH . "/config/applicationconfig.php");
@@ -69,10 +80,8 @@ class Database_Setting {
      */
     public function update_configs($configs, $module="site") {
         try {
-            echo Kohana::debug($configs);
             DB::query(NULL, "BEGIN WORK")->execute(); //开启事务
             foreach ($configs as $key_name => $conf_value) {
-
                 DB::update("sys_config")->set(array("conf_value" => $conf_value))
                         ->where("key_name", "=", $key_name)
                         ->and_where("module", "=", $module)
@@ -80,6 +89,7 @@ class Database_Setting {
             }
 
             DB::query(NULL, "COMMIT")->execute();
+            $this->db_to_cache();
             return "ok";
         } catch (Exception $e) {
             ErrorExceptionReport::_errors_report($e);

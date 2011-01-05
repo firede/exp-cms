@@ -135,7 +135,7 @@ class Controller_setup extends Controller_Base {
         $admin = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $adminDb->create($admin);
         $view_data = Action::sucess_status($view_data);
-        echo $view_data;
+      
         $this->set_status(3);
         if ($view_data) {
             $data['data'] = $view_data;

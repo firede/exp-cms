@@ -38,22 +38,21 @@ return array(
     "user" => array(
         "reg_open" => TRUE, //注册开关 TRUE 开启 FALSE关闭
         "default_avatar" => "", //默认用户头像路径
-        "up_avatar" => array(//用户上传头像的约束
-            "path" => "/upload_avatar/", //图片上传的总路径
-            "max_size" => 1048, //图片大小最大值 单位kb
-            "min_size" => 1, //图片大小最小值 单位kb
-            "max_width" => 1048, //图片宽度最大值 单位px
-            "max_height" => 768, //图片高度最大值 单位px
-            "type" => "jpg,jpeg,png,bmp,gif", //允许上传的图片类型，多个用“,”分隔
-            "watermark_path" => "/watermark/logo.png/", //图片水印路径
-            "watermark_position" => 9, //图片水印位置 1上左 |2上中|3上右|4中左 |5中中|6中右|7下左 |8下中|9下右
-            "watermark_opacity" => 70, //图片水印透明度
-            "watermark_status" => TRUE, //是否使用图片水印 TRUE使用 FALSE不使用
-            "watermark_border_space" => 10, //水印与边框距离 单位：px
-        ),
+        "up_avatar.path" => "/upload_avatar/", //图片上传的总路径
+        "up_avatar.max_size" => "1048", //图片大小最大值 单位kb
+        "up_avatar.min_size" => "1", //图片大小最小值 单位kb
+        "up_avatar.max_width" => "1048", //图片宽度最大值 单位px
+        "up_avatar.max_height" => "768", //图片高度最大值 单位px
+        "up_avatar.type" => "jpg,jpeg,png,bmp,gif", //允许上传的图片类型，多个用“,”分隔
+        "up_avatar.watermark_path" => "/watermark/logo.png/", //图片水印路径
+        "up_avatar.watermark_position" => "9", //图片水印位置 1上左 |2上中|3上右|4中左 |5中中|6中右|7下左 |8下中|9下右
+        "up_avatar.watermark_opacity" => "70", //图片水印透明度
+        "up_avatar.watermark_status" => TRUE, //是否使用图片水印 TRUE使用 FALSE不使用
+        "up_avatar.watermark_border_space" => "10", //水印与边框距离 单位：px
     ),
     "post" => array(
         "title_repeat" => TRUE, //文章标题是否可以重复  TRUE 可以重复|FALSE 不可以重复
+        "retrial" => TRUE, //是否必须审核 TRUE审核｜FALSE 不审核
     ),
     "advanced" => array(//高级选项
         "throw_exception" => "NULL", //系统是输出异常信息 :  NULL 不输出|FILE 输出异常信息到文件 路径为应用根目录/exception.log|WEB 会直接通过视图反馈|THROW 直接抛出

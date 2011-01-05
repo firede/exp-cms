@@ -95,14 +95,15 @@ class Model_Setup extends Model_Base {
         //第二阶段 数据非空验证
         //第三阶段 数据有效格式验证
         //第四阶段 数据有效性验证
-        //cache_type
+        //driver
         if (in_array('driver', $noset_keys)) {
             $op_data['driver']["message"] = $op_data['driver']["label"] . "没有定义";
         }
-        //default_expire
+        //is_open
         if (in_array('is_open', $noset_keys)) {
             $op_data['is_open']["message"] = $op_data['is_open']["label"] . "没有定义";
         }
+        
 
         //将原有值保留到表单设置
         $form['set_cache'] = $this->set_form_value($op_data, $post);

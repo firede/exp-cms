@@ -83,8 +83,11 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
      * 更新缓存配置(GET)
      */
     public function action_cache() {
+        $m_set = new Model_Setting();
         $form = Kohana::config('admin_setting_form.cache');
+        $form = $m_set->check_cache_component($form);
         $setting_db = new Database_Setting();
+
         $data_arr = $setting_db->get_configs('cache');
         $form = Action::build_form_data($form, $data_arr["result"]['cache']);
         $view = View::factory('smarty:admin/setting/cache', array(
@@ -101,6 +104,8 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $m_setting = new Model_Setting();
         $validate_result = $m_setting->cache_validate($_POST);
         if (isset($validate_result["success"])) {
+            $m_setting = new Model_Setting();
+            $validate_result = $m_setting->check_cache_component($validate_result);
             $view = View::factory('smarty:admin/setting/cache', array(
                         'form' => $validate_result["data"],
                     ));
@@ -110,6 +115,8 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting_db = new Database_Setting();
         $arr_element_names = array('driver', "is_open",);
         $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $setting["is_open"] = (bool) $setting["is_open"];
+
         $view_data = $setting_db->update_configs($setting, "cache");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
@@ -147,6 +154,7 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting_db = new Database_Setting();
         $arr_element_names = array("dir", "max_size", "min_size", "max_width", "max_height", "type", "watermark_path", "watermark_position", "watermark_opacity", "watermark_status", "watermark_border_space",);
         $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $setting["watermark_status"]=(bool)$setting["watermark_status"];
         $view_data = $setting_db->update_configs($setting, "up_img");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
@@ -209,6 +217,12 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
      * 更新用户相关配置
      */
     public function action_user_post() {
+      
+        foreach($_POST as $key=>$value){
+           unset( $_POST[$key]);
+            $_POST[str_replace("up_avatar_", "up_avatar.", $key)]=$value;
+        }
+      
         $m_setting = new Model_Setting();
         $validate_result = $m_setting->user_validate($_POST);
         if (isset($validate_result["success"])) {
@@ -218,10 +232,14 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
             $this->template = AppCache::app_cache('setting_user_post', $view);
             return;
         }
+
         $setting_db = new Database_Setting();
-        $arr_element_names = array("reg_open", "default_avatar",'up_avatar.path','up_avatar.max_size','up_avatar.min_size','up_avatar.max_width','up_avatar.max_height','up_avatar.type','up_avatar.watermark_path','up_avatar.watermark_position','up_avatar.watermark_opacity','up_avatar.watermark_status','up_avatar.watermark_border_space');
+        $arr_element_names = array("reg_open", "default_avatar", 'up_avatar.path', 'up_avatar.max_size', 'up_avatar.min_size', 'up_avatar.max_width', 'up_avatar.max_height', 'up_avatar.type', 'up_avatar.watermark_path', 'up_avatar.watermark_position', 'up_avatar.watermark_opacity', 'up_avatar.watermark_status', 'up_avatar.watermark_border_space');
         $setting = Arr::filter_Array($_POST, $arr_element_names);
-        echo Kohana::debug($_POST);
+       
+        $setting["reg_open"] = (bool) $setting["reg_open"];
+        $setting["up_avatar.watermark_status"]=(bool)$setting["up_avatar.watermark_status"];
+        
         $view_data = $setting_db->update_configs($setting, "user");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
@@ -258,8 +276,10 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
             return;
         }
         $setting_db = new Database_Setting();
-        $arr_element_names = array('title_repeat');
+        $arr_element_names = array('title_repeat', 'retrial');
         $setting = Arr::filter_Array($_POST, $arr_element_names);
+        $setting["title_repeat"] = (bool) $setting["title_repeat"];
+        $setting["retrial"] = (bool) $setting["retrial"];
         $view_data = $setting_db->update_configs($setting, "post");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');

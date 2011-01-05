@@ -186,23 +186,23 @@ class Model_Setting extends Model_Base {
         //max_size
         if (in_array('up_avatar.max_size', $noset_keys)) {
             $op_data['up_avatar.max_size']["message"] = $op_data['up_avatar.max_size']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($user['max_size'])) {
+        } elseif (!Validate::not_empty($user['up_avatar.max_size'])) {
             $op_data['up_avatar.max_size']["message"] = $op_data['up_avatar.max_size']["label"] . "不能为空";
-        } elseif (!is_integer($user['max_size'])) {
+        } elseif (!is_integer($user['up_avatar.max_size'])) {
             $op_data['up_avatar.max_size']["message"] = $op_data['up_avatar.max_size']["label"] . " 必须为整数";
         } elseif (!Validate::range($user['max_size'], $op_data["up_avatar.max_size"]['min_len'], $op_data["up_avatar.max_size"]['max_len'])) {
             $op_data["up_avatar.max_size"]["message"] = $op_data['up_avatar.max_size']["label"] .
-                    "大小必须在" . $op_data["max_size"]['min_len'] . "-" . $op_data["max_size"]['max_len'] . "之间";
+                    "大小必须在" . $op_data["up_avatar.max_size"]['min_len'] . "-" . $op_data["max_size"]['max_len'] . "之间";
         }
 
         //min_size
         if (in_array('up_avatar.min_size', $noset_keys)) {
             $op_data['up_avatar.min_size']["message"] = $op_data['up_avatar.min_size']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($user['min_size'])) {
+        } elseif (!Validate::not_empty($user['up_avatar.min_size'])) {
             $op_data['up_avatar.min_size']["message"] = $op_data['up_avatar.min_size']["label"] . "不能为空";
         } elseif (!is_integer($user['up_avatar.min_size'])) {
             $op_data['up_avatar.min_size']["message"] = $op_data['up_avatar.min_size']["label"] . " 必须为整数";
-        } elseif (!Validate::range($user['min_size'], $op_data["up_avatar.min_size"]['min_len'], $op_data["up_avatar.min_size"]['max_len'])) {
+        } elseif (!Validate::range($user['up_avatar.min_size'], $op_data["up_avatar.min_size"]['min_len'], $op_data["up_avatar.min_size"]['max_len'])) {
             $op_data["up_avatar.min_size"]["message"] = $op_data['up_avatar.min_size']["label"] .
                     "大小必须在" . $op_data["up_avatar.min_size"]['min_len'] . "-" . $op_data["up_avatar.min_size"]['max_len'] . "之间";
         }
@@ -211,7 +211,7 @@ class Model_Setting extends Model_Base {
             $op_data['up_avatar.max_width']["message"] = $op_data['up_avatar.max_width']["label"] . "没有定义";
         } elseif (!Validate::not_empty($user['up_avatar.max_width'])) {
             $op_data['up_avatar.max_width']["message"] = $op_data['up_avatar.max_width']["label"] . "不能为空";
-        } elseif (!is_integer($user['max_width'])) {
+        } elseif (!is_integer($user['up_avatar.max_width'])) {
             $op_data['up_avatar.max_width']["message"] = $op_data['up_avatar.max_width']["label"] . " 必须为整数";
         } elseif (!Validate::range($user['up_avatar.max_width'], $op_data["up_avatar.max_size"]['min_len'], $op_data["up_avatar.max_width"]['max_len'])) {
             $op_data["up_avatar.max_width"]["message"] = $op_data['up_avatar.max_width']["label"] .
@@ -220,24 +220,24 @@ class Model_Setting extends Model_Base {
         //max_height
         if (in_array('up_avatar.max_height', $noset_keys)) {
             $op_data['up_avatar.max_height']["message"] = $op_data['up_avatar.max_height']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($user['up_avatar.up_avatar.max_height'])) {
+        } elseif (!Validate::not_empty($user['up_avatar.max_height'])) {
             $op_data['up_avatar.max_height']["message"] = $op_data['up_avatar.max_height']["label"] . "不能为空";
         } elseif (!is_integer($user['up_avatar.max_height'])) {
             $op_data['up_avatar.max_height']["message"] = $op_data['up_avatar.max_height']["label"] . " 必须为整数";
-        } elseif (!Validate::range($user['max_height'], $op_data["up_avatar.max_height"]['min_len'], $op_data["up_avatar.max_height"]['max_len'])) {
+        } elseif (!Validate::range($user['up_avatar.max_height'], $op_data["up_avatar.max_height"]['min_len'], $op_data["up_avatar.max_height"]['max_len'])) {
             $op_data["up_avatar.max_height"]["message"] = $op_data['up_avatar.max_height']["label"] .
                     "大小必须在" . $op_data["up_avatar.max_height"]['min_len'] . "-" . $op_data["up_avatar.max_height"]['max_len'] . "个字符之间";
         }
         //type
         if (in_array('up_avatar.type', $noset_keys)) {
             $op_data['up_avatar.type']["message"] = $op_data['up_avatar.type']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($user['type'])) {
+        } elseif (!Validate::not_empty($user['up_avatar.type'])) {
             $op_data['up_avatar.type']["message"] = $op_data['up_avatar.type']["label"] . "不能为空";
         }
         //watermark_path 直接上传的返回的路径 由隐藏域获得
         if (in_array('up_avatar.watermark_path', $noset_keys)) {
             $op_data['up_avatar.watermark_path']["message"] = $op_data['up_avatar.watermark_path']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($user['path'])) {
+        } elseif (!Validate::not_empty($user['up_avatar.watermark_path'])) {
             $op_data['up_avatar.watermark_path']["message"] = $op_data['up_avatar.watermark_path']["label"] . "不能为空";
         } elseif (!$this->validate_length_range ($user['up_avatar.watermark_path'], $op_data["up_avatar.watermark_path"])) {
             $op_data["up_avatar.watermark_path"]["message"] = $op_data['up_avatar.watermark_path']["label"] .
@@ -272,17 +272,17 @@ class Model_Setting extends Model_Base {
         //watermark_status
         if (in_array('up_avatar.watermark_status', $noset_keys)) {
             $op_data['up_avatar.watermark_status']["message"] = $op_data['up_avatar.watermark_status']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($user['watermark_opacity'])) {
+        } elseif (!Validate::not_empty($user['up_avatar.watermark_opacity'])) {
             $op_data['up_avatar.watermark_status']["message"] = $op_data['up_avatar.watermark_status']["label"] . "不能为空";
         }
         //watermark_border_space
         if (in_array('up_avatar.watermark_border_space', $noset_keys)) {
             $op_data['up_avatar.watermark_border_space']["message"] = $op_data['up_avatar.watermark_border_space']["label"] . "没有定义";
-        } elseif (!Validate::not_empty($user['watermark_border_space'])) {
+        } elseif (!Validate::not_empty($user['up_avatar.watermark_border_space'])) {
             $op_data['up_avatar.watermark_border_space']["message"] = $op_data['up_avatar.watermark_border_space']["label"] . "不能为空";
-        } elseif (!is_integer($user['watermark_border_space'])) {
+        } elseif (!is_integer($user['up_avatar.watermark_border_space'])) {
             $op_data['up_avatar.watermark_border_space']["message"] = $op_data['up_avatar.watermark_border_space']["label"] . "必须为整数";
-        } elseif (!Validate::range($user['watermark_border_space'], $op_data['up_avatar.watermark_border_space']['min_len'], $op_data['up_avatar.watermark_border_space']['max_len'])) {
+        } elseif (!Validate::range($user['up_avatar.watermark_border_space'], $op_data['up_avatar.watermark_border_space']['min_len'], $op_data['up_avatar.watermark_border_space']['max_len'])) {
             $op_data['up_avatar.watermark_border_space']["message"] = $op_data['up_avatar.watermark_border_space']["label"] .
                     "大小必须在" . $op_data['up_avatar.watermark_opacity']['min_len'] . "-" . $op_data['up_avatar.watermark_border_space']['max_len'] . "之间";
         }
@@ -526,7 +526,10 @@ class Model_Setting extends Model_Base {
         } elseif (!Validate::not_empty($post['title_repeat'])) {
             $op_data['title_repeat']["message"] = $op_data['title_repeat']["label"] . "不能为空";
         }
-
+         //title_repeat
+        if (in_array('retrial', $noset_keys)) {
+            $op_data['retrial']["message"] = $op_data['retrial']["label"] . "没有定义";
+        }
        
         //将原有值保留到表单设置
         $form["post"] = $this->set_form_value($op_data, $post, array("password", "re_password"), array());
@@ -569,7 +572,66 @@ class Model_Setting extends Model_Base {
         }
         return TRUE;
     }
+    /**     * **
+     * 判断服务可以已经拥有的缓存组件
+     * 'memcache'
+      'memcachetag'
+      'apc'
+      'sqlite'
+      'eaccelerator'
+      'xcache'
+      'file'
+     */
+    public function check_cache_component($form) {
 
+        $cache_arr = $form['driver'];
+        $select_stauts = FALSE;
+        if (extension_loaded('memcache')) {//1
+            $cache_arr['value']['data']['memcache'] = 'memcache';
+            $cache_arr['value']["select"] = 'memcache';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用memcache";
+            $select_stauts = TRUE;
+        }
+        if (extension_loaded('apc')) {//2
+            $cache_arr['value']['data']['apc'] = 'apc';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'apc';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用apc";
+            $select_stauts = TRUE;
+        }
+        if (extension_loaded('eaccelerator')) {//3
+            $cache_arr['value']['data']['eaccelerator'] = 'eaccelerator';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'eaccelerator';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用eaccelerator";
+            $select_stauts = TRUE;
+        }
+        if (extension_loaded('memcachetag')) {//5
+            $cache_arr['value']['data']['memcachetag'] = 'memcachetag';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'memcachetag';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用memcachetag";
+            $select_stauts = TRUE;
+        }
+        if (extension_loaded('xcache')) {//4
+            $cache_arr['value']['data']['xcache'] = 'xcache';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'xcache';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用xcache";
+            $select_stauts = TRUE;
+        }
+        if (extension_loaded('sqlite3') || extension_loaded('sqlite')) {//6
+            $cache_arr['value']['data']['sqlite'] = 'sqlite';
+            $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'sqlite';
+            $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用sqlite";
+            $select_stauts = TRUE;
+        }
+        // if (extension_loaded('file')) {//7
+        $cache_arr['value']['data']['file'] = 'file';
+        $cache_arr['value']["select"] = $select_stauts ? $cache_arr['value']["select"] : 'file';
+        $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "系统推荐您使用file";
+        $select_stauts = TRUE;
+        $cache_arr["desc"] = $select_stauts ? $cache_arr["desc"] : "找不到相应的缓存组件系统将禁用缓存";
+        $form['is_open']['value']['seclet'] = 0;
+        $form['driver'] = $cache_arr;
+        return $form;
+    }
 }
 
 ?>
