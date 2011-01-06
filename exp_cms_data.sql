@@ -197,9 +197,9 @@ INSERT INTO `user` (`id`, `username`, `password`, `email`, `user_type`, `status`
 (31, '123', '23432', '66@dw.com', 0, 1, 'http://www.google.com.hk/images/srpr/nav_logo25.png', '2010-11-17 03:04:09', '2010-11-17 03:04:33', '0');
 
 
------------
+--
 -- 表结构
---------
+--
 CREATE TABLE IF NOT EXISTS `sys_config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `key_name` varchar(32) COLLATE utf8_bin NOT NULL,
