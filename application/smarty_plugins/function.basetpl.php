@@ -19,8 +19,8 @@ function smarty_function_basetpl($params, &$smarty) {
 	$_arg = array();
 
 	// 初始化Smarty变量
-	$smarty->assign('_prefix', NULL);
-	$smarty->assign('_arg', NULL);
+	$smarty->assign('_prefix', array());
+	$smarty->assign('_arg', array());
 
 	// 将配置拆成数组
 	$conf_arr = explode(',', $conf);
