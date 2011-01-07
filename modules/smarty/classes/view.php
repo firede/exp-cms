@@ -80,10 +80,10 @@ class View extends Kohana_View {
                 $path = true;
             } elseif ($this->_enable_themes) {
                 $default_style = Kohana::config("applicationconfig.site.default_style");
-                $default_style = "themes/" . $default_style;
-                if (($path = Kohana::find_file($default_style, $file, $ext)) === false) {
-                    $default_style = "themes/default_style";
-                    if (($path = Kohana::find_file($default_style, $file, $ext)) === false) {
+                $_style = "themes/" . $default_style;
+                if (($path = Kohana::find_file($_style, $file, $ext)) === false) {
+                    $_style = "themes/default/".$default_style;
+                    if (($path = Kohana::find_file($_style, $file, $ext)) === false) {
                         throw new Kohana_View_Exception('The requested view file :file.:ext could not be found', array(
                             ':file' => $file, ':ext' => $ext,
                         ));
