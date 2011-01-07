@@ -76,6 +76,9 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $view_data = $setting_db->update_configs($setting);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/setting/site";
+        }
         $this->template->_data = $view_data;
     }
 
@@ -120,6 +123,9 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $view_data = $setting_db->update_configs($setting, "cache");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/setting/cache";
+        }
         $this->template->_data = $view_data;
     }
 
@@ -154,10 +160,13 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting_db = new Database_Setting();
         $arr_element_names = array("dir", "max_size", "min_size", "max_width", "max_height", "type", "watermark_path", "watermark_position", "watermark_opacity", "watermark_status", "watermark_border_space",);
         $setting = Arr::filter_Array($_POST, $arr_element_names);
-        $setting["watermark_status"]=(bool)$setting["watermark_status"];
+        $setting["watermark_status"] = (bool) $setting["watermark_status"];
         $view_data = $setting_db->update_configs($setting, "up_img");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/setting/up_img";
+        }
         $this->template->_data = $view_data;
     }
 
@@ -195,6 +204,9 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $view_data = $setting_db->update_configs($setting, "up_file");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/setting/up_file";
+        }
         $this->template->_data = $view_data;
     }
 
@@ -217,12 +229,12 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
      * 更新用户相关配置
      */
     public function action_user_post() {
-      
-        foreach($_POST as $key=>$value){
-           unset( $_POST[$key]);
-            $_POST[str_replace("up_avatar_", "up_avatar.", $key)]=$value;
+
+        foreach ($_POST as $key => $value) {
+            unset($_POST[$key]);
+            $_POST[str_replace("up_avatar_", "up_avatar.", $key)] = $value;
         }
-      
+
         $m_setting = new Model_Setting();
         $validate_result = $m_setting->user_validate($_POST);
         if (isset($validate_result["success"])) {
@@ -236,13 +248,16 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting_db = new Database_Setting();
         $arr_element_names = array("reg_open", "default_avatar", 'up_avatar.path', 'up_avatar.max_size', 'up_avatar.min_size', 'up_avatar.max_width', 'up_avatar.max_height', 'up_avatar.type', 'up_avatar.watermark_path', 'up_avatar.watermark_position', 'up_avatar.watermark_opacity', 'up_avatar.watermark_status', 'up_avatar.watermark_border_space');
         $setting = Arr::filter_Array($_POST, $arr_element_names);
-       
+
         $setting["reg_open"] = (bool) $setting["reg_open"];
-        $setting["up_avatar.watermark_status"]=(bool)$setting["up_avatar.watermark_status"];
-        
+        $setting["up_avatar.watermark_status"] = (bool) $setting["up_avatar.watermark_status"];
+
         $view_data = $setting_db->update_configs($setting, "user");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/setting/user";
+        }
         $this->template->_data = $view_data;
     }
 
@@ -283,6 +298,9 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $view_data = $setting_db->update_configs($setting, "post");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/setting/post";
+        }
         $this->template->_data = $view_data;
     }
 
@@ -320,6 +338,9 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $view_data = $setting_db->update_configs($setting, "advanced");
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/setting/advanced";
+        }
         $this->template->_data = $view_data;
     }
 

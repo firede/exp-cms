@@ -62,9 +62,12 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
 
     public function action_modify($id) {
         $form = Kohana::config('admin_user_form.default');
+        $function_config = Kohana::config('admin_user_form.function_config.default.modify');
+        $form = Action::form_decorate($form, $function_config);
         $userDb = new Database_User();
         $data_arr = $userDb->get_user($id);
         $form = Action::build_form_data($form, $data_arr["result"][0]);
+        $form = Action::set_next_redirect_url($form);
         $view = View::factory('smarty:admin/user/modify', array(
                     'form' => $form,
                 ));
@@ -94,8 +97,13 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $view_data = $userDb->modify($user);
         $view_data = Action::sucess_status($view_data);
 
-        $view = View::factory('smarty:');
-        $view->users = $view_data;
+         $view = View::factory('smarty:');
+        if ($view_data["success"]) {
+            $view->next_page = $_POST["DXN_NEXT_REDIRECT_URL"];
+        } else {
+            $view->next_page = "admin/user/modify?id=" . $_POST["id"];
+        }
+        $view->data = $view_data;
         $this->request->response = AppCache::app_cache("user_modify_post", $view)->render();
     }
 
@@ -134,6 +142,11 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $view_data = Action::sucess_status($view_data);
 
         $view = View::factory('smarty:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/user";
+        } else {
+            $view->next_page = "admin/user/create";
+        }
         $view->users = $view_data;
         $this->request->response = AppCache::app_cache("user_create", $view)->render();
     }

@@ -17,6 +17,9 @@ return array(
             'type' => 'text',
             'name' => 'basehost',
             'value' => '/',
+            'validate'=>array(
+                
+            )
         ),
         'indexurl' => array(
             'label' => '首页地址',

@@ -144,7 +144,21 @@ class Action {
         }
         return $form;
     }
-   
+    /**
+     *设置一个赋予来源页面的URL值的隐藏表单
+     * @param $form 表单配置
+     * @return <type>
+     */
+    public static function set_next_redirect_url($form=array()) {
+     
+        $form["DXN_NEXT_REDIRECT_URL"] = array(
+            'label' => '管理员用户名',
+            'type' => 'hidden',
+            'name' => 'DXN_NEXT_REDIRECT_URL',
+            'value' => $_SERVER['HTTP_REFERER'],
+        );
+        return $form;
+    }
 
 }
 

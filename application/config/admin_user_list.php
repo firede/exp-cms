@@ -18,7 +18,7 @@ return array(
 			'label'     => '用户名',
 			'width'     => '180',
 			'template'  => 'link',
-			'prefix'    => array('admin/user/modify?id='),
+			'prefix'    => array('admin/user/modify/'),
 			'data'      => 'id,username',
 			'order_by'  => 'username',
 		),

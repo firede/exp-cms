@@ -77,6 +77,11 @@ class Controller_Admin_Attachment extends Controller_Admin_BaseAdmin {
         $view_data = $attachemenDb->modify($attachement);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/attachment";
+        } else {
+            $view->next_page = "admin/attachment/modify?id=".$_POST["id"];
+        }
         $this->template->_data = $view_data;
     }
 

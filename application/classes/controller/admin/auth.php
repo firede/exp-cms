@@ -31,7 +31,6 @@ class Controller_Admin_Auth extends Controller_Base {
         $m_admin = new Model_Admin();
         $validate_result = $m_admin->auth_validate($_POST);
         if (isset($validate_result["success"])) {
-
             $view = View::factory('smarty:admin/auth/login', array(
                         'form' => $validate_result["data"],
                         'page_path' => $_GET["page_path"],

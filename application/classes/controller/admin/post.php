@@ -28,13 +28,12 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
             $_GET['page'] = 1;
         }
         $conf = "";
-        if (isset($_GET["is_del"])&&$_GET["is_del"] =="1") {
-            
+        if (isset($_GET["is_del"]) && $_GET["is_del"] == "1") {
+
             if (isset($_GET['status'])) {
                 unset($_GET['status']);
             }
             $conf = Kohana::config('admin_post_list.recycle');
-             
         } else {
             $_GET["is_del"] = "0";
             if (!isset($_GET['status'])) {
@@ -60,7 +59,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
                     'view_data' => $posts,
                     'conf' => $conf,
                 ));
-           
+
         $this->template = AppCache::app_cache("post_view", $view);
     }
 
@@ -150,7 +149,11 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $post = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $postDb->save($post);
         $view_data = Action::sucess_status($view_data);
-
+        if ($view_data["success"]) {
+            $view->next_page = "admin/post";
+        } else {
+            $view->next_page = "admin/post/create?id=" . $_POST["id"];
+        }
         $view = View::factory('smarty:');
         $view->view_data = $view_data;
         $this->request->response = AppCache::app_cache("post_view", $view)->render();
@@ -175,7 +178,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * @$id post.ID 
      */
 
-    public function action_update($id) {
+    public function action_modify($id) {
         $id = isset($id) ? $id : "";
         $postDb = new Database_Post();
         $post = $postDb->getpost($id);
@@ -247,7 +250,7 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
      * 修改post数据行 如果id为数字则为单行修改 如果为id=1,2,4,6,34,风格则为批量修改“，”作为分割符号
      */
 
-    public function action_update_post() {
+    public function action_modify_post() {
         $postDb = new Database_Post();
         $arr_element_names =
                 array('id', 'uuid', 'title', 'cate_id', 'pub_time',
@@ -259,6 +262,11 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $view_data = Action::sucess_status($view_data);
 
         $view = View::factory('json:');
+        if ($view_data["success"]) {
+            $view->next_page = "admin/post";
+        } else {
+            $view->next_page = "admin/post/modify?id=" . $_POST["id"];
+        }
         $view->view_data = $view_data;
         $this->request->response = AppCache::app_cache("post_update_post", $view)->render();
     }
@@ -297,9 +305,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $arr_element_names =
                 array('id', 'flag');
         $post = Arr::filter_Array($_POST, $arr_element_names);
-      
+
         $view_data = $postDb->modify($post);
-        
+
         $view_data = Action::sucess_status($view_data);
 
         $this->template = View::factory('json:');
@@ -394,13 +402,13 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 批量还原文章(GET)
-	 */
-	public function action_restore_all() {
+    /**
+     * 批量还原文章(GET)
+     */
+    public function action_restore_all() {
         $view = View::factory('smarty:admin/post/restore_all');
         $this->template = AppCache::app_cache("post_restore_all", $view);
-	}
+    }
 
     /**     * *
      * 还原所有回收站文章
@@ -414,15 +422,15 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 批量还原文章(GET)
-	 */
-	public function action_m_restore() {
+    /**
+     * 批量还原文章(GET)
+     */
+    public function action_m_restore() {
         $view = View::factory('smarty:admin/post/m_restore');
         $this->template = AppCache::app_cache("post_m_restore", $view);
-	}
+    }
 
-	/**     * *
+    /**     * *
      * 回收站－>批量还原文章
      */
     public function action_m_restore_post() {
@@ -438,13 +446,13 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 还原文章(GET)
-	 */
-	public function action_restore() {
+    /**
+     * 还原文章(GET)
+     */
+    public function action_restore() {
         $view = View::factory('smarty:admin/post/restore');
         $this->template = AppCache::app_cache("post_restore", $view);
-	}
+    }
 
     /**     * *
      * 回收站－>还原文章
@@ -462,14 +470,14 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 清空回收站
-	 */
-	public function action_recycle_empty() {
+    /**
+     * 清空回收站
+     */
+    public function action_recycle_empty() {
         $view = View::factory('smarty:admin/post/recycle_empty');
         $this->template = AppCache::app_cache("post_recycle_empty", $view);
-	}
-	
+    }
+
     /**     * *
      * 回收站－>清空
      */
@@ -486,13 +494,13 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 删除文章(GET)
-	 */
-	public function action_recycle_del() {
+    /**
+     * 删除文章(GET)
+     */
+    public function action_recycle_del() {
         $view = View::factory('smarty:admin/post/recycle_del');
         $this->template = AppCache::app_cache("post_recycle_del", $view);
-	}
+    }
 
     /**     * *
      * 回收站－>删除文章
@@ -510,13 +518,13 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
         $this->template->_data = $view_data;
     }
 
-	/**
-	 * 批量删除文章(GET)
-	 */
-	public function action_m_recycle_del() {
+    /**
+     * 批量删除文章(GET)
+     */
+    public function action_m_recycle_del() {
         $view = View::factory('smarty:admin/post/m_recycle_del');
         $this->template = AppCache::app_cache("post_m_recycle_del", $view);
-	}
+    }
 
     /**     * *
      * 回收站－>批量删除文章

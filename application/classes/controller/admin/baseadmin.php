@@ -10,7 +10,7 @@ class Controller_Admin_BaseAdmin extends Controller_Base {
     public function before() {
 
         parent::before();
-
+   
         if (Session::instance()->get('admin_data') == NULL) {
             $referer = $_SERVER['REQUEST_URI'] . "/";
             if (isset($_GET["page_path"])) {

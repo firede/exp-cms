@@ -87,8 +87,16 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $admin = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $adminDb->create($admin);
         $view_data = Action::sucess_status($view_data);
+
         $view = View::factory('smarty:');
+
         $view->admins = $view_data;
+        if ($view_data["success"]) {
+            $view->next_page = "admin/admin";
+        } else {
+            $view->next_page = "admin/admin/create";
+        }
+
         $this->request->response = AppCache::app_cache("admin_create", $view)->render();
     }
 
@@ -100,9 +108,11 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $form = Kohana::config('admin_admin_form.default');
         $function_config = Kohana::config('admin_admin_form.function_config.default.modify');
         $form = Action::form_decorate($form, $function_config);
+        
         $adminDb = new Database_Admin();
         $data_arr = $adminDb->get_admin(array("id" => $id));
         $form = Action::build_form_data($form, $data_arr["result"][0]);
+        $form = Action::set_next_redirect_url($form);
         $view = View::factory('smarty:admin/admin/modify', array(
                     'form' => $form,
                 ));
@@ -121,7 +131,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
         $validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
-       
+
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/admin/modify', array(
                         'form' => $validate_result["data"],
@@ -134,11 +144,16 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER, array("re_password"));
 
         $admin = Arr::filter_Array($_POST, $arr_element_names);
-       
+
         $view_data = $adminDb->modify($admin);
         $view_data = Action::sucess_status($view_data);
 
         $view = View::factory('smarty:');
+        if ($view_data["success"]) {
+            $view->next_page = $_POST["DXN_NEXT_REDIRECT_URL"];
+        } else {
+            $view->next_page = "admin/admin/modify?id=" . $_POST["id"];
+        }
         $view->admins = $view_data;
         $this->request->response = AppCache::app_cache("admin_modify_post", $view)->render();
     }

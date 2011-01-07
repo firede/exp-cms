@@ -93,7 +93,7 @@ return array(
                 'readonly' => 'avatar',),
             'modify' => array(
                 'display' => 'username,password,re_password,email,status,user_type,avatar,admin_id',
-                'readonly' => 'avatar',)
+                'readonly' => 'username,avatar',)
         )
     ),
 );

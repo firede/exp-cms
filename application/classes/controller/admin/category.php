@@ -114,7 +114,8 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
           $this->request->response = AppCache::app_cache("category_user_m_del", $view)->render();
          * */
     }
-/**
+
+    /**
      * 新增分类(GET)
      */
     public function action_modify($id) {
@@ -124,12 +125,14 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $categoryDb = new Database_Category();
         $data_arr = $categoryDb->get_category($id);
         $form = Action::build_form_data($form, $data_arr["result"][0]);
+        $form = Action::set_next_redirect_url($form);
         $view = View::factory('smarty:admin/category/modify', array(
                     'form' => $form,
                 ));
 
         $this->template = AppCache::app_cache('category_modify', $view);
     }
+
     /**     * ****
      * 修改分类
      */
@@ -140,7 +143,7 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
         $validate_result = $m_category->post_validate($_POST, $form, $legal_fileds);
-      
+
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/category/update', array(
                         'form' => $validate_result["data"],
@@ -148,18 +151,23 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
             $this->template = AppCache::app_cache('category_create_post', $view);
             return;
         }
-    //    $userDb = new Database_User();
+        //    $userDb = new Database_User();
         $arr_element_names = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
 
         $m_category = new Model_Category();
 
         $category = Arr::filter_Array($_POST, $arr_element_names);
-      
+
         $categoryDb = new Database_Category();
         $view_data = $categoryDb->modify($category);
         $view_data = Action::sucess_status($view_data);
         $this->template = View::factory('json:');
-        $this->template->content=$view_data;
+        if ($view_data["success"]) {
+            $view->next_page = $_POST["DXN_NEXT_REDIRECT_URL"];
+        } else {
+            $view->next_page = "admin/category/modify?id=" . $_POST["id"];
+        }
+        $this->template->content = $view_data;
     }
 
     /**     * ***
