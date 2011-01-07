@@ -4,11 +4,11 @@
          "webname" => "大犀牛内容分享系统",
          "basehost" => "http://daxiniu.com",
          "indexurl" => "http://daxiniu.com/exp",
-         "default_style" => "green",
-         "copyright" => "这里可以是html",
+         "default_style" => "",
+         "powerby" => "这里可以是html",
          "keywords" => "大犀牛，内容分享，游戏，插件",
          "description" => "这里写描述",
-         "beian" => "陕SDFE2134F",
+         "beian" => "测试",
     ),
      "cache" => array(
          "driver" => "memcache",
@@ -50,7 +50,6 @@
     ),
      "post" => array(
          "title_repeat" => TRUE,
-         "retrial" => TRUE,
     ),
      "advanced" => array(
          "throw_exception" => "THROW",
@@ -58,12 +57,6 @@
      "app" => array(
          "setup.status" => "4",
          "setup.steps_page" => "set_db,set_cache,set_admin,finish,TRUE",
-    ),
-     "filter_bool" => array(
-         "cache" => "is_open",
-         "up_img" => "watermark_status",
-         "post" => "title_repeat,retrial",
-         "user" => "reg_open,up_avatar.watermark_status",
     ),
 ) ;
 ?>

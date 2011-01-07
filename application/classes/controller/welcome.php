@@ -10,7 +10,7 @@ class Controller_Welcome extends Controller_BaseUser {
         if ($this->app_setup()) {
             return;
         }
-
+		echo Kohana::debug(Kohana::config('smarty.smarty_config.template_dir'));
         $this->template = View::factory('smarty:post/list',NULL, $this->_enable_themes);
     }
 
