@@ -8,7 +8,6 @@ class Controller_Welcome extends Controller_BaseUser {
     public function action_index() {
      
         if ($this->app_setup()) {
-
             return;
         }
 
