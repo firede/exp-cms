@@ -3,9 +3,9 @@
 
 <div class="grid_21">
     <h2>添加管理员</h2>
-    <div  class="grid_21">
+   <{debug}>
         <{$data.message}>
-    </div>
+    
     <div class="form-table-wrap">
         <form action="<{$BASE_URL}>setup/set_admin_post" method="POST">
             <table class="form-table">
