@@ -105,7 +105,8 @@ class Controller_setup extends Controller_Base {
      */
     public function action_set_admin() {
 
-        $form = Kohana::config('admin_admin_form');
+        $form = Kohana::config('admin_admin_form.default');
+       
         $view = View::factory('smarty:setup/set_admin', array(
                     'form' => $form,
                     'data' => array('message' => "",),
@@ -119,8 +120,12 @@ class Controller_setup extends Controller_Base {
      */
     public function action_set_admin_post() {
 
-        $m_admin = new Model_Admin();
-        $validate_result = $m_admin->post_validate($_POST);
+         $m_admin = new Model_Admin();
+        $form = Kohana::config('admin_admin_form.default');
+        $function_config = Kohana::config('admin_admin_form.function_config.default.create');
+        $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
+        $form = Action::form_decorate($form, $function_config);
+        $validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
         if (isset($validate_result["success"])) {
             $data['data']['message'] = "";
             $view = View::factory('smarty:setup/set_admin', array(

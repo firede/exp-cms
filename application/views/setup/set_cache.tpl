@@ -4,9 +4,9 @@
 
 <div class="grid_21">
     <h2>设置缓存模式</h2>
-    <div  class="grid_21">
+    
         <{$data.message}>
-    </div>
+    
     <div class="form-table-wrap">
         <form action="<{$BASE_URL}>setup/set_cache_post" method="POST">
             <table class="form-table">
