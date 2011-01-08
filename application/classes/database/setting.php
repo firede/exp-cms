@@ -8,7 +8,7 @@ defined('SYSPATH') or die('No direct script access.');
  * @author Fanqie
  */
 class Database_Setting {
-
+    
     /**     * **
      * 将缓存中的数据放入数据库里
      * @return string ok|error

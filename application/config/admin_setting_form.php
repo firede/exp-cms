@@ -86,9 +86,6 @@ return array(
             'value' => array(
                 'select' => 'apc',
                 'data' => array(
-                    'apc' => 'APC',
-                    'sqlite' => 'sqlite',
-                    'file' => '文件',
                 ),
             ),
         ),
