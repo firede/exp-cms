@@ -64,6 +64,7 @@ class Database_Setting {
                 }
                 $application[$val["module"]][$val["key_name"]] = $val["conf_value"];
             }
+             $application['filter_bool']=$filter_bools;
             Arr::as_config_file($application, APPPATH . "/config/applicationconfig.php");
             return "ok";
         } catch (Exception $e) {
