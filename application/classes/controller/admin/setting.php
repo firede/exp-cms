@@ -122,11 +122,11 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
 
         $view_data = $setting_db->update_configs($setting, "cache");
         $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
+        $this->template = View::factory('smarty:system/redirect');
         if ($view_data["success"]) {
-            $view->next_page = "admin/setting/cache";
+            $this->template->next_page = "admin/setting/cache";
         }
-        $this->template->_data = $view_data;
+        $this->template->view_data = $view_data;
     }
 
     /**
@@ -163,11 +163,11 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting["watermark_status"] = (bool) $setting["watermark_status"];
         $view_data = $setting_db->update_configs($setting, "up_img");
         $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
+        $this->template = View::factory('smarty:system/redirect');
         if ($view_data["success"]) {
-            $view->next_page = "admin/setting/up_img";
+            $this->template->next_page = "admin/setting/up_img";
         }
-        $this->template->_data = $view_data;
+        $this->template->view_data = $view_data;
     }
 
     /**
@@ -203,11 +203,11 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $setting_db->update_configs($setting, "up_file");
         $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
+        $this->template = View::factory('smarty:system/redirect');
         if ($view_data["success"]) {
-            $view->next_page = "admin/setting/up_file";
+            $this->template->next_page = "admin/setting/up_file";
         }
-        $this->template->_data = $view_data;
+        $this->template->view_data = $view_data;
     }
 
     /**
@@ -254,11 +254,11 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
 
         $view_data = $setting_db->update_configs($setting, "user");
         $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
+        $this->template = View::factory('smarty:system/redirect');
         if ($view_data["success"]) {
-            $view->next_page = "admin/setting/user";
+            $this->template->next_page = "admin/setting/user";
         }
-        $this->template->_data = $view_data;
+        $this->template->view_data = $view_data;
     }
 
     /**
@@ -297,11 +297,11 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting["retrial"] = (bool) $setting["retrial"];
         $view_data = $setting_db->update_configs($setting, "post");
         $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
+        $this->template = View::factory('smarty:system/redirect');
         if ($view_data["success"]) {
-            $view->next_page = "admin/setting/post";
+            $this->template->next_page = "admin/setting/post";
         }
-        $this->template->_data = $view_data;
+        $this->template->view_data = $view_data;
     }
 
     /**
@@ -337,11 +337,11 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $setting_db->update_configs($setting, "advanced");
         $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
+        $this->template = View::factory('smarty:system/redirect');
         if ($view_data["success"]) {
-            $view->next_page = "admin/setting/advanced";
+            $this->template->next_page = "admin/setting/advanced";
         }
-        $this->template->_data = $view_data;
+        $this->template->view_data = $view_data;
     }
 
 }

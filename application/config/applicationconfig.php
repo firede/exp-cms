@@ -4,14 +4,14 @@
          "webname" => "大犀牛内容分享系统",
          "basehost" => "http://daxiniu.com",
          "indexurl" => "http://daxiniu.com/exp",
-         "default_style" => "",
+         "default_style" => "default",
          "copyright" => "&lt;a href='http://daxiniu.com'&gt;大犀牛&lt;/a&gt;",
          "keywords" => "大犀牛，内容分享，游戏，插件",
          "description" => "这里写描述",
          "beian" => "测试",
     ),
      "cache" => array(
-         "driver" => "memcache",
+         "driver" => "sqlite",
          "is_open" => "1",
     ),
      "up_img" => array(
