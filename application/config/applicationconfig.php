@@ -12,7 +12,7 @@
     ),
      "cache" => array(
          "driver" => "memcache",
-         "is_open" => TRUE,
+         "is_open" => "1",
     ),
      "up_img" => array(
          "path" => "/upload/img",
@@ -24,7 +24,7 @@
          "watermark_path" => "D:\project\exp-cms\assets\admin\img\logo.png",
          "watermark_position" => "9",
          "watermark_opacity" => "70",
-         "watermark_status" => TRUE,
+         "watermark_status" => "1",
          "watermark_border_space" => "10",
     ),
      "up_file" => array(
@@ -34,7 +34,7 @@
          "type" => "jpg,jpeg,png,bmp,gif,rar,txt,doc,pdf,xml,7zip,zip,",
     ),
      "user" => array(
-         "reg_open" => TRUE,
+         "reg_open" => "1",
          "default_avatar" => "",
          "up_avatar.path" => "/upload_avatar/",
          "up_avatar.max_size" => "1048",
@@ -45,11 +45,11 @@
          "up_avatar.watermark_path" => "/watermark/logo.png/",
          "up_avatar.watermark_position" => "9",
          "up_avatar.watermark_opacity" => "70",
-         "up_avatar.watermark_status" => TRUE,
+         "up_avatar.watermark_status" => "1",
          "up_avatar.watermark_border_space" => "10",
     ),
      "post" => array(
-         "title_repeat" => TRUE,
+         "title_repeat" => "1",
     ),
      "advanced" => array(
          "throw_exception" => "THROW",

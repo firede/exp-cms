@@ -75,11 +75,11 @@ class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
         $setting = Arr::filter_Array($_POST, $arr_element_names);
         $view_data = $setting_db->update_configs($setting);
         $view_data = Action::sucess_status($view_data);
-        $this->template = View::factory('json:');
+        $this->template = View::factory('smarty:system/redirect');
         if ($view_data["success"]) {
-            $view->next_page = "admin/setting/site";
+            $this->template->next_page = "admin/setting/site";
         }
-        $this->template->_data = $view_data;
+        $this->template->view_data = $view_data;
     }
 
     /**
