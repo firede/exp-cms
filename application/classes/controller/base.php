@@ -24,7 +24,7 @@ class Controller_Base extends Controller {
     public function filter_XSS($params) {
         foreach ($params as $key => $value) {
             //如果该参数属于XSS放行行列 则不进行转义
-            if (!isset($this->xss_green_light[$key])) {
+            if (in_array($key, $this->xss_green_light)) {
                 continue;
             }
             //将当前参数进行转义

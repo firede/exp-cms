@@ -3,6 +3,11 @@
 defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Admin_Setting extends Controller_Admin_BaseAdmin {
+    //
+    public function before() {
+        $this->xss_green_light=array('copyright');
+        parent::before();
+    }
 
     public function action_query_list() {
         

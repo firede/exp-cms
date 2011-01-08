@@ -8,7 +8,7 @@ defined('SYSPATH') or die('No direct script access.');
  * @author Fanqie
  */
 class Database_Setting {
-
+    
     /**     * **
      * 将缓存中的数据放入数据库里
      * @return string ok|error
@@ -64,6 +64,7 @@ class Database_Setting {
                 }
                 $application[$val["module"]][$val["key_name"]] = $val["conf_value"];
             }
+             $application['filter_bool']=$filter_bools;
             Arr::as_config_file($application, APPPATH . "/config/applicationconfig.php");
             return "ok";
         } catch (Exception $e) {

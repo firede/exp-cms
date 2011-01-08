@@ -1,0 +1,18 @@
+非空 not_null=>array(msg=>'')
+数字 is_number
+整数 is_int
+浮点型 is_float
+值范围 range=>array(min,max)
+字符串长度 str_len=>array(min,max)
+电子邮件 email
+日期 datetime
+时间 time
+表单二元运算对比 如 inp1＝inp2 则系统会检测两个表单中value是否相等 当然 支持<,=,<=,>,>=,=== 等等 exp=>
+正则匹配 reg
+url匹配 url
+dir匹配 dir
+调用函数匹配 call_function
+
+
+
+开发者配置验证段的同时可以配置自定义的错误提示
