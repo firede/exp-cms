@@ -1,6 +1,6 @@
 <?php defined('SYSPATH') or die('No direct script access.'); 
- return  array(
-     "site" => array(
+ return array (
+     "site" =>array(
          "webname" => "大犀牛内容分享系统",
          "basehost" => "http://daxiniu.com",
          "indexurl" => "http://daxiniu.com/exp",
@@ -10,11 +10,11 @@
          "description" => "这里写描述",
          "beian" => "陕SDFE2134F",
     ),
-     "cache" => array(
-         "driver" => "memcache",
+     "cache" =>array(
+         "driver" => "file",
          "is_open" => TRUE,
     ),
-     "up_img" => array(
+     "up_img" =>array(
          "path" => "/upload/img",
          "max_size" => "1048",
          "min_size" => "1",
@@ -27,13 +27,13 @@
          "watermark_status" => TRUE,
          "watermark_border_space" => "10",
     ),
-     "up_file" => array(
+     "up_file" =>array(
          "path" => "/upload/file/",
          "max_size" => "2048",
          "min_size" => "1",
          "type" => "jpg,jpeg,png,bmp,gif,rar,txt,doc,pdf,xml,7zip,zip,",
     ),
-     "user" => array(
+     "user" =>array(
          "reg_open" => TRUE,
          "default_avatar" => "",
          "up_avatar.path" => "/upload_avatar/",
@@ -48,18 +48,18 @@
          "up_avatar.watermark_status" => TRUE,
          "up_avatar.watermark_border_space" => "10",
     ),
-     "post" => array(
+     "post" =>array(
          "title_repeat" => TRUE,
          "retrial" => TRUE,
     ),
-     "advanced" => array(
+     "advanced" =>array(
          "throw_exception" => "THROW",
     ),
-     "app" => array(
-         "setup.status" => "4",
+     "app" =>array(
+         "setup.status" => 4,
          "setup.steps_page" => "set_db,set_cache,set_admin,finish,TRUE",
     ),
-     "filter_bool" => array(
+     "filter_bool" =>array(
          "cache" => "is_open",
          "up_img" => "watermark_status",
          "post" => "title_repeat,retrial",
