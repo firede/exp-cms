@@ -1,0 +1,17 @@
+#header {
+	margin:10px 0;
+}
+#footer {
+	margin:10px 0;
+	padding:10px;
+	text-align: center;
+	border-top: 1px solid #EEE;
+	color: #666;
+}
+#main {
+	margin:10px 0;
+}
+
+.user-status {
+	text-align: right;
+}

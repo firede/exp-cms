@@ -9,3 +9,24 @@
 		<link rel="stylesheet" href="<{$BASE_URL}>assets/default/main.css" />
 	</head>
 	<body>
+		<div class="container_24 clearfix">
+			<div id="header" class="clearfix">
+				<div class="grid_8" id="logo">
+					<a href="<{$BASE_URL}>">
+						<img alt="<{$SITE.webname}>" src="/assets/admin/img/logo.png">
+					</a>
+				</div>
+				<div class="grid_16">
+					<div class="user-status">
+						<a href="#">注册</a>
+						- <a href="#">登录</a>
+					</div>
+				</div>
+				<div class="clear"></div>
+				<div class="menu">
+					<li>test</li>
+					<li>test</li>
+					<li>test</li>
+					<li>test</li>
+				</div>
+			</div>
