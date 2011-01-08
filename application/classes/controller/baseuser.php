@@ -14,6 +14,7 @@ class Controller_BaseUser extends Controller_Base {
 
     public function after() {
 		$this->template->SITE = Kohana::config('applicationconfig.site');
+		
         return parent::after();
     }
 

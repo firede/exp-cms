@@ -5,7 +5,7 @@
          "basehost" => "http://daxiniu.com",
          "indexurl" => "http://daxiniu.com/exp",
          "default_style" => "",
-         "powerby" => "这里可以是html",
+         "copyright" => "&lt;a href='http://daxiniu.com'&gt;大犀牛&lt;/a&gt;",
          "keywords" => "大犀牛，内容分享，游戏，插件",
          "description" => "这里写描述",
          "beian" => "测试",
