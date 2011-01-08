@@ -19,7 +19,7 @@ class Model_Setting extends Model_Base {
      */
     public function site_validate($site) {
         $form = Kohana::config("admin_setting_form");
-        $noset_keys = Arr::get_noset_key($site, array('webname', "basehost", "indexurl", 'default_style', 'powerby', 'keywords', 'description', 'beian'));
+        $noset_keys = Arr::get_noset_key($site, array('webname', "basehost", "indexurl", 'default_style', 'copyright', 'keywords', 'description', 'beian'));
         $op_data = $form["site"];
         //第一阶段 未定义错误
         //第二阶段 数据非空验证
@@ -54,7 +54,7 @@ class Model_Setting extends Model_Base {
             $op_data['default_style']["message"] = $op_data['default_style']["label"] . "不能为空";
         }
 
-        //powerby
+        //copyright
         if (in_array('copyright', $noset_keys)) {
             $op_data['copyright']["message"] = $op_data['copyright']["label"] . "没有定义";
         } elseif (!Validate::not_empty($site['copyright'])) {
@@ -550,7 +550,7 @@ class Model_Setting extends Model_Base {
      */
     public function advanced_validate($advanced) {
         $form = Kohana::config("admin_setting_form");
-        $noset_keys = Arr::get_noset_key($advanced, array('webname', "basehost", "indexurl", 'default_style', 'powerby', 'keywords', 'description', 'beian'));
+        $noset_keys = Arr::get_noset_key($advanced, array('webname', "basehost", "indexurl", 'default_style', 'copyright', 'keywords', 'description', 'beian'));
         $op_data = $form["advanced"];
         //第一阶段 未定义错误
         //第二阶段 数据非空验证

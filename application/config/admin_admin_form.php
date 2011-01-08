@@ -18,6 +18,22 @@ return array(
 			'message' => '',
 			'min_len' => 3,
 			'max_len' => 16,
+                        'validate'=>array(
+                            'not_null'=>array('error_msg'=>'用户名不能为空'),
+                            'is_number',
+                            'is_int',
+                            'is_float',
+                            'range'=>array('min'=>0,'max'=>100,'error_msg'=>'大小必须在0到100之间'),
+                            'str_len'=>array('min'=>0,'max'=>100,),
+                            'email',
+                            'datatime',
+                            'time',
+                            'exp'=>array(),
+                            'reg'=>array(),
+                            'url',
+                            'dir',
+                            'call_function'=>array('function'=>'Database_Post.methd','params'=>'name','message'=>'用户名已存在'),
+                        )
 		),
 		'password' => array(
 			'label' => '密码',

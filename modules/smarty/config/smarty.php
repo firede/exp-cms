@@ -26,6 +26,8 @@ return array (
     // provides an absolute path to template files, but the path here needs to be
     // set for the smarty {include} function
     'template_dir'    =>  array(
+	  APPPATH.'themes/'.Kohana::config("applicationconfig.site.default_style"),
+	  APPPATH.'themes/default',
       APPPATH.'views',
       MODPATH.'smarty/views',
     ),

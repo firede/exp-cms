@@ -8,31 +8,10 @@ class Controller_Welcome extends Controller_BaseUser {
     public function action_index() {
      
         if ($this->app_setup()) {
-
             return;
         }
-        $conf = 'id,title';
-        $conf_arr = explode(',', $conf);
-
-        $this->template = View::factory('smarty:welcome/index',NULL, $this->_enable_themes);
-        $this->template->conf = $conf;
-        $this->template->prefix = array('admin/post/view/', '.html');
-        $this->template->data = array(
-            'id' => 15,
-            'title' => '测试底层模板设计',
-            'date' => time(),
-            'flag' => array(
-                '1' => '精华',
-                '2' => '置顶'
-            ),
-        );
-
-        if (isset($_GET) AND isset($_GET['id'])) {
-            $id = (int) $_GET['id'];
-        } else {
-            $id = NULL;
-        }
-        $this->template->hello = ($id) ? '你GET的ID是' . $id : 'hello, world!';
+		
+        $this->template = View::factory('smarty:post/list',NULL, $this->_enable_themes);
     }
 
     /**     * *
