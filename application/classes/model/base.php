@@ -13,7 +13,7 @@ class Model_Base {
      * 将$post中的值放入 $form中 并返回
      * @param $form array
      * @param $post array
-     * @param $is_empty array 设置传空值的项
+     * @param $set_empty array 设置传空值的项
      * @param $set_continue array 设置跳过不设置值的项
      * @return array
      */
