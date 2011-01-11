@@ -50,7 +50,8 @@ class StrongKohana  extends Kohana_Core{
 						}
 					}
 
-					return htmlspecialchars($file, ENT_NOQUOTES, Kohana::$charset);
+					//return htmlspecialchars($file, ENT_NOQUOTES, Kohana::$charset);
+                                        return $file;
 				}
 			}
 			else
@@ -68,12 +69,14 @@ class StrongKohana  extends Kohana_Core{
 			if (UTF8::strlen($var) > $length)
 			{
 				// Encode the truncated string
-				$str = htmlspecialchars(UTF8::substr($var, 0, $length), ENT_NOQUOTES, StrongKohana::$charset).'&nbsp;&hellip;';
+				//$str = htmlspecialchars(UTF8::substr($var, 0, $length), ENT_NOQUOTES, StrongKohana::$charset).'&nbsp;&hellip;';
+                            $str=UTF8::substr($var, 0, $length);
 			}
 			else
 			{
 				// Encode the string
-				$str = htmlspecialchars($var, ENT_NOQUOTES, Kohana::$charset);
+				//$str = htmlspecialchars($var, ENT_NOQUOTES, Kohana::$charset);
+                                $str =$var;
 			}
                         if(is_string($str)){
                             return '"'.$str.'"';
@@ -113,7 +116,8 @@ class StrongKohana  extends Kohana_Core{
 					if ($key === $marker) continue;
 					if ( ! is_int($key))
 					{
-						$key = '"'.htmlspecialchars($key, ENT_NOQUOTES, self::$charset).'"';
+						//$key = '"'.htmlspecialchars($key, ENT_NOQUOTES, self::$charset).'"';
+                                            $key ='"'.$key.'"';
 					}
                                        // $key='"'.$key.'"';
 					$output[] = "$space$s $key => ".StrongKohana::my_dump($val, $length, $level + 1).",";
@@ -190,7 +194,8 @@ class StrongKohana  extends Kohana_Core{
 		}
 		else
 		{
-			return htmlspecialchars(print_r($var, TRUE), ENT_NOQUOTES, Kohana::$charset);
+			//return htmlspecialchars(print_r($var, TRUE), ENT_NOQUOTES, Kohana::$charset);
+                        return print_r($var, TRUE);
 		}
 	}
 }
