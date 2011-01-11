@@ -16,11 +16,8 @@
 						<img alt="<{$SITE.webname}>" src="/assets/admin/img/logo.png">
 					</a>
 				</div>
-				<div class="grid_16">
-					<div class="user-status">
-						<a href="#">注册</a>
-						- <a href="#">登录</a>
-					</div>
+				<div class="grid_16 clearfix">
+					<{include file="base/inc_userinfo.tpl"}>
 				</div>
 				<div class="clear"></div>
 				<div class="menu">
