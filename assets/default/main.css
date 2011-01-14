@@ -13,7 +13,7 @@ a:hover {
 	margin:10px 0;
 	padding:10px;
 	text-align: center;
-	border-top: 1px solid #EEE;
+	border-top: 1px dotted #EEE;
 	color: #666;
 }
 #main {
@@ -26,4 +26,39 @@ a:hover {
 
 .input-text {
 	border: 1px solid #369;
+}
+.navbar {
+	position: relative;
+	zoom:1;
+}
+.mainmenu {
+	height:28px;
+	background: url('img/bgs.png') repeat-x;
+	padding:2px;
+}
+.mainmenu li {
+	float:left;
+	list-style: none;
+	padding:0 -2px 0 0;
+	margin:0;
+	background:url('img/menu-separate.png') right 0 no-repeat;
+}
+.mainmenu li a {
+	display: block;
+	padding: 0 20px;
+	height: 28px;
+	color: #FFF;
+	font-size:14px;
+	line-height: 28px;
+	font-weight: 700;
+}
+.quicklink {
+	position: absolute;
+	right:4px;
+	top:4px;
+	background: url('img/menu-btn.png') no-repeat;
+	width:101px;
+	height:25px;
+	line-height: 25px;
+	padding-left: 20px;
 }
