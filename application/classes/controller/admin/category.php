@@ -142,7 +142,9 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $function_config = Kohana::config('admin_category_form.function_config.default.modify');
         $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
-        $validate_result = $m_category->post_validate($_POST, $form, $legal_fileds);
+        $formvalidate = new FormValidate($form, $legal_fileds, $_POST, array(), array());
+        $validate_result = $formvalidate->_form_validate();
+        //$validate_result = $m_category->post_validate($_POST, $form, $legal_fileds);
 
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/category/update', array(
@@ -206,8 +208,9 @@ class Controller_Admin_Category extends Controller_Admin_BaseAdmin {
         $function_config = Kohana::config('admin_category_form.function_config.default.create');
         $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
-
-        $validate_result = $m_category->post_validate($_POST, $form, $legal_fileds);
+        $formvalidate = new FormValidate($form, $legal_fileds, $_POST,array(),Array());
+        $validate_result = $formvalidate->_form_validate();
+        //$validate_result = $m_category->post_validate($_POST, $form, $legal_fileds);
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/category/create', array(
                         'form' => $validate_result["data"],
