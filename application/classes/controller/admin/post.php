@@ -133,7 +133,9 @@ class Controller_Admin_Post extends Controller_Admin_BaseAdmin {
 
     public function action_create_post() {
         $m_post = new Model_Post();
-        $validate_result = $m_post->post_validate($_POST);
+        //$validate_result = $m_post->post_validate($_POST);
+        $formvalidate = new FormValidate($form, $legal_fileds, $_POST, array('password', 're_password'), array());
+        $validate_result = $formvalidate->_form_validate();
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/post/create', array(
                         'form' => $validate_result["data"],

@@ -12,8 +12,21 @@ return array(
             'desc' => '',
             'value' => '',
             'message' => '',
-            'min_len' => 3,
-            'max_len' => 16,
+            'validate' => array(
+                'not_empty' => array('error_msg' => '用户名不能为空'),
+                //'is_numeric',
+                //'is_integer',
+                //'is_decimal',
+                //'range'=>array('min'=>4,'max'=>100,'error_msg'=>'大小必须在4到100之间'),
+                'str_len' => array('min' => 3, 'max' => 20,),
+                //'email',
+                //'datatime',
+                //'filed_exp'=>array("filed1"=>"username","opertor"=>"==","filed2"=>"password"),
+                //'reg'=>array(),
+                //'url',
+                //'dir',
+                'call_function' => array('function' => 'Database_user.check_exist','error_msg' => '用户名已存在'),
+            )
         ),
         'password' => array(
             'label' => '密码',
@@ -24,6 +37,11 @@ return array(
             'message' => '',
             'min_len' => 6,
             'max_len' => 22,
+            'validate' => array(
+                'not_empty',
+                'str_len' => array('min' => 3, 'max' => 20,),
+                'call_function' => array('function' => 'Database_user.check_exist','error_msg' => '用户名已存在'),
+            )
         ),
         're_password' => array(
             'label' => '重复密码',
@@ -32,6 +50,11 @@ return array(
             'desc' => '请重复输入密码',
             'value' => '',
             'message' => '',
+            'validate' => array(
+                'not_empty',
+                'str_len' => array('min' => 3, 'max' => 20,),
+                'filed_exp'=>array("filed1"=>"username","opertor"=>"==","filed2"=>"password"),
+            )
         ),
         'email' => array(
             'label' => '电子邮件',
@@ -40,6 +63,11 @@ return array(
             'desc' => '',
             'value' => '',
             'message' => '',
+            'validate' => array(
+                'not_empty' => array('error_msg' => '用户名不能为空'),
+                'str_len' => array('min' => 3, 'max' => 50,),
+                'email',
+            )
         ),
         'status' => array(
             'label' => '状态',

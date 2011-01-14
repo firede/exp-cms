@@ -72,7 +72,10 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $function_config = Kohana::config('admin_admin_form.function_config.default.create');
         $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
-        $validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
+        $formvalidate = new FormValidate($form, $legal_fileds, $_POST, array('password', 're_password'), array());
+        $validate_result = $formvalidate->_form_validate();
+
+        //$validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
         if (isset($validate_result["success"])) {
 
             $view = View::factory('smarty:admin/admin/create', array(
@@ -108,7 +111,7 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $form = Kohana::config('admin_admin_form.default');
         $function_config = Kohana::config('admin_admin_form.function_config.default.modify');
         $form = Action::form_decorate($form, $function_config);
-        
+
         $adminDb = new Database_Admin();
         $data_arr = $adminDb->get_admin(array("id" => $id));
         $form = Action::build_form_data($form, $data_arr["result"][0]);
@@ -130,7 +133,9 @@ class Controller_Admin_Admin extends Controller_Admin_BaseAdmin {
         $function_config = Kohana::config('admin_admin_form.function_config.default.modify');
         $legal_fileds = Action::legal_fileds($function_config, Action::$LEGAL_FORM_TYPE_WRITER);
         $form = Action::form_decorate($form, $function_config);
-        $validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
+        $formvalidate = new FormValidate($form, $legal_fileds, $_POST, array('password', 're_password'), array());
+        $validate_result = $formvalidate->_form_validate();
+//$validate_result = $m_admin->post_validate($_POST, $form, $legal_fileds);
 
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/admin/modify', array(
