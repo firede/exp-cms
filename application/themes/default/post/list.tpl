@@ -1,7 +1,6 @@
 <{include file='base/header.tpl'}>
 <div id="main" class="clearfix">
 	<div class="grid_18">
-		<{part type="Post" action="list" param="NULL"}>
 		<div class="mbox-wrap">
 			<div class="mbox">
 				<div class="mbox-title"><h3>魔兽世界</h3></div>
@@ -14,28 +13,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="mbox-wrap">
-			<div class="mbox">
-				<table class="list-table">
-					<thead>
-						<tr>
-							<th style="width:450px;">标题</th>
-							<th style="width:130px;">作者</th>
-							<th>更新时间</th>
-						</tr>
-					</thead>
-					<tbody>
-						<{php}>for ($i=0; $i<20; $i++){  <{/php}>
-						<tr>
-							<td><a href="http://wow.163.com" class="title">魔兽世界怎么快速升到80级？</a><a href="http://wow.163.com">[魔兽世界]</a></td>
-							<td><a href="http://zhaolei.info">火德</a></td>
-							<td><span class="date">2011-01-15</span></td>
-						</tr>
-						<{php}>} <{/php}>
-					</tbody>
-				</table>
-			</div>
-		</div>
+		<{part type="Post" action="list" param="array('status'=>1)" tpl="smarty:post/inc_list"}>
 	</div>
 	<div class="grid_6">
 		<div class="mbox-wrap">

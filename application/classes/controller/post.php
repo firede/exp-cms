@@ -54,11 +54,11 @@ class Controller_Post extends Controller_BaseUser {
         }
 
 
-        $view = View::factory('smarty:admin/post/list', array(
+        $view = View::factory('smarty:post/inc_list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
                     'conf' => $conf,
-                ));
+                ), TRUE);
 
         echo AppCache::app_cache("post_view", $view);
     }

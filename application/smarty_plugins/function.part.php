@@ -5,7 +5,7 @@ function smarty_function_part($params, &$smarty) {
 
 	eval('$p='.$param.';');
 	eval('$i = new Controller_'.$type.'(new Kohana_Request(""));');
-	eval('$i->action_'.$action.'($p);');
+	eval('$i->action_'.$action.'($p, $tpl);');
 }
 
 ?>
