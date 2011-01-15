@@ -20,7 +20,7 @@ class Controller_Auth extends Controller_Base {
         }
 
         $view = View::factory('smarty:auth/login', $data);
-        $this->template = AppCache::app_cache('userauth_login', $view);
+        $this->template = AppCache::app_cache('userauth_login',  AppCache::app_cache("userauth_login", $data));
     }
 
     /** **
@@ -35,7 +35,7 @@ class Controller_Auth extends Controller_Base {
                         'form' => $validate_reauthsult["data"],
                         'page_path' => $_GET["page_path"],
                     ));
-            $this->template = AppCache::app_cache('userauth_login', $view);
+            $this->template = AppCache::app_cache('userauth_login', AppCache::app_cache('userauth_login_post',$view));
             return;
         } else {
             Session::instance()->set('user_data', $validate_result["result"][0]);
@@ -51,7 +51,7 @@ class Controller_Auth extends Controller_Base {
      * 注销
      */
 
-    public function action_login_out() {
+    public function action_logout() {
         Session::instance()->delete('user_data');
         $this->request->redirect('');
     }

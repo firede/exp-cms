@@ -4,6 +4,8 @@ defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Post extends Controller_BaseUser {
 
+    
+
     /**
      * 获取 带分页的文章的列表
      * @param <type> $dxn_get
@@ -58,9 +60,9 @@ class Controller_Post extends Controller_BaseUser {
                     'pagination' => $pagination,
                     'view_data' => $posts,
                     'conf' => $conf,
-                ));
+                        ), TRUE);
 
-        echo AppCache::app_cache("post_view", $view);
+        echo AppCache::app_cache("post_view", AppCache::app_cache('before_post_list', $view));
     }
 
     /**

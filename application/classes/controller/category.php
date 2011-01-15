@@ -4,6 +4,22 @@ defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Category extends Controller_BaseUser {
 
+    public function action_index($id) {
+
+        if ($this->app_setup()) {
+            return;
+        }
+        $categorys = Kohana::config("category");
+        $view = View::factory('smarty:post/list', NULL, $this->_enable_themes);
+        foreach ($categorys as $category) {
+            if ($category["id"] == $id) {
+                $view->category = $category;
+                break;
+            }
+        }
+        $this->template = AppCache::app_cache("category_index", $view);
+    }
+
     /**
      *
      * @param <type> $dxn_get
