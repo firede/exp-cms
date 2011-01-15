@@ -7,7 +7,8 @@
 		<meta name="description" content="<{$SITE.description}>">
 		<link rel="stylesheet" href="<{$BASE_URL}>assets/common/960gs.css" />
 		<link rel="stylesheet" href="<{$BASE_URL}>assets/default/main.css" />
-		<script src="<{$BASE_URL}>assets/default/js/jquery.min.js" type="text/javascript"></script>
+		<script src="<{$BASE_URL}>assets/common/js/jquery.min.js" type="text/javascript"></script>
+		<script src="<{$BASE_URL}>assets/admin/js/jquery.qtip.min.js" type="text/javascript"></script>
 	</head>
 	<body>
 		<div class="container_24 clearfix">
@@ -21,7 +22,7 @@
 					<{include file="base/inc_userinfo.tpl"}>
 				</div>
 				<div class="clear"></div>
-				<div class="navbar">
+				<div class="navbar grid_24">
 					<div class="mainmenu">
 						<li><a href="#">首页</a></li>
 						<li><a href="#">反恐精英</a></li>

@@ -1,3 +1,6 @@
+body {
+	overflow-y: scroll;
+}
 a {
 	color: #36C;
 	text-decoration: none;
@@ -23,8 +26,13 @@ a:hover {
 .userinfo {
 	float: right;
 }
-
+.userinfo .row {
+	line-height: 25px;
+	height: 25px;
+}
 .input-text {
+	padding:1px;
+	margin:0;
 	border: 1px solid #369;
 }
 .navbar {
@@ -61,4 +69,81 @@ a:hover {
 	height:25px;
 	line-height: 25px;
 	padding-left: 20px;
+}
+
+/* mbox */
+.mbox-wrap {
+	border:2px solid #F2F8FC;
+	margin-bottom: 10px;
+}
+.mbox {
+	border:1px solid #A8D9EE;
+}
+.mbox-title {
+	background: url('img/bgs.png') 0 -40px repeat-x;
+	line-height: 26px;
+	height: 26px;
+	padding: 0 0 4px 0;
+	overflow: hidden;
+	
+}
+.mbox-title h3 {
+	padding-left: 10px;
+	font-weight: 700;
+	font-size: 12px;
+}
+
+.mbox-content:before,
+.mbox-content:after {
+	content:'\0020';
+	display:block;
+	overflow:hidden;
+	visibility:hidden;
+	width:0;
+	height:0;
+}
+.mbox-content:after {
+	clear:both;
+}
+.mbox-content {
+	zoom:1;
+}
+
+.mbox-cate-item {
+	float:left;
+	width:210px;
+	height: 30px;
+	padding: 0 10px;
+	line-height:30px;
+	font-size: 14px;
+}
+
+/* list-table */
+.list-table {
+	width:100%;
+	margin:0;
+	padding:0;
+}
+
+.list-table thead th {
+	text-align: left;
+	line-height: 26px;
+	height:26px;
+	padding:0 0 4px 10px;
+	overflow: hidden;
+	background: url('img/bgs.png') 0 -40px repeat-x;
+}
+.list-table tbody td {
+	padding:0 0 0 10px;
+	line-height: 30px;
+	height:30px;
+	border-bottom: 1px dotted #EEE;
+}
+
+.list-table tbody td .title {
+	margin-right: 10px;
+	font-size: 14px;
+}
+.list-table tbody td .date {
+	color: #999;
 }
