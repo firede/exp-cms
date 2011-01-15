@@ -2,7 +2,7 @@
 
 defined('SYSPATH') or die('No direct script access.');
 
-class Contrller_Post extends Controller_BaseUser {
+class Controller_Post extends Controller_BaseUser {
 
     /**
      * 获取 带分页的文章的列表

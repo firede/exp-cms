@@ -1,6 +1,7 @@
 <{include file='base/header.tpl'}>
 <div id="main" class="clearfix">
 	<div class="grid_18">
+		<{part type="Post" action="list" param="NULL"}>
 		<div class="mbox-wrap">
 			<div class="mbox">
 				<div class="mbox-title"><h3>魔兽世界</h3></div>
