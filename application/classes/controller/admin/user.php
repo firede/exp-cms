@@ -83,7 +83,6 @@ class Controller_Admin_User extends Controller_Admin_BaseAdmin {
         $form = Action::form_decorate($form, $function_config);
         $formvalidate = new FormValidate($form, $legal_fileds, $_POST, array('password', 're_password'), array());
         $validate_result = $formvalidate->_form_validate();
-//$validate_result = $m_user->post_validate($_POST, $form, $legal_fileds);
         if (isset($validate_result["success"])) {
             $view = View::factory('smarty:admin/user/modify', array(
                         'form' => $validate_result["data"],

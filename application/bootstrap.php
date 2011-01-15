@@ -1,4 +1,6 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
+
+defined('SYSPATH') or die('No direct script access.');
 
 //-- Environment setup --------------------------------------------------------
 
@@ -40,9 +42,8 @@ ini_set('unserialize_callback_func', 'spl_autoload_call');
  * Set Kohana::$environment if $_ENV['KOHANA_ENV'] has been supplied.
  * 
  */
-if (isset($_ENV['KOHANA_ENV']))
-{
-	Kohana::$environment = $_ENV['KOHANA_ENV'];
+if (isset($_ENV['KOHANA_ENV'])) {
+    Kohana::$environment = $_ENV['KOHANA_ENV'];
 }
 
 /**
@@ -59,14 +60,14 @@ if (isset($_ENV['KOHANA_ENV']))
  * - boolean  caching     enable or disable internal caching                 FALSE
  */
 Kohana::init(array(
-	'base_url'   => '/',
-	'index_file' => '',
-));
+            'base_url' => '/',
+            'index_file' => '',
+        ));
 
 /**
  * Attach the file write to logging. Multiple writers are supported.
  */
-Kohana::$log->attach(new Kohana_Log_File(APPPATH.'logs'));
+Kohana::$log->attach(new Kohana_Log_File(APPPATH . 'logs'));
 
 /**
  * Attach a file reader to config. Multiple readers are supported.
@@ -77,48 +78,47 @@ Kohana::$config->attach(new Kohana_Config_File);
  * Enable modules. Modules are referenced by a relative or absolute path.
  */
 Kohana::modules(array(
-	// 'auth'       => MODPATH.'auth',       // Basic authentication
-	 'cache'      => MODPATH.'cache',      // Caching with multiple backends
-	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
-	'database'   => MODPATH.'database',   // Database access
-	 'image'      => MODPATH.'image',      // Image manipulation
-	'orm'        => MODPATH.'orm',        // Object Relationship Mapping
-	// 'oauth'      => MODPATH.'oauth',      // OAuth authentication
-	'pagination' => MODPATH.'pagination', // Paging of results
-	// 'unittest'   => MODPATH.'unittest',   // Unit testing
-        'helper'    =>MODPATH.'helper', //辅助模块
-	'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-	'smarty'     => MODPATH.'smarty',
-	));
+            // 'auth'       => MODPATH.'auth',       // Basic authentication
+            'cache' => MODPATH . 'cache', // Caching with multiple backends
+            // 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
+            'database' => MODPATH . 'database', // Database access
+            'image' => MODPATH . 'image', // Image manipulation
+            'orm' => MODPATH . 'orm', // Object Relationship Mapping
+            // 'oauth'      => MODPATH.'oauth',      // OAuth authentication
+            'pagination' => MODPATH . 'pagination', // Paging of results
+            // 'unittest'   => MODPATH.'unittest',   // Unit testing
+            'captcha' => MODPATH . 'Captcha', //验证码
+            'helper' => MODPATH . 'helper', //辅助模块
+            'userguide' => MODPATH . 'userguide', // User guide and API documentation
+            'smarty' => MODPATH . 'smarty',
+        ));
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.
  */
-
 // 后台管理路由设置
 Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
-	->defaults(array(
-		'directory'  => 'admin',
-		'controller' => 'post',
-		'action'     => 'list',
-	));
+        ->defaults(array(
+            'directory' => 'admin',
+            'controller' => 'post',
+            'action' => 'list',
+        ));
 
 // 默认路由设置
 Route::set('default', '(<controller>(/<action>(/<id>)))')
-	->defaults(array(
-		'controller' => 'welcome',
-		'action'     => 'index',
-	));
+        ->defaults(array(
+            'controller' => 'welcome',
+            'action' => 'index',
+        ));
 
-if ( ! defined('SUPPRESS_REQUEST'))
-{
-	/**
-	 * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
-	 * If no source is specified, the URI will be automatically detected.
-	 */
-	echo Request::instance()
-		->execute()
-		->send_headers()
-		->response;
+if (!defined('SUPPRESS_REQUEST')) {
+    /**
+     * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].
+     * If no source is specified, the URI will be automatically detected.
+     */
+    echo Request::instance()
+            ->execute()
+            ->send_headers()
+    ->response;
 }
