@@ -3,8 +3,11 @@
 defined('SYSPATH') or die('No direct script access.');
 
 class Controller_Post extends Controller_BaseUser {
+<<<<<<< HEAD
 
     
+=======
+>>>>>>> 4260af4220263d1e0edf5abb75634fa00db4b54b
 
     /**
      * 获取 带分页的文章的列表
@@ -56,11 +59,15 @@ class Controller_Post extends Controller_BaseUser {
         }
 
 
-        $view = View::factory('smarty:admin/post/list', array(
+        $view = View::factory('smarty:post/inc_list', array(
                     'pagination' => $pagination,
                     'view_data' => $posts,
                     'conf' => $conf,
+<<<<<<< HEAD
                         ), TRUE);
+=======
+                ), TRUE);
+>>>>>>> 4260af4220263d1e0edf5abb75634fa00db4b54b
 
         echo AppCache::app_cache("post_view", AppCache::app_cache('before_post_list', $view));
     }

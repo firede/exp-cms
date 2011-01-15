@@ -1,0 +1,21 @@
+首页: /
+
+列表: /category/[:id]
+
+文章: /post/[:id]
+用户创建文章: /post/create
+用户修改文章: /post/modify
+
+注册: /user/register
+用户中心: /user
+用户信息修改: /user/modify
+用户头像修改: /user/avatar
+用户安全设置: /user/security
+用户中心文章列表(已发布，草稿，待审核)
+
+登录: /auth/login
+登出: /auth/logout
+
+搜索: /post/search
+
+后台: /admin
